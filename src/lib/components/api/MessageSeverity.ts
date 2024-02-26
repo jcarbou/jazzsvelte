@@ -3,4 +3,4 @@ export const MessageSeverity = Object.freeze({
     INFO: 'info',
     WARN: 'warn',
     ERROR: 'error'
-});
+})

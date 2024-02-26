@@ -1,7 +1,4 @@
-export const FilterOperator: {
-    AND: 'and'
-    OR: 'or'
-} = Object.freeze({
+export const FilterOperator = Object.freeze({
     AND: 'and',
     OR: 'or'
 })

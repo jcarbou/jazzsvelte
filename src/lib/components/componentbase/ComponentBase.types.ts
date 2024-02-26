@@ -1,3 +1,14 @@
+export interface ComponentBaseDefaultProps {
+    pt?: undefined
+    ptOptions?: undefined
+    unstyled: boolean
+}
+
+export type ComponentBaseProps<C> = {
+    css?: string
+    defaultProps?: C
+}
+
 export interface ComponentLifecycle {
     onMount?(): void
     onUnmont?(): void
