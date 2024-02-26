@@ -1,0 +1,11 @@
+.surface-border {
+    border-color: var(--surface-border)!important;
+}
+.surface-card {
+    background-color: var(--surface-card)!important;
+}
+.active\:border-primary:active,
+.focus\:border-primary:focus,
+.hover\:border-primary:hover {
+    border-color: var(--primary-color)!important
+}

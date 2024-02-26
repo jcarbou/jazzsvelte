@@ -1,18 +1,18 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import {announcement, setNewsVisible} from '$lib/layout/layoutStore'
+    import {announcement, news} from '$lib/layout/layoutStore'
 
     const storageKey = 'jazzsvelte-news'
 
     onMount( () => {
         const readNews = localStorage.getItem(storageKey) || 'none'
 
-        setNewsVisible(readNews !== ''+$announcement.id)
+        news.setVisible(readNews !== ''+$announcement.id)
     })
 
     function hideNews() {
-        setNewsVisible(false)
-        const readNews = localStorage.setItem(storageKey, ''+''+$announcement.id)
+        news.hide()
+        localStorage.setItem(storageKey, ''+''+$announcement.id)
     }
 </script>
 
@@ -89,6 +89,8 @@
     }
 
     .layout-news-close {
+        border: none;
+        background-color: transparent;
         line-height: 1.5;
         cursor: pointer;
         display: inline-flex;
