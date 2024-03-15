@@ -1,4 +1,4 @@
-import { ComponentBase } from '../componentbase/ComponentBas'
+import { ComponentBase } from '../componentbase/ComponentBase'
 import { classNames } from '../utils/Utils'
 
 const classes = {

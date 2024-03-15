@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-prototype-builtins */
 //import { useMountEffect, useStyle, useUnmountEffect, useUpdateEffect } from '../hooks/Hooks';
+import JAZZ_SVELTE from '../api/JazzSvelte'
 import { ObjectUtils, classNames, mergeProps } from '../utils/Utils'
-import type { ComponentBaseProps } from './ComponentBase.types'
+import type { CmpBaseContext, CmpBaseMetadata, CmpBaseParams, CmpBaseProps, CmpBasePtCallback, ComponentBaseProps, ComponentBaseType, MetadataHandler } from './ComponentBase.types'
 
-const baseStyle = `
+export const baseStyle = `
 .p-hidden-accessible {
     border: 0;
     clip: rect(0 0 0 0);
@@ -291,7 +294,7 @@ svg.p-icon g,
     }
 }
 `
-const commonStyle = `
+export const commonStyle = `
 @layer primereact {
     .p-component, .p-component * {
         box-sizing: border-box;
@@ -463,7 +466,7 @@ const commonStyle = `
 }
 `
 
-export const ComponentBase = {
+export const ComponentBase: ComponentBaseType = {
     cProps: undefined,
     cParams: undefined,
     cName: undefined,
@@ -476,21 +479,21 @@ export const ComponentBase = {
     globalCSS: undefined,
     classes: {},
     styles: '',
-    extend: (props: ComponentBaseProps<FC> = {}) => {
-        const css = props.css
+    extend: (props: ComponentBaseProps = {}) => {
+        const css: any = props.css
         const defaultProps = { ...props.defaultProps, ...ComponentBase.defaultProps }
         const inlineStyles = {}
 
-        const getProps = (props, context = {}) => {
+        const getProps = (cProps: CmpBaseProps, context: CmpBaseContext = {}): CmpBaseProps => {
             ComponentBase.context = context
-            ComponentBase.cProps = props
+            ComponentBase.cProps = cProps
 
-            return ObjectUtils.getMergedProps(props, defaultProps)
+            return ObjectUtils.getMergedProps(cProps, defaultProps)
         }
 
-        const getOtherProps = (props) => ObjectUtils.getDiffProps(props, defaultProps)
+        const getOtherProps = (props: CmpBaseProps): CmpBaseProps => ObjectUtils.getDiffProps(props, defaultProps)
 
-        const getPTValue = (obj = {}, key = '', params = {}, searchInDefaultPT = true) => {
+        const getPTValue = (obj: any = {}, key = '', params: CmpBaseParams = {}, searchInDefaultPT = true) => {
             // obj either is the passthrough options or has a .pt property.
             if (obj.hasOwnProperty('pt') && obj.pt !== undefined) {
                 obj = obj.pt
@@ -504,11 +507,11 @@ export const ComponentBase = {
             const isTransition = fkey === 'transition'
             const datasetPrefix = 'data-pc-'
 
-            const getHostInstance = (params) => {
+            const getHostInstance = (params: CmpBaseParams): any => {
                 return params?.props ? (params.hostName ? (params.props.__TYPE === params.hostName ? params.props : getHostInstance(params.parent)) : params.parent) : undefined
             }
 
-            const getPropValue = (name) => {
+            const getPropValue = (name: string) => {
                 return params.props?.[name] || getHostInstance(params)?.[name]
             }
 
@@ -516,8 +519,8 @@ export const ComponentBase = {
             ComponentBase.cName = componentName
             const { mergeSections = true, mergeProps: useMergeProps = false } = getPropValue('ptOptions') || ComponentBase.context.ptOptions || {}
 
-            const getPTClassValue = (...args) => {
-                const value = getOptionValue(...args)
+            const getPTClassValue = (obj: any, key = '', params = {}) => {
+                const value = getOptionValue(obj, key, params)
 
                 if (Array.isArray(value)) return { className: classNames(...value) }
                 if (ObjectUtils.isString(value)) return { className: value }
@@ -530,7 +533,7 @@ export const ComponentBase = {
             }
 
             const globalPT = searchInDefaultPT ? (isNestedParam ? _useGlobalPT(getPTClassValue, originalkey, params) : _useDefaultPT(getPTClassValue, originalkey, params)) : undefined
-            const self = isNestedParam ? undefined : _usePT(_getPT(obj, componentName), getPTClassValue, originalkey, params, componentName)
+            const self = isNestedParam ? undefined : _usePT(_getPT(obj, componentName), getPTClassValue, originalkey, params)
 
             const datasetProps = !isTransition && {
                 ...(fkey === 'root' && { [`${datasetPrefix}name`]: params.props && params.props.__parentMetadata ? ObjectUtils.toFlatCase(params.props.__TYPE) : componentName }),
@@ -544,20 +547,20 @@ export const ComponentBase = {
                 : { ...self, ...(Object.keys(datasetProps).length ? datasetProps : {}) }
         }
 
-        const setMetaData = (metadata = {}) => {
+        const setMetaData = (metadata: CmpBaseMetadata = {}): MetadataHandler => {
             const { props, state } = metadata
             const ptm = (key = '', params = {}) => getPTValue((props || {}).pt, key, { ...metadata, ...params })
             const ptmo = (obj = {}, key = '', params = {}) => getPTValue(obj, key, params, false)
 
             const isUnstyled = () => {
-                return ComponentBase.context.unstyled || PrimeReact.unstyled || props.unstyled
+                return ComponentBase.context.unstyled || JAZZ_SVELTE.unstyled || props.unstyled
             }
 
-            const cx = (key = '', params = {}) => {
+            const cx: MetadataHandler['cx'] = (key = '', params = {}) => {
                 return !isUnstyled() ? getOptionValue(css && css.classes, key, { props, state, ...params }) : undefined
             }
 
-            const sx = (key = '', params = {}, when = true) => {
+            const sx: MetadataHandler['sx'] = (key = '', params = {}, when = true) => {
                 if (when) {
                     const self = getOptionValue(css && css.inlineStyles, key, { props, state, ...params })
                     const base = getOptionValue(inlineStyles, key, { props, state, ...params })
@@ -581,18 +584,18 @@ export const ComponentBase = {
     }
 }
 
-const getOptionValue = (obj, key = '', params = {}) => {
+const getOptionValue = (obj: any, key = '', params = {}): any => {
     const fKeys = String(ObjectUtils.toFlatCase(key)).split('.')
     const fKey = fKeys.shift()
-    const matchedPTOption = ObjectUtils.isNotEmpty(obj) ? Object.keys(obj).find((k) => ObjectUtils.toFlatCase(k) === fKey) : ''
+    const matchedPTOption = ObjectUtils.isNotEmpty(obj) ? Object.keys(obj).find((k) => ObjectUtils.toFlatCase(k) === fKey) || '' : ''
 
     return fKey ? (ObjectUtils.isObject(obj) ? getOptionValue(ObjectUtils.getItemValue(obj[matchedPTOption], params), fKeys.join('.'), params) : undefined) : ObjectUtils.getItemValue(obj, params)
 }
 
-const _getPT = (pt, key = '', callback) => {
+const _getPT = (pt: any, key = '', callback?: (value: any) => any) => {
     const _usept = pt?.['_usept']
 
-    const getValue = (value, checkSameKey = false) => {
+    const getValue = (value: any, checkSameKey = false) => {
         const _value = callback ? callback(value) : value
         const _key = ObjectUtils.toFlatCase(key)
 
@@ -608,8 +611,8 @@ const _getPT = (pt, key = '', callback) => {
         : getValue(pt, true)
 }
 
-const _usePT = (pt, callback, key, params) => {
-    const fn = (value) => callback(value, key, params)
+const _usePT = (pt: any, callback: CmpBasePtCallback, key: string, params: CmpBaseParams) => {
+    const fn = (value: any) => callback(value, key, params)
 
     if (pt?.hasOwnProperty('_usept')) {
         const { mergeSections = true, mergeProps: useMergeProps = false, classNameMergeFunction } = pt['_usept'] || ComponentBase.context.ptOptions || {}
@@ -627,22 +630,22 @@ const _usePT = (pt, callback, key, params) => {
 }
 
 const getGlobalPT = () => {
-    return _getPT(ComponentBase.context.pt || PrimeReact.pt, undefined, (value) => ObjectUtils.getItemValue(value, ComponentBase.cParams))
+    return _getPT(ComponentBase.context.pt || JAZZ_SVELTE.pt, undefined, (value) => ObjectUtils.getItemValue(value, ComponentBase.cParams))
 }
 
 const getDefaultPT = () => {
-    return _getPT(ComponentBase.context.pt || PrimeReact.pt, undefined, (value) => getOptionValue(value, ComponentBase.cName, ComponentBase.cParams) || ObjectUtils.getItemValue(value, ComponentBase.cParams))
+    return _getPT(ComponentBase.context.pt || JAZZ_SVELTE.pt, undefined, (value) => getOptionValue(value, ComponentBase.cName, ComponentBase.cParams) || ObjectUtils.getItemValue(value, ComponentBase.cParams))
 }
 
-const _useGlobalPT = (callback, key, params) => {
+const _useGlobalPT = (callback: CmpBasePtCallback, key: string, params: CmpBaseParams) => {
     return _usePT(getGlobalPT(), callback, key, params)
 }
 
-const _useDefaultPT = (callback, key, params) => {
+const _useDefaultPT = (callback: CmpBasePtCallback, key: string, params: CmpBaseParams) => {
     return _usePT(getDefaultPT(), callback, key, params)
 }
 
-export const useHandleStyle = (styles, _isUnstyled = () => {}, config) => {
+/*export const useHandleStyle = (styles, _isUnstyled = () => {}, config) => {
     const { name, styled = false, hostName = '' } = config
 
     const globalCSS = _useGlobalPT(getOptionValue, 'global.css', ComponentBase.cParams)
@@ -678,4 +681,4 @@ export const useHandleStyle = (styles, _isUnstyled = () => {}, config) => {
     useUnmountEffect(() => {
         hook('useUnmountEffect')
     })
-}
+}*/

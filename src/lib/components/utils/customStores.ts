@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import type { BooleanStore, VisibilityStore } from './customStore'
+import type { BooleanStore, VisibilityStore } from './customStore.types'
 
 /**
  * Store with a uniq boolean property used to hie / show someting

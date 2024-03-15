@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { get as storeGet } from 'svelte/store'
-import { JAZZ_SVELTE_CONTEXT } from './JazzSvelteContext'
+import { JAZZ_SVELTE } from './JazzSvelte'
 
 const enEntries = {
     startsWith: 'Starts with',
@@ -144,8 +144,8 @@ type AriaEntryKey = keyof AriaEntries
  * @return {object} - Locale object.
  */
 function locale(locale?: LocaleType): { locale: string; options: object } {
-    locale && JAZZ_SVELTE_CONTEXT.locale.set(locale)
-    const newLocale = locale || (storeGet(JAZZ_SVELTE_CONTEXT.locale) as LocaleType)
+    locale && JAZZ_SVELTE.locale.set(locale)
+    const newLocale = locale || (storeGet(JAZZ_SVELTE.locale) as LocaleType)
 
     return {
         locale: newLocale,
@@ -177,7 +177,7 @@ function updateLocaleOption(key: LocalesNoAriaKey, value: any, locale: LocaleTyp
  * @param {string} locale - Locale string.
  */
 function updateLocaleOptions(options: Partial<LocalesEntries>, locale?: LocaleType): void {
-    const _locale = locale || (storeGet(JAZZ_SVELTE_CONTEXT.locale) as LocaleType)
+    const _locale = locale || (storeGet(JAZZ_SVELTE.locale) as LocaleType)
 
     locales[_locale] = { ...locales[_locale], ...options }
 }
@@ -188,7 +188,7 @@ function updateLocaleOptions(options: Partial<LocalesEntries>, locale?: LocaleTy
  * @param {string} locale - Locale string.
  */
 function localeOption(key: LocalesEntryKey, locale?: LocaleType): any {
-    const _locale = locale || (storeGet(JAZZ_SVELTE_CONTEXT.locale) as LocaleType)
+    const _locale = locale || (storeGet(JAZZ_SVELTE.locale) as LocaleType)
 
     try {
         return localeOptions(_locale)[key]
@@ -211,7 +211,7 @@ function localeOption(key: LocalesEntryKey, locale?: LocaleType): any {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ariaLabel(ariaKey: AriaEntryKey, options: { [key: string]: any }) {
-    const _locale = storeGet(JAZZ_SVELTE_CONTEXT.locale) as LocaleType
+    const _locale = storeGet(JAZZ_SVELTE.locale) as LocaleType
 
     try {
         let ariaLabel = localeOptions(_locale)['aria'][ariaKey]
@@ -235,7 +235,7 @@ function ariaLabel(ariaKey: AriaEntryKey, options: { [key: string]: any }) {
  * @param {string} locale - Locale string.
  */
 function localeOptions(locale?: LocaleType): LocalesEntries {
-    const _locale = locale || (storeGet(JAZZ_SVELTE_CONTEXT.locale) as LocaleType)
+    const _locale = locale || (storeGet(JAZZ_SVELTE.locale) as LocaleType)
 
     return locales[_locale]
 }

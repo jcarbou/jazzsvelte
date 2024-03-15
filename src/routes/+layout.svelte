@@ -1,16 +1,19 @@
-<script>
-    import { JAZZ_SVELTE_CONTEXT } from '$lib/components/api/JazzSvelteContext'
+<script lang="ts">
+    import { JAZZ_SVELTE } from '$lib/components/api/JazzSvelte'
     import { inputStyle, ripple, news } from '$lib/layout/layoutStore'
-    import NewsSection from '$lib/layout/NewsSection.svelte'
-    import TopBar from '$lib/layout/TopBar.svelte'
+    import NewsSection from '$lib/layout/newsSection/NewsSection.svelte'
+    import Sidebar from '$lib/layout/sidebar/Sidebar.svelte'
+    import TopBar from '$lib/layout/topbar/TopBar.svelte'
     import '../app.css'
+    import '../core.css'
     import './layout.css'
 
-    const { themePath } = JAZZ_SVELTE_CONTEXT
+    const { themePath } = JAZZ_SVELTE
 </script>
 
 <svelte:head>
     <link rel="stylesheet" href="themes/{$themePath}/theme.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
     <link rel="stylesheet" href="/primeicons.css" />
 
     <title>JazzSvelte - Svelte UI Component Library</title>
@@ -33,10 +36,11 @@
     <link rel="icon" href="/favicon.png" type="image/png" />
 </svelte:head>
 
-<div class:layout-news-active={$news} class:p-input-filled={$inputStyle === 'filled'} class:p-ripple-disabled={$ripple === false}>
+<div class="layout-wrapper" class:p-input-filled={$inputStyle === 'filled'} class:p-ripple-disabled={$ripple === false}>
     <NewsSection />
     <TopBar />
-    <div class="layout-content">
+    <div class="layout-content" class:layout-news-active={$news}>
+        <Sidebar />
         <div class="layout-content-slot">
             <slot />
         </div>
@@ -44,22 +48,25 @@
 </div>
 
 <style>
-    .layout-news-active .layout-topbar {
-        top: 2rem;
+    :global(html) {
+        font-size: 14px;
     }
-
-    .layout-news-active .layout-sidebar,
-    .layout-news-active .doc-section-nav {
-        top: 8rem;
+    :global(body) {
+        background-color: var(--surface-ground);
     }
-
-    .layout-news-active .layout-content {
-        padding-top: 8rem;
+    .layout-content {
+        padding: 6rem 4rem 0;
+        display: flex;
     }
-
-    .layout-news-active .doc-section-label,
-    .layout-news-active .doc-table tbody td .doc-option-name,
-    .layout-news-active .doc-table tbody td > i {
-        scroll-margin-top: 8.5rem;
+    .layout-content.layout-news-active {
+        padding-top: 6.5rem;
+    }
+    .layout-content-slot {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .layout-wrapper {
+        background-color: var(--surface-ground);
     }
 </style>

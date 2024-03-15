@@ -12,7 +12,10 @@ function MenuItem(props) {
     const btnRef = useRef(null);
 
     const isActiveRootmenuItem = (rootItem) => {
-        return rootItem.children && !rootItem.children.some((item) => item.to === router.pathname || (item.children && item.children.some((it) => it.to === router.pathname)));
+        return rootItem.children && !rootItem.children.some(
+            (item) => item.to === router.pathname 
+            || (item.children && item.children.some((it) => it.to === router.pathname))
+        );
     };
 
     return (
@@ -56,7 +59,8 @@ function MenuItem(props) {
             )}
             {!root && menuItem.children && <span className="menu-child-category">{menuItem?.name}</span>}
             {menuItem?.children && (
-                <div className={classNames('overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out', { hidden: menuItem.children && root && isActiveRootmenuItem(menuItem) })}>
+                <div className={classNames('overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out', 
+                { hidden: menuItem.children && root && isActiveRootmenuItem(menuItem) })}>
                     <ol>
                         {menuItem.children.map((item, index) => (
                             <MenuItem root={false} menuItem={item} key={`_root${index}`}></MenuItem>

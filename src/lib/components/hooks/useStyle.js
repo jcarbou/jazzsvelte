@@ -21,7 +21,8 @@ export const useStyle = (css, options = {}) => {
 
         const styleContainer = context?.styleContainer || document.head;
 
-        styleRef.current = styleContainer.querySelector(`style[data-primereact-style-id="${name}"]`) || document.getElementById(id) || document.createElement('style');
+        styleRef.current = styleContainer.querySelector(`style[data-primereact-style-id="${name}"]`) || document.getElementById(id) 
+        || document.createElement('style');
 
         if (!styleRef.current.isConnected) {
             styleRef.current.type = 'text/css';
