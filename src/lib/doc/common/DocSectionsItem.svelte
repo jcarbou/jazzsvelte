@@ -1,4 +1,5 @@
 <script lang="ts">
+    import DocApiTable from './DocApiTable.svelte'
     import DocSectionText from './DocSectionText.svelte'
     import type { Doc } from './doc.types'
     import { toDocSection } from './doc.utils'
@@ -16,8 +17,8 @@
     {#each doc.children as child, i (child.id)}
         {#if child.component}
             <svelte:component this={child.component} docSection={toDocSection(child, level + 1)} />
-        {:else if child.docApiTable}
-            <svelte:component this={child.docApiTable} {...child.docApiData} />
+        {:else if child.docApiData}
+            <DocApiTable apiData={child.docApiData} />
         {:else if child.children}
             <svelte:self doc={child.children} level={level + 1} />
         {/if}

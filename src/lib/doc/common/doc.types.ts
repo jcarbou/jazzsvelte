@@ -1,10 +1,11 @@
 import type { ComponentType } from 'svelte'
+import type { Writable } from 'svelte/store'
 
 export type DocApiData = {
     id: string
     data: DataItem[]
-    name: string
-    description: string
+    name?: string
+    description?: string
     allowLink: boolean
 }
 
@@ -14,8 +15,11 @@ export type Doc = {
     children?: Doc[]
     description?: string
     component?: ComponentType
-    docApiTable?: ComponentType
     docApiData?: DocApiData
+}
+
+export type DocWithChildren = Doc & {
+    children: Doc[]
 }
 
 export type DocSection = {
@@ -26,7 +30,7 @@ export type DocSection = {
 }
 
 export type SectionNavContext = {
-    activeId: string
+    activeId: Writable<string>
 }
 
 export type CodeMode = 'basic' | 'data' | 'javascript'
@@ -51,8 +55,8 @@ export type DataSubItem = {
 }
 
 export type DataItem = {
-    value: string
-    label: string
-    description: string
+    value?: string
+    label?: string
+    description?: string
     deprecated?: string
 } & { [key: string]: string | boolean | DataSubItem[] }

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import DocApiTable from './DocApiTable.svelte'
     import DocSectionsItem from './DocSectionsItem.svelte'
     import type { Doc } from './doc.types'
     import { toDocSection } from './doc.utils'
@@ -12,8 +13,8 @@
             <DocSectionsItem {doc} />
         {:else if doc.component}
             <svelte:component this={doc.component} docSection={toDocSection(doc)} />
-        {:else if doc.docApiTable}
-            <svelte:component this={doc.docApiTable} {...doc.docApiData} />
+        {:else if doc.docApiData}
+            <DocApiTable apiData={doc.docApiData} />
         {/if}
     </section>
 {/each}

@@ -1,290 +1,367 @@
-import type { Doc } from "./doc.types";
+import type { Doc, DocWithChildren } from './doc.types'
+import docs from './apidoc/apidoc.json'
+import type { ApiDoc, ApiMainComponent } from './apidoc/apidoc.types'
+
+type IsExcluded = (option: string, key: string) => boolean
+type IsExcludedAll = (option: string) => boolean
+type Context = {
+    isExcluded: IsExcluded
+    isExcludedAll: IsExcludedAll
+    data: Doc[]
+    name: string
+}
+type ComponentContext = Context & {
+    main: ApiMainComponent
+}
+type SubComponentContext = ComponentContext & {
+    componentName: string
+}
+
+const APIDoc: ApiDoc = docs
 
 const capitalize = (s: string) => (s && s[0].toUpperCase() + s.slice(1)) || ''
 
+function addToChildDoc(cmpContext: ComponentContext, childDoc: Doc[], componentName: string): void {
+    const subCmpContext: SubComponentContext = { ...cmpContext, componentName }
 
-export function buildDocApiData(docNames: string[], header: any, exclude: {[ey:string]: string}) {
+    const eventsDoc = buildApiEvents(subCmpContext)
+    const interfacesDoc = buildApiInterfaces(subCmpContext, false)
+    const typesDoc = buildApiTypes(subCmpContext)
 
-    const docs = docNames.reduce((cDocs, name) => {
-        const splitedName = name.split('.');
-        const modName = capitalize(splitedName[0]);
-        const mod = APIDoc[modName.toLowerCase()];
+    eventsDoc && childDoc.push(eventsDoc)
+    interfacesDoc && childDoc.push(interfacesDoc)
+    typesDoc && childDoc.push(typesDoc)
+}
 
-        const isExcluded = (option: string, key: string) => {
-            return exclude?.[option]?.includes(key);
-        };
+export function buildApiDocs(apiDocNames: string[], exclude: { [key: string]: string }) {
+    const data: Doc[] = []
 
-        const isExcludedAll = (option: string) => {
-            return exclude?.[option] === 'excludeAll';
-        };
+    for (const name of apiDocNames) {
+        buildApiDocItem({
+            isExcluded: (option, key) => exclude?.[option]?.includes(key),
+            isExcludedAll: (option) => exclude?.[option] === 'excludeAll',
+            data,
+            name
+        })
+    }
+    return data
+}
 
-        if (mod) {
-            const addToChildDoc = (childDoc, componentName) => {
-                if (ObjectUtils.isNotEmpty(mod.events) && ObjectUtils.isNotEmpty(mod.events.values) && !isExcludedAll('events')) {
-                    const eMap = {
-                        id: `api.${componentName}.events`,
-                        label: 'Events',
-                        description: mod.events.description,
-                        children: []
-                    };
+function buildApiDocItem(context: Context) {
+    const { name, data } = context
+    const splitedName = name.split('.')
+    const modName = capitalize(splitedName[0])
+    const main = APIDoc[modName.toLowerCase()]
 
-                    Object.entries(mod.events.values).forEach(([eKey, eValue]) => {
-                        const [id, label] = [`api.${componentName}.${eKey}`, eKey];
+    if (!main) return
 
-                        if (isExcluded('event', eKey)) return;
+    const cmpContext: ComponentContext = { ...context, main }
 
-                        eMap.children.push({
-                            id,
-                            label,
-                            component: (inProps) => (
-                                <DocApiTable
-                                    name={componentName}
-                                    data={eValue.props}
-                                    description={
-                                        <>
-                                            {eValue.description} See <i>{eValue.relatedProp}</i>.
-                                        </>
-                                    }
-                                    {...inProps}
-                                />
-                            )
-                        });
-                    });
+    if (splitedName.length === 3) {
+        const type = splitedName[1]
+        const selectedName = splitedName[2]
 
-                    childDoc.push(eMap);
+        if (type === 'functions' && main.functions) {
+            const value = main.functions.values[selectedName]
+
+            const functionDoc: DocWithChildren = {
+                id: `api.${modName}`,
+                label: modName,
+                children: []
+            }
+
+            const [id, label] = [`api.${modName}.function`, 'Function']
+
+            const values = { ...value }
+            delete values.description
+
+            functionDoc.children.push({
+                id,
+                label,
+                docApiData: {
+                    id,
+                    allowLink: false,
+                    name: modName,
+                    data: [values],
+                    description: '' + value.description
                 }
+            })
 
-                if (ObjectUtils.isNotEmpty(mod.interfaces) && ObjectUtils.isNotEmpty(mod.interfaces.values) && !isExcludedAll('interfaces')) {
-                    const iMap = {
-                        id: `api.${componentName}.interfaces`,
-                        label: 'Interfaces',
-                        description: mod.interfaces.description,
-                        children: []
-                    };
+            const types = value.parameters?.map((p) => p.type)
 
-                    Object.entries(mod.interfaces.values).forEach(([iKey, iValue]) => {
-                        const [id, label] = [`api.${componentName}.${iKey}`, iKey];
+            const subCmpContext: SubComponentContext = {
+                ...cmpContext,
+                isExcluded: (ref, key) => !types.includes(key),
+                isExcludedAll: () => false,
+                componentName: modName
+            }
 
-                        if (isExcluded('interfaces', iKey)) return;
+            const interfacesDoc = buildApiInterfaces(subCmpContext, true)
+            interfacesDoc?.children?.length && functionDoc.children.push(interfacesDoc)
 
-                        iMap.children.push({
-                            id,
-                            label,
-                            component: (inProps) => (
-                                <DocApiTable
-                                    name={componentName}
-                                    data={iValue.props}
-                                    description={
-                                        <>
-                                            {iValue.description}{' '}
-                                            {iValue.extendedTypes && (
-                                                <>
-                                                    Extends <i>{iValue.extendedTypes}</i>.
-                                                </>
-                                            )}
-                                        </>
-                                    }
-                                    {...inProps}
-                                />
-                            )
-                        });
-                    });
+            data.push(functionDoc)
+        }
+    } else {
+        const componentDocList = buildApiComponent(cmpContext)
+        data.push(...componentDocList)
 
-                    childDoc.push(iMap);
-                }
+        const modelDocList = buildApiModel(cmpContext)
+        data.push(...modelDocList)
 
-                if (ObjectUtils.isNotEmpty(mod.types) && ObjectUtils.isNotEmpty(mod.types.values) && !isExcludedAll('types')) {
-                    const tMap = {
-                        id: `api.${componentName}.types`,
-                        label: 'Types',
-                        description: mod.types.description,
-                        children: []
-                    };
+        !main.components && !main.model && addToChildDoc(cmpContext, data, modName)
+    }
+}
 
-                    Object.entries(mod.types.values).forEach(([tKey, tValue]) => {
-                        const [id, label] = [`api.${componentName}.${tKey}`, tKey];
+function buildApiEvents(context: SubComponentContext): DocWithChildren | null {
+    const { componentName, main, isExcluded, isExcludedAll } = context
 
-                        if (isExcluded('types', tKey)) return;
+    if (!main.events?.values || isExcludedAll('events')) return null
 
-                        tMap.children.push({
-                            id,
-                            label,
-                            component: (inProps) => <DocApiTable name={componentName} data={[tValue]} allowLink={false} {...inProps} />
-                        });
-                    });
+    const eventsDoc: DocWithChildren = {
+        id: `api.${componentName}.events`,
+        label: 'Events',
+        description: main.events.description,
+        children: []
+    }
 
-                    childDoc.push(tMap);
-                }
-            };
+    Object.entries(main.events.values).forEach(([eventKey, eventValue]) => {
+        const [id, label] = [`api.${componentName}.${eventKey}`, eventKey]
 
-            if (splitedName.length === 3) {
-                const type = splitedName[1];
-                const selectedName = splitedName[2];
+        if (isExcluded('events', eventKey)) return null
 
-                if (type === 'functions') {
-                    const value = mod[type].values[selectedName];
+        eventsDoc.children.push({
+            id,
+            label,
+            docApiData: {
+                id,
+                allowLink: false,
+                name: componentName,
+                data: eventValue.props,
+                description: `${eventValue.description} See <i>${eventValue.relatedProp}</i>`
+            }
+        })
+    })
 
-                    const fMap = {
-                        id: `api.${modName}`,
-                        label: modName,
-                        children: []
-                    };
+    return eventsDoc
+}
 
-                    const [id, label] = [`api.${modName}.function`, 'Function'];
+function buildApiTypes(context: SubComponentContext): DocWithChildren | null {
+    const { componentName, main, isExcluded, isExcludedAll } = context
 
-                    const values = Object.entries(value).reduce((avs, [k, v]) => {
-                        k !== 'description' && (avs[k] = v);
+    if (!main.types?.values || isExcludedAll('types')) return null
 
-                        return avs;
-                    }, {});
+    const typesDoc: DocWithChildren = {
+        id: `api.${componentName}.types`,
+        label: 'Types',
+        description: main.types.description,
+        children: []
+    }
 
-                    fMap.children.push({
-                        id,
-                        label,
-                        component: (inProps) => <DocApiTable name={modName} data={[values]} description={value.description} {...inProps} />
-                    });
+    Object.entries(main.types.values).forEach(([typeKey, typeValue]) => {
+        const [id, label] = [`api.${componentName}.${typeKey}`, typeKey]
 
-                    const types = value.parameters && value.parameters.map((p) => p.type);
+        if (isExcluded('types', typeKey)) return null
 
-                    if (ObjectUtils.isNotEmpty(mod.interfaces) && ObjectUtils.isNotEmpty(mod.interfaces.values)) {
-                        const iMap = {
-                            id: `api.${modName}.interfaces`,
-                            label: 'Interfaces',
-                            description: mod.interfaces.description,
-                            children: []
-                        };
+        typesDoc.children.push({
+            id,
+            label,
+            docApiData: {
+                id,
+                allowLink: false,
+                name: componentName,
+                data: [typeValue],
+                description: ''
+            }
+        })
+    })
 
-                        Object.entries(mod.interfaces.values).forEach(([iKey, iValue]) => {
-                            if (types.includes(iKey)) {
-                                const [id, label] = [`api.${modName}.${iKey}`, iKey];
+    return typesDoc
+}
 
-                                const tMap = {
-                                    id,
-                                    label,
-                                    description: (
-                                        <>
-                                            {iValue.description}{' '}
-                                            {iValue.extendedTypes && (
-                                                <>
-                                                    Extends <i>{iValue.extendedTypes}</i>.
-                                                </>
-                                            )}
-                                        </>
-                                    ),
-                                    children: []
-                                };
+function buildApiInterfaces(context: SubComponentContext, addPropsAndCallBack: boolean): DocWithChildren | null {
+    const { componentName, main, isExcluded, isExcludedAll } = context
 
-                                if (ObjectUtils.isNotEmpty(iValue.props)) {
-                                    tMap.children.push({
-                                        id: `${id}.props`,
-                                        label: 'Props',
-                                        component: (inProps) => <DocApiTable data={iValue.props} {...inProps} />
-                                    });
-                                }
+    if (!main.interfaces?.values || isExcludedAll('interfaces')) return null
 
-                                if (ObjectUtils.isNotEmpty(iValue.callbacks)) {
-                                    tMap.children.push({
-                                        id: `${id}.callbacks`,
-                                        label: 'Callbacks',
-                                        component: (inProps) => <DocApiTable data={iValue.callbacks} {...inProps} />
-                                    });
-                                }
+    const interfacesDoc: DocWithChildren = {
+        id: `api.${componentName}.interfaces`,
+        label: 'Interfaces',
+        description: main.interfaces.description,
+        children: []
+    }
 
-                                iMap.children.push(tMap);
-                            }
-                        });
+    Object.entries(main.interfaces.values).forEach(([interfaceKey, interfaceValue]) => {
+        const [id, label] = [`api.${componentName}.${interfaceKey}`, interfaceKey]
 
-                        ObjectUtils.isNotEmpty(iMap.children) && fMap.children.push(iMap);
-                    }
+        if (isExcluded('interfaces', interfaceKey)) return null
 
-                    cDocs.push(fMap);
-                }
-            } else {
-                mod.components &&
-                    Object.entries(mod.components).forEach(([cKey, cValue]) => {
-                        const cMap = {
-                            id: `api.${cKey}`,
-                            label: cKey,
-                            description: cValue.description,
-                            children: []
-                        };
+        const description = interfaceValue.description + ' ' + (interfaceValue.extendedTypes ? `Extends <i>${interfaceValue.extendedTypes}</i>.` : '')
 
-                        if (ObjectUtils.isNotEmpty(cValue.props) && ObjectUtils.isNotEmpty(cValue.props.values) && !isExcludedAll('props')) {
-                            const [id, label] = [`api.${cKey}.props`, 'Props'];
-
-                            if (isExcluded('props', cKey)) return;
-
-                            cMap.children.push({
-                                id,
-                                label,
-                                component: (inProps) => <DocApiTable name={cKey} data={cValue.props.values} description={cValue.props.description} {...inProps} />
-                            });
-                        }
-
-                        if (ObjectUtils.isNotEmpty(cValue.callbacks) && ObjectUtils.isNotEmpty(cValue.callbacks.values) && !isExcludedAll('callbacks')) {
-                            const [id, label] = [`api.${cKey}.callbacks`, 'Callbacks'];
-
-                            if (isExcluded('callbacks', cKey)) return;
-
-                            cMap.children.push({
-                                id,
-                                label,
-                                component: (inProps) => <DocApiTable name={cKey} data={cValue.callbacks.values} description={cValue.callbacks.description} {...inProps} />
-                            });
-                        }
-
-                        if (ObjectUtils.isNotEmpty(cValue.methods) && ObjectUtils.isNotEmpty(cValue.methods.values) && !isExcludedAll('methods')) {
-                            const [id, label] = [`api.${cKey}.methods`, 'Methods'];
-
-                            if (isExcluded('methods', cKey)) return;
-
-                            cMap.children.push({
-                                id,
-                                label,
-                                component: (inProps) => <DocApiTable name={cKey} data={cValue.methods.values} description={cValue.methods.description} {...inProps} />
-                            });
-                        }
-
-                        if (cKey.toLocaleLowerCase() === name.toLowerCase()) {
-                            addToChildDoc(cMap.children, cKey);
-                        }
-
-                        cDocs.push(cMap);
-                    });
-
-                mod.model &&
-                    Object.entries(mod.model).forEach(([mKey, mValue]) => {
-                        const mMap = {
-                            id: `api.${mKey}`,
-                            label: mKey,
-                            description: mValue.description,
-                            children: []
-                        };
-
-                        if (ObjectUtils.isNotEmpty(mValue.props) && ObjectUtils.isNotEmpty(mValue.props.values) && !isExcludedAll('props')) {
-                            const [id, label] = [`api.${mKey}.props`, 'Props'];
-
-                            if (isExcluded('props', mKey)) return;
-
-                            mMap.children.push({
-                                id,
-                                label,
-                                component: (inProps) => <DocApiTable name={mKey} data={mValue.props.values} description={mValue.props.description} {...inProps} />
-                            });
-                        }
-
-                        if (mKey.toLocaleLowerCase() === name.toLowerCase()) {
-                            addToChildDoc(mMap.children, mKey);
-                        }
-
-                        cDocs.push(mMap);
-                    });
-
-                !mod.components && !mod.model && addToChildDoc(cDocs, modName);
+        const childDoc: Doc = {
+            id,
+            label,
+            docApiData: {
+                id,
+                allowLink: false,
+                name: componentName,
+                data: interfaceValue.props,
+                description
             }
         }
+        interfacesDoc.children.push(childDoc)
 
-        return cDocs;
-    }, []);
+        if (addPropsAndCallBack) {
+            const children: Doc[] = []
 
+            if (interfaceValue?.props?.length) {
+                children.push({
+                    id: `${id}.props`,
+                    label: 'Props',
+                    docApiData: {
+                        id: `${id}.props`,
+                        allowLink: false,
+                        data: interfaceValue.props
+                    }
+                })
+            }
+
+            if (interfaceValue?.callbacks?.length) {
+                children.push({
+                    id: `${id}.callbacks`,
+                    label: 'Callbacks',
+                    docApiData: {
+                        id: `${id}.callbacks`,
+                        allowLink: false,
+                        data: interfaceValue.callbacks
+                    }
+                })
+            }
+
+            childDoc.children = children
+        }
+    })
+
+    return interfacesDoc
+}
+
+function buildApiComponent(context: ComponentContext): DocWithChildren[] {
+    const { main, name, isExcluded, isExcludedAll } = context
+
+    if (!main.components) return []
+
+    const docList: DocWithChildren[] = []
+
+    Object.entries(main.components).forEach(([componentKey, componentValue]) => {
+        const componentsDoc: DocWithChildren = {
+            id: `api.${componentKey}`,
+            label: componentKey,
+            description: componentValue.description,
+            children: []
+        }
+
+        if (componentValue?.props?.values?.length && !isExcludedAll('props')) {
+            const [id, label] = [`api.${componentKey}.props`, 'Props']
+
+            if (isExcluded('props', componentKey)) return
+
+            componentsDoc.children.push({
+                id,
+                label,
+                docApiData: {
+                    id,
+                    allowLink: false,
+                    name: componentKey,
+                    data: componentValue.props.values,
+                    description: componentValue.props.description
+                }
+            })
+        }
+
+        if (componentValue.callbacks?.values?.length && !isExcludedAll('callbacks')) {
+            const [id, label] = [`api.${componentKey}.callbacks`, 'Callbacks']
+
+            if (isExcluded('callbacks', componentKey)) return
+
+            componentsDoc.children.push({
+                id,
+                label,
+                docApiData: {
+                    id,
+                    allowLink: false,
+                    name: componentKey,
+                    data: componentValue.callbacks.values,
+                    description: componentValue.callbacks.description
+                }
+            })
+        }
+
+        if (componentValue.methods?.values?.length && !isExcludedAll('methods')) {
+            const [id, label] = [`api.${componentKey}.methods`, 'Methods']
+
+            if (isExcluded('methods', componentKey)) return
+
+            componentsDoc.children.push({
+                id,
+                label,
+                docApiData: {
+                    id,
+                    allowLink: false,
+                    name: componentKey,
+                    data: componentValue.methods.values,
+                    description: componentValue.methods.description
+                }
+            })
+        }
+
+        if (componentKey.toLocaleLowerCase() === name.toLowerCase()) {
+            addToChildDoc(context, componentsDoc.children, componentKey)
+        }
+
+        return docList.push(componentsDoc)
+    })
+
+    return docList
+}
+
+function buildApiModel(context: ComponentContext): DocWithChildren[] {
+    const { main, name, isExcluded, isExcludedAll } = context
+
+    if (!main.model) return []
+
+    const docList: DocWithChildren[] = []
+
+    Object.entries(main.model).forEach(([modelKey, modelValue]) => {
+        const modelDoc: DocWithChildren = {
+            id: `api.${modelKey}`,
+            label: modelKey,
+            description: modelValue.description,
+            children: []
+        }
+
+        if (modelValue.props?.values?.length && !isExcludedAll('props')) {
+            const [id, label] = [`api.${modelKey}.props`, 'Props']
+
+            if (isExcluded('props', modelKey)) return
+
+            modelDoc.children.push({
+                id,
+                label,
+                docApiData: {
+                    id,
+                    allowLink: false,
+                    name: modelKey,
+                    data: modelValue.props.values,
+                    description: modelValue.props.description
+                }
+            })
+        }
+
+        if (modelKey.toLocaleLowerCase() === name.toLowerCase()) {
+            addToChildDoc(context, modelDoc.children, modelKey)
+        }
+
+        docList.push(modelDoc)
+    })
+
+    return docList
 }

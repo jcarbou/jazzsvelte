@@ -1,93 +1,110 @@
-export type MainComponent = {
-    description: string
-    components: { [key: string]: Component }
-    events: Events
-    interfaces: AccordionInterfaces
-    types: AccordionTypes
+export type ApiDoc = { [key: string]: ApiMainComponent }
+
+export type ApiMainComponent = {
+    description?: string
+    components?: { [key: string]: ApiComponent }
+    events?: ApiEvents
+    interfaces?: ApiInterfaces
+    types?: ApiTypes
+    functions?: ApiFunctions
+    model?: { [key: string]: ApiModel }
 }
 
-export type Component = {
-    description: string
-    methods: Methods
-    props: Props
-    callbacks: Callbacks
+export type ApiModel = {
+    description?: string
+    props: ApiPropsValues
+    callbacks: ApiCallbacksValues
 }
 
-export type Callbacks = {
-    description: string
-    values: Callback[]
+export type ApiFunctions = {
+    description?: string
+    values: { [key: string]: ApiFunction }
 }
 
-export type Callback = {
+export type ApiTypes = {
+    description?: string
+    values: {
+        [key: string]: {
+            values: string
+        }
+    }
+}
+
+export type ApiInterfaces = {
+    description?: string
+    values: { [key: string]: ApiInterface }
+}
+
+export type ApiInterface = {
+    description?: string
+    relatedProp: string
+    extendedTypes?: string
+    props: ApiProp[]
+    callbacks?: ApiFunction[]
+}
+
+export type ApiComponent = {
+    description?: string
+    methods: ApiComponentMethods
+    props: ApiPropsValues
+    callbacks: ApiCallbacksValues
+}
+
+export type ApiCallbacksValues = {
+    description?: string
+    values: ApiFunction[]
+}
+
+export type ApiFunction = {
     name: string
-    parameters: CallbackParametter[]
+    parameters: ApiParameter[]
     returnType: string
-    description: string
+    description?: string
 }
 
-export type CallbackParametter = {
+export type ApiParameter = {
     name: string
-    optional: boolean
+    optional?: boolean
     type: string
-    description: string
-}
-export type Props = {
-    description: string
-    values: Prop[]
+    description?: string
 }
 
-export type Prop = {
+export type ApiPropsValues = {
+    description?: string
+    values: ApiProp[]
+}
+
+export type ApiProp = {
     name: string
     optional: boolean
     readonly: boolean
     type: string
-    default: string
-    description: string
+    default?: string
+    description?: string
 }
 
-export type Methods = {
-    description: string
-    values: MethodsValue[]
+export type ApiComponentMethods = {
+    description?: string
+    values: ApiFunction[]
 }
 
-export type MethodsValue = {
-    name: string
-    parameters: MethodsValuueParmeter[]
-    returnType: string
-    description: string
+export type ApiEvents = {
+    description?: string
+    values: { [key: string]: ApiEvent }
 }
 
-export type MethodsValuueParmeter = {
-    name: string
-    type: string
-    description: string
-}
-
-export type Events = {
-    description: string
-    values: { [key: string]: Event }
-}
-
-export type Event = {
+export type ApiEvent = {
     description?: string
     relatedProp: string
-    props: EventProp[]
+    props: ApiProp[]
     extendedBy?: string
-    callbacks?: EventCallback[]
+    callbacks?: ApiEventCallback[]
     extendedTypes?: string
 }
 
-export type EventProp = {
-    name: string
-    optional: boolean
-    readonly: boolean
-    type: string
-    description: string
-}
-
-export type EventCallback = {
+export type ApiEventCallback = {
     name: string
     optional: boolean
     type: string
-    description: string
+    description?: string
 }

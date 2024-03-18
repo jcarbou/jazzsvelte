@@ -7,6 +7,7 @@
     import UnstyledModeDoc from '$lib/doc/installation/UnstyledModeDoc.svelte'
     //import UsageDoc from '$lib/doc/installation/UsageDoc.svelte'
     import ContextDoc from '$lib/doc/installation/ContextDoc.svelte'
+    import DocPage from '$lib/doc/common/DocPage.svelte'
 
     const docs = [
         {
@@ -53,13 +54,10 @@
     <title>Getting Started - PrimeReact</title>
     <meta name="description" content="PrimeReact is a rich set of open source components for React." />
 </svelte:head>
-<div class="doc">
-    <div class="doc-main">
-        <div class="doc-intro">
-            <h1>Installation</h1>
-            <p>PrimeReact is a rich set of open source UI components for React.</p>
-        </div>
-        <DocSections {docs} />
-    </div>
-    <DocSectionNav {docs} />
-</div>
+
+<DocPage {docs}>
+    <svelte:fragment slot="intro">
+        <h1>Installation</h1>
+        <p>PrimeReact is a rich set of open source UI components for React.</p>
+    </svelte:fragment>
+</DocPage>
