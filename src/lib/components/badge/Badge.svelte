@@ -8,11 +8,11 @@
     import type { HTMLAttributes } from 'svelte/elements'
 
     export let value: BadgeValue
-    export let severity: BadgeSeverity
-    export let size: BadgeSize
-    export let pt: BadgePassThroughOptions
-    export let ptOptions: BadgePassThroughMethodOptions
-    export let unstyled: boolean
+    export let severity: BadgeSeverity = null
+    export let size: BadgeSize = null
+    export let pt: BadgePassThroughOptions | null = null
+    export let ptOptions: BadgePassThroughMethodOptions | null = null
+    export let unstyled: boolean = false
 
     let rootClassName: string = ''
     let rootAttributes: BadgePassThroughOptions['root'] = {}
