@@ -37,3 +37,5 @@ export function classNames(entries: ClassNameEntry[]) {
 
     return undefined
 }
+
+export const mergeCssClasses = classNames

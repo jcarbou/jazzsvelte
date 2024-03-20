@@ -50,14 +50,14 @@ import { Badge } from 'primereact/badge';
                 <Badge value="3" severity="danger"></Badge>
             </div>
             <div class="card flex flex-wrap justify-center gap-4">
-                <i class="pi pi-bell relative text-gray-700 dark:text-white/80" style={{ fontSize: '2rem' }}>
+                <i class="pi pi-bell relative text-gray-700 dark:text-white/80" style="font-size:2rem;">
                     <Badge class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 origin-top-right m-0" value="2"></Badge>
                 </i>
-                <i class="pi pi-calendar relative text-gray-700 dark:text-white/80" style={{ fontSize: '2rem' }}>
+                <i class="pi pi-calendar relative text-gray-700 dark:text-white/80" style="font-size:2rem;">
                     <Badge class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 origin-top-right m-0" value="5+" severity="danger"></Badge>
                 </i>
-                <i class="pi pi-envelope relative text-gray-700 dark:text-white/80" style={{ fontSize: '2rem' }}>
-                    <Badge class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 origin-top-right m-0" severity="danger" style={{ minWidth:'0.75rem', height:'0.75rem' }}></Badge>
+                <i class="pi pi-envelope relative text-gray-700 dark:text-white/80" style="font-size:2rem;">
+                    <Badge class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 origin-top-right m-0" severity="danger" style="min-width:0.75rem;height:0.75rem;"></Badge>
                 </i>
             </div>
         </div>
@@ -73,7 +73,7 @@ import { Badge } from 'primereact/badge';
                     PrimeReact offers a built-in Tailwind theme to get you started quickly. The default values related to the component are displayed below. The component can easily be styled with your own design based on Tailwind utilities, see the{' '}
                     <a href="/tailwind">Tailwind Customization</a> section for an example.
                 </p>
-                <DocSectionCode code={code} hideToggleCode import hideStackBlitz />
+                <DocSectionCode code={code} hideToggleCode toImport hideStackBlitz />
                 <p>A playground sample with the pre-built Tailwind theme.</p>
                 <DocSectionCode code={code2} embedded />
             </DocSectionText>

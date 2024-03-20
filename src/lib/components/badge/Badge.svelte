@@ -1,27 +1,29 @@
 <script lang="ts">
-    import { isObject } from 'chart.js/helpers'
-    import { isEmpty, isFunction, isNotEmpty, classNames } from '../utils/Utils'
-    import type { ClassNameEntry, PassThroughOptions } from '../utils/utils.types'
-    import type { BadgePassThroughMethodOptions, BadgePassThroughOptions, BadgeProps, BadgeSeverity, BadgeSize, BadgeValue } from './badge.types'
+    import { isEmpty, isNotEmpty } from '../utils/Utils'
+    import type {
+        BadgePassThroughMethodOptions,
+        BadgePassThroughOptions,
+        BadgeSeverity,
+        BadgeSize,
+        BadgeValue,
+        RootHTMLAttributes
+    } from './badge.types'
     import JAZZ_SVELTE from '../api/JazzSvelte'
-    import { ptToAttributes } from '../utils/ptUtils'
-    import type { HTMLAttributes } from 'svelte/elements'
+    import { resolvePT } from '../utils/ptUtils'
 
-    export let value: BadgeValue
+    export let value: BadgeValue = null
     export let severity: BadgeSeverity = null
     export let size: BadgeSize = null
     export let pt: BadgePassThroughOptions | null = null
     export let ptOptions: BadgePassThroughMethodOptions | null = null
     export let unstyled: boolean = false
+    export let style: string | null = null
 
-    let rootClassName: string = ''
-    let rootAttributes: BadgePassThroughOptions['root'] = {}
+    let rootAttributes: RootHTMLAttributes = {}
 
     $: {
-        const ptGlobalAttributes = ptToAttributes(JAZZ_SVELTE.pt?.badge?.root, ptOptions)
-        const ptComponentAttributes = ptToAttributes(pt?.root, ptOptions)
-
-        const rootClasses: ClassNameEntry[] = [
+        // "root" element
+        const rootClasses = [
             'p-badge p-component',
             {
                 'p-badge-no-gutter': isNotEmpty(value) && String(value).length === 1,
@@ -29,15 +31,13 @@
                 'p-badge-lg': size === 'large',
                 'p-badge-xl': size === 'xlarge',
                 [`p-badge-${severity}`]: severity !== null
-            },
-            ptGlobalAttributes.classes,
-            ptComponentAttributes.classes
+            }
         ]
-        rootClassName = classNames(rootClasses) || ''
+        rootAttributes = resolvePT(rootClasses, style, pt?.root, JAZZ_SVELTE.pt?.badge?.root, ptOptions, unstyled)
     }
 </script>
 
-<span class={rootClassName} {...rootAttributes}>{value}</span>
+<span {...rootAttributes}>{value}</span>
 
 <style>
     @layer primereact {

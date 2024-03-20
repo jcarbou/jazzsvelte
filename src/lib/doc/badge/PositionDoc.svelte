@@ -9,13 +9,13 @@
 
     const code = {
         basic: `
-<i class="pi pi-bell p-overlay-badge" style={{ fontSize: '2rem' }}>
+<i class="pi pi-bell p-overlay-badge" style="font-size:2rem;">
     <Badge value="2"></Badge>
 </i>
-<i class="pi pi-calendar p-overlay-badge" style={{ fontSize: '2rem' }}>
+<i class="pi pi-calendar p-overlay-badge" style="font-size:2rem;">
     <Badge value="5+" severity="danger"></Badge>
 </i>
-<i class="pi pi-envelope p-overlay-badge" style={{ fontSize: '2rem' }}>
+<i class="pi pi-envelope p-overlay-badge" style="font-size:2rem;">
     <Badge severity="danger"></Badge>
 </i>
             `,
@@ -25,13 +25,13 @@ import { Badge } from 'primereact/badge';
 
 
         <div class="card flex flex-wrap justify-content-center gap-4">
-            <i class="pi pi-bell p-overlay-badge" style={{ fontSize: '2rem' }}>
+            <i class="pi pi-bell p-overlay-badge" style="font-size:2rem;">
                 <Badge value="2"></Badge>
             </i>
-            <i class="pi pi-calendar p-overlay-badge" style={{ fontSize: '2rem' }}>
+            <i class="pi pi-calendar p-overlay-badge" style="font-size:2rem;">
                 <Badge value="5+" severity="danger"></Badge>
             </i>
-            <i class="pi pi-envelope p-overlay-badge" style={{ fontSize: '2rem' }}>
+            <i class="pi pi-envelope p-overlay-badge" style="font-size:2rem;">
                 <Badge severity="danger"></Badge>
             </i>
         </div>
@@ -44,13 +44,13 @@ import { Badge } from 'primereact/badge';
 
 
         <div class="card flex flex-wrap justify-content-center gap-4">
-            <i class="pi pi-bell p-overlay-badge" style={{ fontSize: '2rem' }}>
+            <i class="pi pi-bell p-overlay-badge" style="font-size:2rem;">
                 <Badge value="2"></Badge>
             </i>
-            <i class="pi pi-calendar p-overlay-badge" style={{ fontSize: '2rem' }}>
+            <i class="pi pi-calendar p-overlay-badge" style="font-size:2rem;">
                 <Badge value="5+" severity="danger"></Badge>
             </i>
-            <i class="pi pi-envelope p-overlay-badge" style={{ fontSize: '2rem' }}>
+            <i class="pi pi-envelope p-overlay-badge" style="font-size:2rem;">
                 <Badge severity="danger"></Badge>
             </i>
         </div>
@@ -67,13 +67,13 @@ import { Badge } from 'primereact/badge';
                 </p>
             </DocSectionText>
             <div class="card flex flex-wrap justify-content-center gap-4">
-                <i class="pi pi-bell p-overlay-badge" style={{ fontSize: '2rem' }}>
+                <i class="pi pi-bell p-overlay-badge" style="font-size:2rem;">
                     <Badge value="2"></Badge>
                 </i>
-                <i class="pi pi-calendar p-overlay-badge" style={{ fontSize: '2rem' }}>
+                <i class="pi pi-calendar p-overlay-badge" style="font-size:2rem;">
                     <Badge value="5+" severity="danger"></Badge>
                 </i>
-                <i class="pi pi-envelope p-overlay-badge" style={{ fontSize: '2rem' }}>
+                <i class="pi pi-envelope p-overlay-badge" style="font-size:2rem;">
                     <Badge severity="danger"></Badge>
                 </i>
             </div>

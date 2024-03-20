@@ -15,7 +15,7 @@ import { Badge } from 'primereact/badge';
 </script>
 
 <DocSectionText docSection={docSection} />
-            <DocSectionCode code={code} hideToggleCode import hideStackBlitz />
+            <DocSectionCode code={code} hideToggleCode toImport hideStackBlitz />
 
 
 

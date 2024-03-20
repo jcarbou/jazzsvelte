@@ -5,7 +5,7 @@
     "semi": false,
     "singleQuote": true,
     "jsxSingleQuote": false,
-    "printWidth": 250,
+    "printWidth": 130,
     "bracketSameLine": false,
     "plugins": ["prettier-plugin-svelte"],
 	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]

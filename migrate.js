@@ -27,7 +27,17 @@ const CMP_DOC_MIGRATE = [
     [/\s*<DocSectionText\s*id="(\w*)"\s*label="(\w*)"\s*>/gm, 
     "\n<DocSectionText docSection={{id:'$1', label:'$2'}}>"],
     [/<Link\s*href="\/(\w*)"\s*>([\w\s]*)<\/Link>/gm, '<a href="/$1">$2</a>'],
+    [/(<DocSectionCode.*) import /gm, '$1 toImport ']
 ]
+
+function fixedJSON(badJSON) {
+    return badJSON.replace(/:\s*"([^"]*)"/g, function(match, p1) {
+		return ': "' + p1.replace(/:/g, '@colon@') + '"';
+	}).replace(/:\s*'([^']*)'/g, function(match, p1) {
+		return ': "' + p1.replace(/:/g, '@colon@') + '"';
+	}).replace(/(['"])?([a-z0-9A-Z_]+)(['"])?\s*:/g, '"$2": ')
+    .replace(/@colon@/g, ':')
+}
 
 function regexpPatch(content) {
     for(const rule of CMP_DOC_MIGRATE ) {
@@ -61,6 +71,17 @@ function moveCode(content) {
     return content
 }
 
+function styleToString(styleJsonString) {
+    const style = JSON.parse(fixedJSON(styleJsonString))
+    return Object.keys(style).reduce((acc, key) => (
+        acc + key.split(/(?=[A-Z])/).join('-').toLowerCase() + ':' + style[key] + ';'
+    ), '');
+};
+
+function jsonStyleToString(content) {
+    return content.replace(/style=\{(\{.*\})\}/g, match => `style="${styleToString(match.substring(7,match.length-1))}"`);
+}
+
 function withFileContent(filePath,patchList) {
     let content = fs.readFileSync(filePath, {encoding: "utf-8"})
     for(const patch of patchList) {
@@ -82,7 +103,7 @@ const importCmpDocRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/componen
 function importCmpDocPatch(content)  {
     return content.replace(importCmpDocRegExp,`    import $1 from '$lib/doc/${cmp}/$1.svelte'`)
 }
-withFileContent(newPagePath, [regexpPatch, importCmpDocPatch, lastPatch])
+withFileContent(newPagePath, [regexpPatch, importCmpDocPatch, jsonStyleToString, lastPatch])
 fs.writeFileSync(`${newPage}/+page.ts` ,`import { dev } from '$app/environment';
 
 // we don't need any JS on this page, though we'll load
@@ -114,7 +135,7 @@ function renameDocFiles(dirPath) {
 
         console.log(`Patch ${newFilePath}`)
 
-        withFileContent(newFilePath, [regexpPatch, cmpDocExportPatch, moveCode, lastPatch])      
+        withFileContent(newFilePath, [regexpPatch, cmpDocExportPatch, moveCode, jsonStyleToString, lastPatch])      
     }
 }
 fs.rmSync(newDoc, { recursive: true, force: true })

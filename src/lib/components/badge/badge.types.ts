@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'svelte/elements'
-import type { PassThroughOptions, PassThroughType } from '../utils/utils.types'
+import type { PassThroughHTMLAttributes, PassThroughOptions, PassThroughType } from '../utils/utils.types'
 
 /**
  * Value to display inside the badge.
@@ -65,6 +65,8 @@ export interface BadgePassThroughMethodOptions {
 
 export declare type BadgePassThroughType<T> = PassThroughType<T, BadgePassThroughMethodOptions>
 
+export type RootHTMLAttributes = PassThroughHTMLAttributes<HTMLAttributes<HTMLSpanElement>>
+
 /**
  * Custom passthrough(pt) options.
  * @see {@link BadgeProps.pt}
@@ -73,5 +75,5 @@ export interface BadgePassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: BadgePassThroughType<HTMLAttributes<HTMLSpanElement>>
+    root?: BadgePassThroughType<RootHTMLAttributes>
 }

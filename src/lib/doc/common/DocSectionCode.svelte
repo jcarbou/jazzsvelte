@@ -11,6 +11,7 @@
     export let code: Code
     export let hideStackBlitz: boolean = false
     export let codeclass: string = ''
+    export let toImport: boolean = false
 
     const toggleCodeMode = (content: CodeMode) => {
         if (codeMode === 'data') {

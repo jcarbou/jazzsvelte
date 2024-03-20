@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type ClassNameEntry = null | string | number | string[] | { [key: string]: boolean }
+export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: boolean }
 
 export type PassThroughTypeFunction<T, O> = (options?: O) => T | void
-export type PassThroughType<T, O> = T | PassThroughTypeFunction<T, O> | null | undefined
+export type PassThroughType<T, O> = T | PassThroughTypeFunction<T, O> | string | null | undefined
+export type PassThroughHTMLAttributes<T> = T & {
+    style?: string | { [key: string]: string }
+}
 
 export interface PassThroughOptions {
     /**

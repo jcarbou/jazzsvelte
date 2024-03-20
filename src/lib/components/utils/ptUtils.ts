@@ -1,57 +1,49 @@
-import type { HTMLAttributes } from 'svelte/elements'
-import { isFunction, isObject } from './ObjectUtils'
-import type { PassThroughType, PassThroughTypeFunction } from './utils.types'
+import { isFunction, isObject, isString } from './ObjectUtils'
+import type { ClassNameEntry, PassThroughType, PassThroughTypeFunction } from './utils.types'
 import JAZZ_SVELTE from '../api/JazzSvelte'
-import type { JazzSveltePTOptions } from '../api/JazzSvelte.types'
-
-type HTMLAttr = HTMLAttributes<HTMLElement>
-
-export type PassThroughMethodeOptions<CP> = {
-    props: CP
-}
+import { mergeCssClasses } from './ClassNames'
+import type { PassThroughMethodOptions, PtHTMLAttr } from './ptUtils.types'
+import { mergeCssStsyles } from './cssStyles'
 
 type Options<T, M> = PassThroughType<T, M> | undefined
 
-export function ptToAttributes<T extends HTMLAttr, M, CP>
-(options: Options<T,M>, ptOptions: PassThroughMethodeOptions<CP>) {
-    let attributes: T | null = null,
-        classes = null,
-        styles = null
+function ptToAttributes<T extends PtHTMLAttr, M, CP>(options: Options<T, M>, ptOptions?: PassThroughMethodOptions<CP> | null): T {
+    let attributes: T = {} as T
+
     if (options) {
         if (isFunction(options)) {
-            const functionAttr = (options as PassThroughTypeFunction<T, PassThroughMethodeOptions<CP>>)(ptOptions)
+            const functionAttr = (options as PassThroughTypeFunction<T, PassThroughMethodOptions<CP>>)(ptOptions || undefined)
             if (functionAttr) {
                 attributes = { ...functionAttr }
             }
         } else if (isObject(options)) {
             attributes = { ...(options as T) }
-        }
-        if (attributes?.class) {
-            classes = attributes.class
-            delete attributes.class
-        }
-        if (attributes?.style) {
-            styles = attributes.style
-            delete attributes.style
+        } else if (isString(options)) {
+            // Ex: title: 'text-xl', // OR { class: 'text-xl' }
+            attributes = { class: options as string } as T
         }
     }
-    return { attributes, classes, styles }
+    return attributes
 }
- export function ptAttributes<T extends HTMLAttr, M, CP>(
-    options: Options<T,M>,
-    globalOptions: Options<T,M>,
-    ptOptions: PassThroughMethodeOptions<CP> ) {
 
-    const ptGlobalAttributes = ptToAttributes(globalOptions, ptOptions)
-    const ptAttributes = ptToAttributes(options, ptOptions)
-    let attributes: T | null = null,
-    classes,
-    styles
-    
-    if (ptGlobalAttributes.attributes || ptAttributes.attributes) {
-        attributes = {...ptGlobalAttributes.attributes, ...ptAttributes.attributes}
-    }
-    classes =  classes ? (ptAttributes.classes ? classes+" "+ptAttributes.classes :)
+export function resolvePT<T extends PtHTMLAttr, M, CP>(
+    elementClasses: ClassNameEntry[],
+    elementStyle: string | null,
+    elementOptions: Options<T, M>,
+    globalOptions: Options<T, M>,
+    ptOptions: PassThroughMethodOptions<CP> | null,
+    unstyled: boolean
+): Omit<T, 'style'> & { style?: string } {
+    unstyled = unstyled || JAZZ_SVELTE.unstyled
 
-    return { attributes, classes, styles }    
+    const globalPtAttributes = ptToAttributes(globalOptions, ptOptions)
+    const elementPtAttributes = ptToAttributes(elementOptions, ptOptions)
+    const classes = mergeCssClasses([...(unstyled ? [] : elementClasses), elementPtAttributes.class, globalPtAttributes.class])
+    const styles = mergeCssStsyles([elementStyle, globalPtAttributes.style, elementPtAttributes.style])
+    const attributes: T = { ...globalPtAttributes, ...elementPtAttributes }
+
+    if (classes) attributes.class = classes
+    if (styles) attributes.style = styles
+
+    return attributes
 }
