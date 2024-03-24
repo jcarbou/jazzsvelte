@@ -7,22 +7,22 @@
  * @module tristatecheckbox
  *
  */
-import * as React from 'react';
-import { ComponentHooks } from '../componentbase/componentbase';
-import { PassThroughOptions } from '../passthrough';
-import { TooltipPassThroughOptions } from '../tooltip/tooltip';
-import { TooltipOptions } from '../tooltip/tooltipoptions';
-import { FormEvent } from '../ts-helpers';
-import { IconType, PassThroughType } from '../utils/utils';
+import * as React from 'react'
+import { ComponentHooks } from '../componentbase/componentbase'
+import { PassThroughOptions } from '../passthrough'
+import { TooltipPassThroughOptions } from '../tooltip/tooltip'
+import { TooltipOptions } from '../tooltip/tooltipOptions.types'
+import { FormEvent } from '../ts-helpers'
+import { IconType, PassThroughType } from '../utils/utils'
 
-export declare type TriStateCheckboxPassThroughType<T> = PassThroughType<T, TriStateCheckboxPassThroughMethodOptions>;
+export declare type TriStateCheckboxPassThroughType<T> = PassThroughType<T, TriStateCheckboxPassThroughMethodOptions>
 
 /**
  * Custom passthrough(pt) option method.
  */
 export interface TriStateCheckboxPassThroughMethodOptions {
-    props: TriStateCheckboxProps;
-    state: TriStateCheckboxState;
+    props: TriStateCheckboxProps
+    state: TriStateCheckboxState
 }
 
 /**
@@ -33,33 +33,33 @@ export interface TriStateCheckboxPassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: TriStateCheckboxPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    root?: TriStateCheckboxPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the checkbox box's DOM element.
      */
-    checkbox?: TriStateCheckboxPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    checkbox?: TriStateCheckboxPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes tooltip's DOM element.
      * @type {TooltipPassThroughOptions}
      */
-    tooltip?: TooltipPassThroughOptions;
+    tooltip?: TooltipPassThroughOptions
     /**
      * Uses to pass attributes to the check icon's DOM element.
      */
-    checkIcon?: TriStateCheckboxPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>;
+    checkIcon?: TriStateCheckboxPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>
     /**
      * Uses to pass attributes to the uncheck icon's DOM element.
      */
-    uncheckIcon?: TriStateCheckboxPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>;
+    uncheckIcon?: TriStateCheckboxPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>
     /**
      * Uses to pass attributes to the sr only aria's DOM element.
      */
-    srOnlyAria?: TriStateCheckboxPassThroughType<React.HTMLAttributes<HTMLSpanElement>>;
+    srOnlyAria?: TriStateCheckboxPassThroughType<React.HTMLAttributes<HTMLSpanElement>>
     /**
      * Used to manage all lifecycle hooks
      * @see {@link ComponentHooks}
      */
-    hooks?: ComponentHooks;
+    hooks?: ComponentHooks
 }
 
 /**
@@ -69,7 +69,7 @@ export interface TriStateCheckboxState {
     /**
      * Focused state as a boolean.
      */
-    focused: boolean;
+    focused: boolean
 }
 
 /**
@@ -84,67 +84,71 @@ interface TriStateCheckboxChangeEvent extends FormEvent<boolean> {}
  * Defines valid properties in TriStateCheckbox component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group Properties
  */
-export interface TriStateCheckboxProps extends Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'onChange' | 'value' | 'ref'> {
+export interface TriStateCheckboxProps
+    extends Omit<
+        React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+        'onChange' | 'value' | 'ref'
+    > {
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @defaultValue false
      */
-    autoFocus?: boolean | undefined;
+    autoFocus?: boolean | undefined
     /**
      * Value of the TriStateCheckbox.
      */
-    value?: boolean | undefined | null;
+    value?: boolean | undefined | null
     /**
      * When present, it specifies that the element value cannot be altered.
      * @defaultValue false
      */
-    disabled?: boolean | undefined;
+    disabled?: boolean | undefined
     /**
      * When present, it specifies that the value cannot be changed.
      * @defaultValue false
      */
-    readOnly?: boolean | undefined;
+    readOnly?: boolean | undefined
     /**
      * Icon of the checkbox when checked.
      */
-    checkIcon?: IconType<TriStateCheckboxProps> | undefined;
+    checkIcon?: IconType<TriStateCheckboxProps> | undefined
     /**
      * Icon of the checkbox when unchecked.
      */
-    uncheckIcon?: IconType<TriStateCheckboxProps> | undefined;
+    uncheckIcon?: IconType<TriStateCheckboxProps> | undefined
     /**
      * Content of the tooltip.
      */
-    tooltip?: string | undefined;
+    tooltip?: string | undefined
     /**
      * Configuration of the tooltip, refer to the tooltip documentation for more information.
      */
-    tooltipOptions?: TooltipOptions | undefined;
+    tooltipOptions?: TooltipOptions | undefined
     /**
      * Callback to invoke on value change
      * @param {TriStateCheckboxChangeEvent} event - Browser event.
      */
-    onChange?(event: TriStateCheckboxChangeEvent): void;
+    onChange?(event: TriStateCheckboxChangeEvent): void
     /**
      * Used to get the child elements of the component.
      * @readonly
      */
-    children?: React.ReactNode | undefined;
+    children?: React.ReactNode | undefined
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {TriStateCheckboxPassThroughOptions}
      */
-    pt?: TriStateCheckboxPassThroughOptions;
+    pt?: TriStateCheckboxPassThroughOptions
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions;
+    ptOptions?: PassThroughOptions
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
      */
-    unstyled?: boolean;
+    unstyled?: boolean
 }
 
 /**
@@ -162,10 +166,10 @@ export declare class TriStateCheckbox extends React.Component<TriStateCheckboxPr
     /**
      * Used to focus the component.
      */
-    public focus(): void;
+    public focus(): void
     /**
      * Used to get container element.
      * @return {HTMLDivElement} Container element
      */
-    public getElement(): HTMLDivElement;
+    public getElement(): HTMLDivElement
 }

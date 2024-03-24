@@ -4,17 +4,17 @@
     import DocSectionNav from './DocSectionNav.svelte'
     import DocSections from './DocSections.svelte'
 
-    export let className: string
+    export let className: string = ''
     export let title: string
     export let description: string
-    export let hideTabMenu: boolean
+    export let hideTabMenu: boolean = false
     export let header: string
-    export let themingDocs: Doc[]
-    export let apiDocs: Doc[]
-    export let apiExclude: boolean
-    export let ptDescription: string
-    export let ptDocs: Doc[]
-    export let componentDocs: Doc[]
+    export let themingDocs: Doc[] = []
+    export let apiDocs: string[]
+    export let apiExclude: { [key: string]: string } | null = null
+    export let ptDescription: string | null = null
+    export let ptDocs: Doc[] | null = null
+    export let componentDocs: Doc[] = []
 
     let tab: number = 0
     let mainTitle = ''
@@ -73,7 +73,7 @@
         {:else if tab === 1}
             <div class="doc-tabpanel">
                 {#if apiDocs}
-                    <DocApiSection {header} doc={apiDocs} {apiExclude} />
+                    <DocApiSection {header} docNames={apiDocs} exclude={apiExclude} />
                 {:else}
                     <div class="doc-main">
                         <div class="doc-intro">
@@ -113,6 +113,24 @@
 </div>
 
 <style lang="scss">
+    .doc-tabpanel {
+        display: flex;
+    }
+    .doc-main {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0;
+        min-width: 0;
+    }
+    .doc-intro {
+        margin-bottom: 1.5rem;
+
+        :global(p) {
+            font-size: 1.125rem;
+            color: var(--surface-900);
+            margin: 0;
+        }
+    }
     .doc-tabmenu {
         list-style: none;
         margin: 0;

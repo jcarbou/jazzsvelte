@@ -1,19 +1,11 @@
-/**
- *
- * Tooltip functionality is integrated within various JazzSvelte components.
- *
- * [Live Demo](https://www.primereact.org/tooltip/)
- *
- * @module tooltip
- *
- */
-import { SvelteComponent } from 'svelte'
-import { ComponentLifecycle } from '../componentbase/componentbase'
-import { PassThroughOptions } from '../passthrough'
-import { PassThroughType } from '../utils/utils'
-import { TooltipEvent, TooltipOptions } from './tooltipoptions'
+import type { HTMLAttributes } from 'svelte/elements'
+import type { PassThroughOptions, PassThroughType } from '../utils/utils.types'
+import type { TooltipEvent, TooltipOptions } from './tooltipOptions.types'
+import type { SvelteComponent } from 'svelte'
 
 export declare type TooltipPassThroughType<T> = PassThroughType<T, TooltipPassThroughMethodOptions>
+
+export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'mouse' | null
 
 /**
  * Custom passthrough(pt) option method.
@@ -41,11 +33,6 @@ export interface TooltipPassThroughOptions {
      * Uses to pass attributes to the text's DOM element.
      */
     text?: TooltipPassThroughType<HTMLAttributes<HTMLLIElement>>
-    /**
-     * Used to manage all lifecycle hooks
-     * @see {@link ComponentHooks}
-     */
-    lifecycle?: ComponentLifecycle
 }
 
 /**

@@ -31,24 +31,28 @@
                                     <br />
                                 </div>
                             {/each}
-                        {:else if key === 'default'}
+                        {:else if key === 'default' && typeof value === 'string'}
                             <div class="doc-option-default" class:doc-option-dark={$darkMode} class:doc-option-light={!$darkMode}>
                                 {#if !isEmpty(value)}
-                                    <DocApiTableContext value={'' + value} deprecated={item['deprecated']} />
+                                    <DocApiTableContext {value} deprecated={item['deprecated']} />
                                 {/if}
                             </div>
-                        {:else if key === 'type'}
+                        {:else if key === 'type' && typeof value === 'string'}
                             <span class="doc-option-type">
-                                <DocApiTableContext value={'' + value} deprecated={item['deprecated']} />
+                                <DocApiTableContext {value} deprecated={item['deprecated']} />
                             </span>
-                        {:else if key === 'returnType'}
-                            <div class="doc-option-returnType" class:doc-option-dark={$darkMode} class:doc-option-light={!$darkMode}>
-                                <DocApiTableContext value={'' + value} deprecated={item['deprecated']} />
+                        {:else if key === 'returnType' && typeof value === 'string'}
+                            <div
+                                class="doc-option-returnType"
+                                class:doc-option-dark={$darkMode}
+                                class:doc-option-light={!$darkMode}
+                            >
+                                <DocApiTableContext {value} deprecated={item['deprecated']} />
                             </div>
                         {:else if key === 'description' || key === 'values'}
                             <span class="doc-option-description">{value}</span>
-                        {:else}
-                            <DocApiTableContext value={'' + value} isLinkableOption={key === 'name'} deprecated={item['deprecated']} />
+                        {:else if typeof value === 'string'}
+                            <DocApiTableContext {value} isLinkableOption={key === 'name'} deprecated={item['deprecated']} />
                         {/if}
                     </td>
                 {/if}
@@ -56,3 +60,143 @@
         </tr>
     {/if}
 {/each}
+
+<style lang="scss">
+    .doc-option-type {
+        font-family:
+            ui-monospace,
+            SFMono-Regular,
+            'SF Mono',
+            Menlo,
+            Consolas,
+            Liberation Mono,
+            monospace;
+        color: var(--primary-500);
+        font-weight: 500;
+
+        .doc-option-type-options-container {
+            display: flex;
+            align-items: center;
+        }
+
+        span.doc-option-type-options {
+            color: var(--primary-700);
+        }
+
+        &.doc-option-link {
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    :global(.doc-option-name),
+    td > i:not(.pi) {
+        font-family:
+            ui-monospace,
+            SFMono-Regular,
+            'SF Mono',
+            Menlo,
+            Consolas,
+            Liberation Mono,
+            monospace;
+        position: relative;
+        scroll-margin-top: 6.5rem;
+        background-color: var(--doc-highlight-text-bg);
+        color: var(--doc-highlight-text-color);
+        border-radius: 6px;
+        padding: 2px 6px;
+        font-weight: 600;
+        font-style: normal;
+        white-space: nowrap;
+
+        :global(.doc-option-link) {
+            position: absolute;
+            top: 0;
+            right: -1.5rem;
+            color: var(--primary-color);
+            opacity: 0.7;
+            display: none;
+            transition:
+                opacity 0.3s,
+                colors 0.3s;
+        }
+    }
+
+    td:hover {
+        :global(.doc-option-name) {
+            :global(.doc-option-link) {
+                display: inline;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .doc-option-default,
+    .doc-option-returnType {
+        font-family:
+            ui-monospace,
+            SFMono-Regular,
+            'SF Mono',
+            Menlo,
+            Consolas,
+            Liberation Mono,
+            monospace;
+        font-weight: 400;
+        font-style: normal;
+        display: flex;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 6px;
+        padding: 2px 6px;
+        max-width: min-content;
+    }
+
+    .doc-option-parameter-name {
+        font-family:
+            ui-monospace,
+            SFMono-Regular,
+            'SF Mono',
+            Menlo,
+            Consolas,
+            Liberation Mono,
+            monospace;
+        color: var(--primary-700);
+    }
+
+    .doc-option-parameter-type {
+        font-family:
+            ui-monospace,
+            SFMono-Regular,
+            'SF Mono',
+            Menlo,
+            Consolas,
+            Liberation Mono,
+            monospace;
+        color: var(--primary-500);
+    }
+
+    .doc-option-params {
+        font-family:
+            ui-monospace,
+            SFMono-Regular,
+            'SF Mono',
+            Menlo,
+            Consolas,
+            Liberation Mono,
+            monospace;
+    }
+
+    .doc-option-light {
+        background: var(--bluegray-50);
+        border-color: var(--bluegray-100);
+    }
+
+    .doc-option-dark {
+        background: var(--bluegray-800);
+        border-color: var(--bluegray-800);
+    }
+</style>

@@ -1,4 +1,9 @@
 import fs from "fs"
+import util from "util"
+import child_process from 'child_process'
+const exec = util.promisify(child_process.exec);
+
+const CUSTOM_PAGES = ['ripple']
 
 const IMPORT_DOC_COMMON_REG_EXP = /import \{\s*(\w*)\s*\}.*@\/components\/doc\/common.*/gm
 const IMPORT2_DOC_COMMON_REG_EXP = /import\s*(\w*)\s*.*@\/components\/doc\/common.*/gm
@@ -26,7 +31,7 @@ const CMP_DOC_MIGRATE = [
     [/\s*<DocSectionText\s*\{...props\}\s*>/gm, '\n<DocSectionText docSection={docSection}>'],
     [/\s*<DocSectionText\s*id="(\w*)"\s*label="(\w*)"\s*>/gm, 
     "\n<DocSectionText docSection={{id:'$1', label:'$2'}}>"],
-    [/<Link\s*href="\/(\w*)"\s*>([\w\s]*)<\/Link>/gm, '<a href="/$1">$2</a>'],
+    [/<Link\s*href="\/([\w\/#]*)"\s*>([\w\s]*)<\/Link>/gm, '<a href="/$1">$2</a>'],
     [/(<DocSectionCode.*) import /gm, '$1 toImport ']
 ]
 
@@ -57,6 +62,14 @@ function cmpDocExportPatch(content) {
     export let docSection: DocSection
 </script>`)
 }
+
+function importCmpDocPatch (content) {
+    const importCmpDocThemingRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmp}\\/theming.*`, 'gm')
+    const importCmpDocRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmp}.*`, 'gm')
+    content = content.replace(importCmpDocThemingRegExp,`    import $1 from '$lib/doc/${cmp}/theming/$1.svelte'`)
+    return content.replace(importCmpDocRegExp,`    import $1 from '$lib/doc/${cmp}/$1.svelte'`)
+}
+
 
 function moveCode(content) {
     const hasCode = content.indexOf('const code = {') > 0
@@ -91,29 +104,33 @@ function withFileContent(filePath,patchList) {
 }
 
 
+async function format(path) {
+    const { stdout, stderr } = await exec(`pnpx prettier --write '${path}/**/*.{svelte,ts,js}'`);
+    console.log('stdout:', stdout)
+    console.log('stderr:', stderr)
+    //console.log(`prettier --check ${path} && eslint ${path}`);
+}
+
 const [cmd, migateFile, cmp] = process.argv
 const newPage = `src/routes/${cmp}`
 const newDoc = `src/lib/doc/${cmp}`
 
 // Migrate page
-const newPagePath = `${newPage}/page.svelte`
-fs.cpSync(`_pr_pages/${cmp}`, newPage, {recursive: true})
-fs.renameSync(`${newPage}/index.js`, newPagePath)
-const importCmpDocRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmp}.*`, 'gm')
-function importCmpDocPatch(content)  {
-    return content.replace(importCmpDocRegExp,`    import $1 from '$lib/doc/${cmp}/$1.svelte'`)
+const newPagePath = `${newPage}/+page.svelte`
+if (CUSTOM_PAGES[cmp]) {
+    fs.cpSync(`_pr_pages/${cmp}`, newPage, {recursive: true})
+    fs.renameSync(`${newPage}/index.js`, newPagePath)
+    withFileContent(newPagePath, [regexpPatch, importCmpDocPatch, jsonStyleToString, lastPatch])
+    fs.writeFileSync(`${newPage}/+page.ts` ,`import { dev } from '$app/environment';
+
+    // we don't need any JS on this page, though we'll load
+    // it in dev so that we get hot module replacement
+    export const csr = dev;
+
+    // since there's no dynamic data here, we can prerender
+    // it so that it gets served as a static asset in production
+    export const prerender = true;`)
 }
-withFileContent(newPagePath, [regexpPatch, importCmpDocPatch, jsonStyleToString, lastPatch])
-fs.writeFileSync(`${newPage}/+page.ts` ,`import { dev } from '$app/environment';
-
-// we don't need any JS on this page, though we'll load
-// it in dev so that we get hot module replacement
-export const csr = dev;
-
-// since there's no dynamic data here, we can prerender
-// it so that it gets served as a static asset in production
-export const prerender = true;`)
-
 
 // Migrate page components
 function renameDocFiles(dirPath) {
@@ -141,3 +158,6 @@ function renameDocFiles(dirPath) {
 fs.rmSync(newDoc, { recursive: true, force: true })
 fs.cpSync(`_pr_components/doc/${cmp}`, newDoc, {recursive: true})
 renameDocFiles(newDoc)
+
+format(newPage)
+format(newDoc)

@@ -5,7 +5,7 @@
 
     export let docNames: string[]
     export let header: any
-    export let exclude: { [key: string]: string }
+    export let exclude: { [key: string]: string } | null = null
 
     $: docs = buildApiDocs(docNames, exclude)
 </script>
@@ -18,3 +18,15 @@
     <DocSections {docs} />
 </div>
 <DocSectionNav {docs} />
+
+<style lang="scss">
+    .doc-intro {
+        margin-bottom: 1.5rem;
+
+        :global(p) {
+            font-size: 1.125rem;
+            color: var(--surface-900);
+            margin: 0;
+        }
+    }
+</style>

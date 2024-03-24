@@ -44,9 +44,8 @@
         width: 14rem;
         max-height: calc(100vh - 15rem);
         list-style: none;
-        margin: 0;
+        margin: 0 0 0 4rem;
         padding: 0.25rem 0;
-        margin-left: 4rem;
         overflow-y: auto;
         overflow-x: hidden;
         align-self: flex-start;

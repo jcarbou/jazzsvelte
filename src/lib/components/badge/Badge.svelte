@@ -10,6 +10,7 @@
     } from './badge.types'
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { resolvePT } from '../utils/ptUtils'
+    import type { CssStyle } from '../utils/cssStyles'
 
     export let value: BadgeValue = null
     export let severity: BadgeSeverity = null
@@ -17,7 +18,7 @@
     export let pt: BadgePassThroughOptions | null = null
     export let ptOptions: BadgePassThroughMethodOptions | null = null
     export let unstyled: boolean = false
-    export let style: string | null = null
+    export let style: CssStyle = null
 
     let rootAttributes: RootHTMLAttributes = {}
 

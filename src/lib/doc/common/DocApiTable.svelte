@@ -4,6 +4,7 @@
     import { isNotEmpty } from '$lib/components/utils/ObjectUtils'
     import DocSectionText from './DocSectionText.svelte'
     import DocApiTableBody from './DocApiTableBody.svelte'
+    import DocTableWrapper from './DocTableWrapper.svelte'
 
     export let apiData: DocApiData
 
@@ -28,26 +29,40 @@
     <DocSectionText {docSection}>
         <p>{apiData.description}</p>
     </DocSectionText>
-    <div class="doc-tablewrapper">
-        <table class="doc-table">
-            <thead>
-                <tr>
-                    {#if isPT}
-                        {#each headers as header, index (index)}
-                            <th>{header}</th>
-                        {/each}
-                    {:else}
-                        {#each headers as header, index (index)}
-                            {#if header !== 'readonly' && header !== 'optional' && header !== 'deprecated'}
-                                <th>{header}</th>
-                            {/if}
-                        {/each}
+    <DocTableWrapper>
+        <tr slot="thead">
+            {#if isPT}
+                {#each headers as header, index (index)}
+                    <th>{header}</th>
+                {/each}
+            {:else}
+                {#each headers as header, index (index)}
+                    {#if header !== 'readonly' && header !== 'optional' && header !== 'deprecated'}
+                        <th>{header}</th>
                     {/if}
-                </tr>
-            </thead>
-            <tbody>
-                <DocApiTableBody />
-            </tbody>
-        </table>
-    </div>
+                {/each}
+            {/if}
+        </tr>
+        <DocApiTableBody slot="tbody" />
+    </DocTableWrapper>
 {/if}
+
+<style lang="scss">
+    .doc-tablewrapper {
+        overflow: auto;
+    }
+
+    .doc-table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 960px;
+        margin-bottom: 1.5rem;
+
+        th {
+            border-bottom: 1px solid var(--surface-border);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            text-transform: capitalize;
+        }
+    }
+</style>

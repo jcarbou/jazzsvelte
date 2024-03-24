@@ -3,7 +3,7 @@ import type { ClassNameEntry, PassThroughType, PassThroughTypeFunction } from '.
 import JAZZ_SVELTE from '../api/JazzSvelte'
 import { mergeCssClasses } from './ClassNames'
 import type { PassThroughMethodOptions, PtHTMLAttr } from './ptUtils.types'
-import { mergeCssStsyles } from './cssStyles'
+import { mergeCssStsyles, type CssStyle } from './cssStyles'
 
 type Options<T, M> = PassThroughType<T, M> | undefined
 
@@ -28,7 +28,7 @@ function ptToAttributes<T extends PtHTMLAttr, M, CP>(options: Options<T, M>, ptO
 
 export function resolvePT<T extends PtHTMLAttr, M, CP>(
     elementClasses: ClassNameEntry[],
-    elementStyle: string | null,
+    elementStyle: CssStyle,
     elementOptions: Options<T, M>,
     globalOptions: Options<T, M>,
     ptOptions: PassThroughMethodOptions<CP> | null,

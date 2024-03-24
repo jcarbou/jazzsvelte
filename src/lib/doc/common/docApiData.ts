@@ -33,12 +33,12 @@ function addToChildDoc(cmpContext: ComponentContext, childDoc: Doc[], componentN
     typesDoc && childDoc.push(typesDoc)
 }
 
-export function buildApiDocs(apiDocNames: string[], exclude: { [key: string]: string }) {
+export function buildApiDocs(apiDocNames: string[], exclude: { [key: string]: string } | null) {
     const data: Doc[] = []
 
     for (const name of apiDocNames) {
         buildApiDocItem({
-            isExcluded: (option, key) => exclude?.[option]?.includes(key),
+            isExcluded: (option, key) => !!exclude?.[option]?.includes(key),
             isExcludedAll: (option) => exclude?.[option] === 'excludeAll',
             data,
             name
@@ -195,7 +195,10 @@ function buildApiInterfaces(context: SubComponentContext, addPropsAndCallBack: b
 
         if (isExcluded('interfaces', interfaceKey)) return null
 
-        const description = interfaceValue.description + ' ' + (interfaceValue.extendedTypes ? `Extends <i>${interfaceValue.extendedTypes}</i>.` : '')
+        const description =
+            interfaceValue.description +
+            ' ' +
+            (interfaceValue.extendedTypes ? `Extends <i>${interfaceValue.extendedTypes}</i>.` : '')
 
         const childDoc: Doc = {
             id,

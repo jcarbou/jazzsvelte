@@ -11,7 +11,7 @@ import { SvelteComponent } from 'svelte'
 import { ComponentLifecycle } from '../componentbase/componentbase'
 import { PassThroughOptions } from '../passthrough'
 import { TooltipPassThroughOptions } from '../tooltip/tooltip'
-import { TooltipOptions } from '../tooltip/tooltipoptions'
+import { TooltipOptions } from '../tooltip/tooltipOptions.types'
 import { IconType, PassThroughType } from '../utils'
 
 export declare type ButtonPassThroughType<T> = PassThroughType<T, ButtonPassThroughMethodOptions>
@@ -76,7 +76,8 @@ export interface ButtonContext {
  * Defines valid properties in Button component. In addition to these, all properties of HTMLButtonElement can be used in this component.
  * @group Properties
  */
-export interface ButtonProps extends Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'disabled' | 'ref'> {
+export interface ButtonProps
+    extends Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'disabled' | 'ref'> {
     /**
      * Value of the badge.
      */

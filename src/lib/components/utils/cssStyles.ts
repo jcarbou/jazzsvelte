@@ -1,6 +1,7 @@
 type CssObject = { [key: string]: string }
+export type CssStyle = string | CssObject | null
 
-export function mergeCssStsyles(styles: (string | CssObject | null | undefined)[]) {
+export function mergeCssStsyles(styles: (CssStyle | undefined)[]) {
     const cssObject = {}
     for (const style of styles) {
         if (!style) continue

@@ -7,23 +7,23 @@
  * @module chips
  *
  */
-import * as React from 'react';
-import { ComponentHooks } from '../componentbase/componentbase';
-import { KeyFilterType } from '../keyfilter';
-import { PassThroughOptions } from '../passthrough';
-import { TooltipPassThroughOptions } from '../tooltip/tooltip';
-import { TooltipOptions } from '../tooltip/tooltipoptions';
-import { FormEvent } from '../ts-helpers';
-import { IconType, PassThroughType } from '../utils/utils';
+import * as React from 'react'
+import { ComponentHooks } from '../componentbase/componentbase'
+import { KeyFilterType } from '../keyfilter'
+import { PassThroughOptions } from '../passthrough'
+import { TooltipPassThroughOptions } from '../tooltip/tooltip'
+import { TooltipOptions } from '../tooltip/tooltipOptions.types'
+import { FormEvent } from '../ts-helpers'
+import { IconType, PassThroughType } from '../utils/utils'
 
-export declare type ChipsPassThroughType<T> = PassThroughType<T, ChipsPassThroughMethodOptions>;
+export declare type ChipsPassThroughType<T> = PassThroughType<T, ChipsPassThroughMethodOptions>
 
 /**
  * Custom passthrough(pt) option method.
  */
 export interface ChipsPassThroughMethodOptions {
-    props: ChipsProps;
-    state: ChipsState;
+    props: ChipsProps
+    state: ChipsState
 }
 
 /**
@@ -34,41 +34,41 @@ export interface ChipsPassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: ChipsPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    root?: ChipsPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the container's DOM element.
      */
-    container?: ChipsPassThroughType<React.HTMLAttributes<HTMLUListElement>>;
+    container?: ChipsPassThroughType<React.HTMLAttributes<HTMLUListElement>>
     /**
      * Uses to pass attributes to the token's DOM element.
      */
-    token?: ChipsPassThroughType<React.HTMLAttributes<HTMLLIElement>>;
+    token?: ChipsPassThroughType<React.HTMLAttributes<HTMLLIElement>>
     /**
      * Uses to pass attributes to the label's DOM element.
      */
-    label?: ChipsPassThroughType<React.HTMLAttributes<HTMLSpanElement>>;
+    label?: ChipsPassThroughType<React.HTMLAttributes<HTMLSpanElement>>
     /**
      * Uses to pass attributes to the remove token icon's DOM element.
      */
-    removeTokenIcon?: ChipsPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>;
+    removeTokenIcon?: ChipsPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>
     /**
      * Uses to pass attributes to the input token's DOM element.
      */
-    inputToken?: ChipsPassThroughType<React.HTMLAttributes<HTMLLIElement>>;
+    inputToken?: ChipsPassThroughType<React.HTMLAttributes<HTMLLIElement>>
     /**
      * Uses to pass attributes to the input's DOM element.
      */
-    input?: ChipsPassThroughType<React.HTMLAttributes<HTMLInputElement>>;
+    input?: ChipsPassThroughType<React.HTMLAttributes<HTMLInputElement>>
     /**
      * Uses to pass attributes tooltip's DOM element.
      * @type {TooltipPassThroughOptions}
      */
-    tooltip?: TooltipPassThroughOptions;
+    tooltip?: TooltipPassThroughOptions
     /**
      * Used to manage all lifecycle hooks
      * @see {@link ComponentHooks}
      */
-    hooks?: ComponentHooks;
+    hooks?: ComponentHooks
 }
 
 /**
@@ -79,7 +79,7 @@ export interface ChipsState {
      * Current focused state as a boolean.
      * @defaultValue false
      */
-    focused: boolean;
+    focused: boolean
 }
 
 /**
@@ -90,16 +90,16 @@ interface ChipsRemovableOptions {
     /**
      * Current value
      */
-    value: string;
+    value: string
     /**
      * Current index
      */
-    index: number;
+    index: number
     /**
      * Props of Chips component
      * @type {ChipsProps}
      */
-    props: ChipsProps;
+    props: ChipsProps
 }
 
 /**
@@ -109,11 +109,11 @@ interface ChipsAddEvent {
     /**
      * Browser event
      */
-    originalEvent: React.SyntheticEvent;
+    originalEvent: React.SyntheticEvent
     /**
      * Added item value
      */
-    value: string;
+    value: string
 }
 
 /**
@@ -124,11 +124,11 @@ interface ChipsRemoveEvent {
     /**
      * Browser event
      */
-    originalEvent: React.SyntheticEvent;
+    originalEvent: React.SyntheticEvent
     /**
      * Removed item value
      */
-    value: string;
+    value: string
 }
 
 /**
@@ -143,142 +143,146 @@ interface ChipsChangeEvent extends FormEvent<string[]> {}
  * Defines valid properties in Chips component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group Properties
  */
-export interface ChipsProps extends Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'ref'> {
+export interface ChipsProps
+    extends Omit<
+        React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+        'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'ref'
+    > {
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @defaultValue false
      */
-    autoFocus?: boolean | undefined;
+    autoFocus?: boolean | undefined
     /**
      * Reference of the input element.
      */
-    inputRef?: React.Ref<HTMLInputElement> | undefined;
+    inputRef?: React.Ref<HTMLInputElement> | undefined
     /**
      * Identifier of the input element.
      */
-    inputId?: string | undefined;
+    inputId?: string | undefined
     /**
      * Name of the input field.
      */
-    name?: string | undefined;
+    name?: string | undefined
     /**
      * Advisory information to display on input.
      */
-    placeholder?: string | undefined;
+    placeholder?: string | undefined
     /**
      * Value of the component.
      */
-    value?: string[] | undefined;
+    value?: string[] | undefined
     /**
      * Maximum number of entries allowed.
      */
-    max?: number | undefined;
+    max?: number | undefined
     /**
      * When present, it specifies that the element should be disabled.
      * @defaultValue false
      */
-    disabled?: boolean | undefined;
+    disabled?: boolean | undefined
     /**
      * When present, it specifies that the element should be read-only.
      * @defaultValue false
      */
-    readOnly?: boolean | undefined;
+    readOnly?: boolean | undefined
     /**
      * Whether an item is removable.
      * @defaultValue true
      */
-    removable?: boolean | ((options: ChipsRemovableOptions) => boolean);
+    removable?: boolean | ((options: ChipsRemovableOptions) => boolean)
     /**
      * Icon of the remove element.
      */
-    removeIcon?: IconType<ChipsProps> | undefined;
+    removeIcon?: IconType<ChipsProps> | undefined
     /**
      * Content of the tooltip.
      */
-    tooltip?: string | undefined;
+    tooltip?: string | undefined
     /**
      * Configuration of the tooltip, refer to the tooltip documentation for more information.
      * @type {TooltipOptions}
      */
-    tooltipOptions?: TooltipOptions | undefined;
+    tooltipOptions?: TooltipOptions | undefined
     /**
      * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
      */
-    ariaLabelledBy?: string | undefined;
+    ariaLabelledBy?: string | undefined
     /**
      * Separator char to add an item when pressed in addition to the enter key. Currently only possible value is ','.
      */
-    separator?: string | undefined;
+    separator?: string | undefined
     /**
      * Whether to allow duplicate values or not.
      * @defaultValue true
      */
-    allowDuplicate?: boolean;
+    allowDuplicate?: boolean
     /**
      * Format definition of the keys to block.
      * @type {KeyFilterType}
      */
-    keyfilter?: KeyFilterType | undefined;
+    keyfilter?: KeyFilterType | undefined
     /**
      * Whether to add an item when the input loses focus.
      * @defaultValue false
      */
-    addOnBlur?: boolean | undefined;
+    addOnBlur?: boolean | undefined
     /**
      * The template of each item
      * @param {*} item - Current item
      */
-    itemTemplate?(item: any): React.ReactNode;
+    itemTemplate?(item: any): React.ReactNode
     /**
      * Callback to invoke when a chip is added. Return 'false' to prevent the item from being added.
      * @param {ChipsAddEvent} event - Custom add event
      */
-    onAdd?(event: ChipsAddEvent): void;
+    onAdd?(event: ChipsAddEvent): void
     /**
      * Callback to invoke when a chip is removed.
      * @param {ChipsRemoveEvent} event - Custom remove event
      */
-    onRemove?(event: ChipsRemoveEvent): void;
+    onRemove?(event: ChipsRemoveEvent): void
     /**
      * Callback to invoke when a chip is added or removed.
      * @param {ChipsChangeEvent} event - Custom change event
      */
-    onChange?(event: ChipsChangeEvent): void;
+    onChange?(event: ChipsChangeEvent): void
     /**
      * Callback to invoke when the component gets focus.
      * @param {React.FocusEvent<HTMLInputElement>} event - Browser event
      */
-    onFocus?(event: React.FocusEvent<HTMLInputElement>): void;
+    onFocus?(event: React.FocusEvent<HTMLInputElement>): void
     /**
      * Callback to invoke when the component loses focus.
      * @param {React.FocusEvent<HTMLInputElement>} event - Browser event
      */
-    onBlur?(event: React.FocusEvent<HTMLInputElement>): void;
+    onBlur?(event: React.FocusEvent<HTMLInputElement>): void
     /**
      * Callback to invoke when the key pressed.
      * @param {React.KeyboardEvent<HTMLInputElement>} event - Browser event
      */
-    onKeyDown?(event: React.KeyboardEvent<HTMLInputElement>): void;
+    onKeyDown?(event: React.KeyboardEvent<HTMLInputElement>): void
     /**
      * Used to get the child elements of the component.
      * @readonly
      */
-    children?: React.ReactNode | undefined;
+    children?: React.ReactNode | undefined
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ChipsPassThroughOptions}
      */
-    pt?: ChipsPassThroughOptions;
+    pt?: ChipsPassThroughOptions
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions;
+    ptOptions?: PassThroughOptions
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
      */
-    unstyled?: boolean;
+    unstyled?: boolean
 }
 
 /**
@@ -296,15 +300,15 @@ export declare class Chips extends React.Component<ChipsProps, any> {
     /**
      * Used to focus the component.
      */
-    public focus(): void;
+    public focus(): void
     /**
      * Used to get container element.
      * @return {HTMLDivElement} Container element
      */
-    public getElement(): HTMLDivElement;
+    public getElement(): HTMLDivElement
     /**
      * Used to get input element.
      * @return {HTMLInputElement} Input element
      */
-    public getInput(): HTMLInputElement;
+    public getInput(): HTMLInputElement
 }

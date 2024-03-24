@@ -5,14 +5,14 @@
  * @module tooltipoptions
  *
  */
-import { PassThroughOptions } from '../passthrough'
-import { TooltipPassThroughOptions } from './tooltip'
+import type { PassThroughOptions } from '../utils/utils.types'
+import type { TooltipPassThroughOptions } from './tooltip.types'
 
 /**
  * Custom tooltip event
  * @event
  */
-interface TooltipEvent {
+export interface TooltipEvent {
     /**
      * Browser event
      */
@@ -119,7 +119,7 @@ export interface TooltipOptions {
     /**
      * Style of the tooltip.
      */
-    style?: CSSProperties | undefined
+    style?: string | undefined
     /**
      * Delay to update the tooltip in milliseconds.
      * @defaultValue 0
@@ -161,7 +161,7 @@ export interface TooltipOptions {
  * @group Model
  */
 
-interface TooltipHTMLAttributes {
+export interface TooltipHTMLAttributes {
     /**
      * **JazzSvelte - TooltipHTMLAttributes**
      *
@@ -396,8 +396,4 @@ interface TooltipHTMLAttributes {
      * @defaultValue false
      */
     'data-pr-showondisabled'?: boolean | undefined
-}
-
-declare module 'react' {
-    export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T>, TooltipHTMLAttributes {}
 }

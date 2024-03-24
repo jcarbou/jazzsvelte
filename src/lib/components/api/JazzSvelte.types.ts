@@ -103,7 +103,7 @@ import type { BadgePassThroughOptions } from '../badge/badge.types'
 // import { ToastPassThroughOptions } from '../toast/toast'
 // import { ToggleButtonPassThroughOptions } from '../togglebutton/togglebutton'
 // import { ToolbarPassThroughOptions } from '../toolbar/toolbar'
-// import { TooltipPassThroughOptions } from '../tooltip/tooltip'
+import { TooltipPassThroughOptions } from '../tooltip/tooltip.types'
 // import { TreePassThroughOptions } from '../tree/tree'
 // import { TreeSelectPassThroughOptions } from '../treeselect/treeselect'
 // import { TreeTablePassThroughOptions } from '../treetable/treetable'
@@ -532,7 +532,7 @@ export interface JazzSveltePTOptions {
     // /**
     //  * Custom passthrough(pt) options for Tooltip.
     //  */
-    // tooltip?: TooltipPassThroughOptions
+    tooltip?: TooltipPassThroughOptions
     // /**
     //  * Custom passthrough(pt) options for Tree.
     //  */

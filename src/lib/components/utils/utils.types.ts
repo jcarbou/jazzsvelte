@@ -4,7 +4,7 @@ export type ClassNameEntry = null | undefined | string | number | string[] | { [
 
 export type PassThroughTypeFunction<T, O> = (options?: O) => T | void
 export type PassThroughType<T, O> = T | PassThroughTypeFunction<T, O> | string | null | undefined
-export type PassThroughHTMLAttributes<T> = T & {
+export type PassThroughHTMLAttributes<T> = Omit<T, 'style'> & {
     style?: string | { [key: string]: string }
 }
 

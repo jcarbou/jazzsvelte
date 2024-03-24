@@ -17,7 +17,7 @@ export function toDocSection(doc: Doc, level?: number): DocSection {
 }
 
 export function findActiveDoc(docs: Doc[], y: number): Doc | null {
-    if (!document) return null
+    if (typeof document === 'undefined') return null
     const topBar = document.getElementsByClassName('layout-topbar')?.[0]
     const headerHeight = topBar?.clientHeight | 0
     for (const doc of docs) {

@@ -27,7 +27,7 @@
     $: {
         val = value && value.includes('": "') ? value.replace(/['"]+/g, '').replace(/\.,/gm, '.') : value
         links = value.split('|').map((sValue, index) => {
-            const hasName = sValue.includes(name)
+            const hasName = !!(name && sValue.includes(name))
             if (hasName) {
                 const nameIndex = sValue.indexOf(name)
                 const key = sValue
@@ -64,7 +64,13 @@
         {:else}
             {i !== 0 ? '|' : ''}
             {#if isLinkableOption}
-                <span id={id + '.' + link.label} class="doc-option-name" class:line-through={!!deprecated} class:cursor-pointer={!!deprecated} title={deprecated}>
+                <span
+                    id={id + '.' + link.label}
+                    class="doc-option-name"
+                    class:line-through={!!deprecated}
+                    class:cursor-pointer={!!deprecated}
+                    title={deprecated}
+                >
                     {link.label}
                     <a href={pathname + `#${link.apiId}`} target="_self">
                         <a on:click={() => onClick(link.apiId)} class="doc-option-link">
@@ -78,7 +84,13 @@
         {/if}
     {/each}
 {:else if isLinkableOption}
-    <span id={id + '.' + val} class="doc-option-name" class:line-through={!!deprecated} class:cursor-pointer={!!deprecated} title={deprecated}>
+    <span
+        id={id + '.' + val}
+        class="doc-option-name"
+        class:line-through={!!deprecated}
+        class:cursor-pointer={!!deprecated}
+        title={deprecated}
+    >
         {val}
         <a href={pathname + `#${id + '.' + val}`} target="_self">
             <a on:click={() => onClick(id + '.' + val)} class="doc-option-link">
@@ -87,5 +99,5 @@
         </a>
     </span>
 {:else}
-    {{ val }}
+    {val}
 {/if}
