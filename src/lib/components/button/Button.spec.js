@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { snapshot } from '../../test';
 import { PrimeReactProvider } from '../api/Api';
-import { Button } from './Button';
+import { Button } from './Button.svelte';
 
 describe('Button', () => {
     snapshot(

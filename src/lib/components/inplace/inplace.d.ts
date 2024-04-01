@@ -13,20 +13,20 @@
  * @module inplace
  *
  */
-import * as React from 'react';
-import { ButtonPassThroughOptions } from '../button';
-import { ComponentHooks } from '../componentbase/componentbase';
-import { PassThroughOptions } from '../passthrough';
-import { IconType, PassThroughType } from '../utils/utils';
+import * as React from 'react'
+import { ButtonPassThroughOptions } from '../button/button.types'
+import { ComponentHooks } from '../componentbase/componentbase'
+import { PassThroughOptions } from '../passthrough'
+import { IconType, PassThroughType } from '../utils/utils'
 
-export declare type InplacePassThroughType<T> = PassThroughType<T, InplacePassThroughMethodOptions>;
+export declare type InplacePassThroughType<T> = PassThroughType<T, InplacePassThroughMethodOptions>
 
 /**
  * Custom passthrough(pt) option method.
  */
 export interface InplacePassThroughMethodOptions {
-    props: InplaceProps;
-    state: InplaceState;
+    props: InplaceProps
+    state: InplaceState
 }
 
 /**
@@ -37,25 +37,25 @@ export interface InplacePassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: InplacePassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    root?: InplacePassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the display's DOM element.
      */
-    display?: InplacePassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    display?: InplacePassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the content's DOM element.
      */
-    content?: InplacePassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    content?: InplacePassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the Button component.
      * @see {@link ButtonPassThroughOptions}
      */
-    closeButton?: ButtonPassThroughOptions;
+    closeButton?: ButtonPassThroughOptions
     /**
      * Used to manage all lifecycle hooks
      * @see {@link ComponentHooks}
      */
-    hooks?: ComponentHooks;
+    hooks?: ComponentHooks
 }
 
 /**
@@ -66,7 +66,7 @@ export interface InplaceState {
      * Current active state as a boolean.
      * @defaultValue false
      */
-    active: boolean;
+    active: boolean
 }
 
 /**
@@ -78,11 +78,11 @@ interface InplaceToggleEvent {
     /**
      * Browser event
      */
-    originalEvent: React.SyntheticEvent;
+    originalEvent: React.SyntheticEvent
     /**
      * Current value
      */
-    value: boolean;
+    value: boolean
 }
 
 /**
@@ -94,60 +94,60 @@ export interface InplaceProps extends Omit<React.DetailedHTMLProps<React.HTMLAtt
      * Whether the content is displayed or not.
      * @defaultValue false
      */
-    active?: boolean | undefined;
+    active?: boolean | undefined
     /**
      * Displays a button to switch back to display mode.
      * @defaultValue false
      */
-    closable?: boolean | undefined;
+    closable?: boolean | undefined
     /**
      * When present, it specifies that the element should be disabled.
      * @defaultValue false
      */
-    disabled?: boolean | undefined;
+    disabled?: boolean | undefined
     /**
      * Used to define a string that labels the component.
      */
-    ariaLabel?: string | undefined;
+    ariaLabel?: string | undefined
     /**
      * Icon of the close button.
      */
-    closeIcon?: IconType<InplaceProps> | undefined;
+    closeIcon?: IconType<InplaceProps> | undefined
     /**
      * Callback to invoke when inplace is opened.
      * @param {React.MouseEvent}  event - Browser event.
      */
-    onOpen?(event: React.MouseEvent<HTMLElement>): void;
+    onOpen?(event: React.MouseEvent<HTMLElement>): void
     /**
      * Callback to invoke when inplace is closed.
      * @param {React.MouseEvent}  event - Browser event.
      */
-    onClose?(event: React.MouseEvent<HTMLElement>): void;
+    onClose?(event: React.MouseEvent<HTMLElement>): void
     /**
      * Callback to invoke when inplace is opened or closed.
      * @param {InplaceToggleEvent}  event - Custom toggle event.
      */
-    onToggle?(event: InplaceToggleEvent): void;
+    onToggle?(event: InplaceToggleEvent): void
     /**
      * Used to get the child elements of the component.
      * @readonly
      */
-    children?: React.ReactNode | undefined;
+    children?: React.ReactNode | undefined
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {InplacePassThroughOptions}
      */
-    pt?: InplacePassThroughOptions;
+    pt?: InplacePassThroughOptions
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions;
+    ptOptions?: PassThroughOptions
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
      */
-    unstyled?: boolean;
+    unstyled?: boolean
 }
 
 /**
@@ -166,7 +166,7 @@ export declare class Inplace extends React.Component<InplaceProps, any> {
      * Used to get container element.
      * @return {HTMLDivElement} Container element
      */
-    public getElement(): HTMLDivElement;
+    public getElement(): HTMLDivElement
 }
 
 /**
@@ -177,7 +177,7 @@ export interface InplaceDisplayProps {
      * Used to get the child elements of the component.
      * @readonly
      */
-    children?: React.ReactNode | undefined;
+    children?: React.ReactNode | undefined
 }
 
 /**
@@ -188,7 +188,7 @@ export interface InplaceContentProps {
      * Used to get the child elements of the component.
      * @readonly
      */
-    children?: React.ReactNode | undefined;
+    children?: React.ReactNode | undefined
 }
 
 /**

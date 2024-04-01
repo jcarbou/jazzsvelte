@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type { HTMLAttributes, HTMLButtonAttributes, SVGAttributes } from 'svelte/elements'
+
 export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: boolean }
 
 export type PassThroughTypeFunction<T, O> = (options?: O) => T | void
@@ -25,3 +27,12 @@ export interface PassThroughOptions {
      */
     classNameMergeFunction?: (className1: string, className2: string) => string | undefined
 }
+
+/*export type HTMLButtonAttributes = HTMLAttributes<HTMLButtonElement>
+
+*/
+export type HTMLSpanAttributes = HTMLAttributes<HTMLSpanElement>
+export type HTMLSVGAttributes = SVGAttributes<SVGSVGElement> | HTMLAttributes<HTMLSpanElement | SVGSVGElement>
+
+export type PassThroughHTMLButtonAttributes = PassThroughHTMLAttributes<HTMLButtonAttributes>
+export type PassThroughHTMLSpanAttributes = PassThroughHTMLAttributes<HTMLSpanAttributes>

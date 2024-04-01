@@ -53,7 +53,7 @@ export * from './avatargroup/AvatarGroup';
 export * from './badge/Badge';
 export * from './blockui/BlockUI';
 export * from './breadcrumb/BreadCrumb';
-export * from './button/Button';
+export * from './button/Button.svelte';
 export * from './calendar/Calendar';
 export * from './card/Card';
 export * from './carousel/Carousel';

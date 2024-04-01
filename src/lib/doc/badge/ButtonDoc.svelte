@@ -5,7 +5,7 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
-    
+
     export let docSection: DocSection
 
     const code = {
@@ -51,22 +51,18 @@ import { Badge } from 'primereact/badge';
 
 
         `
-    };
-
+    }
 </script>
 
-<DocSectionText docSection={docSection}>
-                <p>Buttons have built-in support for badges to display a badge inline.</p>
-            </DocSectionText>
-            <div class="card flex flex-wrap justify-content-center gap-2">
-                <Button type="button" label="Emails">
-                    <Badge value="8"></Badge>
-                </Button>
-                <Button type="button" label="Messages" icon="pi pi-users" severity="secondary">
-                    <Badge value="8" severity="danger"></Badge>
-                </Button>
-            </div>
-            <DocSectionCode code={code} />
-
-
-
+<DocSectionText {docSection}>
+    <p>Buttons have built-in support for badges to display a badge inline.</p>
+</DocSectionText>
+<div class="card flex flex-wrap justify-content-center gap-2">
+    <Button type="button" label="Emails">
+        <Badge value="8"></Badge>
+    </Button>
+    <Button type="button" label="Messages" icon="pi pi-users" severity="secondary">
+        <Badge value="8" severity="danger"></Badge>
+    </Button>
+</div>
+<DocSectionCode {code} />

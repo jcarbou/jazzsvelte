@@ -76,9 +76,9 @@
         padding-top: 6.5rem;
     }
     .layout-content-slot {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
+        flex: 1 1 auto;
+        width: 1%;
+        padding-top: 0.5rem;
     }
     .layout-wrapper {
         background-color: var(--surface-ground);

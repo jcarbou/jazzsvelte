@@ -4,16 +4,15 @@
     import ButtonDoc from '$lib/doc/badge/ButtonDoc.svelte'
     import ImportDoc from '$lib/doc/badge/ImportDoc.svelte'
     import PositionDoc from '$lib/doc/badge/PositionDoc.svelte'
-    import PTDoc from '$lib/doc/badge/PTDoc.svelte'
-    import Wireframe from '$lib/doc/badge/Wireframe.svelte'
+    import PtDoc from '$lib/doc/badge/pt/PtDoc.svelte'
+    import Wireframe from '$lib/doc/badge/pt/Wireframe.svelte'
     import SeverityDoc from '$lib/doc/badge/SeverityDoc.svelte'
     import SizeDoc from '$lib/doc/badge/SizeDoc.svelte'
-    import StyledDoc from '$lib/doc/badge/StyledDoc.svelte'
-    import TailwindDoc from '$lib/doc/badge/TailwindDoc.svelte'
+    import StyledDoc from '$lib/doc/badge/theming/StyledDoc.svelte'
+    import TailwindDoc from '$lib/doc/badge/theming/TailwindDoc.svelte'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
 
-</script>
     const docs = [
         {
             id: 'import',
@@ -51,7 +50,7 @@
             label: 'Accessibility',
             component: AccessibilityDoc
         }
-    ];
+    ]
 
     const ptDocs = [
         {
@@ -67,9 +66,9 @@
         {
             id: 'pt.demo',
             label: 'Example',
-            component: PTDoc
+            component: PtDoc
         }
-    ];
+    ]
 
     const themingDocs = [
         {
@@ -89,7 +88,15 @@
                 }
             ]
         }
-    ];<DocComponent title="React Badge Component" header="Badge" description="Badge is a small status indicator for another element." componentDocs={docs} apiDocs={['Badge']} ptDocs={ptDocs} themingDocs={themingDocs} />;
+    ]
+</script>
 
-
-
+<DocComponent
+    title="React Badge Component"
+    header="Badge"
+    description="Badge is a small status indicator for another element."
+    componentDocs={docs}
+    apiDocs={['Badge']}
+    {ptDocs}
+    {themingDocs}
+/>;

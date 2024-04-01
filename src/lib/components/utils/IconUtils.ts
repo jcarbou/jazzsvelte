@@ -1,4 +1,4 @@
-/*import { classNames } from './ClassNames';
+import { classNames } from './ClassNames';
 import ObjectUtils from './ObjectUtils';
 
 export default class IconUtils {
@@ -24,4 +24,4 @@ export default class IconUtils {
 
         return content;
     }
-}*/
+}

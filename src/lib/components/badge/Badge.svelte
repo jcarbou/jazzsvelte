@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { isEmpty, isNotEmpty } from '../utils/Utils'
+    import type { CssStyle } from '../utils/cssStyles'
     import type {
         BadgePassThroughMethodOptions,
         BadgePassThroughOptions,
@@ -10,7 +10,7 @@
     } from './badge.types'
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { resolvePT } from '../utils/ptUtils'
-    import type { CssStyle } from '../utils/cssStyles'
+    import { isEmpty, isNotEmpty } from '../utils/Utils'
 
     export let value: BadgeValue = null
     export let severity: BadgeSeverity = null
@@ -22,9 +22,9 @@
 
     let rootAttributes: RootHTMLAttributes = {}
 
-    $: {
-        // "root" element
-        const rootClasses = [
+    // "root element"
+    $: rootAttributes = resolvePT(
+        [
             'p-badge p-component',
             {
                 'p-badge-no-gutter': isNotEmpty(value) && String(value).length === 1,
@@ -33,9 +33,13 @@
                 'p-badge-xl': size === 'xlarge',
                 [`p-badge-${severity}`]: severity !== null
             }
-        ]
-        rootAttributes = resolvePT(rootClasses, style, pt?.root, JAZZ_SVELTE.pt?.badge?.root, ptOptions, unstyled)
-    }
+        ],
+        style,
+        pt?.root,
+        JAZZ_SVELTE.pt?.badge?.root,
+        ptOptions,
+        unstyled
+    )
 </script>
 
 <span {...rootAttributes}>{value}</span>

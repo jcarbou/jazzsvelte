@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'svelte/elements'
-import type { PassThroughHTMLAttributes, PassThroughOptions, PassThroughType } from '../utils/utils.types'
+import type { HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughOptions, PassThroughType } from '../utils/utils.types'
 
 /**
  * Defines valid properties in Ripple component.
@@ -30,9 +30,9 @@ export interface RipplePassThroughMethodOptions {
     props: RippleProps
 }
 
-export declare type RipplePassThroughType<T> = PassThroughType<T, RipplePassThroughMethodOptions>
+export declare type RipplePassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, RipplePassThroughMethodOptions>
 
-export type RootHTMLAttributes = HTMLAttributes<HTMLSpanElement>
+export type RootHTMLAttributes = HTMLSpanAttributes
 
 /**
  * Custom passthrough(pt) options.
@@ -42,5 +42,5 @@ export interface RipplePassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: RipplePassThroughType<PassThroughHTMLAttributes<RootHTMLAttributes>>
+    root?: RipplePassThroughType<RootHTMLAttributes>
 }

@@ -40,7 +40,12 @@ export function resolvePT<T extends PtHTMLAttr, M, CP>(
     const elementPtAttributes = ptToAttributes(elementOptions, ptOptions)
     const classes = mergeCssClasses([...(unstyled ? [] : elementClasses), elementPtAttributes.class, globalPtAttributes.class])
     const styles = mergeCssStsyles([elementStyle, globalPtAttributes.style, elementPtAttributes.style])
-    const attributes: T = { ...globalPtAttributes, ...elementPtAttributes }
+    const attributes: Omit<T, 'style'> & { style?: string } = {
+        ...globalPtAttributes,
+        ...elementPtAttributes,
+        classes: undefined,
+        style: undefined
+    }
 
     if (classes) attributes.class = classes
     if (styles) attributes.style = styles

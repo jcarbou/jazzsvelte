@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PrimeReact, { FilterMatchMode, FilterOperator, PrimeReactContext, localeOption } from '../api/Api';
-import { Button } from '../button/Button';
+import { Button } from '../button/Button.svelte';
 import { ColumnBase } from '../column/ColumnBase';
 import { CSSTransition } from '../csstransition/CSSTransition';
 import { Dropdown } from '../dropdown/Dropdown';

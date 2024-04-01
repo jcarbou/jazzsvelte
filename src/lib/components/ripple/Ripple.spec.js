@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { userAgent } from '../../test';
 import { PrimeReactProvider } from '../api/Api';
-import { Button } from '../button/Button';
+import { Button } from '../button/Button.svelte';
 
 describe('Ripple', () => {
     test('when Ripple is enabled, button should have ripple effect on desktop device', async () => {

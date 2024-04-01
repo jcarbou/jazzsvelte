@@ -20,6 +20,12 @@
 <DocSectionNav {docs} />
 
 <style lang="scss">
+    .doc-main {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0;
+        min-width: 0;
+    }
     .doc-intro {
         margin-bottom: 1.5rem;
 

@@ -4,6 +4,9 @@ import child_process from 'child_process'
 const exec = util.promisify(child_process.exec);
 
 const CUSTOM_PAGES = ['ripple']
+const CUSTOM_DOC_CMP = [{_cmp: 'button', _fileName:'LoadingDoc.svelte', _jsFileName:'loadingdoc.js'}]
+
+const FIX_FILENAME_CASE_ERRROR = {}
 
 const IMPORT_DOC_COMMON_REG_EXP = /import \{\s*(\w*)\s*\}.*@\/components\/doc\/common.*/gm
 const IMPORT2_DOC_COMMON_REG_EXP = /import\s*(\w*)\s*.*@\/components\/doc\/common.*/gm
@@ -17,7 +20,10 @@ const CMP_DOC_MIGRATE = [
     [/export.*const.*=>.*/gm, '</script>'],
     [/const.*=>.*/gm, '</script>'],
     [/className/gm, 'class'],
-    [/\s*return\s*<DocComponent(.*)/gm, '<DocComponent$1'],
+    [/ClassName/gm, 'Class'],
+    [/><\/img>/gm, '/>'],
+    [/onClick/gm, 'on:click'],
+    [/\s*return\s*<DocComponent(.*)/gm, '\n</script>\n\n<DocComponent$1'],
     [/\s*return.*/gm, ''],
     [/^}$/gm, ''],
     [/^};$/gm, ''],
@@ -56,22 +62,37 @@ function lastPatch(content) {
 `+ content
 }
 
-function cmpDocExportPatch(content) {
+function cmp_docExportPatch(content) {
     return content.replace(/^<\/script>/gm, `    import type { DocSection } from '$lib/doc/common/doc.types'
     
     export let docSection: DocSection
 </script>`)
 }
 
-function importCmpDocPatch (content) {
-    const importCmpDocThemingRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmp}\\/theming.*`, 'gm')
+function page_fixImportCaseError (content) {
+    for(const id in FIX_FILENAME_CASE_ERRROR) {
+       const fixRegExp = new RegExp(`import\\s*\\{\\s*${id}\\s*\\}.*@\\/components`, 'gmi')
+       content = content.replace(fixRegExp, `import {${FIX_FILENAME_CASE_ERRROR[id]}} '@/components`)
+       const fix2RegExp = new RegExp(`\\s*component\\s*:\\s*${id}\\s*`, 'gmi')
+       content = content.replace(fix2RegExp, `            component: ${FIX_FILENAME_CASE_ERRROR[id]}`)
+    }
+    return content
+}
+
+function page_importCmpDocPatch (content) {
+    const importCmpDocThemingRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmp}\\/(\\w*)\\/.*`, 'gm')
     const importCmpDocRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmp}.*`, 'gm')
-    content = content.replace(importCmpDocThemingRegExp,`    import $1 from '$lib/doc/${cmp}/theming/$1.svelte'`)
+    content = content.replace(importCmpDocThemingRegExp,`    import $1 from '$lib/doc/${cmp}/$2/$1.svelte'`)
     return content.replace(importCmpDocRegExp,`    import $1 from '$lib/doc/${cmp}/$1.svelte'`)
 }
 
+function page_removeXXXDemo (content) {
+    content = content.replace(/const.*Demo.*=>.*/gm, '')
+    return content
+}
 
-function moveCode(content) {
+
+function cmp_moveCode(content) {
     const hasCode = content.indexOf('const code = {') > 0
     const hasDocSectionText = content.indexOf('<DocSectionText ') > 0
     if (hasCode && hasDocSectionText) {
@@ -115,12 +136,75 @@ const [cmd, migateFile, cmp] = process.argv
 const newPage = `src/routes/${cmp}`
 const newDoc = `src/lib/doc/${cmp}`
 
+// Migrate components
+function renameDocFiles(dirPath) {
+    for(const fileName of fs.readdirSync(dirPath)) {
+
+        // For custom migration (when automatic failed) ignore file (remove it)
+        if (CUSTOM_DOC_CMP.find(({_cmp , _jsFileName}) => 
+           _cmp === cmp &&  _jsFileName === fileName
+        )) {
+            fs.rmSync(dirPath+'/'+fileName)
+            continue
+        }
+
+        // Ignore previously migrated svelte files
+        if (fileName.endsWith('svelte')) continue
+
+        /// Migrate
+        const oldFilePath = `${dirPath}/${fileName}`
+        if (fs.lstatSync(oldFilePath).isDirectory()) {
+            renameDocFiles(oldFilePath)
+            continue
+        } 
+        
+        let newFileName = fileName.replace('doc.js', 'Doc.svelte')
+        newFileName = newFileName.replace('.js', '.svelte')
+        newFileName = newFileName.substring(0,1).toUpperCase()+newFileName.substring(1)
+        FIX_FILENAME_CASE_ERRROR[newFileName.toLowerCase().split('.')[0]] = newFileName.split('.')[0]
+        const newFilePath = `${dirPath}/${newFileName}`
+
+        const custom = CUSTOM_DOC_CMP.find(({_cmp , _fileName}) => 
+           _cmp === cmp &&  _fileName === newFileName
+        )
+
+        if (custom) {
+            console.log(`Ignore custom doc ${cmp} ${newFileName}`)
+            continue
+        }
+
+        console.log(`Rename ${oldFilePath} to ${newFilePath}`)
+
+        fs.renameSync(oldFilePath,newFilePath)
+
+        console.log(`Patch ${newFilePath}`)
+
+        withFileContent(newFilePath, [
+            regexpPatch, // Fake for prettier
+            cmp_docExportPatch, 
+            cmp_moveCode, 
+            jsonStyleToString, 
+            lastPatch
+        ])      
+    }
+}
+//fs.rmSync(newDoc, { recursive: true, force: true })
+fs.cpSync(`_pr_components/doc/${cmp}`, newDoc, {recursive: true})
+renameDocFiles(newDoc)
+
 // Migrate page
 const newPagePath = `${newPage}/+page.svelte`
-if (CUSTOM_PAGES[cmp]) {
+if (!CUSTOM_PAGES[cmp]) {
     fs.cpSync(`_pr_pages/${cmp}`, newPage, {recursive: true})
     fs.renameSync(`${newPage}/index.js`, newPagePath)
-    withFileContent(newPagePath, [regexpPatch, importCmpDocPatch, jsonStyleToString, lastPatch])
+    withFileContent(newPagePath, [
+        page_removeXXXDemo, // fake for prettier
+        page_fixImportCaseError,
+        regexpPatch,  
+        page_importCmpDocPatch, 
+        jsonStyleToString, 
+        lastPatch
+    ])
     fs.writeFileSync(`${newPage}/+page.ts` ,`import { dev } from '$app/environment';
 
     // we don't need any JS on this page, though we'll load
@@ -131,33 +215,6 @@ if (CUSTOM_PAGES[cmp]) {
     // it so that it gets served as a static asset in production
     export const prerender = true;`)
 }
-
-// Migrate page components
-function renameDocFiles(dirPath) {
-    for(const fileName of fs.readdirSync(dirPath)) {
-        const oldFilePath = `${dirPath}/${fileName}`
-        if (fs.lstatSync(oldFilePath).isDirectory()) {
-            renameDocFiles(oldFilePath)
-            continue
-        } 
-        
-        let newFileName = fileName.replace('doc.js', 'Doc.svelte')
-        newFileName = newFileName.replace('.js', '.svelte')
-        newFileName = newFileName.substring(0,1).toUpperCase()+newFileName.substring(1)
-        const newFilePath = `${dirPath}/${newFileName}`
-
-        console.log(`Rename ${oldFilePath} to ${newFilePath}`)
-
-        fs.renameSync(oldFilePath,newFilePath)
-
-        console.log(`Patch ${newFilePath}`)
-
-        withFileContent(newFilePath, [regexpPatch, cmpDocExportPatch, moveCode, jsonStyleToString, lastPatch])      
-    }
-}
-fs.rmSync(newDoc, { recursive: true, force: true })
-fs.cpSync(`_pr_components/doc/${cmp}`, newDoc, {recursive: true})
-renameDocFiles(newDoc)
 
 format(newPage)
 format(newDoc)

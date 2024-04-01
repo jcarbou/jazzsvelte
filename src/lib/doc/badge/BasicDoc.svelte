@@ -4,7 +4,7 @@
     import Badge from '$lib/components/badge/Badge.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
-    
+
     export let docSection: DocSection
 
     const code = {
@@ -33,19 +33,15 @@ import { Badge } from 'primereact/badge';
 
 
         `
-    };
-
+    }
 </script>
 
-<DocSectionText docSection={docSection}>
-                <p>
-                    Text to display is defined with the <i>value</i> property.
-                </p>
-            </DocSectionText>
-            <div class="card flex justify-content-center">
-                <Badge value="2"></Badge>
-            </div>
-            <DocSectionCode code={code} />
-
-
-
+<DocSectionText {docSection}>
+    <p>
+        Text to display is defined with the <i>value</i> property.
+    </p>
+</DocSectionText>
+<div class="card flex justify-content-center">
+    <Badge value="2"></Badge>
+</div>
+<DocSectionCode {code} />

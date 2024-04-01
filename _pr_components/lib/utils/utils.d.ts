@@ -196,7 +196,9 @@ export type IconOptions<ComponentProps, AdditionalProps> = AdditionalProps & {
     [key: string]: any
 }
 
-export type IconType<ComponentProps, AdditionalProps = NonNullable<unknown>> = React.ReactNode | ((options: IconOptions<ComponentProps, AdditionalProps>) => React.ReactNode)
+export type IconType<ComponentProps, AdditionalProps = NonNullable<unknown>> =
+    | React.ReactNode
+    | ((options: IconOptions<ComponentProps, AdditionalProps>) => React.ReactNode)
 
 export type TemplateType<ComponentProps> = React.ReactNode | ((props: ComponentProps) => React.ReactNode)
 

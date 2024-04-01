@@ -10,7 +10,7 @@
  */
 import * as React from 'react'
 import { FilterMatchMode } from '../api/api'
-import { ButtonPassThroughOptions } from '../button/button'
+import { ButtonPassThroughOptions } from '../button/Button.svelte'
 import { ComponentHooks } from '../componentbase/componentbase'
 import { DataTablePassThroughOptions } from '../datatable/datatable'
 import { DropdownPassThroughOptions } from '../dropdown/dropdown'

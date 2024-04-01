@@ -7,21 +7,21 @@
  * @module orderlist
  *
  */
-import * as React from 'react';
-import { ButtonPassThroughOptions } from '../button/button';
-import { ComponentHooks } from '../componentbase/componentbase';
-import { PassThroughOptions } from '../passthrough';
-import { IconType, PassThroughType } from '../utils/utils';
+import * as React from 'react'
+import { ButtonPassThroughOptions } from '../button/Button.svelte'
+import { ComponentHooks } from '../componentbase/componentbase'
+import { PassThroughOptions } from '../passthrough'
+import { IconType, PassThroughType } from '../utils/utils'
 
-export declare type OrderListPassThroughType<T> = PassThroughType<T, OrderListPassThroughMethodOptions>;
+export declare type OrderListPassThroughType<T> = PassThroughType<T, OrderListPassThroughMethodOptions>
 
 /**
  * Custom passthrough(pt) option method.
  */
 export interface OrderListPassThroughMethodOptions {
-    props: OrderListProps;
-    state: OrderListState;
-    context: OrderListContext;
+    props: OrderListProps
+    state: OrderListState
+    context: OrderListContext
 }
 
 /**
@@ -32,72 +32,72 @@ export interface OrderListPassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    root?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the controls' DOM element.
      */
-    controls?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    controls?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the Button component.
      */
-    moveUpButton?: ButtonPassThroughOptions;
+    moveUpButton?: ButtonPassThroughOptions
     /**
      * Uses to pass attributes to the Button component.
      */
-    moveTopButton?: ButtonPassThroughOptions;
+    moveTopButton?: ButtonPassThroughOptions
     /**
      * Uses to pass attributes to the Button component.
      */
-    moveDownButton?: ButtonPassThroughOptions;
+    moveDownButton?: ButtonPassThroughOptions
     /**
      * Uses to pass attributes to the Button component.
      */
-    moveBottomButton?: ButtonPassThroughOptions;
+    moveBottomButton?: ButtonPassThroughOptions
     /**
      * Uses to pass attributes to the container's DOM element.
      */
-    container?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    container?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the header's DOM element.
      */
-    header?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    header?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the list's DOM element.
      */
-    list?: OrderListPassThroughType<React.HTMLAttributes<HTMLUListElement>>;
+    list?: OrderListPassThroughType<React.HTMLAttributes<HTMLUListElement>>
     /**
      * Uses to pass attributes to the item's DOM element.
      */
-    item?: OrderListPassThroughType<React.HTMLAttributes<HTMLLIElement>>;
+    item?: OrderListPassThroughType<React.HTMLAttributes<HTMLLIElement>>
     /**
      * Uses to pass attributes to the item's DOM element.
      */
-    droppoint?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    droppoint?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the item's DOM element.
      */
-    icon?: OrderListPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>;
+    icon?: OrderListPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>
     /**
      * Uses to pass attributes to the item's DOM element.
      */
-    filterInput?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    filterInput?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the item's DOM element.
      */
-    filterIcon?: OrderListPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>;
+    filterIcon?: OrderListPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>
     /**
      * Uses to pass attributes to the item's DOM element.
      */
-    filter?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    filter?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Uses to pass attributes to the item's DOM element.
      */
-    filterContainer?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    filterContainer?: OrderListPassThroughType<React.HTMLAttributes<HTMLDivElement>>
     /**
      * Used to manage all lifecycle hooks
      * @see {@link ComponentHooks}
      */
-    hooks?: ComponentHooks;
+    hooks?: ComponentHooks
 }
 
 /**
@@ -107,15 +107,15 @@ export interface OrderListState {
     /**
      * Current selection state as a boolean.
      */
-    selection: [];
+    selection: []
     /**
      * Current filter value as a string.s
      */
-    filterValue: string;
+    filterValue: string
     /**
      * Current attribute selector state as a string.
      */
-    attributeSelector: string;
+    attributeSelector: string
 }
 
 /**
@@ -125,7 +125,7 @@ export interface OrderListContext {
     /**
      * Current selection state of the item as a boolean.
      */
-    selected: boolean;
+    selected: boolean
 }
 
 /**
@@ -137,11 +137,11 @@ interface OrderListChangeEvent {
     /**
      * Browser event
      */
-    originalEvent: React.SyntheticEvent;
+    originalEvent: React.SyntheticEvent
     /**
      * Reordered list
      */
-    value: any;
+    value: any
 }
 
 /**
@@ -151,140 +151,141 @@ interface OrderListFilterOptions {
     /**
      * Browser keyboard event for the filter orderlist element.
      */
-    filter?: (event?: KeyboardEvent) => void;
+    filter?: (event?: KeyboardEvent) => void
     /**
      * Used to reset the filter.
      */
-    reset?: () => void;
+    reset?: () => void
 }
 
 /**
  * Defines valid properties in OrderList component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group Properties
  */
-export interface OrderListProps extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'onChange' | 'ref' | 'pt'> {
+export interface OrderListProps
+    extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'onChange' | 'ref' | 'pt'> {
     /**
      * An array of objects to reorder.
      */
-    value?: any[] | undefined;
+    value?: any[] | undefined
     /**
      * Text for the caption.
      */
-    header?: React.ReactNode | undefined;
+    header?: React.ReactNode | undefined
     /**
      * Inline style of the list element.
      */
-    listStyle?: React.CSSProperties | undefined;
+    listStyle?: React.CSSProperties | undefined
     /**
      * Whether to enable dragdrop based reordering.
      * @defaultValue false
      */
-    dragdrop?: boolean | undefined;
+    dragdrop?: boolean | undefined
     /**
      * Used to define a string that labels the component.
      */
-    ariaLabel?: string | undefined;
+    ariaLabel?: string | undefined
     /**
      * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
      */
-    ariaLabelledBy?: string | undefined;
+    ariaLabelledBy?: string | undefined
     /**
      * Callback to invoke when menu receives focus.
      * @param {React.SyntheticEvent} event - Browser event.
      */
-    onFocus?(event: React.SyntheticEvent): void;
+    onFocus?(event: React.SyntheticEvent): void
     /**
      * Callback to invoke when menu loses focus.
      * @param {React.SyntheticEvent} event - Browser event.
      */
-    onBlur?(event: React.SyntheticEvent): void;
+    onBlur?(event: React.SyntheticEvent): void
     /**
      * Name of the field that uniquely identifies the a record in the data.
      */
-    dataKey: string;
+    dataKey: string
     /**
      * The breakpoint to define the maximum width boundary when responsiveness is enabled.
      * @defaultValue '960px'.
      */
-    breakpoint?: string | undefined;
+    breakpoint?: string | undefined
     /**
      * Icon of the move up icon.
      */
-    moveUpIcon?: IconType<OrderListProps> | undefined;
+    moveUpIcon?: IconType<OrderListProps> | undefined
     /**
      * Icon of the move top icon.
      */
-    moveTopIcon?: IconType<OrderListProps> | undefined;
+    moveTopIcon?: IconType<OrderListProps> | undefined
     /**
      * Icon of the move down icon.
      */
-    moveDownIcon?: IconType<OrderListProps> | undefined;
+    moveDownIcon?: IconType<OrderListProps> | undefined
     /**
      * Icon of the move bottom icon.
      */
-    moveBottomIcon?: IconType<OrderListProps> | undefined;
+    moveBottomIcon?: IconType<OrderListProps> | undefined
     /**
      * Icon of the filter.
      */
-    filterIcon?: IconType<OrderListProps> | undefined;
+    filterIcon?: IconType<OrderListProps> | undefined
     /**
      * When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
      * @defaultValue label
      */
-    filter?: boolean | undefined;
+    filter?: boolean | undefined
     /**
      * When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
      * @defaultValue label
      */
-    filterBy?: string | undefined;
+    filterBy?: string | undefined
     /**
      * Defines how the items are filtered, valid values are "contains" (default), "startsWith", "endsWith", "equals" and "notEquals".
      * @defaultValue contains
      */
-    filterMatchMode?: string | undefined;
+    filterMatchMode?: string | undefined
     /**
      * Placeholder text to show when filter input is empty.
      */
-    filterPlaceholder?: string | undefined;
+    filterPlaceholder?: string | undefined
     /**
      * Locale to use in filtering. The default locale is the host environment's current locale.
      * @defaultValue undefined
      */
-    filterLocale?: string | undefined;
+    filterLocale?: string | undefined
     /**
      * Custom template of filter element.
      */
-    filterTemplate?: React.ReactNode | ((options: OrderListFilterOptions) => React.ReactNode);
+    filterTemplate?: React.ReactNode | ((options: OrderListFilterOptions) => React.ReactNode)
     /**
      * Callback to invoke to when a mouse button is pressed.
      * @param {OrderListChangeEvent} event - Browser event.
      */
-    onChange?(event: OrderListChangeEvent): void;
+    onChange?(event: OrderListChangeEvent): void
     /**
      * The template of each item
      * @param {*} item - Current item
      */
-    itemTemplate?(item: any): React.ReactNode;
+    itemTemplate?(item: any): React.ReactNode
     /**
      * Used to get the child elements of the component.
      * @readonly
      */
-    children?: React.ReactNode | undefined;
+    children?: React.ReactNode | undefined
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {OrderListPassThroughOptions}
      */
-    pt?: OrderListPassThroughOptions;
+    pt?: OrderListPassThroughOptions
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions;
+    ptOptions?: PassThroughOptions
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
      */
-    unstyled?: boolean;
+    unstyled?: boolean
 }
 
 /**
@@ -303,5 +304,5 @@ export declare class OrderList extends React.Component<OrderListProps, any> {
      * Used to get container element.
      * @return {HTMLDivElement} Container element
      */
-    public getElement(): HTMLDivElement;
+    public getElement(): HTMLDivElement
 }

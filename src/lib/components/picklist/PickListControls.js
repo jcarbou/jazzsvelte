@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ariaLabel } from '../api/Api';
-import { Button } from '../button/Button';
+import { Button } from '../button/Button.svelte';
 import { useMergeProps } from '../hooks/Hooks';
 import { AngleDoubleDownIcon } from '../icons/angledoubledown';
 import { AngleDoubleUpIcon } from '../icons/angledoubleup';

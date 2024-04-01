@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ariaLabel } from '../api/Locale';
-import { Button } from '../button/Button';
+import { Button } from '../button/Button.svelte';
 import { useMatchMedia, useMergeProps } from '../hooks/Hooks';
 import { AngleDoubleDownIcon } from '../icons/angledoubledown';
 import { AngleDoubleLeftIcon } from '../icons/angledoubleleft';

@@ -30,8 +30,22 @@ export const JAZZ_SVELTE: JazzSvelte = Object.seal({
     autoZIndex: createBooleanStore(true),
     cssTransition: createBooleanStore(true),
     filterMatchModeOptions: writable({
-        text: [FilterMatchMode.STARTS_WITH, FilterMatchMode.CONTAINS, FilterMatchMode.NOT_CONTAINS, FilterMatchMode.ENDS_WITH, FilterMatchMode.EQUALS, FilterMatchMode.NOT_EQUALS],
-        numeric: [FilterMatchMode.EQUALS, FilterMatchMode.NOT_EQUALS, FilterMatchMode.LESS_THAN, FilterMatchMode.LESS_THAN_OR_EQUAL_TO, FilterMatchMode.GREATER_THAN, FilterMatchMode.GREATER_THAN_OR_EQUAL_TO],
+        text: [
+            FilterMatchMode.STARTS_WITH,
+            FilterMatchMode.CONTAINS,
+            FilterMatchMode.NOT_CONTAINS,
+            FilterMatchMode.ENDS_WITH,
+            FilterMatchMode.EQUALS,
+            FilterMatchMode.NOT_EQUALS
+        ],
+        numeric: [
+            FilterMatchMode.EQUALS,
+            FilterMatchMode.NOT_EQUALS,
+            FilterMatchMode.LESS_THAN,
+            FilterMatchMode.LESS_THAN_OR_EQUAL_TO,
+            FilterMatchMode.GREATER_THAN,
+            FilterMatchMode.GREATER_THAN_OR_EQUAL_TO
+        ],
         date: [FilterMatchMode.DATE_IS, FilterMatchMode.DATE_IS_NOT, FilterMatchMode.DATE_BEFORE, FilterMatchMode.DATE_AFTER]
     }),
     hideOverlaysOnDocumentScrolling: createBooleanStore(false),
@@ -39,7 +53,7 @@ export const JAZZ_SVELTE: JazzSvelte = Object.seal({
     locale: writable<string>('en'),
     nonce: writable<string | null>(null),
     nullSortOrder: writable<number>(1),
-    ripple: createBooleanStore(false),
+    ripple: createBooleanStore(true),
     theme,
     darkMode,
     themePath,
