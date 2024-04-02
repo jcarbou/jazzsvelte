@@ -4,37 +4,37 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import Badge from '$lib/components/badge/Badge.svelte'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
     const code = {
         basic: `
 <Button type="button" label="Emails" badge="8" />
-<Button type="button" label="Messages" icon="pi pi-users" outlined badge="2" badgeClass="p-badge-danger" />
+<Button type="button" label="Messages" icon="pi pi-users" outlined>
+    <Badge slot="badge" value="2" severity="danger" size="normal" />
+</Button>
         `,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importJS('Button')}
 
-
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <Button type="button" label="Emails" badge="8" />
-            <Button type="button" label="Messages" icon="pi pi-users" outlined badge="2" badgeClass="p-badge-danger" />
-        </div>
-    )
-
+<div class="card flex flex-wrap justify-content-center gap-3">
+    <Button type="button" label="Emails" badge="8" />
+    <Button type="button" label="Messages" icon="pi pi-users" outlined>
+        <Badge slot="badge" value="2" severity="danger" size="normal" />
+    </Button>
+</div>
         `,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importTS('Button')}
 
-
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <Button type="button" label="Emails" badge="8" />
-            <Button type="button" label="Messages" icon="pi pi-users" outlined badge="2" badgeClass="p-badge-danger" />
-        </div>
-    )
-
+<div class="card flex flex-wrap justify-content-center gap-3">
+    <Button type="button" label="Emails" badge="8" />
+    <Button type="button" label="Messages" icon="pi pi-users" outlined>
+        <Badge slot="badge" value="2" severity="danger" size="normal" />
+    </Button>
+</div>
         `
     }
 </script>
@@ -46,6 +46,8 @@ import { Button } from 'primereact/button';
 </DocSectionText>
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button type="button" label="Emails" badge="8" />
-    <Button type="button" label="Messages" icon="pi pi-users" outlined badge="2" badgeClass="p-badge-danger" />
+    <Button type="button" label="Messages" icon="pi pi-users" outlined>
+        <Badge slot="badge" value="2" severity="danger" size="normal" />
+    </Button>
 </div>
 <DocSectionCode {code} />

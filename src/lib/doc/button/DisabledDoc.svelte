@@ -4,6 +4,7 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -12,26 +13,18 @@
 <Button label="Submit" disabled />
         `,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importJS('Button')}
 
-
-        <div class="card flex justify-content-center">
-            <Button label="Submit" disabled />
-        </div>
-    )
-
+<div class="card flex justify-content-center">
+    <Button label="Submit" disabled />
+</div>
         `,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importTS('Button')}
 
-
-        <div class="card flex justify-content-center">
-            <Button label="Submit" disabled />
-        </div>
-    )
-
+<div class="card flex justify-content-center">
+    <Button label="Submit" disabled />
+</div>
         `
     }
 </script>

@@ -34,3 +34,27 @@ export function findActiveDoc(docs: Doc[], y: number): Doc | null {
     }
     return null
 }
+
+export function importComponent(cmp: string) {
+    return `import ${cmp} from 'jazzsvelte/${cmp}'`
+}
+
+export function importJS(cmp: string, ...codeList: string[]) {
+    return scriptJS([importComponent(cmp), ...codeList].join('\n'))
+}
+
+export function importTS(cmp: string, ...codeList: string[]) {
+    return scriptTS([importComponent(cmp), ...codeList].join('\n'))
+}
+
+export function scriptJS(code: string) {
+    return `<script>
+   ${code}
+</script>`
+}
+
+export function scriptTS(code: string) {
+    return `<script lang="ts">
+   ${code}
+</script>`
+}

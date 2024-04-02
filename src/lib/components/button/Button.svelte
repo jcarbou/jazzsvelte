@@ -28,8 +28,7 @@
     export let style: CssStyle = null
     export let badge: string | number | null = null
     export let badgeClass: string | null = null
-
-    const { 'aria-label': ariaLabel } = $$props
+    export let ariaLabel: string | null = null
 
     let ripple = JAZZ_SVELTE.ripple
 
@@ -100,17 +99,25 @@
 </script>
 
 {#if visible}
-    <button {...rootAttributes} {disabled} aria-label={defaultAriaLabel} {...$$restProps} on:click>
-        {#if label}
-            <span {...labelAttributes}>{label}</span>
-        {/if}
+    <button
+        data-pc-name="button"
+        data-pc-section="root"
+        {disabled}
+        aria-label={defaultAriaLabel}
+        {...rootAttributes}
+        {...$$restProps}
+        on:click
+    >
         {#if icon && !loading}
-            <span {...iconAttributes}></span>
+            <span data-pc-section="icon" {...iconAttributes}></span>
         {:else if loadingIcon && loading}
-            <span {...loadingiconAttributes}></span>
+            <span data-pc-section="icon" {...loadingiconAttributes}></span>
+        {/if}
+        {#if label}
+            <span data-pc-section="label" {...labelAttributes}>{label}</span>
         {/if}
         {#if badge}
-            <Badge>{badge}</Badge>
+            <Badge class={badgeClass} value={badge}></Badge>
         {/if}
         <slot name="badge" />
         <slot />

@@ -4,6 +4,7 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -18,38 +19,30 @@
 <Button label="Danger" severity="danger" />
         `,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+ ${importJS('Button')}
 
-
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <Button label="Primary" />
-            <Button label="Secondary" severity="secondary" />
-            <Button label="Success" severity="success" />
-            <Button label="Info" severity="info" />
-            <Button label="Warning" severity="warning" />
-            <Button label="Help" severity="help" />
-            <Button label="Danger" severity="danger" />
-        </div>
-    )
-
+<div class="card flex flex-wrap justify-content-center gap-3">
+    <Button label="Primary" />
+    <Button label="Secondary" severity="secondary" />
+    <Button label="Success" severity="success" />
+    <Button label="Info" severity="info" />
+    <Button label="Warning" severity="warning" />
+    <Button label="Help" severity="help" />
+    <Button label="Danger" severity="danger" />
+</div>
         `,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importTS('Button')}
 
-
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <Button label="Primary" />
-            <Button label="Secondary" severity="secondary" />
-            <Button label="Success" severity="success" />
-            <Button label="Info" severity="info" />
-            <Button label="Warning" severity="warning" />
-            <Button label="Help" severity="help" />
-            <Button label="Danger" severity="danger" />
-        </div>
-    )
-
+<div class="card flex flex-wrap justify-content-center gap-3">
+    <Button label="Primary" />
+    <Button label="Secondary" severity="secondary" />
+    <Button label="Success" severity="success" />
+    <Button label="Info" severity="info" />
+    <Button label="Warning" severity="warning" />
+    <Button label="Help" severity="help" />
+    <Button label="Danger" severity="danger" />
+</div>
         `
     }
 </script>

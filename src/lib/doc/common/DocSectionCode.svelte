@@ -5,7 +5,7 @@
     import CodeHighlight from './CodeHighlight.svelte'
 
     export let embedded: boolean = false
-    export let hideToggleCode: boolean = true
+    export let hideToggleCode: boolean = false
     export let codeMode: CodeMode = 'basic'
     export let codeLang: CodeLang = 'javascript'
     export let code: Code
@@ -114,3 +114,68 @@
         {/if}
     </div>
 {/if}
+
+<style lang="scss">
+    .doc-section-code {
+        position: relative;
+
+        div {
+            &::-webkit-scrollbar {
+                width: 5px;
+            }
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+        &:hover {
+            .doc-section-code-buttons {
+                display: flex;
+            }
+        }
+    }
+
+    :global(.doc-section-code-buttons) {
+        position: absolute;
+        align-items: center;
+        justify-content: end;
+        z-index: 1;
+        top: 0.75rem;
+        right: 0.75rem;
+        gap: 0.5rem;
+        display: none;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        padding: 2px;
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        :global(button) {
+            outline: 0 none;
+            border-radius: 8px;
+            outline-offset: 0;
+            background-color: transparent;
+            transition:
+                background-color 0.2s,
+                box-shadow 0.2s;
+            border: 0 none;
+            color: var(--demo-code-button-color);
+            cursor: pointer;
+        }
+
+        :global(button:hover) {
+            background-color: var(--demo-code-button-hover-bg);
+            color: var(--demo-code-button-hover-color);
+        }
+    }
+
+    :global(.code-active) {
+        color: #bbf7d0 !important;
+    }
+
+    .doc-section-code-tooltip .p-tooltip-text {
+        padding: 0.5rem;
+        font-size: 11px;
+    }
+</style>

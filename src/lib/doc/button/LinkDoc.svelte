@@ -4,44 +4,36 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
     const code = {
         basic: `
 <Button label="Link" link />
-<a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="p-button font-bold">
+<a href="https://svelte.dev" target="_blank" rel="noopener noreferrer" class="p-button font-bold">
     Navigate
 </a>
         `,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+ ${importJS('Button')}
 
-
-        <div class="card flex justify-content-center">
-            <Button label="Link" link />
-            <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="p-button font-bold">
-                Navigate
-            </a>
-
-        </div>
-    )
-
+<div class="card flex justify-content-center">
+    <Button label="Link" link />
+    <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer" class="p-button font-bold">
+        Navigate
+    </a>
+</div>
         `,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+ ${importTS('Button')}
 
-
-        <div class="card flex justify-content-center">
-            <Button label="Link" link />
-            <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="p-button font-bold">
-                Navigate
-            </a>
-        </div>
-    )
-
+<div class="card flex justify-content-center">
+    <Button label="Link" link />
+    <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer" class="p-button font-bold">
+        Navigate
+    </a>
+</div>
         `
     }
 </script>

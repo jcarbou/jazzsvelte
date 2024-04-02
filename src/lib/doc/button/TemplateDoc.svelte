@@ -4,6 +4,7 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -14,30 +15,22 @@
 </Button>
         `,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importJS('Button')}
 
-
-        <div class="card flex justify-content-center">
-            <Button class="bg-bluegray-600 hover:bg-bluegray-400 border-bluegray-700">
-                <img alt="logo" src="https://primefaces.org/cdn/primereact/images/primereact-logo-light.svg" class="h-2rem"/>
-            </Button>
-        </div>
-    )
-
+<div class="card flex justify-content-center">
+    <Button class="bg-bluegray-600 hover:bg-bluegray-400 border-bluegray-700">
+        <img alt="logo" src="https://primefaces.org/cdn/primereact/images/primereact-logo-light.svg" class="h-2rem"/>
+    </Button>
+</div>
         `,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importTS('Button')}
 
-
-        <div class="card flex justify-content-center">
-            <Button class="bg-bluegray-600 hover:bg-bluegray-400 border-bluegray-700">
-                <img alt="logo" src="https://primefaces.org/cdn/primereact/images/primereact-logo-light.svg" class="h-2rem"/>
-            </Button>
-        </div>
-    )
-
+<div class="card flex justify-content-center">
+    <Button class="bg-bluegray-600 hover:bg-bluegray-400 border-bluegray-700">
+        <img alt="logo" src="https://primefaces.org/cdn/primereact/images/primereact-logo-light.svg" class="h-2rem"/>
+    </Button>
+</div>
         `
     }
 </script>

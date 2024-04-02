@@ -5,8 +5,7 @@
         BadgePassThroughOptions,
         BadgeSeverity,
         BadgeSize,
-        BadgeValue,
-        RootHTMLAttributes
+        BadgeValue
     } from './badge.types'
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { resolvePT } from '../utils/ptUtils'
@@ -19,8 +18,6 @@
     export let ptOptions: BadgePassThroughMethodOptions | null = null
     export let unstyled: boolean = false
     export let style: CssStyle = null
-
-    let rootAttributes: RootHTMLAttributes = {}
 
     // "root element"
     $: rootAttributes = resolvePT(
@@ -42,7 +39,7 @@
     )
 </script>
 
-<span {...rootAttributes}>{value}</span>
+<span data-pc-name="badge" data-pc-section="root" {...rootAttributes} {...$$restProps}>{value}</span>
 
 <style>
     @layer primereact {

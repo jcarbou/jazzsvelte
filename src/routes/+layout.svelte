@@ -72,6 +72,13 @@
         padding: 6rem 4rem 0;
         display: flex;
     }
+    :global(.card) {
+        background: var(--surface-card);
+        border: var(--card-border);
+        padding: 2rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+    }
     .layout-content.layout-news-active {
         padding-top: 6.5rem;
     }

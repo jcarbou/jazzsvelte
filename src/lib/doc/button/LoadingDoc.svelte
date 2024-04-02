@@ -3,6 +3,7 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import Button from '$lib/components/button/Button.svelte'
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -21,10 +22,9 @@
 <Button label="Submit" icon="pi pi-check" loading={loading} onClick={load} />
         `,
         javascript: `
-Script :
-
-    import { Button } from 'primereact/button'
-
+${importJS(
+    'Button',
+    `
     const loading = false
 
     const load = () => {
@@ -32,19 +32,17 @@ Script :
         setTimeout(() => {
             loading = false
         }, 2000)
-    }
-
-Template
+    }`
+)}
 
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button label="Submit" icon="pi pi-check" loading={loading} onClick={load} />
 </div>
-
         `,
         typescript: `
-Type script :
-    import { Button } from 'primereact/button'
-
+${importTS(
+    'Button',
+    `
     const loading: boolean = false
 
     const load = () => {
@@ -52,15 +50,12 @@ Type script :
         setTimeout(() => {
             loading = false
         }, 2000)
-    }
-
-    
-Template :
+    }`
+)}
 
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button label="Submit" icon="pi pi-check" loading={loading} onClick={load} />
 </div>
-
         `
     }
 </script>

@@ -4,6 +4,7 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -14,30 +15,22 @@
 <Button label="Large" icon="pi pi-check" size="large" />
         `,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importJS('Button')}
 
-
-        <div class="card flex flex-wrap align-items-center justify-content-center gap-3">
-            <Button label="Small" icon="pi pi-check" size="small" />
-            <Button label="Normal" icon="pi pi-check" />
-            <Button label="Large" icon="pi pi-check" size="large" />
-        </div>
-    )
-
+<div class="card flex flex-wrap align-items-center justify-content-center gap-3">
+    <Button label="Small" icon="pi pi-check" size="small" />
+    <Button label="Normal" icon="pi pi-check" />
+    <Button label="Large" icon="pi pi-check" size="large" />
+</div>
         `,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importTS('Button')}
 
-
-        <div class="card flex flex-wrap align-items-center justify-content-center gap-3">
-            <Button label="Small" icon="pi pi-check" size="small" />
-            <Button label="Normal" icon="pi pi-check" />
-            <Button label="Large" icon="pi pi-check" size="large" />
-        </div>
-    )
-
+<div class="card flex flex-wrap align-items-center justify-content-center gap-3">
+    <Button label="Small" icon="pi pi-check" size="small" />
+    <Button label="Normal" icon="pi pi-check" />
+    <Button label="Large" icon="pi pi-check" size="large" />
+</div>
         `
     }
 </script>

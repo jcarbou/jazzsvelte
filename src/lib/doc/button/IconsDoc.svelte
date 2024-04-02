@@ -4,6 +4,7 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -14,30 +15,22 @@
 <Button label="Submit" icon="pi pi-check" iconPos="right" />
         `,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importJS('Button')}
 
-
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <Button icon="pi pi-check" />
-            <Button label="Submit" icon="pi pi-check" />
-            <Button label="Submit" icon="pi pi-check" iconPos="right" />
-        </div>
-    )
-
-        `,
+<div class="card flex flex-wrap justify-content-center gap-3">
+    <Button icon="pi pi-check" />
+    <Button label="Submit" icon="pi pi-check" />
+    <Button label="Submit" icon="pi pi-check" iconPos="right" />
+</div>
+         `,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importTS('Button')}
 
-
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <Button icon="pi pi-check" />
-            <Button label="Submit" icon="pi pi-check" />
-            <Button label="Submit" icon="pi pi-check" iconPos="right" />
-        </div>
-    )
-
+<div class="card flex flex-wrap justify-content-center gap-3">
+    <Button icon="pi pi-check" />
+    <Button label="Submit" icon="pi pi-check" />
+    <Button label="Submit" icon="pi pi-check" iconPos="right" />
+</div>
         `
     }
 </script>

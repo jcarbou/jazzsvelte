@@ -4,6 +4,7 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -18,38 +19,30 @@
 <Button label="Danger" severity="danger" text />
         `,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importJS('Button')}
 
-
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <Button label="Primary" text />
-            <Button label="Secondary" severity="secondary" text />
-            <Button label="Success" severity="success" text />
-            <Button label="Info" severity="info" text />
-            <Button label="Warning" severity="warning" text />
-            <Button label="Help" severity="help" text />
-            <Button label="Danger" severity="danger" text />
-        </div>
-    )
-
+<div class="card flex flex-wrap justify-content-center gap-3">
+    <Button label="Primary" text />
+    <Button label="Secondary" severity="secondary" text />
+    <Button label="Success" severity="success" text />
+    <Button label="Info" severity="info" text />
+    <Button label="Warning" severity="warning" text />
+    <Button label="Help" severity="help" text />
+    <Button label="Danger" severity="danger" text />
+</div>
         `,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
+${importTS('Button')}
 
-
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <Button label="Primary" text />
-            <Button label="Secondary" severity="secondary" text />
-            <Button label="Success" severity="success" text />
-            <Button label="Info" severity="info" text />
-            <Button label="Warning" severity="warning" text />
-            <Button label="Help" severity="help" text />
-            <Button label="Danger" severity="danger" text />
-        </div>
-    )
-
+<div class="card flex flex-wrap justify-content-center gap-3">
+    <Button label="Primary" text />
+    <Button label="Secondary" severity="secondary" text />
+    <Button label="Success" severity="success" text />
+    <Button label="Info" severity="info" text />
+    <Button label="Warning" severity="warning" text />
+    <Button label="Help" severity="help" text />
+    <Button label="Danger" severity="danger" text />
+</div>
         `
     }
 </script>

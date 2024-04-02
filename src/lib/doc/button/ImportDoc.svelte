@@ -3,13 +3,14 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importComponent } from '../common/doc.utils'
 
     export let docSection: DocSection
 
     const code = {
         basic: `
-import { Button } from 'primereact/button';
-        `
+${importComponent('Button')}
+   `
     }
 </script>
 

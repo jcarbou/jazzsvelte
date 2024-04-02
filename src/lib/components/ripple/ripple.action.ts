@@ -3,21 +3,11 @@ import DOM from '../utils/DOM'
 export function ripple(element: HTMLElement) {
     const targetElement = element.parentElement
 
-    const activateRipple = (offsetX: number, offsetY: number) => {
+    const onPointerDown = (event: MouseEvent) => {
         if (!element || getComputedStyle(element, null).display === 'none') {
             return
         }
 
-        element.classList.toggle('p-ink-active', false)
-
-        setDimensions()
-
-        element.style.top = offsetY + 'px'
-        element.style.left = offsetX + 'px'
-        element.classList.toggle('p-ink-active', true)
-    }
-
-    const onPointerDown = (event: MouseEvent) => {
         const offset = DOM.getOffset(targetElement)
         if (offset.left === 'auto') {
             offset.left = 0
@@ -25,14 +15,17 @@ export function ripple(element: HTMLElement) {
         if (offset.top === 'auto') {
             offset.top = 0
         }
+        setDimensions()
         const offsetX = event.pageX - offset.left + document.body.scrollTop - DOM.getWidth(element) / 2
         const offsetY = event.pageY - offset.top + document.body.scrollLeft - DOM.getHeight(element) / 2
-        activateRipple(offsetX, offsetY)
+
+        element.classList.toggle('p-ink-active', false)
+        element.style.top = offsetY + 'px'
+        element.style.left = offsetX + 'px'
+        element.classList.toggle('p-ink-active', true)
     }
 
-    const onAnimationEnd = () => {
-        element.classList.toggle('p-ink-active', false)
-    }
+    const onAnimationEnd = () => element.classList.toggle('p-ink-active', false)
 
     const setDimensions = () => {
         if (element && !DOM.getHeight(element) && !DOM.getWidth(element)) {
@@ -43,7 +36,7 @@ export function ripple(element: HTMLElement) {
         }
     }
 
-    element.addEventListener('animationEnd', onAnimationEnd)
+    element.addEventListener('animationend', onAnimationEnd)
     if (targetElement) {
         targetElement.classList.toggle('p-ripple', true)
         targetElement.addEventListener('pointerdown', onPointerDown)
@@ -51,7 +44,7 @@ export function ripple(element: HTMLElement) {
 
     return {
         destroy() {
-            element.removeEventListener('animationEnd', onAnimationEnd)
+            element.removeEventListener('animationend', onAnimationEnd)
             if (targetElement) {
                 targetElement.removeEventListener('pointerdown', onPointerDown)
             }
