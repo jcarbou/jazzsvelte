@@ -1,5 +1,16 @@
-import type { HTMLSVGAttributes, HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '../utils/utils.types'
+import type { HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '../utils/utils.types'
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+
+export type ButtonSize = 'small' | 'large' | undefined
+export type IconPos = 'top' | 'bottom' | 'left' | 'right' | undefined
+
+export type ButtonGroupContext = {
+    disabled: boolean
+    rounded: boolean
+    outlined: boolean
+    size: ButtonSize
+    iconPos: IconPos
+}
 
 /**
  * Defines valid properties in Button component. In addition to these, all properties of HTMLButtonElement can be used in this component.
@@ -52,12 +63,12 @@ export interface ButtonProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'di
     /**
      * Defines the size of the button, valid values are "small" and "large".
      */
-    size?: 'small' | 'large' | undefined
+    size?: ButtonSize
     /**
      * Position of the icon, valid values are "left", "right", "top" and "bottom".
      * @defaultValue left
      */
-    iconPos?: 'top' | 'bottom' | 'left' | 'right' | undefined
+    iconPos?: IconPos
     /**
      * Text of the button.
      */
@@ -117,8 +128,8 @@ export interface ButtonPassThroughMethodOptions {
 }
 
 export type RootHTMLAttributes = HTMLButtonAttributes
-export type LoadingIconHTMLAttributes = HTMLSVGAttributes
-export type IconHTMLAttributes = HTMLSVGAttributes
+export type LoadingIconHTMLAttributes = HTMLSpanAttributes
+export type IconHTMLAttributes = HTMLSpanAttributes
 export type LabelHTMLAttributes = HTMLSpanAttributes
 
 /**

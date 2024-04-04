@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'svelte/elements'
 
-export type HTMLAttr = HTMLAttributes<HTMLElement>
+type HTMLAttr<ELT extends HTMLElement> = HTMLAttributes<ELT>
 
-export type PtHTMLAttr = Omit<HTMLAttr, 'style'> & {
+export type PtAttr<ELT extends HTMLElement> = Omit<HTMLAttr<ELT>, 'style'> & {
     style?: string | { [key: string]: string }
 }
 

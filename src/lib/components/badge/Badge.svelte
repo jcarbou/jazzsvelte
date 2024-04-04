@@ -26,6 +26,7 @@
             {
                 'p-badge-no-gutter': isNotEmpty(value) && String(value).length === 1,
                 'p-badge-dot': isEmpty(value),
+                'p-badge-m': size === 'medium',
                 'p-badge-lg': size === 'large',
                 'p-badge-xl': size === 'xlarge',
                 [`p-badge-${severity}`]: severity !== null
@@ -48,6 +49,13 @@
             border-radius: 10px;
             text-align: center;
             padding: 0 0.5rem;
+        }
+
+        .p-badge.p-badge-m {
+            font-size: 0.725rem;
+            min-width: 1.55rem;
+            height: 1.55rem;
+            line-height: 1.55rem;
         }
 
         .p-overlay-badge {

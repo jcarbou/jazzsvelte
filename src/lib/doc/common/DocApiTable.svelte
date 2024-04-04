@@ -13,19 +13,21 @@
     let headers: string[]
 
     $: {
-        docSection = { id: apiData.id, label: '' }
-        isPT = apiData.id.startsWith('pt.')
-        headers = Object.keys(apiData.data[0])
+        if (apiData?.data?.length) {
+            docSection = { id: apiData.id, label: '' }
+            isPT = apiData.id.startsWith('pt.')
+            headers = Object.keys(apiData.data?.[0])
 
-        setContext<ApiTableInfo>('apiTabelInfo', {
-            ...apiData,
-            isPT,
-            headers
-        })
+            setContext<ApiTableInfo>('apiTabelInfo', {
+                ...apiData,
+                isPT,
+                headers
+            })
+        }
     }
 </script>
 
-{#if isNotEmpty(apiData.data)}
+{#if isNotEmpty(apiData?.data)}
     <DocSectionText {docSection}>
         <p>{apiData.description}</p>
     </DocSectionText>

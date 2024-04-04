@@ -39,12 +39,19 @@ export function importComponent(cmp: string) {
     return `import ${cmp} from 'jazzsvelte/${cmp}'`
 }
 
-export function importJS(cmp: string, ...codeList: string[]) {
-    return scriptJS([importComponent(cmp), ...codeList].join('\n'))
+export function importComponents(cmpOrCmpList: string | string[]) {
+    if (typeof cmpOrCmpList === 'string') return [importComponent(cmpOrCmpList)]
+    const imports = []
+    for (const cmp of cmpOrCmpList) imports.push(importComponent(cmp))
+    return imports
 }
 
-export function importTS(cmp: string, ...codeList: string[]) {
-    return scriptTS([importComponent(cmp), ...codeList].join('\n'))
+export function importJS(cmpOrCmpList: string | string[], ...codeList: string[]) {
+    return scriptJS([...importComponents(cmpOrCmpList), ...codeList].join('\n'))
+}
+
+export function importTS(cmpOrCmpList: string | string[], ...codeList: string[]) {
+    return scriptTS([...importComponents(cmpOrCmpList), ...codeList].join('\n'))
 }
 
 export function scriptJS(code: string) {

@@ -66,6 +66,6 @@ ${importTS(
     </p>
 </DocSectionText>
 <div class="card flex flex-wrap justify-content-center gap-3">
-    <Button label="Submit" icon="pi pi-check" {loading} on:click={load} />
+    <Button label="Submit" iconPos="right" icon="pi pi-check" {loading} on:click={load} />
 </div>
 <DocSectionCode {code} />

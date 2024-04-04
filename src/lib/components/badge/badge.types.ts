@@ -17,7 +17,7 @@ export type BadgeSeverity = 'success' | 'info' | 'warning' | 'danger' | null | u
  * Size of the badge, valid options are "large" and "xlarge".
  * @defaultValue null
  */
-export type BadgeSize = 'normal' | 'large' | 'xlarge' | null | undefined
+export type BadgeSize = 'normal' | 'medium' | 'large' | 'xlarge' | null | undefined
 
 /**
  * Defines valid properties in Badge component. In addition to these, all properties of HTMLSpanElement can be used in this component.

@@ -2,7 +2,7 @@
     import AccessibilityDoc from '$lib/doc/button/AccessibilityDoc.svelte'
     import BadgesDoc from '$lib/doc/button/BadgesDoc.svelte'
     import BasicDoc from '$lib/doc/button/BasicDoc.svelte'
-    import ButtonsetDoc from '$lib/doc/button/ButtonsetDoc.svelte'
+    import ButtonGroup from '$lib/doc/button/ButtonGroupDoc.svelte'
     import DisabledDoc from '$lib/doc/button/DisabledDoc.svelte'
     import IcononlyDoc from '$lib/doc/button/IcononlyDoc.svelte'
     import IconsDoc from '$lib/doc/button/IconsDoc.svelte'
@@ -97,8 +97,8 @@
         },
         {
             id: 'buttonset',
-            label: 'Button Set',
-            component: ButtonsetDoc
+            label: 'Button Group',
+            component: ButtonGroup
         },
         {
             id: 'sizes',

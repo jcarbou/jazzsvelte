@@ -27,7 +27,8 @@ export type Dispatch<A> = (action: A) => void
 import type { BadgePassThroughOptions } from '../badge/badge.types'
 // import { BlockUIPassThroughOptions } from '../blockui/blockui'
 // import { BreadCrumbPassThroughOptions } from '../breadcrumb/breadcrumb'
-import type { ButtonPassThroughOptions } from '../button/buttontypes'
+import type { ButtonPassThroughOptions } from '../button/button.types'
+import type { ButtonGroupPassThroughOptions } from '../buttonGroup/buttonGroup.types'
 // import { CalendarPassThroughOptions } from '../calendar/calendar'
 // import { CardPassThroughOptions } from '../card/card'
 // import { CarouselPassThroughOptions } from '../carousel/carousel'
@@ -221,6 +222,7 @@ export interface JazzSveltePTOptions {
     //  * Custom passthrough(pt) options for Button.
     //  */
     button?: ButtonPassThroughOptions
+    buttonGroup?: ButtonGroupPassThroughOptions
     // /**
     //  * Custom passthrough(pt) options for Calendar.
     //  */

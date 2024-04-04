@@ -13,7 +13,7 @@
         basic: `
 <Button type="button" label="Emails" badge="8" />
 <Button type="button" label="Messages" icon="pi pi-users" outlined>
-    <Badge slot="badge" value="2" severity="danger" size="normal" />
+    <Badge slot="badge" value="2" severity="danger" size="medium" />
 </Button>
         `,
         javascript: `
@@ -22,7 +22,7 @@ ${importJS('Button')}
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button type="button" label="Emails" badge="8" />
     <Button type="button" label="Messages" icon="pi pi-users" outlined>
-        <Badge slot="badge" value="2" severity="danger" size="normal" />
+        <Badge slot="badge" value="2" severity="danger" size="medium" />
     </Button>
 </div>
         `,
@@ -32,7 +32,7 @@ ${importTS('Button')}
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button type="button" label="Emails" badge="8" />
     <Button type="button" label="Messages" icon="pi pi-users" outlined>
-        <Badge slot="badge" value="2" severity="danger" size="normal" />
+        <Badge slot="badge" value="2" severity="danger" size="medium" />
     </Button>
 </div>
         `
@@ -47,7 +47,7 @@ ${importTS('Button')}
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button type="button" label="Emails" badge="8" />
     <Button type="button" label="Messages" icon="pi pi-users" outlined>
-        <Badge slot="badge" value="2" severity="danger" size="normal" />
+        <Badge slot="badge" value="2" severity="danger" size="medium" />
     </Button>
 </div>
 <DocSectionCode {code} />
