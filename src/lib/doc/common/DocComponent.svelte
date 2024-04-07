@@ -1,5 +1,7 @@
 <script lang="ts">
+    import { setContext } from 'svelte'
     import type { Doc } from './doc.types'
+    import { buildApiDocs } from './docApiData'
     import DocApiSection from './DocApiSection.svelte'
     import DocSectionNav from './DocSectionNav.svelte'
     import DocSections from './DocSections.svelte'
@@ -10,7 +12,8 @@
     export let hideTabMenu: boolean = false
     export let header: string
     export let themingDocs: Doc[] = []
-    export let apiDocs: string[]
+    let apiDocNames: string[]
+    export { apiDocNames as apiDocs }
     export let apiExclude: { [key: string]: string } | null = null
     export let ptDescription: string | null = null
     export let ptDocs: Doc[] | null = null
@@ -18,6 +21,7 @@
 
     let tab: number = 0
     let mainTitle = ''
+    let apiDocs: Doc[] | undefined
 
     const activateTab = (i: number) => {
         tab = i
@@ -27,6 +31,13 @@
         if (header.startsWith('use')) mainTitle = 'HOOK'
         else if (header === 'PassThrough' || header === 'Configuration') mainTitle = 'OVERVIEW'
         else mainTitle = 'FEATURES'
+    }
+
+    $: {
+        if (apiDocNames) {
+            apiDocs = buildApiDocs(apiDocNames, apiExclude)
+            setContext('apiDocs', apiDocs)
+        }
     }
 </script>
 
@@ -73,7 +84,7 @@
         {:else if tab === 1}
             <div class="doc-tabpanel">
                 {#if apiDocs}
-                    <DocApiSection {header} docNames={apiDocs} exclude={apiExclude} />
+                    <DocApiSection {header} docs={apiDocs} />
                 {:else}
                     <div class="doc-main">
                         <div class="doc-intro">
@@ -101,7 +112,9 @@
                     <div class="doc-main">
                         <div class="doc-intro">
                             <h1>{header} Pass Through</h1>
-                            <p>{ptDescription}</p>
+                            {#if ptDescription}
+                                <p>{ptDescription}</p>
+                            {/if}
                         </div>
                         <DocSections docs={ptDocs} />
                     </div>

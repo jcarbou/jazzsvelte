@@ -249,7 +249,7 @@ function renameDocFiles(dirPath) {
         ])
     }
 }
-//fs.rmSync(newDoc, { recursive: true, force: true })
+fs.rmSync(newDoc, { recursive: true, force: true })
 fs.cpSync(`_pr_components/doc/${cmp}`, newDoc, {recursive: true})
 renameDocFiles(newDoc)
 

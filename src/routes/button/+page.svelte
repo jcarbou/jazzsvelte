@@ -21,6 +21,7 @@
     import TextDoc from '$lib/doc/button/TextDoc.svelte'
     import StyledDoc from '$lib/doc/button/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/button/theming/TailwindDoc.svelte'
+    import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
 
@@ -127,7 +128,7 @@
         {
             id: 'pt.button.options',
             label: 'Button PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         },
         {
             id: 'pt.demo',

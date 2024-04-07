@@ -1,14 +1,11 @@
 <script lang="ts">
     import DocSectionNav from './DocSectionNav.svelte'
     import DocSections from './DocSections.svelte'
+    import type { Doc } from './doc.types'
     import { projectName } from './doc.utils'
-    import { buildApiDocs } from './docApiData'
 
-    export let docNames: string[]
+    export let docs: Doc[]
     export let header: any
-    export let exclude: { [key: string]: string } | null = null
-
-    $: docs = buildApiDocs(docNames, exclude)
 </script>
 
 <div class="doc-main">

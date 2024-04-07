@@ -1,4 +1,4 @@
-import type { Doc, DocApiData, DocWithChildren } from './doc.types'
+import type { Doc, DocApiData, DocSection, DocWithChildren } from './doc.types'
 import docs from './apidoc/apidoc.json'
 import type { ApiDoc, ApiMainComponent } from './apidoc/apidoc.types'
 
@@ -33,7 +33,15 @@ function addToChildDoc(cmpContext: ComponentContext, childDoc: Doc[], componentN
     typesDoc && childDoc.push(typesDoc)
 }
 
-export function buildApiDocs(apiDocNames: string[], exclude: { [key: string]: string } | null) {
+export function buildPtApiRows(apiDocs: Doc[]): string[][] | null {
+    const interfaces = apiDocs[0]?.children?.find((doc) => doc.id.endsWith('.interfaces'))
+    if (!interfaces) return null
+    const ptOptions = interfaces.children?.find((doc) => doc.id.endsWith('PassThroughOptions'))
+    if (!ptOptions?.docApiData) return null
+    return ptOptions.docApiData.data.map(({ name, description }, index) => [index + 1 + '', name + '', description + ''])
+}
+
+export function buildApiDocs(apiDocNames: string[], exclude: { [key: string]: string } | null): Doc[] {
     const data: Doc[] = []
 
     for (const name of apiDocNames) {

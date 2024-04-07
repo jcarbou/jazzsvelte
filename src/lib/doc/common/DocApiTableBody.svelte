@@ -1,6 +1,5 @@
 <script lang="ts">
     import type { ApiTableInfo, DataItem } from './doc.types'
-    import { isEmpty } from '$lib/components/utils/ObjectUtils'
     import { JAZZ_SVELTE } from '$lib/components/api/JazzSvelte'
     import { getContext } from 'svelte'
     import DocApiTableContext from './DocApiTableContext.svelte'
