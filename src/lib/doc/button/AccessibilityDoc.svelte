@@ -3,6 +3,7 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import DocTableWrapper from '../common/DocTableWrapper.svelte'
 
     export let docSection: DocSection
 
@@ -32,34 +33,30 @@
     <DocSectionCode {code} hideToggleCode toImport hideStackBlitz />
 
     <h3>Keyboard Support</h3>
-    <div class="doc-tablewrapper">
-        <table class="doc-table">
-            <thead>
-                <tr>
-                    <th>Key</th>
-                    <th>Function</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <i>tab</i>
-                    </td>
-                    <td>Moves focus to the button.</td>
-                </tr>
-                <tr>
-                    <td>
-                        <i>enter</i>
-                    </td>
-                    <td>Activates the button.</td>
-                </tr>
-                <tr>
-                    <td>
-                        <i>space</i>
-                    </td>
-                    <td>Activates the button.</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <DocTableWrapper keyStyle="button">
+        <tr slot="thead">
+            <th>Key</th>
+            <th>Function</th>
+        </tr>
+        <svelte:fragment slot="tbody">
+            <tr>
+                <td>
+                    <i>tab</i>
+                </td>
+                <td>Moves focus to the button.</td>
+            </tr>
+            <tr>
+                <td>
+                    <i>enter</i>
+                </td>
+                <td>Activates the button.</td>
+            </tr>
+            <tr>
+                <td>
+                    <i>space</i>
+                </td>
+                <td>Activates the button.</td>
+            </tr>
+        </svelte:fragment>
+    </DocTableWrapper>
 </DocSectionText>

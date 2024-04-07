@@ -79,8 +79,6 @@ export interface ButtonGroupPassThroughMethodOptions {
     context: ButtonGroupContext
 }
 
-export type RootHTMLAttributes = HTMLSpanAttributes
-
 /**
  * Custom passthrough(pt) options.
  * @see {@link ButtonProps.pt}
@@ -89,7 +87,7 @@ export interface ButtonGroupPassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: ButtonGroupPassThroughType<RootHTMLAttributes>
+    root?: ButtonGroupPassThroughType<HTMLSpanAttributes>
 }
 
 /**

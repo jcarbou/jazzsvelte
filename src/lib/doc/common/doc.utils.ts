@@ -35,6 +35,8 @@ export function findActiveDoc(docs: Doc[], y: number): Doc | null {
     return null
 }
 
+export const projectName = 'JazzSvelte'
+
 export function importComponent(cmp: string) {
     return `import ${cmp} from 'jazzsvelte/${cmp}'`
 }

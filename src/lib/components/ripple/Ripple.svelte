@@ -1,22 +1,20 @@
 <script lang="ts">
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { resolvePT } from '../utils/ptUtils'
+    import type { HTMLSpanAttributes } from '../utils/utils.types'
     import { ripple } from './ripple.action'
-    import type { RipplePassThroughMethodOptions, RipplePassThroughOptions, RootHTMLAttributes } from './ripple.types'
+    import type { RipplePassThroughMethodOptions, RipplePassThroughOptions } from './ripple.types'
 
     export let style: string | null = null
+    let className: string | null = null
+    export { className as class }
     export let unstyled: boolean = false
     export let pt: RipplePassThroughOptions | null = null
     export let ptOptions: RipplePassThroughMethodOptions | null = null
 
     const { ripple: hasRipple } = JAZZ_SVELTE
-    let rootAttributes: RootHTMLAttributes = {}
 
-    $: {
-        // "root" element
-        const rootClasses = ['p-ink']
-        rootAttributes = resolvePT(rootClasses, style, pt?.root, null, ptOptions, unstyled)
-    }
+    $: rootAttributes = resolvePT(['p-ink', className], style, pt?.root, null, ptOptions, unstyled) satisfies HTMLSpanAttributes
 </script>
 
 {#if $hasRipple}

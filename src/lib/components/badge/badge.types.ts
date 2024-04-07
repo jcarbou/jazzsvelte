@@ -65,8 +65,6 @@ export interface BadgePassThroughMethodOptions {
 
 export declare type BadgePassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, BadgePassThroughMethodOptions>
 
-export type RootHTMLAttributes = HTMLSpanAttributes
-
 /**
  * Custom passthrough(pt) options.
  * @see {@link BadgeProps.pt}
@@ -75,5 +73,5 @@ export interface BadgePassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: BadgePassThroughType<RootHTMLAttributes>
+    root?: BadgePassThroughType<HTMLSpanAttributes>
 }

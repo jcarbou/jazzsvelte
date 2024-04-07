@@ -20,7 +20,7 @@
         {:else if child.docApiData}
             <DocApiTable apiData={child.docApiData} />
         {:else if child.children}
-            <svelte:self doc={child.children} level={level + 1} />
+            <svelte:self doc={child} level={level + 1} />
         {/if}
     {/each}
 {/if}

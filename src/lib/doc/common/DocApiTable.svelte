@@ -9,20 +9,12 @@
     export let apiData: DocApiData
 
     let docSection: DocSection
-    let isPT: boolean
-    let headers: string[]
 
     $: {
         if (apiData?.data?.length) {
-            docSection = { id: apiData.id, label: '' }
-            isPT = apiData.id.startsWith('pt.')
-            headers = Object.keys(apiData.data?.[0])
+            docSection = { id: apiData.id, label: apiData.label }
 
-            setContext<ApiTableInfo>('apiTabelInfo', {
-                ...apiData,
-                isPT,
-                headers
-            })
+            setContext<ApiTableInfo>('apiTabelInfo', apiData)
         }
     }
 </script>
@@ -33,12 +25,12 @@
     </DocSectionText>
     <DocTableWrapper>
         <tr slot="thead">
-            {#if isPT}
-                {#each headers as header, index (index)}
+            {#if apiData.isPT}
+                {#each apiData.headers as header, index (index)}
                     <th>{header}</th>
                 {/each}
             {:else}
-                {#each headers as header, index (index)}
+                {#each apiData.headers as header, index (index)}
                     {#if header !== 'readonly' && header !== 'optional' && header !== 'deprecated'}
                         <th>{header}</th>
                     {/if}

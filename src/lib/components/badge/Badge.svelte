@@ -10,6 +10,7 @@
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { resolvePT } from '../utils/ptUtils'
     import { isEmpty, isNotEmpty } from '../utils/Utils'
+    import type { HTMLSpanAttributes } from '../utils/utils.types'
 
     export let value: BadgeValue = null
     export let severity: BadgeSeverity = null
@@ -18,11 +19,14 @@
     export let ptOptions: BadgePassThroughMethodOptions | null = null
     export let unstyled: boolean = false
     export let style: CssStyle = null
+    let className: string | null = null
+    export { className as class }
 
     // "root element"
     $: rootAttributes = resolvePT(
         [
             'p-badge p-component',
+            className,
             {
                 'p-badge-no-gutter': isNotEmpty(value) && String(value).length === 1,
                 'p-badge-dot': isEmpty(value),
@@ -37,7 +41,7 @@
         JAZZ_SVELTE.pt?.badge?.root,
         ptOptions,
         unstyled
-    )
+    ) satisfies HTMLSpanAttributes
 </script>
 
 <span data-pc-name="badge" data-pc-section="root" {...rootAttributes} {...$$restProps}>{value}</span>

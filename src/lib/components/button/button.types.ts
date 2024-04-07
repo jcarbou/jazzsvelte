@@ -1,7 +1,7 @@
 import type { HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '../utils/utils.types'
 import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
-export type ButtonSize = 'small' | 'large' | undefined
+export type ButtonSize = 'small' | 'normal' | 'large' | undefined
 export type IconPos = 'top' | 'bottom' | 'left' | 'right' | undefined
 
 export type ButtonGroupContext = {
@@ -127,11 +127,6 @@ export interface ButtonPassThroughMethodOptions {
     context: ButtonContext
 }
 
-export type RootHTMLAttributes = HTMLButtonAttributes
-export type LoadingIconHTMLAttributes = HTMLSpanAttributes
-export type IconHTMLAttributes = HTMLSpanAttributes
-export type LabelHTMLAttributes = HTMLSpanAttributes
-
 /**
  * Custom passthrough(pt) options.
  * @see {@link ButtonProps.pt}
@@ -140,19 +135,19 @@ export interface ButtonPassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: ButtonPassThroughType<RootHTMLAttributes>
+    root?: ButtonPassThroughType<HTMLButtonAttributes>
     /**
      * Uses to pass attributes to the loading icon's DOM element.
      */
-    loadingIcon?: ButtonPassThroughType<LoadingIconHTMLAttributes>
+    loadingIcon?: ButtonPassThroughType<HTMLSpanAttributes>
     /**
      * Uses to pass attributes to the icon's DOM element.
      */
-    icon?: ButtonPassThroughType<LoadingIconHTMLAttributes>
+    icon?: ButtonPassThroughType<HTMLSpanAttributes>
     /**
      * Uses to pass attributes to the label's DOM element.
      */
-    label?: ButtonPassThroughType<LabelHTMLAttributes>
+    label?: ButtonPassThroughType<HTMLSpanAttributes>
     /**
      * Uses to pass attributes to the Tooltip component.
      * @see {@link TooltipPassThroughOptions}

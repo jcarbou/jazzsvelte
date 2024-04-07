@@ -5350,22 +5350,6 @@
                             "description": "Value of the badge."
                         },
                         {
-                            "name": "badgeClassName",
-                            "optional": true,
-                            "readonly": false,
-                            "type": "string",
-                            "default": "",
-                            "description": "Style class of the badge."
-                        },
-                        {
-                            "name": "children",
-                            "optional": true,
-                            "readonly": true,
-                            "type": "ReactNode",
-                            "default": "",
-                            "description": "Used to get the child elements of the component."
-                        },
-                        {
                             "name": "disabled",
                             "optional": true,
                             "readonly": false,
@@ -5481,7 +5465,7 @@
                             "name": "size",
                             "optional": true,
                             "readonly": false,
-                            "type": "\"small\" | \"large\"",
+                            "type": "\"small\" | \"normal\" | \"large\"",
                             "default": "",
                             "description": "Defines the size of the button, valid values are \"small\" and \"large\"."
                         },
@@ -5563,35 +5547,35 @@
                             "name": "root",
                             "optional": true,
                             "readonly": false,
-                            "type": "ButtonPassThroughType<HTMLAttributes<HTMLButtonElement>>",
+                            "type": "ButtonPassThroughType<HTMLButtonAttributes>",
                             "description": "Uses to pass attributes to the root's DOM element."
                         },
                         {
                             "name": "loadingIcon",
                             "optional": true,
                             "readonly": false,
-                            "type": "ButtonPassThroughType<SVGProps<SVGSVGElement> | HTMLAttributes<SVGSVGElement | HTMLSpanElement>>",
+                            "type": "ButtonPassThroughType<HTMLSpanAttributes>",
                             "description": "Uses to pass attributes to the loading icon's DOM element."
                         },
                         {
                             "name": "icon",
                             "optional": true,
                             "readonly": false,
-                            "type": "ButtonPassThroughType<SVGProps<SVGSVGElement> | HTMLAttributes<SVGSVGElement | HTMLSpanElement>>",
+                            "type": "ButtonPassThroughType<HTMLSpanAttributes>",
                             "description": "Uses to pass attributes to the icon's DOM element."
                         },
                         {
                             "name": "label",
                             "optional": true,
                             "readonly": false,
-                            "type": "ButtonPassThroughType<HTMLAttributes<HTMLSpanElement>>",
+                            "type": "ButtonPassThroughType<HTMLSpanAttributes>",
                             "description": "Uses to pass attributes to the label's DOM element."
                         },
                         {
                             "name": "badge",
                             "optional": true,
                             "readonly": false,
-                            "type": "ButtonPassThroughType<HTMLAttributes<HTMLSpanElement>>",
+                            "type": "ButtonPassThroughType<HTMLSpanAttributes>",
                             "description": "Uses to pass attributes to the badge's DOM element."
                         },
                         {
@@ -5631,7 +5615,7 @@
             "description": "Defines the custom types used by the module.",
             "values": {
                 "ButtonPassThroughType": {
-                    "values": "PassThroughType<T, ButtonPassThroughMethodOptions>"
+                    "values": "PassThroughType<PassThroughHTMLAttributes<T>, ButtonPassThroughMethodOptions>"
                 }
             }
         }

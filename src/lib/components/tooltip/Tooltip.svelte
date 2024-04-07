@@ -40,11 +40,9 @@
     $: positionState = position
     let classNameState = ''
 
-    let rootAttributes: RootHTMLAttributes = {}
-
-    $: {
-        // "root" element
-        const rootClasses = [
+    
+    // "root" element
+    $: rootAttributes = resolvePT([
             'p-badge p-component',
             {
                 'p-badge-no-gutter': isNotEmpty(value) && String(value).length === 1,
@@ -53,7 +51,6 @@
                 'p-badge-xl': size === 'xlarge',
                 [`p-badge-${severity}`]: severity !== null
             }
-        ]
-        rootAttributes = resolvePT(rootClasses, style, pt?.root, JAZZ_SVELTE.pt?.tooltip?.root, ptOptions, unstyled)
-    }
+        ], style, pt?.root, JAZZ_SVELTE.pt?.tooltip?.root, ptOptions, unstyled)        
+    } satisfies HTMLSpanAttributes
 </script>

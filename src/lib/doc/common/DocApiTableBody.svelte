@@ -33,9 +33,7 @@
                             {/each}
                         {:else if key === 'default' && typeof value === 'string'}
                             <div class="doc-option-default" class:doc-option-dark={$darkMode} class:doc-option-light={!$darkMode}>
-                                {#if !isEmpty(value)}
-                                    <DocApiTableContext {value} deprecated={item['deprecated']} />
-                                {/if}
+                                <DocApiTableContext value={value || 'null'} deprecated={item['deprecated']} />
                             </div>
                         {:else if key === 'type' && typeof value === 'string'}
                             <span class="doc-option-type">

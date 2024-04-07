@@ -5,8 +5,11 @@ export type DocApiData = {
     id: string
     data: DataItem[]
     name?: string
+    label: string
     description?: string
     allowLink: boolean
+    isPT: boolean
+    headers: string[]
 }
 
 export type Doc = {

@@ -1,4 +1,4 @@
-import type { Doc, DocWithChildren } from './doc.types'
+import type { Doc, DocApiData, DocWithChildren } from './doc.types'
 import docs from './apidoc/apidoc.json'
 import type { ApiDoc, ApiMainComponent } from './apidoc/apidoc.types'
 
@@ -78,13 +78,13 @@ function buildApiDocItem(context: Context) {
             functionDoc.children.push({
                 id,
                 label,
-                docApiData: {
+                docApiData: buildDocApiData({
                     id,
-                    allowLink: false,
+                    label,
                     name: modName,
                     data: [values],
                     description: '' + value.description
-                }
+                })
             })
 
             const types = value.parameters?.map((p) => p.type)
@@ -132,13 +132,13 @@ function buildApiEvents(context: SubComponentContext): DocWithChildren | null {
         eventsDoc.children.push({
             id,
             label,
-            docApiData: {
+            docApiData: buildDocApiData({
                 id,
-                allowLink: false,
+                label,
                 name: componentName,
                 data: eventValue.props,
                 description: `${eventValue.description} See <i>${eventValue.relatedProp}</i>`
-            }
+            })
         })
     })
 
@@ -165,13 +165,13 @@ function buildApiTypes(context: SubComponentContext): DocWithChildren | null {
         typesDoc.children.push({
             id,
             label,
-            docApiData: {
+            docApiData: buildDocApiData({
                 id,
-                allowLink: false,
+                label,
                 name: componentName,
                 data: [typeValue],
                 description: ''
-            }
+            })
         })
     })
 
@@ -203,13 +203,13 @@ function buildApiInterfaces(context: SubComponentContext, addPropsAndCallBack: b
         const childDoc: Doc = {
             id,
             label,
-            docApiData: {
+            docApiData: buildDocApiData({
                 id,
-                allowLink: false,
+                label,
                 name: componentName,
                 data: interfaceValue.props,
                 description
-            }
+            })
         }
         interfacesDoc.children.push(childDoc)
 
@@ -220,11 +220,11 @@ function buildApiInterfaces(context: SubComponentContext, addPropsAndCallBack: b
                 children.push({
                     id: `${id}.props`,
                     label: 'Props',
-                    docApiData: {
+                    docApiData: buildDocApiData({
                         id: `${id}.props`,
-                        allowLink: false,
+                        label: 'Props',
                         data: interfaceValue.props
-                    }
+                    })
                 })
             }
 
@@ -232,11 +232,11 @@ function buildApiInterfaces(context: SubComponentContext, addPropsAndCallBack: b
                 children.push({
                     id: `${id}.callbacks`,
                     label: 'Callbacks',
-                    docApiData: {
+                    docApiData: buildDocApiData({
                         id: `${id}.callbacks`,
-                        allowLink: false,
+                        label: 'Callbacks',
                         data: interfaceValue.callbacks
-                    }
+                    })
                 })
             }
 
@@ -270,13 +270,13 @@ function buildApiComponent(context: ComponentContext): DocWithChildren[] {
             componentsDoc.children.push({
                 id,
                 label,
-                docApiData: {
+                docApiData: buildDocApiData({
                     id,
-                    allowLink: false,
+                    label,
                     name: componentKey,
                     data: componentValue.props.values,
                     description: componentValue.props.description
-                }
+                })
             })
         }
 
@@ -288,13 +288,13 @@ function buildApiComponent(context: ComponentContext): DocWithChildren[] {
             componentsDoc.children.push({
                 id,
                 label,
-                docApiData: {
+                docApiData: buildDocApiData({
                     id,
-                    allowLink: false,
+                    label,
                     name: componentKey,
                     data: componentValue.callbacks.values,
                     description: componentValue.callbacks.description
-                }
+                })
             })
         }
 
@@ -306,13 +306,13 @@ function buildApiComponent(context: ComponentContext): DocWithChildren[] {
             componentsDoc.children.push({
                 id,
                 label,
-                docApiData: {
+                docApiData: buildDocApiData({
                     id,
-                    allowLink: false,
+                    label,
                     name: componentKey,
                     data: componentValue.methods.values,
                     description: componentValue.methods.description
-                }
+                })
             })
         }
 
@@ -324,6 +324,19 @@ function buildApiComponent(context: ComponentContext): DocWithChildren[] {
     })
 
     return docList
+}
+
+function buildDocApiData(
+    props: Omit<DocApiData, 'isPT' | 'headers' | 'allowLink' | 'label'> & { allowLink?: boolean; label?: string }
+): DocApiData {
+    const { id, label, data, allowLink } = props
+    return {
+        ...props,
+        label: label || '',
+        isPT: id.startsWith('pt.'),
+        headers: Object.keys(data?.[0]),
+        allowLink: !!allowLink
+    }
 }
 
 function buildApiModel(context: ComponentContext): DocWithChildren[] {
@@ -349,13 +362,13 @@ function buildApiModel(context: ComponentContext): DocWithChildren[] {
             modelDoc.children.push({
                 id,
                 label,
-                docApiData: {
+                docApiData: buildDocApiData({
                     id,
-                    allowLink: false,
+                    label,
                     name: modelKey,
                     data: modelValue.props.values,
                     description: modelValue.props.description
-                }
+                })
             })
         }
 

@@ -32,8 +32,6 @@ export interface RipplePassThroughMethodOptions {
 
 export declare type RipplePassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, RipplePassThroughMethodOptions>
 
-export type RootHTMLAttributes = HTMLSpanAttributes
-
 /**
  * Custom passthrough(pt) options.
  * @see {@link RippleProps.pt}
@@ -42,5 +40,5 @@ export interface RipplePassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: RipplePassThroughType<RootHTMLAttributes>
+    root?: RipplePassThroughType<HTMLSpanAttributes>
 }

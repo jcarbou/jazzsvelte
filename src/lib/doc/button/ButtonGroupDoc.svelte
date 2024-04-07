@@ -17,7 +17,7 @@
     <Button label="Cancel" icon="pi pi-times" />
 </ButtonGroup>
 
-<ButtonGroup rounded={true} iconPos="right">
+<ButtonGroup rounded={true} iconPos="right" size="small">
     <Button label="Save" icon="pi pi-check" />
     <Button label="Delete" icon="pi pi-trash" />
     <Button label="Cancel" icon="pi pi-times" />
@@ -32,7 +32,7 @@
         <Button label="Cancel" icon="pi pi-times" />
     </ButtonGroup>
 
-    <ButtonGroup rounded={true} iconPos="right">
+    <ButtonGroup rounded={true} iconPos="right" size="small">
         <Button label="Save" icon="pi pi-check" />
         <Button label="Delete" icon="pi pi-trash" />
         <Button label="Cancel" icon="pi pi-times" />
@@ -47,7 +47,7 @@
         <Button label="Cancel" icon="pi pi-times" />
     </ButtonGroup>
 
-    <ButtonGroup rounded={true} iconPos="right">
+    <ButtonGroup rounded={true} iconPos="right" size="small">
         <Button label="Save" icon="pi pi-check" />
         <Button label="Delete" icon="pi pi-trash" />
         <Button label="Cancel" icon="pi pi-times" />
@@ -68,7 +68,7 @@
         <Button label="Cancel" icon="pi pi-times" />
     </ButtonGroup>
 
-    <ButtonGroup rounded={true} iconPos="right">
+    <ButtonGroup rounded={true} iconPos="right" size="small">
         <Button label="Save" icon="pi pi-check" />
         <Button label="Delete" icon="pi pi-trash" />
         <Button label="Cancel" icon="pi pi-times" />

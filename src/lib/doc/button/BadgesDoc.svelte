@@ -41,7 +41,7 @@ ${importTS('Button')}
 
 <DocSectionText {docSection}>
     <p>
-        Buttons have built-in badge support with <i>badge</i> and <i>badgeClass</i> properties.
+        Buttons have built-in badge support with <i>badge property</i> and <i>badge slot</i>.
     </p>
 </DocSectionText>
 <div class="card flex flex-wrap justify-content-center gap-3">

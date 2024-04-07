@@ -1,4 +1,5 @@
 <script lang="ts">
+    export let keyStyle: 'button' | 'text' = 'button'
 </script>
 
 <div class="doc-tablewrapper">
@@ -41,6 +42,45 @@
             white-space: pre-line;
             line-height: 1.5;
             scroll-margin-top: 6.5rem;
+
+            :global(.doc-option-name) {
+                font-family:
+                    ui-monospace,
+                    SFMono-Regular,
+                    SF Mono,
+                    Menlo,
+                    Consolas,
+                    Liberation Mono,
+                    monospace;
+                position: relative;
+                scroll-margin-top: 6.5rem;
+                background-color: var(--doc-highlight-text-bg);
+                color: var(--doc-highlight-text-color);
+                border-radius: 6px;
+                padding: 2px 6px;
+                font-weight: 600;
+                font-style: normal;
+                white-space: nowrap;
+            }
+        }
+        :global(td > i:not(.pi)) {
+            font-family:
+                ui-monospace,
+                SFMono-Regular,
+                SF Mono,
+                Menlo,
+                Consolas,
+                Liberation Mono,
+                monospace;
+            position: relative;
+            scroll-margin-top: 6.5rem;
+            background-color: var(--doc-highlight-text-bg);
+            color: var(--doc-highlight-text-color);
+            border-radius: 6px;
+            padding: 2px 6px;
+            font-weight: 600;
+            font-style: normal;
+            white-space: nowrap;
         }
         :global(td:first-child) {
             color: var(--primary-color);

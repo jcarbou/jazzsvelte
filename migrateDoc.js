@@ -105,6 +105,66 @@ function cmp_moveCode(content) {
     return content
 }
 
+const DOC_TABLE_WRAPPER_START = /<div\s*class="doc-tablewrapper"\s*>/g
+const DOC_TABLE_WRAPPER_TH = /\s*<th>(.*)<\/th>/g
+const DOC_TABLE_WRAPPER_TD = /\s*<td>(.*)<\/td>/g
+
+function cmp_docTabelWrapper(content) {
+    const lines = content.split('\n')
+    let newContent = ''
+    let migrating = false
+    const headers = []
+    const rows = []
+    let row = []
+    let tbody = false
+    
+    for(const line of lines) {
+        if (!migrating) {
+            if (DOC_TABLE_WRAPPER_START.test(line)) {                
+                migrating = true
+            } else {
+                newContent += line + '\''
+            }
+            continue
+        }
+
+        if (
+            line.includes('<table') || line.includes('</table') 
+            || line.includes('<thead') || line.includes('</thead')
+            || line.includes('<tbody') || line.includes('</tbody')
+            || line.includes('<tr')
+            ) {
+                tbody = tbody || line.includes('<tbody')
+                continue
+        }
+
+        if (line.includes('<th')) {
+            headers.push(line.replace( DOC_TABLE_WRAPPER_TH, `'$1'`))
+            continue
+        }
+
+        if (line.includes('<td')) {
+            row.push(line.replace( DOC_TABLE_WRAPPER_TD, `'$1'`))
+            continue
+        }
+
+        if (line.includes('</tr') && tbody) {
+            rows.push(`[${row.join(',')}]`)
+            row = []
+            continue
+        }
+
+        if (line.includes('</div')) { 
+            migrating  = false
+            newContent += `<DocSimpleTable headers={[${headers.join(',')})]} rows={[\n   ${rows.join(',\n   ')}\n]}/>
+`
+            continue
+        }
+    }
+
+    return newContent
+}
+
 function styleToString(styleJsonString) {
     const style = JSON.parse(fixedJSON(styleJsonString))
     return Object.keys(style).reduce((acc, key) => (
@@ -183,9 +243,10 @@ function renameDocFiles(dirPath) {
             regexpPatch, // Fake for prettier
             cmp_docExportPatch, 
             cmp_moveCode, 
+            cmp_docTabelWrapper,
             jsonStyleToString, 
             lastPatch
-        ])      
+        ])
     }
 }
 //fs.rmSync(newDoc, { recursive: true, force: true })

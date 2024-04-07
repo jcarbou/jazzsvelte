@@ -1,5 +1,7 @@
 <script lang="ts">
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSimpleTable from '$lib/doc/common/DocSimpleTable.svelte'
+    import DocTableWrapper from '$lib/doc/common/DocTableWrapper.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
 
@@ -9,27 +11,11 @@
 <DocSectionText {docSection}>
     <p>List of class names used in the styled mode.</p>
 </DocSectionText>
-<div class="doc-tablewrapper">
-    <table class="doc-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Element</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>p-button</td>
-                <td>Button element</td>
-            </tr>
-            <tr>
-                <td>p-button-icon</td>
-                <td>Icon element</td>
-            </tr>
-            <tr>
-                <td>p-button-text</td>
-                <td>Label element of the button</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<DocSimpleTable
+    headers={['Name', 'Element']}
+    rows={[
+        ['p-button', 'Button element'],
+        ['p-button-icon', 'Icon element'],
+        ['p-button-text', 'Label element of the button']
+    ]}
+/>
