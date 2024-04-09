@@ -35,6 +35,6 @@ ${scriptTS(`import Button from 'jazzsvelte/Button'`)}
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <Button label="Submit" />
+    <Button label="Submit" tooltip="MyTT" tooltipOptions={{ position: 'right' }} />
 </div>
 <DocSectionCode {code} />

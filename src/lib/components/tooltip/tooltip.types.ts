@@ -1,11 +1,22 @@
-import type { HTMLAttributes } from 'svelte/elements'
-import type { PassThroughOptions, PassThroughType } from '../utils/utils.types'
+import type { HTMLDivAttributes, PassThroughHTMLAttributes, PassThroughOptions, PassThroughType } from '../utils/utils.types'
 import type { TooltipEvent, TooltipOptions } from './tooltipOptions.types'
 import type { SvelteComponent } from 'svelte'
 
-export declare type TooltipPassThroughType<T> = PassThroughType<T, TooltipPassThroughMethodOptions>
+export declare type TooltipPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, TooltipPassThroughMethodOptions>
 
-export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'mouse' | null
+export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'mouse'
+
+export type TooltipActionOptions = {
+    content: string | null
+    options?: TooltipOptions
+}
+
+export type TooltipLayoutActionOptions = {
+    targetElement: HTMLElement
+    x: number | null
+    y: number | null
+    options?: TooltipOptions
+}
 
 /**
  * Custom passthrough(pt) option method.
@@ -24,15 +35,15 @@ export interface TooltipPassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: TooltipPassThroughType<HTMLAttributes<HTMLDivElement>>
+    root?: TooltipPassThroughType<HTMLDivAttributes>
     /**
      * Uses to pass attributes to the arrow's DOM element.
      */
-    arrow?: TooltipPassThroughType<HTMLAttributes<HTMLDivElement>>
+    arrow?: TooltipPassThroughType<HTMLDivAttributes>
     /**
      * Uses to pass attributes to the text's DOM element.
      */
-    text?: TooltipPassThroughType<HTMLAttributes<HTMLLIElement>>
+    text?: TooltipPassThroughType<HTMLDivAttributes>
 }
 
 /**

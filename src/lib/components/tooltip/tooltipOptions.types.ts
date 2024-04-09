@@ -33,98 +33,98 @@ export interface TooltipOptions {
      * DOM element instance where the overlay panel should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located.
      * @defaultValue document.body
      */
-    appendTo?: 'self' | HTMLElement | null | undefined | (() => HTMLElement)
+    appendTo?: 'self' | HTMLElement | null | (() => HTMLElement)
     /**
      * Defines which position on the target element to align the positioned tooltip.
      */
-    at?: string | undefined
+    at?: string
     /**
      * Whether to hide tooltip when hovering over tooltip content.
      * @defaultValue true
      */
-    autoHide?: boolean | undefined
+    autoHide?: boolean
     /**
      * Whether to automatically manage layering.
      * @defaultValue true
      */
-    autoZIndex?: boolean | undefined
+    autoZIndex?: boolean
     /**
      * Base zIndex value to use in layering.
      * @defaultValue 0
      */
-    baseZIndex?: number | undefined
+    baseZIndex?: number
     /**
      * Style class of the tooltip.
      */
-    className?: string | undefined
+    className?: string
     /**
      * When present, it specifies that the tooltip should be hidden.
      * @defaultValue false
      */
-    disabled?: boolean | undefined
+    disabled?: boolean
     /**
      * Event to show the tooltip.
      * @defaultValue hover
      */
-    event?: 'hover' | 'focus' | 'both' | undefined
+    event?: 'hover' | 'focus' | 'both'
     /**
      * Delay to hide the tooltip in milliseconds.
      * @defaultValue 0
      */
-    hideDelay?: number | undefined
+    hideDelay?: number
     /**
      * Event to hide the tooltip if the event property is empty.
      * @defaultValue mouseleave
      */
-    hideEvent?: string | undefined
+    hideEvent?: string
     /**
      * Whether the tooltip will follow the mouse.
      * @defaultValue false
      */
-    mouseTrack?: boolean | undefined
+    mouseTrack?: boolean
     /**
      * Defines left position of the tooltip in relation to the mouse when the mouseTrack is enabled.
      * @defaultValue 5
      */
-    mouseTrackLeft?: number | undefined
+    mouseTrackLeft?: number
     /**
      * Defines top position of the tooltip in relation to the mouse when the mouseTrack is enabled.
      * @defaultValue 5
      */
-    mouseTrackTop?: number | undefined
+    mouseTrackTop?: number
     /**
      * Defines which position on the tooltip being positioned to align with the target element.
      */
-    my?: string | undefined
+    my?: string
     /**
      * Position of the tooltip.
      * @defaultValue right
      */
-    position?: 'top' | 'bottom' | 'left' | 'right' | 'mouse' | undefined
+    position?: 'top' | 'bottom' | 'left' | 'right' | 'mouse'
     /**
      * Delay to show the tooltip in milliseconds.
      * @defaultValue 0
      */
-    showDelay?: number | undefined
+    showDelay?: number
     /**
      * Event to show the tooltip if the event property is empty.
      * @defaultValue mouseenter
      */
-    showEvent?: string | undefined
+    showEvent?: string
     /**
      * Whether to show tooltip for disabled elements.
      * @defaultValue false
      */
-    showOnDisabled?: boolean | undefined
+    showOnDisabled?: boolean
     /**
      * Style of the tooltip.
      */
-    style?: string | undefined
+    style?: string
     /**
      * Delay to update the tooltip in milliseconds.
      * @defaultValue 0
      */
-    updateDelay?: number | undefined
+    updateDelay?: number
     /**
      * Uses to pass attributes to DOM elements inside the component.
      */

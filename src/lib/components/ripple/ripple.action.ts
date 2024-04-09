@@ -1,4 +1,4 @@
-import DOM from '../utils/DOM'
+import { getOffset, getWidth, getHeight, getOuterWidth, getOuterHeight } from '../utils/DOM'
 
 export function ripple(element: HTMLElement) {
     const targetElement = element.parentElement
@@ -8,7 +8,7 @@ export function ripple(element: HTMLElement) {
             return
         }
 
-        const offset = DOM.getOffset(targetElement)
+        const offset = getOffset(targetElement)
         if (offset.left === 'auto') {
             offset.left = 0
         }
@@ -16,8 +16,8 @@ export function ripple(element: HTMLElement) {
             offset.top = 0
         }
         setDimensions()
-        const offsetX = event.pageX - offset.left + document.body.scrollTop - DOM.getWidth(element) / 2
-        const offsetY = event.pageY - offset.top + document.body.scrollLeft - DOM.getHeight(element) / 2
+        const offsetX = event.pageX - offset.left + document.body.scrollTop - getWidth(element) / 2
+        const offsetY = event.pageY - offset.top + document.body.scrollLeft - getHeight(element) / 2
 
         element.classList.toggle('p-ink-active', false)
         element.style.top = offsetY + 'px'
@@ -28,8 +28,8 @@ export function ripple(element: HTMLElement) {
     const onAnimationEnd = () => element.classList.toggle('p-ink-active', false)
 
     const setDimensions = () => {
-        if (element && !DOM.getHeight(element) && !DOM.getWidth(element)) {
-            const size = Math.max(DOM.getOuterWidth(targetElement), DOM.getOuterHeight(targetElement))
+        if (element && !getHeight(element) && !getWidth(element)) {
+            const size = Math.max(getOuterWidth(targetElement), getOuterHeight(targetElement))
 
             element.style.height = size + 'px'
             element.style.width = size + 'px'

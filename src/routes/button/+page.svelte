@@ -21,6 +21,7 @@
     import TextDoc from '$lib/doc/button/TextDoc.svelte'
     import StyledDoc from '$lib/doc/button/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/button/theming/TailwindDoc.svelte'
+    import { projectName } from '$lib/doc/common/doc.utils'
     import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
@@ -159,7 +160,7 @@
 </script>
 
 <DocComponent
-    title="React Button Component"
+    title="{projectName} Button Component"
     header="Button"
     description="Button is an extension to standard input element with icons and theming."
     componentDocs={docs}

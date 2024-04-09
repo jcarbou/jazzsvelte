@@ -1,14 +1,16 @@
 <script lang="ts">
     import type { CssStyle } from '../utils/cssStyles'
     import type { ButtonGroupContext, ButtonPassThroughMethodOptions, ButtonPassThroughOptions } from './button.types'
+    import type { HTMLButtonAttributes } from 'svelte/elements'
+    import type { HTMLSpanAttributes } from '../utils/utils.types'
+    import type { TooltipOptions } from '../tooltip/tooltipOptions.types'
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { resolvePT } from '../utils/ptUtils'
     import Ripple from '../ripple/Ripple.svelte'
     import Badge from '../badge/Badge.svelte'
     import { getContext } from 'svelte'
     import { SIZE_VALUE_TO_CSS, getIconPos, isIconPos } from './button.utils'
-    import type { HTMLButtonAttributes } from 'svelte/elements'
-    import type { HTMLSpanAttributes } from '../utils/utils.types'
+    import { tooltip } from '../tooltip/tooltip.actions'
 
     export let disabled: boolean = false
     export let icon: string | null = null
@@ -24,7 +26,9 @@
     export let loading: boolean = false
     export let loadingIcon: string | null = 'pi-spinner'
     export let plain: boolean = false
-    //export let tooltip: string | null = null
+    let tooltipContent: string | null = null
+    export { tooltipContent as tooltip }
+    export let tooltipOptions: TooltipOptions | undefined = undefined
     export let visible: boolean = true
     export let pt: ButtonPassThroughOptions | null = null
     export let ptOptions: ButtonPassThroughMethodOptions | null = null
@@ -123,6 +127,7 @@
         aria-label={defaultAriaLabel}
         {...rootAttributes}
         {...$$restProps}
+        use:tooltip={{ content: tooltipContent, options: tooltipOptions }}
         on:click
     >
         {#if icon && !loading}

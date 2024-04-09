@@ -42261,14 +42261,6 @@
                     "description": "Defines valid properties in Ripple component.",
                     "values": [
                         {
-                            "name": "children",
-                            "optional": true,
-                            "readonly": true,
-                            "type": "ReactNode",
-                            "default": "",
-                            "description": "Used to get the child elements of the component."
-                        },
-                        {
                             "name": "unstyled",
                             "optional": true,
                             "readonly": false,

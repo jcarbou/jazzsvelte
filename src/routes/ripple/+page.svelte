@@ -8,6 +8,7 @@
     import StyledDoc from '$lib/doc/ripple/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/ripple/theming/TailwindDoc.svelte'
     import JAZZ_SVELTE from '$lib/components/api/JazzSvelte'
+    import { projectName } from '$lib/doc/common/doc.utils'
 
     const docs = [
         {
@@ -60,7 +61,7 @@
 </script>
 
 <DocComponent
-    title="React Ripple Component"
+    title="{projectName} Ripple Component"
     header="Ripple"
     description="Ripple component adds ripple effect to the host element."
     componentDocs={docs}

@@ -33,18 +33,19 @@ function ptToAttributes<ELT extends HTMLElement, M, CP>(
 
 export function resolvePT<ELT extends HTMLElement, M, CP>(
     elementClasses: ClassNameEntry[],
-    elementStyle: CssStyle,
+    elementStyle: CssStyle | CssStyle[],
     elementOptions: Options<PtAttr<ELT>, M>,
     globalOptions: Options<PtAttr<ELT>, M>,
     ptOptions: PassThroughMethodOptions<CP> | null,
     unstyled: boolean
 ): Omit<PtAttr<ELT>, 'style'> & { style?: string } {
     unstyled = unstyled || JAZZ_SVELTE.unstyled
+    elementStyle = !elementStyle ? [] : Array.isArray(elementStyle) ? elementStyle : [elementStyle]
 
     const globalPtAttributes = ptToAttributes(globalOptions, ptOptions)
     const elementPtAttributes = ptToAttributes(elementOptions, ptOptions)
     const classes = mergeCssClasses([...(unstyled ? [] : elementClasses), elementPtAttributes.class, globalPtAttributes.class])
-    const styles = mergeCssStsyles([elementStyle, globalPtAttributes.style, elementPtAttributes.style])
+    const styles = mergeCssStsyles([...elementStyle, globalPtAttributes.style, elementPtAttributes.style])
     const attributes: Omit<PtAttr<ELT>, 'style'> & { style?: string } = {
         ...globalPtAttributes,
         ...elementPtAttributes,
