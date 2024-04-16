@@ -49,7 +49,7 @@ export function importComponents(cmpOrCmpList: string | string[]) {
 }
 
 export function importJS(cmpOrCmpList: string | string[], ...codeList: string[]) {
-    return scriptJS([...importComponents(cmpOrCmpList), ...codeList].join('\n'))
+    return scriptJS([...importComponents(cmpOrCmpList), ...codeList].join('\n   '))
 }
 
 export function importTS(cmpOrCmpList: string | string[], ...codeList: string[]) {
