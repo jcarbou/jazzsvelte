@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { PrimeReactProvider } from '../api/Api';
 import { Button } from '../button/Button.svelte';
-import { InputText } from '../inputtext/InputText';
+import { InputText } from '../inputtext/inputtext.types';
 import { Tooltip } from './Tooltip';
 
 describe('Tooltip', () => {

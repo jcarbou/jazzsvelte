@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useMergeProps } from '../hooks/Hooks';
 import { SearchIcon } from '../icons/search';
-import { InputText } from '../inputtext/InputText';
+import { InputText } from '../inputtext/inputtext.types';
 import { IconUtils, ObjectUtils } from '../utils/Utils';
 
 export const ListBoxHeader = React.memo((props) => {

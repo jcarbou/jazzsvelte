@@ -9,7 +9,7 @@
  */
 import * as React from 'react'
 import { ComponentHooks } from '../componentbase/componentbase'
-import { InputText, InputTextPassThroughOptions } from '../inputtext/inputtext'
+import { InputText, InputTextPassThroughOptions } from '../inputtext/inputtext.types'
 import { PassThroughOptions } from '../passthrough'
 import { TooltipPassThroughOptions } from '../tooltip/tooltip'
 import { TooltipOptions } from '../tooltip/tooltipOptions.types'

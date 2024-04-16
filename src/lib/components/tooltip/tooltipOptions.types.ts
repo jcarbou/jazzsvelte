@@ -56,7 +56,7 @@ export interface TooltipOptions {
     /**
      * Style class of the tooltip.
      */
-    className?: string
+    class?: string
     /**
      * When present, it specifies that the tooltip should be hidden.
      * @defaultValue false

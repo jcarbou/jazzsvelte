@@ -8,7 +8,7 @@
  *
  */
 import * as React from 'react'
-import { InputText, InputTextPassThroughOptions, InputTextProps } from '../inputtext'
+import { InputText, InputTextPassThroughOptions, InputTextProps } from '../inputtext/inputtext.types'
 import { TooltipOptions } from '../tooltip/tooltipOptions.types'
 import { FormEvent } from '../ts-helpers'
 import { PassThroughOptions } from '../passthrough'

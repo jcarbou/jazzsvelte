@@ -12,7 +12,7 @@ import { CSSTransitionProps as ReactCSSTransitionProps } from 'react-transition-
 import { ButtonPassThroughOptions } from '../button/Button.svelte'
 import { ComponentHooks } from '../componentbase/componentbase'
 import { CSSTransitionProps } from '../csstransition'
-import { InputTextPassThroughOptions } from '../inputtext/inputtext'
+import { InputTextPassThroughOptions } from '../inputtext/inputtext.types'
 import { PassThroughOptions } from '../passthrough'
 import { TooltipOptions } from '../tooltip/tooltipOptions.types'
 import { FormEvent, Nullable } from '../ts-helpers'

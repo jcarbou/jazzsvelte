@@ -11,8 +11,8 @@ import * as React from 'react'
 import { CSSTransitionProps as ReactCSSTransitionProps } from 'react-transition-group/CSSTransition'
 import { ComponentHooks } from '../componentbase/componentbase'
 import { CSSTransitionProps } from '../csstransition'
-import { InputText } from '../inputtext'
-import { KeyFilterType } from '../keyfilter/keyfilteroptions'
+import { InputText } from '../inputtext/inputtext.types'
+import { KeyFilterRegExp } from '../keyfilter/keyfilter.types'
 import { PassThroughOptions } from '../passthrough'
 import { TooltipOptions } from '../tooltip/tooltipOptions.types'
 import { IconType, PassThroughType } from '../utils/utils'
@@ -250,7 +250,7 @@ export interface PasswordProps
     /**
      * Format definition of the keys to block.
      */
-    keyfilter?: KeyFilterType | undefined
+    keyfilter?: KeyFilterRegExp | undefined
     /**
      * Inline style of the overlay panel element.
      */

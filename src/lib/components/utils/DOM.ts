@@ -1,6 +1,17 @@
 import { isFunction } from './ObjectUtils'
 
 /**
+ * Test if OS is Android
+ * @returns
+ */
+export function isAndroid(): boolean {
+    if (typeof window !== 'undefined') {
+        return /(android)/i.test(navigator.userAgent)
+    }
+    return false
+}
+
+/**
  * Get html element height (without padding)
  * @param el
  * @returns
@@ -121,6 +132,17 @@ export function getWindowScrollLeft(): number {
 export function getWindowScrollTop(): number {
     const doc = document.documentElement
     return doc.scrollTop - (doc.clientTop || 0)
+}
+
+/**
+ * Add event listener. If the element already have the same listener, it isn't added
+ * @param element - element
+ * @param eventName - event name
+ * @param listener - listener
+ */
+export function setSingleEventListener(element: HTMLElement, eventName: string, listener: EventListenerOrEventListenerObject) {
+    element.removeEventListener(eventName, listener)
+    element.addEventListener(eventName, listener)
 }
 
 /**

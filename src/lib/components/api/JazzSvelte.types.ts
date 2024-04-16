@@ -58,7 +58,7 @@ import type { ButtonGroupPassThroughOptions } from '../buttonGroup/buttonGroup.t
 // import { InplacePassThroughOptions } from '../inplace/inplace'
 // import { InputNumberPassThroughOptions } from '../inputnumber/inputnumber'
 // import { InputSwitchPassThroughOptions } from '../inputswitch/inputswitch'
-// import { InputTextPassThroughOptions } from '../inputtext/inputtext'
+import { InputTextThroughOptions } from '../inputtext/inputtext.types'
 // import { InputTextareaPassThroughOptions } from '../inputtextarea/inputtextarea'
 // import { KnobPassThroughOptions } from '../knob/knob'
 // import { ListboxPassThroughOptions } from '../listbox/listbox'
@@ -350,7 +350,7 @@ export interface JazzSveltePTOptions {
     // /**
     //  * Custom passthrough(pt) options for InputText.
     //  */
-    // inputtext?: InputTextPassThroughOptions
+    inputtext?: InputTextThroughOptions
     // /**
     //  * Custom passthrough(pt) options for InputTextarea.
     //  */

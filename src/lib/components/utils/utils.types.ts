@@ -33,6 +33,7 @@ export interface PassThroughOptions {
 */
 export type HTMLSpanAttributes = HTMLAttributes<HTMLSpanElement>
 export type HTMLDivAttributes = HTMLAttributes<HTMLDivElement>
+export type HTMLInputAttributes = HTMLAttributes<HTMLInputElement>
 export type HTMLSVGAttributes = SVGAttributes<SVGSVGElement> | HTMLAttributes<HTMLSpanElement | SVGSVGElement>
 
 export type PassThroughHTMLButtonAttributes = PassThroughHTMLAttributes<HTMLButtonAttributes>

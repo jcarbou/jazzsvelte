@@ -5,7 +5,7 @@ import { useMergeProps } from '../hooks/Hooks';
 import { SortAltIcon } from '../icons/sortalt';
 import { SortAmountDownIcon } from '../icons/sortamountdown';
 import { SortAmountUpAltIcon } from '../icons/sortamountupalt';
-import { InputText } from '../inputtext/InputText';
+import { InputText } from '../inputtext/inputtext.types';
 import { RowBase } from '../row/RowBase';
 import { Tooltip } from '../tooltip/Tooltip';
 import { classNames, DomHandler, IconUtils, ObjectUtils } from '../utils/Utils';

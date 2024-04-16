@@ -1,14 +1,21 @@
 <script lang="ts">
     import type { CssStyle } from '../utils/cssStyles'
-    import type { TooltipPassThroughMethodOptions, TooltipPassThroughOptions, TooltipPosition } from './tooltip.types'
+    import type {
+        TooltipLayoutActionState,
+        TooltipPassThroughMethodOptions,
+        TooltipPassThroughOptions,
+        TooltipPosition
+    } from './tooltip.types'
     import type { TooltipEvent, TooltipOptions } from './tooltipOptions.types'
     import type { HTMLDivAttributes } from '../utils/utils.types'
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { isEmpty, isNotEmpty } from '../utils/Utils'
     import { resolvePT } from '../utils/ptUtils'
     import { tooltipLayout } from './tooltip.actions'
+    import { onMount } from 'svelte'
 
     export let targetElement: HTMLElement
+    export let tooltipLayoutState: TooltipLayoutActionState
     export let x: number | null = null
     export let y: number | null = null
     export let visible: boolean = false
@@ -44,12 +51,14 @@
     export let unstyled: boolean = false
     export let style: CssStyle = null
 
+    let textRef: HTMLDivElement
+
     $: positionState = options?.position || 'right'
     let classNameState = ''
 
     // "root" element
     $: rootAttributes = resolvePT(
-        ['p-tooltip p-component', `p-tooltip-${positionState}`, classNameState],
+        ['p-tooltip p-component', options?.class, classNameState],
         style,
         pt?.root,
         JAZZ_SVELTE.pt?.tooltip?.root,
@@ -79,10 +88,10 @@
 </script>
 
 {#if visible}
-    <div {...rootAttributes} use:tooltipLayout={{ x, y, targetElement, options }}>
+    <div {...rootAttributes} use:tooltipLayout={{ x, y, targetElement, tooltipLayoutState, options }}>
         <div {...arrowAttributes}></div>
-        <div {...textAttributes}>
-            {content || ''}
+        <div {...textAttributes} bind:this={textRef}>
+            {@html content || ''}
             <slot />
         </div>
     </div>

@@ -11,6 +11,7 @@
     import { getContext } from 'svelte'
     import { SIZE_VALUE_TO_CSS, getIconPos, isIconPos } from './button.utils'
     import { tooltip } from '../tooltip/tooltip.actions'
+    import TooltipTargetDisabled from '../tooltip/TooltipTargetDisabled.svelte'
 
     export let disabled: boolean = false
     export let icon: string | null = null
@@ -40,7 +41,6 @@
     //export let badgeClass: string | null = null => Use badge slot instead
 
     let ripple = JAZZ_SVELTE.ripple
-
     const buttonGroup = getContext<ButtonGroupContext>('buttonGroup')
 
     $: defaultAriaLabel = label ? label + (badge ? ' ' + badge : '') : ''
@@ -117,34 +117,38 @@
         ptOptions,
         unstyled
     ) satisfies HTMLSpanAttributes
+
+    $: showOnDisabled = !!tooltipOptions?.showOnDisabled satisfies boolean
 </script>
 
 {#if visible}
-    <button
-        data-pc-name="button"
-        data-pc-section="root"
-        {disabled}
-        aria-label={defaultAriaLabel}
-        {...rootAttributes}
-        {...$$restProps}
-        use:tooltip={{ content: tooltipContent, options: tooltipOptions }}
-        on:click
-    >
-        {#if icon && !loading}
-            <span data-pc-section="icon" {...iconAttributes}></span>
-        {:else if loadingIcon && loading}
-            <span data-pc-section="icon" {...loadingiconAttributes}></span>
-        {/if}
-        {#if label}
-            <span data-pc-section="label" {...labelAttributes}>{label}</span>
-        {/if}
-        {#if badge}
-            <Badge value={badge}></Badge>
-        {/if}
-        <slot name="badge" />
-        <slot />
-        {#if !disabled && $ripple}
-            <Ripple />
-        {/if}
-    </button>
+    <TooltipTargetDisabled {showOnDisabled} useTooltip={{ content: tooltipContent, options: tooltipOptions }}>
+        <button
+            data-pc-name="button"
+            data-pc-section="root"
+            {disabled}
+            aria-label={defaultAriaLabel}
+            {...rootAttributes}
+            {...$$restProps}
+            use:tooltip={{ content: showOnDisabled ? null : tooltipContent, options: tooltipOptions }}
+            on:click
+        >
+            {#if icon && !loading}
+                <span data-pc-section="icon" {...iconAttributes}></span>
+            {:else if loadingIcon && loading}
+                <span data-pc-section="icon" {...loadingiconAttributes}></span>
+            {/if}
+            {#if label}
+                <span data-pc-section="label" {...labelAttributes}>{label}</span>
+            {/if}
+            {#if badge}
+                <Badge value={badge}></Badge>
+            {/if}
+            <slot name="badge" />
+            <slot />
+            {#if !disabled && $ripple}
+                <Ripple />
+            {/if}
+        </button>
+    </TooltipTargetDisabled>
 {/if}

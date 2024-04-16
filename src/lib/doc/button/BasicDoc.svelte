@@ -4,7 +4,7 @@
     import Button from '$lib/components/button/Button.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
-    import { importJS, scriptJS, scriptTS } from '../common/doc.utils'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -20,7 +20,7 @@ ${importJS('Button')}
 </div>
         `,
         typescript: `
-${scriptTS(`import Button from 'jazzsvelte/Button'`)}
+${importTS(`Button`)}
 
 <div class="card flex justify-content-center">
     <Button label="Submit" />
@@ -35,6 +35,6 @@ ${scriptTS(`import Button from 'jazzsvelte/Button'`)}
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <Button label="Submit" tooltip="MyTT" tooltipOptions={{ position: 'right' }} />
+    <Button label="Submit"></Button>
 </div>
 <DocSectionCode {code} />

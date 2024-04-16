@@ -1,5 +1,6 @@
+import type { TooltipOptions } from '../tooltip/tooltipOptions.types'
 import type { HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '../utils/utils.types'
-import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type { HTMLButtonAttributes } from 'svelte/elements'
 
 export type ButtonSize = 'small' | 'normal' | 'large' | undefined
 export type IconPos = 'top' | 'bottom' | 'left' | 'right' | undefined
@@ -16,7 +17,7 @@ export type ButtonGroupContext = {
  * Defines valid properties in Button component. In addition to these, all properties of HTMLButtonElement can be used in this component.
  * @group Properties
  */
-export interface ButtonProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'disabled' | 'ref'> {
+export interface ButtonProps extends Omit<HTMLButtonAttributes, 'disabled'> {
     /**
      * Used to get the child elements of the component.
      * @readonly
@@ -94,7 +95,7 @@ export interface ButtonProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'di
     /**
      * Configuration of the tooltip, refer to the tooltip documentation for more information.
      */
-    //tooltipOptions?: TooltipOptions | undefined
+    tooltipOptions?: TooltipOptions | undefined
     /**
      * When present, it specifies that the element should be visible.
      * @defaultValue true

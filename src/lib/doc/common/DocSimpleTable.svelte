@@ -8,14 +8,14 @@
 <DocTableWrapper>
     <tr slot="thead">
         {#each headers as header, i (i)}
-            <th>{header}</th>
+            <th>{@html header}</th>
         {/each}
     </tr>
     <svelte:fragment slot="tbody">
         {#each rows as row, i (i)}
             <tr>
                 {#each row as value, i (i)}
-                    <td>{value}</td>
+                    <td>{@html value}</td>
                 {/each}
             </tr>
         {/each}

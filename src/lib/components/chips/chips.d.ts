@@ -9,7 +9,7 @@
  */
 import * as React from 'react'
 import { ComponentHooks } from '../componentbase/componentbase'
-import { KeyFilterType } from '../keyfilter'
+import { KeyFilterRegExp } from '../keyfilter/keyfilter.types'
 import { PassThroughOptions } from '../passthrough'
 import { TooltipPassThroughOptions } from '../tooltip/tooltip'
 import { TooltipOptions } from '../tooltip/tooltipOptions.types'
@@ -220,9 +220,9 @@ export interface ChipsProps
     allowDuplicate?: boolean
     /**
      * Format definition of the keys to block.
-     * @type {KeyFilterType}
+     * @type {KeyFilterRegExp}
      */
-    keyfilter?: KeyFilterType | undefined
+    keyfilter?: KeyFilterRegExp | undefined
     /**
      * Whether to add an item when the input loses focus.
      * @defaultValue false

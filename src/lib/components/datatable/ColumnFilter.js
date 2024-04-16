@@ -9,7 +9,7 @@ import { FilterIcon } from '../icons/filter';
 import { FilterSlashIcon } from '../icons/filterslash';
 import { PlusIcon } from '../icons/plus';
 import { TrashIcon } from '../icons/trash';
-import { InputText } from '../inputtext/InputText';
+import { InputText } from '../inputtext/inputtext.types';
 import { OverlayService } from '../overlayservice/OverlayService';
 import { Portal } from '../portal/Portal';
 import { Ripple } from '../ripple/Ripple';

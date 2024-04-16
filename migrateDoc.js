@@ -13,8 +13,10 @@ const IMPORT2_DOC_COMMON_REG_EXP = /import\s*(\w*)\s*.*@\/components\/doc\/commo
 const IMPORT_CMP_REG_EXP = /import \{\s*(\w*)\s*\}.*@\/components\/lib\/(\w*)\/.*/gm
 
 const CMP_DOC_MIGRATE = [
-    [IMPORT_DOC_COMMON_REG_EXP, "    import $1 from '$lib/doc/common/$1.svelte'"],
-    [IMPORT2_DOC_COMMON_REG_EXP, "    import $1 from '$lib/doc/common/$1.svelte'"],
+    [IMPORT_DOC_COMMON_REG_EXP, `    import $1 from '$lib/doc/common/$1.svelte'
+`],
+    [IMPORT2_DOC_COMMON_REG_EXP, `    import $1 from '$lib/doc/common/$1.svelte'
+`],
     [IMPORT_CMP_REG_EXP, "    import $1 from '$lib/components/$2/$1.svelte'"],
     [/export function.*/gm, '</script>'],
     [/export.*const.*=>.*/gm, '</script>'],
@@ -24,14 +26,20 @@ const CMP_DOC_MIGRATE = [
     [/><\/img>/gm, '/>'],
     [/onClick/gm, 'on:click'],
     [/\s*return\s*<DocComponent(.*)/gm, '\n</script>\n\n<DocComponent$1'],
+    [/\s*return\s*\(\s*<DocComponent(.*)/gm, '\n</script>\n\n<DocComponent$1'],
     [/\s*return.*/gm, ''],
     [/^}$/gm, ''],
     [/^};$/gm, ''],
+    [/^\s*\)\s*$/gm, ''],
     [/^ {4}\);$/gm, ''],
     [/^\s*<>$/gm, ''],
     [/^\s*<\/>$/gm, ''],
-    [/export default .*/gm, ''],
+    [/export default .*\s/gm, ''],
     [/import Link from 'next\/link'.*/gm, ''],
+    [/import\s*\{\s*useState\s*\}\s*from\s*'react'.*/gm, ''],
+    [/import\s*React.*\s*/gm, ''],
+    [/(^\s*$\s)(\s*)import/gm, '$2import'], // Remove empty lines before import
+    [/const\s*\[.*\]\s*=\s*useState.*/gm, ''],
     [/\s*<DocSectionText\s*\{...props\}\s*>\s*<\/DocSectionText>/gm, '\n<DocSectionText docSection={docSection} />'],
     [/\s*<DocSectionText\s*\{...props\}\s*\/>/gm, '\n<DocSectionText docSection={docSection} />'],
     [/\s*<DocSectionText\s*\{...props\}\s*>/gm, '\n<DocSectionText docSection={docSection}>'],
@@ -57,8 +65,13 @@ function regexpPatch(content) {
     return content
 }
 
-function lastPatch(content) {
+function addScriptTsDeclaration(content) {
     return `<script lang="ts">
+`+ content
+}
+
+function cmp_addImport(content) {
+    return `import { importJS, importTS} from '../common/doc.utils'
 `+ content
 }
 
@@ -80,10 +93,18 @@ function page_fixImportCaseError (content) {
 }
 
 function page_importCmpDocPatch (content) {
-    const importCmpDocThemingRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmp}\\/(\\w*)\\/.*`, 'gm')
-    const importCmpDocRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmp}.*`, 'gm')
-    content = content.replace(importCmpDocThemingRegExp,`    import $1 from '$lib/doc/${cmp}/$2/$1.svelte'`)
-    return content.replace(importCmpDocRegExp,`    import $1 from '$lib/doc/${cmp}/$1.svelte'`)
+    const importCmpDocThemingRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmpname}\\/(\\w*)\\/.*`, 'gm')
+    const importCmpDocRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmpname}.*`, 'gm')
+    content = content.replace(importCmpDocThemingRegExp,`    import $1 from '$lib/doc/${cmpname}/$2/$1.svelte'`)
+    return content.replace(importCmpDocRegExp,`    import $1 from '$lib/doc/${cmpname}/$1.svelte'`)
+}
+
+function cmp_importCmpDocPatch (content) {
+    const importCmpDocThemingRegExp = new RegExp(`import\\s*\\{\\s*${CmpName}\\s*\\}\\s*from.*`, 'gm')
+    content = content.replace(importCmpDocThemingRegExp,'')
+    content = content.replace(/(.*)javascript:\s*`\s/gm, "$1javascript: `\n${importJS('"+CmpName+"')}")
+    content = content.replace(/(.*)typescript:\s*`\s/gm, "$1typescript: `\n${importTS('"+CmpName+"')}")
+    return content
 }
 
 function page_removeXXXDemo (content) {
@@ -107,23 +128,27 @@ function cmp_moveCode(content) {
 
 const DOC_TABLE_WRAPPER_START = /<div\s*class="doc-tablewrapper"\s*>/g
 const DOC_TABLE_WRAPPER_TH = /\s*<th>(.*)<\/th>/g
-const DOC_TABLE_WRAPPER_TD = /\s*<td>(.*)<\/td>/g
+const DOC_TABLE_WRAPPER_TD = /\s*<td>\s*(.*)\s*<\/td>/gm
 
 function cmp_docTabelWrapper(content) {
     const lines = content.split('\n')
     let newContent = ''
     let migrating = false
+    let cellMigratting = false
     const headers = []
     const rows = []
     let row = []
+    let cell = []
     let tbody = false
+    let migrated = false
     
     for(const line of lines) {
         if (!migrating) {
             if (DOC_TABLE_WRAPPER_START.test(line)) {                
                 migrating = true
+                migrated = true
             } else {
-                newContent += line + '\''
+                newContent += line + '\n'
             }
             continue
         }
@@ -143,8 +168,30 @@ function cmp_docTabelWrapper(content) {
             continue
         }
 
-        if (line.includes('<td')) {
+        if (line.includes('<td') && line.includes('</td>')) {
             row.push(line.replace( DOC_TABLE_WRAPPER_TD, `'$1'`))
+            continue
+        }
+
+        if (line.includes('<td')) {
+            cellMigratting = true
+            continue
+        }
+
+        if (line.includes('</td>')) {
+            cellMigratting = false
+            row.push("'"+cell.join('\n')+"'")
+            cell = []
+            continue
+        }
+
+        if (cellMigratting) {
+            cell.push(line.trim())
+            continue
+        }
+
+        if (cellMigratting) {
+            cellMigratting = true
             continue
         }
 
@@ -156,10 +203,14 @@ function cmp_docTabelWrapper(content) {
 
         if (line.includes('</div')) { 
             migrating  = false
-            newContent += `<DocSimpleTable headers={[${headers.join(',')})]} rows={[\n   ${rows.join(',\n   ')}\n]}/>
+            newContent += `<DocSimpleTable headers={[${headers.join(',')}]} rows={[\n   ${rows.join(',\n   ')}\n]}/>
 `
             continue
         }
+    }
+
+    if (migrated) {
+        newContent = "import DocSimpleTable from '../common/DocSimpleTable.svelte'\n"+newContent
     }
 
     return newContent
@@ -192,9 +243,11 @@ async function format(path) {
     //console.log(`prettier --check ${path} && eslint ${path}`);
 }
 
-const [cmd, migateFile, cmp] = process.argv
-const newPage = `src/routes/${cmp}`
-const newDoc = `src/lib/doc/${cmp}`
+const [cmd, migateFile, cmpName] = process.argv
+const cmpname = cmpName.toLowerCase()
+const CmpName = cmpName.substring(0,1).toUpperCase()+cmpName.substring(1)
+const newPage = `src/routes/${cmpname}`
+const newDoc = `src/lib/doc/${cmpName}`
 
 // Migrate components
 function renameDocFiles(dirPath) {
@@ -202,7 +255,7 @@ function renameDocFiles(dirPath) {
 
         // For custom migration (when automatic failed) ignore file (remove it)
         if (CUSTOM_DOC_CMP.find(({_cmp , _jsFileName}) => 
-           _cmp === cmp &&  _jsFileName === fileName
+           _cmp === cmpName &&  _jsFileName === fileName
         )) {
             fs.rmSync(dirPath+'/'+fileName)
             continue
@@ -225,11 +278,11 @@ function renameDocFiles(dirPath) {
         const newFilePath = `${dirPath}/${newFileName}`
 
         const custom = CUSTOM_DOC_CMP.find(({_cmp , _fileName}) => 
-           _cmp === cmp &&  _fileName === newFileName
+           _cmp === cmpName &&  _fileName === newFileName
         )
 
         if (custom) {
-            console.log(`Ignore custom doc ${cmp} ${newFileName}`)
+            console.log(`Ignore custom doc ${cmpName} ${newFileName}`)
             continue
         }
 
@@ -243,20 +296,22 @@ function renameDocFiles(dirPath) {
             regexpPatch, // Fake for prettier
             cmp_docExportPatch, 
             cmp_moveCode, 
-            cmp_docTabelWrapper,
-            jsonStyleToString, 
-            lastPatch
+            cmp_docTabelWrapper,            
+            jsonStyleToString,
+            cmp_addImport,
+            cmp_importCmpDocPatch,
+            addScriptTsDeclaration
         ])
     }
 }
 fs.rmSync(newDoc, { recursive: true, force: true })
-fs.cpSync(`_pr_components/doc/${cmp}`, newDoc, {recursive: true})
+fs.cpSync(`_pr_components/doc/${cmpName}`, newDoc, {recursive: true})
 renameDocFiles(newDoc)
 
 // Migrate page
 const newPagePath = `${newPage}/+page.svelte`
-if (!CUSTOM_PAGES[cmp]) {
-    fs.cpSync(`_pr_pages/${cmp}`, newPage, {recursive: true})
+if (!CUSTOM_PAGES[cmpName]) {
+    fs.cpSync(`_pr_pages/${cmpName}`, newPage, {recursive: true})
     fs.renameSync(`${newPage}/index.js`, newPagePath)
     withFileContent(newPagePath, [
         page_removeXXXDemo, // fake for prettier
@@ -264,7 +319,7 @@ if (!CUSTOM_PAGES[cmp]) {
         regexpPatch,  
         page_importCmpDocPatch, 
         jsonStyleToString, 
-        lastPatch
+        addScriptTsDeclaration
     ])
     fs.writeFileSync(`${newPage}/+page.ts` ,`import { dev } from '$app/environment';
 

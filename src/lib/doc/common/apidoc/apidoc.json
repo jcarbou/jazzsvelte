@@ -30870,15 +30870,7 @@
                     "description": "Defines valid properties in InputText component. In addition to these, all properties of HTMLInputElement can be used in this component.",
                     "values": [
                         {
-                            "name": "children",
-                            "optional": true,
-                            "readonly": true,
-                            "type": "ReactNode",
-                            "default": "",
-                            "description": "Used to get the child elements of the component."
-                        },
-                        {
-                            "name": "keyfilter",
+                            "name": "keyFilter",
                             "optional": true,
                             "readonly": false,
                             "type": "KeyFilterType",

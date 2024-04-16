@@ -87,7 +87,7 @@ export * from './inplace/Inplace';
 export * from './inputmask/InputMask';
 export * from './inputnumber/InputNumber';
 export * from './inputswitch/InputSwitch';
-export * from './inputtext/InputText';
+export * from './inputtext/inputtext.types';
 export * from './inputtextarea/InputTextarea';
 export * from './keyfilter/KeyFilter';
 export * from './knob/Knob';

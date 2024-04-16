@@ -7,15 +7,20 @@ export declare type TooltipPassThroughType<T> = PassThroughType<PassThroughHTMLA
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'mouse'
 
 export type TooltipActionOptions = {
-    content: string | null
+    content?: string | null
     options?: TooltipOptions
 }
 
 export type TooltipLayoutActionOptions = {
     targetElement: HTMLElement
+    tooltipLayoutState: TooltipLayoutActionState
     x: number | null
     y: number | null
     options?: TooltipOptions
+}
+
+export type TooltipLayoutActionState = {
+    setMouseOverTooltip: (state: boolean) => void
 }
 
 /**

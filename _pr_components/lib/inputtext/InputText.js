@@ -66,7 +66,8 @@ export const InputText = React.memo(
             ObjectUtils.combinedRefs(elementRef, ref);
         }, [elementRef, ref]);
 
-        const isFilled = React.useMemo(() => ObjectUtils.isNotEmpty(props.value) || ObjectUtils.isNotEmpty(props.defaultValue), [props.value, props.defaultValue]);
+        const isFilled = React.useMemo(() => ObjectUtils.isNotEmpty(props.value) 
+        || ObjectUtils.isNotEmpty(props.defaultValue), [props.value, props.defaultValue]);
         const hasTooltip = ObjectUtils.isNotEmpty(props.tooltip);
 
         const rootProps = mergeProps(

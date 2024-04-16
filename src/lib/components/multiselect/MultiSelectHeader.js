@@ -5,7 +5,7 @@ import { useMergeProps } from '../hooks/Hooks';
 import { CheckIcon } from '../icons/check';
 import { SearchIcon } from '../icons/search';
 import { TimesIcon } from '../icons/times';
-import { InputText } from '../inputtext/InputText';
+import { InputText } from '../inputtext/inputtext.types';
 import { Ripple } from '../ripple/Ripple';
 import { IconUtils, ObjectUtils, UniqueComponentId } from '../utils/Utils';
 

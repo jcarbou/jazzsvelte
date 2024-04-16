@@ -9,7 +9,7 @@
  */
 import * as React from 'react'
 import { ComponentHooks } from '../componentbase/componentbase'
-import { KeyFilterType } from '../keyfilter'
+import { KeyFilterRegExp } from '../keyfilter/keyfilter.types'
 import { PassThroughOptions } from '../passthrough'
 import { TooltipPassThroughOptions } from '../tooltip/tooltip'
 import { TooltipOptions } from '../tooltip/tooltipOptions.types'
@@ -74,7 +74,7 @@ export interface InputTextareaProps
     /**
      * Format definition of the keys to block.
      */
-    keyfilter?: KeyFilterType
+    keyfilter?: KeyFilterRegExp
     /**
      * Content of the tooltip.
      */

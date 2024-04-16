@@ -46,6 +46,23 @@
 
 <span data-pc-name="badge" data-pc-section="root" {...rootAttributes} {...$$restProps}>{value}</span>
 
+<svelte:head>
+    <style type="text/css">
+        .p-overlay-badge {
+            position: relative;
+        }
+
+        .p-overlay-badge .p-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate(50%, -50%);
+            transform-origin: 100% 0;
+            margin: 0;
+        }
+    </style>
+</svelte:head>
+
 <style>
     @layer primereact {
         .p-badge {
@@ -60,19 +77,6 @@
             min-width: 1.55rem;
             height: 1.55rem;
             line-height: 1.55rem;
-        }
-
-        .p-overlay-badge {
-            position: relative;
-        }
-
-        .p-overlay-badge .p-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            transform: translate(50%, -50%);
-            transform-origin: 100% 0;
-            margin: 0;
         }
 
         .p-badge-dot {
