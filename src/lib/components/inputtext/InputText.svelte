@@ -1,7 +1,8 @@
 <script lang="ts">
-    import type { CssStyle } from '../utils/cssStyles'
-    import type { HTMLInputAttributes } from '../utils/utils.types'
+    import type { HTMLInputAttributes, CssStyle } from '../utils/utils.types'
     import type { TooltipOptions } from '../tooltip/tooltipOptions.types'
+    import type { InputTextEvent, InputTextPassThroughMethodOptions, InputTextPassThroughOptions } from './inputtext.types'
+    import type { KeyFilterRegExp, ValidatedInputEvent } from '../keyfilter/keyfilter.types'
 
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { resolvePT } from '../utils/ptUtils'
@@ -9,9 +10,7 @@
     import { createEventDispatcher } from 'svelte'
     import { tooltip } from '../tooltip/tooltip.actions'
     import TooltipTargetDisabled from '../tooltip/TooltipTargetDisabled.svelte'
-    import type { InputTextEvent, InputTextPassThroughMethodOptions, InputTextPassThroughOptions } from './inputtext.types'
     import { keyFilter } from '../keyfilter/keyFilter.actions'
-    import type { KeyFilterRegExp, ValidatedInputEvent } from '../keyfilter/keyfilter.types'
 
     export let disabled: boolean = false
     export let invalid: boolean = false
@@ -36,15 +35,19 @@
 
     // "root element"
     $: rootAttributes = resolvePT(
-        [
-            'p-inputtext p-component',
-            className,
-            {
-                'p-disabled': disabled,
-                'p-filled': !!value
-            }
-        ],
-        style,
+        {
+            class: [
+                'p-inputtext p-component',
+                className,
+                {
+                    'p-disabled': disabled,
+                    'p-filled': !!value
+                }
+            ],
+            style,
+            'data-pc-name': 'inputtext',
+            'data-pc-section': 'root'
+        },
         pt?.root,
         JAZZ_SVELTE.pt?.inputtext?.root,
         ptOptions,
@@ -60,8 +63,6 @@
 
 <TooltipTargetDisabled {showOnDisabled} useTooltip={{ content: tooltipContent, options: tooltipOptions }}>
     <input
-        data-pc-name="inputtext"
-        data-pc-section="root"
         {disabled}
         {...rootAttributes}
         {...$$restProps}

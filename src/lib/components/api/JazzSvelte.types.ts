@@ -58,7 +58,7 @@ import type { ButtonGroupPassThroughOptions } from '../buttonGroup/buttonGroup.t
 // import { InplacePassThroughOptions } from '../inplace/inplace'
 // import { InputNumberPassThroughOptions } from '../inputnumber/inputnumber'
 // import { InputSwitchPassThroughOptions } from '../inputswitch/inputswitch'
-import { InputTextThroughOptions } from '../inputtext/inputtext.types'
+import type { InputTextPassThroughOptions } from '../inputtext/inputtext.types'
 // import { InputTextareaPassThroughOptions } from '../inputtextarea/inputtextarea'
 // import { KnobPassThroughOptions } from '../knob/knob'
 // import { ListboxPassThroughOptions } from '../listbox/listbox'
@@ -101,10 +101,10 @@ import { InputTextThroughOptions } from '../inputtext/inputtext.types'
 // import { TerminalPassThroughOptions } from '../terminal/terminal'
 // import { TieredMenuPassThroughOptions } from '../tieredmenu/tieredmenu'
 // import { TimelinePassThroughOptions } from '../timeline/timeline'
-// import { ToastPassThroughOptions } from '../toast/toast'
+import type { ToastPassThroughOptions } from '../toast/toast.types'
 // import { ToggleButtonPassThroughOptions } from '../togglebutton/togglebutton'
 // import { ToolbarPassThroughOptions } from '../toolbar/toolbar'
-import { TooltipPassThroughOptions } from '../tooltip/tooltip.types'
+import type { TooltipPassThroughOptions } from '../tooltip/tooltip.types'
 // import { TreePassThroughOptions } from '../tree/tree'
 // import { TreeSelectPassThroughOptions } from '../treeselect/treeselect'
 // import { TreeTablePassThroughOptions } from '../treetable/treetable'
@@ -350,7 +350,7 @@ export interface JazzSveltePTOptions {
     // /**
     //  * Custom passthrough(pt) options for InputText.
     //  */
-    inputtext?: InputTextThroughOptions
+    inputtext?: InputTextPassThroughOptions
     // /**
     //  * Custom passthrough(pt) options for InputTextarea.
     //  */
@@ -522,7 +522,7 @@ export interface JazzSveltePTOptions {
     // /**
     //  * Custom passthrough(pt) options for Toast.
     //  */
-    // toast?: ToastPassThroughOptions
+    toast?: ToastPassThroughOptions
     // /**
     //  * Custom passthrough(pt) options for ToffleButton.
     //  */

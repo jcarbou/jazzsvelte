@@ -1,6 +1,7 @@
 <script lang="ts">
     import { JAZZ_SVELTE } from '$lib/components/api/JazzSvelte'
     import JazzSvelte from '$lib/components/api/JazzSvelte.svelte'
+    import Toast from '$lib/components/toast/Toast.svelte'
     import { inputStyle, ripple, news } from '$lib/layout/layoutStore'
     import NewsSection from '$lib/layout/newsSection/NewsSection.svelte'
     import Sidebar from '$lib/layout/sidebar/Sidebar.svelte'
@@ -60,6 +61,14 @@
         </div>
     </div>
 </div>
+<Toast />
+<Toast id="topLeft" position="top-left" />
+<Toast id="topCenter" position="top-center" />
+<Toast id="topRight" position="top-right" />
+<Toast id="center" position="center" />
+<Toast id="bottomLeft" position="bottom-left" />
+<Toast id="bottomCenter" position="bottom-center" />
+<Toast id="bottomRight" position="bottom-right" />
 
 <style>
     :global(html) {

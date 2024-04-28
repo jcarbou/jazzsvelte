@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { CssStyle } from '../utils/cssStyles'
     import type { TooltipLayoutActionState, TooltipPassThroughMethodOptions, TooltipPassThroughOptions } from './tooltip.types'
     import type { TooltipOptions } from './tooltipOptions.types'
-    import type { HTMLDivAttributes } from '../utils/utils.types'
+    import type { HTMLDivAttributes, CssStyle } from '../utils/utils.types'
+
     import JAZZ_SVELTE from '../api/JazzSvelte'
     import { resolvePT } from '../utils/ptUtils'
     import { tooltipLayout } from './tooltip.actions'
@@ -28,8 +28,7 @@
 
     // "root" element
     $: rootAttributes = resolvePT(
-        ['p-tooltip p-component', options?.class, classNameState],
-        style,
+        { class: ['p-tooltip p-component', options?.class, classNameState], style },
         pt?.root,
         JAZZ_SVELTE.pt?.tooltip?.root,
         ptOptions,
@@ -38,8 +37,7 @@
 
     // "arrow" element
     $: arrowAttributes = resolvePT(
-        ['p-tooltip-arrow'],
-        null,
+        { class: ['p-tooltip-arrow'] },
         pt?.arrow,
         JAZZ_SVELTE.pt?.tooltip?.arrow,
         ptOptions,
@@ -48,8 +46,7 @@
 
     // "text" element
     $: textAttributes = resolvePT(
-        ['p-tooltip-text'],
-        null,
+        { class: ['p-tooltip-text'] },
         pt?.text,
         JAZZ_SVELTE.pt?.tooltip?.text,
         ptOptions,

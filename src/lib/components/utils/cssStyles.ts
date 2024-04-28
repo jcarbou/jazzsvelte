@@ -1,11 +1,10 @@
-type CssObject = { [key: string]: string }
-export type CssStyle = string | CssObject | null
+import type { CssObject, CssStyle } from './utils.types'
 
 export function mergeCssStsyles(styles: (CssStyle | undefined)[]) {
     const cssObject = {}
     for (const style of styles) {
         if (!style) continue
-        if (typeof styles === 'object') {
+        if (typeof style === 'object') {
             Object.assign(cssObject, cleanCssObject(style as CssObject))
         } else {
             Object.assign(cssObject, cssStringToCssObject(style as string))
@@ -22,6 +21,9 @@ function cleanCssObject(style: CssObject): CssObject {
     const cleanStyle: { [key: string]: string } = {}
     for (const [key, value] of Object.entries(style)) {
         const newKey = key.trim()
+        if (value === null || value === undefined) {
+            continue
+        }
         const newValue = value.trim()
         if (newKey && newValue) {
             cleanStyle[newKey] = newValue

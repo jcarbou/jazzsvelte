@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { setContext } from 'svelte'
-    import JAZZ_SVELTE from '../api/JazzSvelte'
-    import type { CssStyle } from '../utils/cssStyles'
-    import { resolvePT } from '../utils/ptUtils'
     import type { ButtonGroupPassThroughMethodOptions, ButtonGroupPassThroughOptions } from './buttonGroup.types'
     import type { ButtonGroupContext } from '../button/button.types'
-    import type { HTMLSpanAttributes } from '../utils/utils.types'
+    import type { HTMLSpanAttributes, CssStyle } from '../utils/utils.types'
+
+    import { setContext } from 'svelte'
+    import JAZZ_SVELTE from '../api/JazzSvelte'
+    import { resolvePT } from '../utils/ptUtils'
 
     export let disabled: boolean = false
     export let rounded: boolean = false
@@ -22,8 +22,13 @@
 
     // "root element"
     $: rootAttributes = resolvePT(
-        ['p-button-group p-component', className],
-        style,
+        {
+            class: ['p-button-group p-component', className],
+            style,
+            role: 'group',
+            'data-pc-name': 'buttongroup',
+            'data-pc-section': 'root'
+        },
         pt?.root,
         JAZZ_SVELTE.pt?.buttonGroup?.root,
         ptOptions,
@@ -42,7 +47,7 @@
 </script>
 
 {#if visible}
-    <span role="group" data-pc-name="buttongroup" data-pc-section="root" {...rootAttributes} {...$$restProps}>
+    <span {...rootAttributes} {...$$restProps}>
         <slot />
     </span>
 {/if}

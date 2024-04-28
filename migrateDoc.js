@@ -20,7 +20,7 @@ const CMP_DOC_MIGRATE = [
     [IMPORT_CMP_REG_EXP, "    import $1 from '$lib/components/$2/$1.svelte'"],
     [/export function.*/gm, '</script>'],
     [/export.*const.*=>.*/gm, '</script>'],
-    [/const.*=>.*/gm, '</script>'],
+    // [/const.*=>.*/gm, '</script>'], // nor replace const showSuccess = () => {
     [/className/gm, 'class'],
     [/ClassName/gm, 'Class'],
     [/><\/img>/gm, '/>'],
@@ -34,6 +34,7 @@ const CMP_DOC_MIGRATE = [
     [/^ {4}\);$/gm, ''],
     [/^\s*<>$/gm, ''],
     [/^\s*<\/>$/gm, ''],
+    [/^\s*import\s*{\s*useRef\s*}\s*from\s*'react'\s*;/gm, '']
     [/export default .*\s/gm, ''],
     [/import Link from 'next\/link'.*/gm, ''],
     [/import\s*\{\s*useState\s*\}\s*from\s*'react'.*/gm, ''],

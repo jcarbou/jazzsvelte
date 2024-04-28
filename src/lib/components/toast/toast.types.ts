@@ -1,28 +1,30 @@
-/**
- *
- * Toast is used to display messages in an overlay.
- *
- * [Live Demo](https://www.primereact.org/toast/)
- *
- * @module toast
- *
- */
-import * as React from 'react';
-import { CSSTransitionProps as ReactCSSTransitionProps } from 'react-transition-group/CSSTransition';
-import { ComponentHooks } from '../componentbase/componentbase';
-import { CSSTransitionProps } from '../csstransition';
-import { PassThroughOptions } from '../passthrough';
-import { IconType, PassThroughType } from '../utils/utils';
+import type {
+    HTMLDivAttributes,
+    HTMLButtonAttributes,
+    HTMLSpanAttributes,
+    PassThroughHTMLAttributes,
+    PassThroughOptions,
+    PassThroughType,
+    CssStyle,
+    IconComponent
+} from '../utils/utils.types'
+import type { SvelteComponent } from 'svelte'
 
-export declare type ToastPassThroughType<T> = PassThroughType<T, ToastPassThroughMethodOptions>;
-export declare type ToastPassThroughTransitionType = ReactCSSTransitionProps | ((options: ToastPassThroughMethodOptions) => ReactCSSTransitionProps) | undefined;
+export type MessageInfo = { message: string }
+export type ToastPosition = 'center' | 'top-center' | 'top-left' | 'top-right' | 'bottom-center' | 'bottom-left' | 'bottom-right'
+export type ToastSeverity = 'success' | 'info' | 'warn' | 'error'
+
+export declare type ToastPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, ToastPassThroughMethodOptions>
+
+//export declare type ToastPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, ToastPassThroughMethodOptions>;
+//export declare type ToastPassThroughTransitionType = ReactCSSTransitionProps | ((options: ToastPassThroughMethodOptions) => ReactCSSTransitionProps) | undefined;
 
 /**
  * Custom passthrough(pt) option method.
  */
 export interface ToastPassThroughMethodOptions {
-    props: ToastProps;
-    state: ToastState;
+    props: ToastProps
+    state: ToastState
 }
 
 /**
@@ -33,103 +35,104 @@ export interface ToastPassThroughOptions {
     /**
      * Uses to pass attributes to the root's DOM element.
      */
-    root?: ToastPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    root?: ToastPassThroughType<HTMLDivAttributes>
     /**
      * Uses to pass attributes to the message's DOM element.
      */
-    message?: ToastPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    message?: ToastPassThroughType<HTMLDivAttributes>
     /**
      * Uses to pass attributes to the content's DOM element.
      */
-    content?: ToastPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    content?: ToastPassThroughType<HTMLDivAttributes>
     /**
      * Uses to pass attributes to the icon's DOM element.
      */
-    icon?: ToastPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>;
+    icon?: ToastPassThroughType<HTMLSpanAttributes>
     /**
      * Uses to pass attributes to the text's DOM element.
      */
-    text?: ToastPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    text?: ToastPassThroughType<HTMLDivAttributes>
     /**
      * Uses to pass attributes to the summary's DOM element.
      */
-    summary?: ToastPassThroughType<React.HTMLAttributes<HTMLSpanElement>>;
+    summary?: ToastPassThroughType<HTMLSpanAttributes>
     /**
      * Uses to pass attributes to the detail's DOM element.
      */
-    detail?: ToastPassThroughType<React.HTMLAttributes<HTMLDivElement>>;
+    detail?: ToastPassThroughType<HTMLDivAttributes>
     /**
      * Uses to pass attributes to the close button's DOM element.
      */
-    closeButton?: ToastPassThroughType<React.HTMLAttributes<HTMLButtonElement>>;
+    closeButton?: ToastPassThroughType<HTMLButtonAttributes>
     /**
      * Uses to pass attributes to the close button icon's DOM element.
      */
-    closeButtonIcon?: ToastPassThroughType<React.SVGProps<SVGSVGElement> | React.HTMLAttributes<HTMLSpanElement>>;
+    closeButtonIcon?: ToastPassThroughType<HTMLSpanAttributes>
     /**
      * Used to manage all lifecycle hooks
      * @see {@link ComponentHooks}
      */
-    hooks?: ComponentHooks;
+    //hooks?: ComponentHooks
     /**
      * Used to control React Transition API.
      */
-    transition?: ToastPassThroughTransitionType;
+    // transition?: ToastPassThroughTransitionType;
 }
 
 /**
  * Defines message options in Toast component.
  */
 export interface ToastMessageOptions {
+    id: string | undefined
     /**
      * Severity level of the message.
      * @defaultValue info
      */
-    severity?: 'success' | 'info' | 'warn' | 'error' | undefined;
+    severity?: ToastSeverity | undefined
     /**
      * Summary content of the message.
      */
-    summary?: string | undefined;
+    summary?: string | undefined
     /**
      * Detail content of the message.
      */
-    detail?: any | undefined;
+    detail?: string | undefined
     /**
      * Whether the message can be closed manually using the close icon.
      * @defaultValue true
      */
-    closable?: boolean | undefined;
+    closable?: boolean | undefined
     /**
      * Delay in milliseconds to close the message automatically.
      */
-    life?: number | undefined;
+    life?: number | undefined
     /**
      * Key of the Toast to display the message.
      */
-    group?: string | undefined;
+    group?: string | undefined
     /**
      * Style class of the message.
      */
-    styleClass?: any;
+    styleClass?: string | string[] | undefined
     /**
      * Style class of the content.
      */
-    contentStyleClass?: any;
+    contentStyleClass?: string | string[] | undefined
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ToastPassThroughOptions}
      */
-    pt?: ToastPassThroughOptions;
+    pt?: ToastPassThroughOptions
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions;
+    ptOptions?: PassThroughOptions
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
      */
-    unstyled?: boolean;
+    unstyled?: boolean
 }
 
 /**
@@ -139,7 +142,7 @@ export interface ToastState {
     /**
      * Current messages.
      */
-    messages: any[];
+    messages: string[]
 }
 
 /**
@@ -149,71 +152,77 @@ export interface ToastMessage {
     /**
      * Unique id of the message.
      */
-    id?: string | undefined;
+    id: string
+
+    /**
+     * Toast group id
+     */
+    toastId: string
+
     /**
      * Severity of the message.
      */
-    severity?: 'success' | 'info' | 'warn' | 'error' | undefined;
+    severity?: ToastSeverity | undefined
     /**
      * Summary content of the message.
      */
-    summary?: React.ReactNode | undefined;
+    summary?: string | undefined
     /**
-     * Detail content of the message.
+     * Detail content of the message.  TODO Add slot section
      */
-    detail?: React.ReactNode | undefined;
+    detail?: string | undefined
     /**
      * Custom content of the message. If enabled, summary and details properties are ignored.
      */
-    content?: React.ReactNode | undefined;
+    content?: typeof SvelteComponent | undefined
     /**
      * Whether the message can be closed manually using the close icon.
      * @defaultValue true
      */
-    closable?: boolean | undefined;
+    closable?: boolean | undefined
     /**
      * Icon of the message.
      */
-    icon?: IconType<ToastProps> | undefined;
+    icon?: string | undefined
     /**
      * Icon of the close button.
      */
-    closeIcon?: IconType<ToastProps> | undefined;
+    closeIcon?: string | IconComponent | undefined
     /**
      * When enabled, message is not removed automatically.
      */
-    sticky?: boolean | undefined;
+    sticky?: boolean | undefined
     /**
      * Delay in milliseconds to close the message automatically.
      * @defaultValue 3000
      */
-    life?: number | undefined;
+    life?: number | undefined
     /**
      * Style class of the message.
      */
-    className?: string | undefined;
+    class?: string | undefined
     /**
      * Inline style of the message.
      */
-    style?: React.CSSProperties | undefined;
+    style?: CssStyle | undefined
     /**
      * Style class of the message content.
      */
-    contentClassName?: string | undefined;
+    contentClassName?: string | undefined
     /**
      * Inline style of the message content.
      */
-    contentStyle?: React.CSSProperties | undefined;
+    contentStyle?: CssStyle | undefined
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {Omit<ToastPassThroughOptions, 'message'>}
      */
-    pt?: Omit<ToastPassThroughOptions, 'message'>;
+    pt?: Omit<ToastPassThroughOptions, 'message'>
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions;
+    ptOptions?: ToastPassThroughMethodOptions
 }
 
 /**
@@ -225,88 +234,90 @@ interface ContentPropsMessage {
      * Summary of the toast.
      * @readonly
      */
-    summary: string;
+    summary: string
     /**
      * Detail of the toast.
      * @readonly
      */
-    detail: string;
+    detail: string
 }
 
 /**
  * Defines current content values and refs for headless development.
  * @see {@link ToastProps.content}
  */
-interface ContentProps {
+export interface ContentProps {
     /**
      * Toast's props values.
      */
-    message: ContentPropsMessage;
+    message: ContentPropsMessage
 }
 
 /**
  * Defines valid properties in Toast component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group Properties
  */
-export interface ToastProps extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'ref' | 'pt' | 'content'> {
+export interface ToastProps extends Omit<HTMLDivAttributes, 'pt' | 'content'> {
+    id?: string
+
     /**
      * Base zIndex value to add to initial layering of PrimeReact components which start from 1000.
      * @defaultValue 0
      */
-    baseZIndex?: number | undefined;
+    baseZIndex?: number | undefined
     /**
      * Position of the toast in viewport, valid values are 'center', 'top-center', 'top-left', 'top-right', 'bottom-center', 'bottom-left', 'bottom-right'.
      * @defaultValue top-right
      */
-    position?: 'center' | 'top-center' | 'top-left' | 'top-right' | 'bottom-center' | 'bottom-left' | 'bottom-right' | undefined;
+    position?: ToastPosition | undefined
     /**
      * The properties of CSSTransition can be customized, except for "nodeRef" and "in" properties.
      */
-    transitionOptions?: CSSTransitionProps | undefined;
+    ///transitionOptions?: CSSTransitionProps | undefined;
     /**
      * DOM element instance where the component should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located.
      * @defaultValue self
      */
-    appendTo?: 'self' | HTMLElement | undefined | null | (() => HTMLElement);
+    appendTo?: 'self' | HTMLElement | undefined | null | (() => HTMLElement)
     /**
      * Callback to invoke when an active tab is collapsed by clicking on the header.
      * @param {ToastMessage} message - Clicked message
      */
-    onClick?(message: ToastMessage): void;
+    onClick?(message: ToastMessage): void
     /**
      * Callback to invoke when a message is removed.
      * @param {ToastMessage} message - Removed message
      */
-    onRemove?(message: ToastMessage): void;
+    onRemove?(message: ToastMessage): void
     /**
      * Callback to invoke when message becomes visible.
      */
-    onShow?(): void;
+    onShow?(): void
     /**
      * Callback to invoke when message becomes hidden.
      */
-    onHide?(): void;
+    onHide?(): void
     /**
      * Used to get the child elements of the component.
      * @readonly
      */
-    children?: React.ReactNode | undefined;
+    //children?: React.ReactNode | undefined;
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ToastPassThroughOptions}
      */
-    pt?: ToastPassThroughOptions;
+    pt?: ToastPassThroughOptions
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions;
+    ptOptions?: PassThroughOptions
     /**
      * Specifies a custom content for the toast. For more complex markup, use the "content" slot instead.
      * @param {ContentProps} props - The values of toast.
      * @return {React.ReactNode}
      */
-    content?: React.ReactNode | ((props: ContentProps) => React.ReactNode);
+    //content?: React.ReactNode | ((props: ContentProps) => React.ReactNode);
 }
 
 /**
@@ -320,29 +331,29 @@ export interface ToastProps extends Omit<React.DetailedHTMLProps<React.HTMLAttri
  *
  * @group Component
  */
-export declare class Toast extends React.Component<ToastProps, any> {
+export declare class Toast extends SvelteComponent<ToastProps> {
     /**
      * Used to show the message.
      * @param {ToastMessage | ToastMessage[]} message - Message to show
      */
-    public show(message: ToastMessage | ToastMessage[]): void;
+    public show(message: ToastMessage | ToastMessage[]): void
     /**
      * Clears the all messages from Toast.
      */
-    public clear(): void;
+    public clear(): void
     /**
      * Used to add new messages after removing all old messages.
      * @param {ToastMessage | ToastMessage[]} message - Message to replace
      */
-    public replace(message: ToastMessage | ToastMessage[]): void;
+    public replace(message: ToastMessage | ToastMessage[]): void
     /**
      * Used to remove messages.
      * @param {ToastMessage | ToastMessage[]} message - Message to remove
      */
-    public remove(message: ToastMessage | ToastMessage[]): void;
+    public remove(message: ToastMessage | ToastMessage[]): void
     /**
      * Used to get container element.
      * @return {HTMLDivElement} Container element
      */
-    public getElement(): HTMLDivElement;
+    public getElement(): HTMLDivElement
 }

@@ -24,19 +24,23 @@
 
     // "root element"
     $: rootAttributes = resolvePT(
-        [
-            'p-badge p-component',
-            className,
-            {
-                'p-badge-no-gutter': isNotEmpty(value) && String(value).length === 1,
-                'p-badge-dot': isEmpty(value),
-                'p-badge-m': size === 'medium',
-                'p-badge-lg': size === 'large',
-                'p-badge-xl': size === 'xlarge',
-                [`p-badge-${severity}`]: severity !== null
-            }
-        ],
-        style,
+        {
+            class: [
+                'p-badge p-component',
+                className,
+                {
+                    'p-badge-no-gutter': isNotEmpty(value) && String(value).length === 1,
+                    'p-badge-dot': isEmpty(value),
+                    'p-badge-m': size === 'medium',
+                    'p-badge-lg': size === 'large',
+                    'p-badge-xl': size === 'xlarge',
+                    [`p-badge-${severity}`]: severity !== null
+                }
+            ],
+            style,
+            'data-pc-name': 'badge',
+            'data-pc-section': 'root'
+        },
         pt?.root,
         JAZZ_SVELTE.pt?.badge?.root,
         ptOptions,
@@ -44,7 +48,7 @@
     ) satisfies HTMLSpanAttributes
 </script>
 
-<span data-pc-name="badge" data-pc-section="root" {...rootAttributes} {...$$restProps}>{value}</span>
+<span {...rootAttributes} {...$$restProps}>{value}</span>
 
 <svelte:head>
     <style type="text/css">

@@ -14,11 +14,22 @@
 
     const { ripple: hasRipple } = JAZZ_SVELTE
 
-    $: rootAttributes = resolvePT(['p-ink', className], style, pt?.root, null, ptOptions, unstyled) satisfies HTMLSpanAttributes
+    $: rootAttributes = resolvePT(
+        {
+            class: ['p-ink', className],
+            style,
+            role: 'presentation',
+            'aria-hidden': 'true'
+        },
+        pt?.root,
+        null,
+        ptOptions,
+        unstyled
+    ) satisfies HTMLSpanAttributes
 </script>
 
 {#if $hasRipple}
-    <span {...rootAttributes} role="presentation" aria-hidden="true" use:ripple></span>
+    <span {...rootAttributes} use:ripple></span>
 {/if}
 
 <style>

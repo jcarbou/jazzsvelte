@@ -1,5 +1,12 @@
 import type { TooltipOptions } from '../tooltip/tooltipOptions.types'
-import type { HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '../utils/utils.types'
+import type {
+    HTMLSVGAttributes,
+    HTMLSpanAttributes,
+    HTMLSpanOrSvgAttributes,
+    IconComponent,
+    PassThroughHTMLAttributes,
+    PassThroughType
+} from '../utils/utils.types'
 import type { HTMLButtonAttributes } from 'svelte/elements'
 
 export type ButtonSize = 'small' | 'normal' | 'large' | undefined
@@ -82,7 +89,7 @@ export interface ButtonProps extends Omit<HTMLButtonAttributes, 'disabled'> {
     /**
      * Name of the loading icon or JSX.Element for loading icon.
      */
-    loadingIcon?: string | undefined
+    loadingIcon?: string | IconComponent | undefined
     /**
      * Add a plain textual class to the button without a background initially.
      * @defaultValue false
@@ -140,11 +147,11 @@ export interface ButtonPassThroughOptions {
     /**
      * Uses to pass attributes to the loading icon's DOM element.
      */
-    loadingIcon?: ButtonPassThroughType<HTMLSpanAttributes>
+    loadingIcon?: ButtonPassThroughType<HTMLSpanAttributes> | ButtonPassThroughType<HTMLSVGAttributes>
     /**
      * Uses to pass attributes to the icon's DOM element.
      */
-    icon?: ButtonPassThroughType<HTMLSpanAttributes>
+    icon?: ButtonPassThroughType<HTMLSpanAttributes> | ButtonPassThroughType<HTMLSVGAttributes>
     /**
      * Uses to pass attributes to the label's DOM element.
      */

@@ -107,18 +107,18 @@ export function resolveFieldData(data: any, field: string | ((data: any) => stri
     return null
 }
 
-export function findDiffKeys(obj1: any, obj2: any): object {
-    if (!obj1 || !obj2) {
-        return {}
-    }
+export function findDiffKeys<ATTR>(obj1: ATTR, obj2?: ATTR): Partial<ATTR> {
+    const result: Partial<ATTR> = {}
 
-    return Object.keys(obj1)
+    if (!obj1 || !obj2) return result
+
+    Object.keys(obj1)
         .filter((key) => !obj2.hasOwnProperty(key))
-        .reduce((result: any, current) => {
-            result[current] = obj1[current]
-
-            return result
-        }, {})
+        .forEach((key: string) => {
+            const attr = key as keyof ATTR
+            result[attr] = obj1[attr]
+        })
+    return result
 }
 
 /**
@@ -216,11 +216,11 @@ export function getPropCaseInsensitive(props: object, prop: string, defaultProps
     return undefined // Property not found
 }
 
-export function getMergedProps(props: object, defaultProps?: object): object {
+export function getMergedProps<ATTR>(props: ATTR, defaultProps?: ATTR): ATTR {
     return Object.assign({}, defaultProps, props)
 }
 
-export function getDiffProps(props: object, defaultProps?: object): object {
+export function getDiffProps<ATTR>(props: ATTR, defaultProps?: ATTR): Partial<ATTR> {
     return findDiffKeys(props, defaultProps)
 }
 
@@ -337,7 +337,13 @@ export function trim(value: any): any {
 }
 
 export function isEmpty(value: any): boolean {
-    return value === null || value === undefined || value === '' || (Array.isArray(value) && value.length === 0) || (!(value instanceof Date) && typeof value === 'object' && Object.keys(value).length === 0)
+    return (
+        value === null ||
+        value === undefined ||
+        value === '' ||
+        (Array.isArray(value) && value.length === 0) ||
+        (!(value instanceof Date) && typeof value === 'object' && Object.keys(value).length === 0)
+    )
 }
 
 export function isNotEmpty(value: any): boolean {
@@ -408,7 +414,13 @@ export function findLastIndex(arr: any[], callback: () => any): number {
     return index
 }
 
-export function sort(value1: any, value2: any, order: number = 1, comparator: (v1: any, v2: any) => number, nullSortOrder: number = 1): number {
+export function sort(
+    value1: any,
+    value2: any,
+    order: number = 1,
+    comparator: (v1: any, v2: any) => number,
+    nullSortOrder: number = 1
+): number {
     const result = compare(value1, value2, comparator, order)
     let finalSortOrder = order
 
