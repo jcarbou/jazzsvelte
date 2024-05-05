@@ -1,0 +1,1 @@
+export { default as SearchPlusIcon } from './SearchPlusIcon.svelte'

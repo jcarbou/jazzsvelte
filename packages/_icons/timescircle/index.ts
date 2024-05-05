@@ -1,0 +1,1 @@
+export { default as TimesCircleIcon } from './TimesCircleIcon.svelte'

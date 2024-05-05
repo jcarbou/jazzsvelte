@@ -1,0 +1,1 @@
+export { default as SortAmountDownIcon } from './SortAmountDownIcon.svelte'

@@ -1,0 +1,1 @@
+export { default as ExclamationTriangleIcon } from './ExclamationTriangleIcon.svelte'

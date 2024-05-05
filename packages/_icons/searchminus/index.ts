@@ -1,0 +1,1 @@
+export { default as SearchMinusIcon } from './SearchMinusIcon.svelte'

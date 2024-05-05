@@ -8,5 +8,8 @@
     "printWidth": 130,
     "bracketSameLine": false,
     "plugins": ["prettier-plugin-svelte"],
-	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
+	"overrides": [
+        { "files": "*.json", "options": { "parser": "json" } },
+        { "files": "*.svelte", "options": { "parser": "svelte" } }
+    ]
 }

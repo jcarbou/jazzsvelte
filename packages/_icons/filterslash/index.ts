@@ -1,0 +1,1 @@
+export { default as FilterSlashIcon } from './FilterSlashIcon.svelte'

@@ -1,0 +1,16 @@
+{
+            "name": "@jazzsvelte/sortamountupalt_icon",
+            "version": "0.1.0",
+            "description": "SortAmountUpAltIcon",
+            "main": "/index.ts",
+            "sideEffects": false,
+            "scripts": {
+              "test": "echo \"Error: no test specified\" && exit 1"
+            },
+            "dependencies": {
+              "@jazzsvelte/icons": "workspace:*"
+            },
+            "keywords": [],
+            "author": "",
+            "license": "ISC"
+          }

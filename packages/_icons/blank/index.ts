@@ -1,0 +1,1 @@
+export { default as BlankIcon } from './BlankIcon.svelte'

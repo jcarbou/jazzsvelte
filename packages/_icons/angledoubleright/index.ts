@@ -1,0 +1,1 @@
+export { default as AngleDoubleRightIcon } from './AngleDoubleRightIcon.svelte'

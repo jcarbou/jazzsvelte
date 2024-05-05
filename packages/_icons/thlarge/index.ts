@@ -1,0 +1,1 @@
+export { default as ThLargeIcon } from './ThLargeIcon.svelte'

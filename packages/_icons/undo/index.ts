@@ -1,0 +1,1 @@
+export { default as UndoIcon } from './UndoIcon.svelte'

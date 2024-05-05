@@ -1,0 +1,1 @@
+export { default as WindowMaximizeIcon } from './WindowMaximizeIcon.svelte'
