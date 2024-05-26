@@ -1,6 +1,14 @@
 <script lang="ts">
-    import type { HTMLButtonAttributes, IconComponent, CssStyle, ResolvedIconPT, HTMLDivAttributes } from '@jazzsvelte/api'
-    import type { ToastPassThroughMethodOptions, ToastPassThroughOptions, ToastSeverity } from './toast.types'
+    import type {
+        HTMLButtonAttributes,
+        IconComponent,
+        CssStyle,
+        ResolvedIconPT,
+        HTMLDivAttributes,
+        PassThroughOptions,
+        HTMLSpanAttributes
+    } from '@jazzsvelte/api'
+    import type { ToastMessagePassThroughMethodOptions, ToastPassThroughOptions, ToastSeverity } from './toast.types'
 
     import { SvelteComponent, type ComponentType } from 'svelte'
     import { JAZZ_SVELTE, resolveIconPT, resolvePT, localeOption } from '@jazzsvelte/api'
@@ -21,17 +29,15 @@
     export let detail: string | null = null
     export let content: typeof SvelteComponent | null = null
     export let closable: boolean = true
-    export let icon: string | null = null
+    export let icon: string | IconComponent | null = null
     export let closeIcon: string | IconComponent | null = TimesIcon
     export let sticky: boolean = false
-    export let onMouseEnter: ((event: MouseEvent) => void) | null = null
-    export let onMouseLeave: ((event: MouseEvent) => void) | null = null
     export let onClose: ((id: string) => void) | null = null
     export let onClick: ((id: string) => void) | null = null
     export let contentClass: string | null = null
     export let contentStyle: CssStyle | null = null
     export let pt: Omit<ToastPassThroughOptions, 'message'> | null = null
-    export let ptOptions: ToastPassThroughMethodOptions | null = null
+    export let ptOptions: PassThroughOptions | null = null
     let className: string | null = null
     export { className as class }
     export let ariaCloseLabel: string = localeOption('close')
@@ -47,14 +53,21 @@
 
     $: _icon = icon || (severity && icons[severity]) || (null satisfies string | IconComponent | null)
 
+    $: ptContext = {
+        props: $$props,
+        ptOptions,
+        unstyled
+    } satisfies ToastMessagePassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
     // "icon" element
     $: resolvedIcon = resolveIconPT(
         _icon,
         { class: ['p-toast-message-icon'] },
         pt?.icon,
         JAZZ_SVELTE.pt?.toast?.icon,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies ResolvedIconPT
 
     // "close button" element
@@ -65,8 +78,7 @@
         },
         pt?.closeButton,
         JAZZ_SVELTE.pt?.toast?.closeButton,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies HTMLButtonAttributes
 
     // "closeButton" element
@@ -75,8 +87,7 @@
         { class: ['p-toast-icon-close-icon'] },
         pt?.closeButtonIcon,
         JAZZ_SVELTE.pt?.toast?.closeButtonIcon,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies ResolvedIconPT
 
     // "content" element
@@ -87,8 +98,7 @@
         },
         pt?.content,
         JAZZ_SVELTE.pt?.toast?.content,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies HTMLDivAttributes
 
     // "message" element
@@ -108,8 +118,7 @@
         },
         pt?.root,
         JAZZ_SVELTE.pt?.toast?.message,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies HTMLDivAttributes
 
     // "text" element
@@ -117,8 +126,7 @@
         { class: ['p-toast-message-text'] },
         pt?.text,
         JAZZ_SVELTE.pt?.toast?.text,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies HTMLDivAttributes
 
     // "summary" element
@@ -126,34 +134,24 @@
         { class: ['p-toast-summary'] },
         pt?.summary,
         JAZZ_SVELTE.pt?.toast?.summary,
-        ptOptions,
-        unstyled
-    ) satisfies HTMLDivAttributes
+        ptContext
+    ) satisfies HTMLSpanAttributes
 
     // "summary" element
     $: detailAttributes = resolvePT(
         { class: ['p-toast-detail'] },
         pt?.detail,
         JAZZ_SVELTE.pt?.toast?.detail,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies HTMLDivAttributes
 
     function _onMouseEnter(event: MouseEvent) {
-        onMouseEnter?.(event)
-
+       
         // do not continue if the user has canceled the event
         if (event.defaultPrevented) return
 
         // stop timer while user has focused message
         !sticky && clearCloseToastTimer(id)
-    }
-
-    function _onMouseLeave(event: MouseEvent) {
-        // do not continue if the user has canceled the event
-        if (event.defaultPrevented) return
-
-        onMouseLeave?.(event)
     }
 
     function _onClick() {
@@ -167,7 +165,7 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div on:mouseenter={_onMouseEnter} on:mouseleave={_onMouseLeave} on:click={_onClick} {...messageAttributes}>
+<div on:mouseenter={_onMouseEnter} on:click={_onClick} {...messageAttributes}>
     <div {...contentAttributes}>
         {#if content}
             <svelte:component this={content} {...$$props} />

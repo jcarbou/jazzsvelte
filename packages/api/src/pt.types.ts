@@ -18,8 +18,10 @@ export type MainElementAttributes<ELT extends Element> = Omit<PtAttr<ELT>, 'styl
     class: ClassNameEntry[]
 }
 
-export type PassThroughMethodOptions<CP> = {
+export type PassThroughMethodOptions<CP, STATE, CTX> = {
     props: CP
+    state?: STATE
+    context?: CTX
 }
 
 export type ResolvedIconPT = {
@@ -39,18 +41,18 @@ export interface PassThroughOptions {
     /**
      * Should the passthrough merge sections?
      */
-    mergeSections?: boolean | undefined
+    mergeSections?: boolean
     /**
      * Should the passthrough merge properties?
      */
-    mergeProps?: boolean | undefined
+    mergeProps?: boolean
     /**
      * Custom merge function such as twMerge for Tailwind merging.
      * @param className1 the first className to merge
      * @param className2 the second className to merge to className1
      * @returns the merged className
      */
-    classNameMergeFunction?: (className1: string, className2: string) => string | undefined
+    classNameMergeFunction?: (className1: string, className2: string) => string
 }
 
 /*export type HTMLButtonAttributes = HTMLAttributes<HTMLButtonElement>

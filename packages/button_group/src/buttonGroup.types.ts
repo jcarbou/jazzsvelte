@@ -1,54 +1,58 @@
-import type { HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '@jazzsvelte/api'
+import type { CssStyle, HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '@jazzsvelte/api'
+import { ButtonIconPos, ButtonSeverity, ButtonSize } from '@jazzsvelte/button'
 import type { HTMLAttributes } from 'svelte/elements'
 
 /**
  * Defines valid properties in Button Group component. In addition to these, all properties of HTMLSpanElement can be used in this component.
  * @group Properties
  */
-export interface ButtonGroupProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'disabled' | 'ref'> {
-    /**
-     * Used to get the child elements of the component.
-     * @readonly
-     */
-    //children?: HTMLElement | undefined
+export interface BaseButtonGroupProps {
     /**
      * When present, it specifies that the element should be disabled.
      * @defaultValue false
      */
-    disabled?: boolean | undefined
+    disabled?: boolean
     /**
      * Add a circular border radius to the button.
      * @defaultValue false
      */
-    rounded?: boolean | undefined
+    rounded?: boolean
     /**
      * Add a shadow to indicate elevation.
      * @defaultValue false
      */
-    raised?: boolean | undefined
+    raised?: boolean
     /**
      * Add a border class without a background initially.
      * @defaultValue false
      */
-    outlined?: boolean | undefined
+    outlined?: boolean
     /**
      * Defines the style of the button, valid values are "secondary", "success", "info", "warning", "danger", "help".
      */
-    severity?: 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help' | undefined
+    severity?: ButtonSeverity | null
     /**
      * Defines the size of the button, valid values are "small" and "large".
      */
-    size?: 'small' | 'large' | undefined
+    size?: ButtonSize | null
     /**
      * Position of the icon, valid values are "left", "right", "top" and "bottom".
      * @defaultValue left
      */
-    iconPos?: 'top' | 'bottom' | 'left' | 'right' | undefined
+    iconPos?: ButtonIconPos | null
     /**
      * When present, it specifies that the element should be visible.
      * @defaultValue true
      */
-    visible?: boolean | undefined
+    visible?: boolean
+    /**
+     * CSS classes to add to root element
+     */
+    class?: string | null
+    /**
+     * CSS classes to add to root element
+     */
+    style?: CssStyle | null
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ButtonGroupPassThroughOptions}
@@ -65,6 +69,12 @@ export interface ButtonGroupProps extends Omit<HTMLAttributes<HTMLButtonElement>
      */
     unstyled?: boolean
 }
+
+/**
+ * Defines valid properties in Button Group component. In addition to these, all properties of HTMLSpanElement can be used in this component.
+ * @group Properties
+ */
+export interface ButtonGroupProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'disabled' | 'style'>, BaseButtonGroupProps {}
 
 export declare type ButtonGroupPassThroughType<T> = PassThroughType<
     PassThroughHTMLAttributes<T>,

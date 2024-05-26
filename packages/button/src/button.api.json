@@ -1,0 +1,240 @@
+{
+    "description": "Button is an extension to standard button element with icons and theming.",
+    "meta": {
+        "RootType": "Button",
+        "omitAttributes": "'disabled' | 'style'"
+    },
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": []
+    },
+    "types": {
+        "description": "Defines types used by properties of the Button component.",
+        "values": [
+            { "name": "ButtonIconPos", "value": "'top' | 'bottom' | 'left' | 'right'" },
+            { "name": "ButtonSeverity", "value": "'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help'" },
+            { "name": "ButtonSize", "value": "'small' | 'normal' | 'large'" }
+        ]
+    },
+    "props": {
+        "baseDescription": "Defines valid properties in Button component.",
+        "description": "Defines valid properties in Button component. In addition to these, all properties of HTMLButtonElement can be used in this component.",
+        "values": [
+            {
+                "name": "badge",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Value of the badge."
+            },
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "disabled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When present, it specifies that the element should be disabled."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Name of the icon or JSX.Element for icon."
+            },
+            {
+                "name": "iconPos",
+                "optional": true,
+                "readonly": false,
+                "type": "${ButtonIconPos} | null",
+                "default": "'left'",
+                "description": "Position of the icon, valid values are \"left\", \"right\", \"top\" and \"bottom\"."
+            },
+            {
+                "name": "label",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Text of the button."
+            },
+            {
+                "name": "link",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a link style to the button."
+            },
+            {
+                "name": "loading",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Display loading icon of the button"
+            },
+            {
+                "name": "loadingIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "SpinnerIcon",
+                "defaultImport": "import { SpinnerIcon } from '@jazzsvelte/spinner_icon'",
+                "description": "Name of the loading icon or JSX.Element for loading icon."
+            },
+            {
+                "name": "outlined",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a border class without a background initially."
+            },
+            {
+                "name": "plain",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a plain textual class to the button without a background initially."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonPassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonPassThroughMethodOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "raised",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a shadow to indicate elevation."
+            },
+            {
+                "name": "rounded",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a circular border radius to the button."
+            },
+            {
+                "name": "severity",
+                "optional": true,
+                "readonly": false,
+                "type": "${ButtonSeverity} | null",
+                "default": "null",
+                "description": "Defines the style of the button, valid values are \"secondary\", \"success\", \"info\", \"warning\", \"danger\", \"help\"."
+            },
+            {
+                "name": "size",
+                "optional": true,
+                "readonly": false,
+                "type": "${ButtonSize} | null",
+                "default": "null",
+                "description": "Defines the size of the button, valid values are \"small\" and \"large\"."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "text",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a textual class to the button without a background initially."
+            },
+            {
+                "name": "tooltip",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Content of the tooltip."
+            },
+            {
+                "name": "tooltipOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "TooltipOptions | null",
+                "default": "null",
+                "description": "Configuration of the tooltip, refer to the tooltip documentation for more information."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            },
+            {
+                "name": "visible",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "When present, it specifies that the element should be visible."
+            }
+        ]
+    },
+    "ptContext": {
+        "values": [
+            { "name": "disabled", "type": "boolean", "description": "Current disabled state of the element as a boolean." }
+        ]
+    },
+    "ptOptions": {
+        "label": "Button PT Options",
+        "values": [
+            { "name": "root", "type": "Button", "description": "Uses to pass attributes to the root's DOM element." },
+            {
+                "name": "loadingIcon",
+                "type": "Icon",
+                "description": "Uses to pass attributes to the loading icon's DOM element."
+            },
+            { "name": "icon", "type": "Icon", "description": "Uses to pass attributes to the icon's DOM element." },
+            { "name": "label", "type": "Span", "description": "Uses to pass attributes to the label's DOM element." },
+            { "name": "badge", "type": "Span", "description": "Uses to pass attributes to the badge's DOM element." }
+        ]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "values": [
+            { "name": "props", "type": "ButtonProps", "optional": false, "readonly": false },
+            { "name": "context", "type": "ButtonContext", "optional": false, "readonly": false }
+        ]
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": []
+    }
+}

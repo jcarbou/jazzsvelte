@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { TooltipLayoutActionState, TooltipPassThroughMethodOptions, TooltipPassThroughOptions } from './tooltip.types'
     import type { TooltipOptions } from './tooltipOptions.types'
-    import type { JazzSvelteContext, HTMLDivAttributes, CssStyle } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, HTMLDivAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
 
     import { getContext } from 'svelte'
     import { fade } from 'svelte/transition'
@@ -18,20 +18,31 @@
     export let content: string | null = null
     export let options: TooltipOptions | undefined = undefined
     export let pt: TooltipPassThroughOptions | null = null
-    export let ptOptions: TooltipPassThroughMethodOptions | null = null
+    export let ptOptions: PassThroughOptions | null = null
     export let unstyled: boolean = false
     export let style: CssStyle = null
+    export const displayName = 'Tooltip'
 
     $: positionState = options?.position || 'right'
     let classNameState = ''
+
+    $: ptContext = {
+        props: $$props,
+        //TODO ? : context: { right, left, top, bottom },
+        state: { visible, position: positionState, class: classNameState },
+        ptOptions,
+        unstyled
+    } satisfies TooltipPassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 
     // "root" element
     $: rootAttributes = resolvePT(
         { class: ['p-tooltip p-component', options?.class, classNameState], style },
         pt?.root,
         JAZZ_SVELTE.pt?.tooltip?.root,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies HTMLDivAttributes
 
     // "arrow" element
@@ -39,8 +50,7 @@
         { class: ['p-tooltip-arrow'] },
         pt?.arrow,
         JAZZ_SVELTE.pt?.tooltip?.arrow,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies HTMLDivAttributes
 
     // "text" element
@@ -48,8 +58,7 @@
         { class: ['p-tooltip-text'] },
         pt?.text,
         JAZZ_SVELTE.pt?.tooltip?.text,
-        ptOptions,
-        unstyled
+        ptContext
     ) satisfies HTMLDivAttributes
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')

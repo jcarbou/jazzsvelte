@@ -1,18 +1,30 @@
 <script lang="ts">
-    import type { HTMLSpanAttributes } from '@jazzsvelte/api'
+    import type { CssStyle, HTMLSpanAttributes, PassThroughOptions } from '@jazzsvelte/api'
     import type { RipplePassThroughMethodOptions, RipplePassThroughOptions } from './ripple.types'
 
     import { JAZZ_SVELTE, resolvePT } from '@jazzsvelte/api'
     import { ripple } from './ripple.action'
+    import { defaultRippleProps as DEFAULT, globalRipplePT as globalPt } from './ripple.config'
 
-    export let style: string | null = null
-    let className: string | null = null
+    export let style: CssStyle | null = DEFAULT.style
+    let className: string | null = DEFAULT.class
     export { className as class }
-    export let unstyled: boolean = false
+    export let unstyled: boolean = DEFAULT.unstyled
     export let pt: RipplePassThroughOptions | null = null
-    export let ptOptions: RipplePassThroughMethodOptions | null = null
+    export let ptOptions: PassThroughOptions | null = null
+
+    export const displayName = 'Ripple'
 
     const { ripple: hasRipple } = JAZZ_SVELTE
+
+    $: ptContext = {
+        props: $$props,
+        ptOptions,
+        unstyled
+    } satisfies RipplePassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 
     $: rootAttributes = resolvePT(
         {
@@ -22,9 +34,8 @@
             'aria-hidden': 'true'
         },
         pt?.root,
-        null,
-        ptOptions,
-        unstyled
+        globalPt?.root,
+        ptContext
     ) satisfies HTMLSpanAttributes
 </script>
 

@@ -1,9 +1,5 @@
-import  { render, screen, fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/svelte';
-import {describe, expect, test, vi} from 'vitest'
-/*import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { snapshot } from '../../test';
-import { PrimeReactProvider } from '../api/Api';*/
+import  { screen, fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/svelte';
+import {describe, expect, vi} from 'vitest'
 import Button from './Button.svelte';
 import { containerTest, snapshot} from '@jazzsvelte/test'
 
@@ -19,7 +15,6 @@ describe('Button', () => {
     snapshot('when label is true it renders Button with default aria label', Button, {})
     snapshot('when aria-label prop is not exist aria-label prop should be equal to label prop', Button, {label:'test'})
     snapshot('when label prop is not exist label prop should be equal to aria-label prop', Button, {'aria-label':'test'})
-    snapshot('when using badge and label the aria-label should contain both values', Button, {label:'test', badge:'lost'})
     snapshot('when using badge and label the aria-label should contain both values', Button, {label:'test', badge:'lost'})
 
     containerTest('when using tooltip make sure the tooltip is rendered', Button, {label:'test', tooltip:'Jest Tooltip'}, async (buttonEl) => {
@@ -80,7 +75,7 @@ describe('Button', () => {
         }
     })
 
-    containerTest('when button is disabled the click event should not fire', Button, {label:'test', ripple:true}, async (buttonEl, button) => {
+    containerTest('when Ripple is enabled button should have ripple effect', Button, {label:'test', ripple:true}, async (buttonEl, button) => {
         expect(buttonEl).not.toBeNull()
         expect(button).not.toBeNull()
         

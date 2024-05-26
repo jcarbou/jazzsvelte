@@ -5,22 +5,23 @@
     "main": "src/index.ts",
     "sideEffects": false,
     "scripts": {
-      "test": "vitest"
+        "test": "vitest",
+        "test:update": "vitest run -u"
     },
     "devDependencies": {
-      "@jazzsvelte/test": "workspace:^0.1.0"
+        "@jazzsvelte/test": "workspace:^0.1.0"
     },
     "dependencies": {
-      "@jazzsvelte/api": "workspace:^0.1.0",
-      "@jazzsvelte/badge": "workspace:^0.1.0",
-      "@jazzsvelte/icons": "workspace:^0.1.0",
-      "@jazzsvelte/object": "workspace:^0.1.0",
-      "@jazzsvelte/ripple": "workspace:^0.1.0",
-      "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
-      "@jazzsvelte/tooltip": "workspace:^0.1.0"
+        "@jazzsvelte/api": "workspace:^0.1.0",
+        "@jazzsvelte/badge": "workspace:^0.1.0",
+        "@jazzsvelte/icons": "workspace:^0.1.0",
+        "@jazzsvelte/object": "workspace:^0.1.0",
+        "@jazzsvelte/ripple": "workspace:^0.1.0",
+        "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
+        "@jazzsvelte/tooltip": "workspace:^0.1.0"
     },
     "keywords": [],
-    "author": "",
+    "author": "Jerome Carbou",
     "license": "ISC",
     "type": "module"
-  }
+}

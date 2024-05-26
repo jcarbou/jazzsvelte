@@ -1,0 +1,346 @@
+{
+    "description": "When pressed, a floating action button can display multiple primary actions that can be performed on a page.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            },
+            {
+                "name": "hide",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Used to hide the popup."
+            },
+            {
+                "name": "show",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Used to show the popup."
+            }
+        ]
+    },
+    "props": {
+        "description": "Defines valid properties in SpeedDial component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "buttonClassName",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Style class of the button element."
+            },
+            {
+                "name": "buttonStyle",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Inline style of the button element."
+            },
+            {
+                "name": "buttonTemplate",
+                "optional": true,
+                "readonly": false,
+                "type": "typeof SvelteComponent | null ",
+                "default": "null",
+                "description": "Template of button element."
+            },
+            {
+                "name": "direction",
+                "optional": true,
+                "readonly": false,
+                "type": "${SpeedDialDirection} | null",
+                "default": "'up'",
+                "description": "Specifies the opening direction of actions. Valid values are 'up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left' and 'down-right'"
+            },
+            {
+                "name": "disabled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether the component is disabled."
+            },
+            {
+                "name": "hideIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Hide icon of the button element."
+            },
+            {
+                "name": "hideOnClickOutside",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "Whether the actions close when clicked outside."
+            },
+            {
+                "name": "mask",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether to show a mask element behind the speeddial."
+            },
+            {
+                "name": "maskClassName",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Style class of the mask element."
+            },
+            {
+                "name": "maskStyle",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Inline style of the mask element."
+            },
+            {
+                "name": "model",
+                "optional": true,
+                "readonly": false,
+                "type": "MenuItem[]",
+                "default": "null",
+                "description": "MenuModel instance to define the action items."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "SpeedDialPassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "SpeedDialPassThroughMethodOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "radius",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "0",
+                "description": "Radius for *circle types."
+            },
+            {
+                "name": "rotateAnimation",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "Defined to rotate showIcon when hideIcon is not present."
+            },
+            {
+                "name": "showIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Show icon of the button element."
+            },
+            {
+                "name": "transitionDelay",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "30",
+                "description": "Transition delay step for each action item."
+            },
+            {
+                "name": "type",
+                "optional": true,
+                "readonly": false,
+                "type": "${SpeedDialType}",
+                "default": "'linear'",
+                "description": "Specifies the opening type of actions."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            },
+            {
+                "name": "visible",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Specifies the visibility of the overlay."
+            }
+        ]
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onClick",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent<HTMLElement, MouseEvent>",
+                        "description": "Browser event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Fired when the button element clicked."
+            },
+            {
+                "name": "onHide",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Fired when the actions are hidden."
+            },
+            {
+                "name": "onShow",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Fired when the actions are visible."
+            },
+            {
+                "name": "onVisibleChange",
+                "parameters": [
+                    {
+                        "name": "visible",
+                        "optional": false,
+                        "type": "boolean",
+                        "description": "Custom visible change event"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Fired when the visibility of element changed."
+            }
+        ]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "SpeedDialProps"
+            },
+            {
+                "name": "state",
+                "optional": false,
+                "readonly": false,
+                "type": "SpeedDialState"
+            }
+        ]
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "button",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonPassThroughO",
+                "description": "Uses to pass attributes to the Button component."
+            },
+            {
+                "name": "menu",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the menu's DOM element."
+            },
+            {
+                "name": "menuitem",
+                "optional": true,
+                "readonly": false,
+                "type": "LI",
+                "description": "Uses to pass attributes to the menu item's DOM element."
+            },
+            {
+                "name": "action",
+                "optional": true,
+                "readonly": false,
+                "type": "Anchor",
+                "description": "Uses to pass attributes to the action's DOM element."
+            },
+            {
+                "name": "actionIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the action icon's DOM element."
+            },
+            {
+                "name": "mask",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the mask's DOM element."
+            },
+            {
+                "name": "hooks",
+                "optional": true,
+                "readonly": false,
+                "type": "ComponentHooks",
+                "description": "Used to manage all lifecycle hooks"
+            }
+        ]
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": true,
+        "svelteComponent": true
+    },
+    "types": {
+        "description": "Defines types used by properties of the SpeedDial component.",
+        "values": [
+            {
+                "name": "SpeedDialDirection",
+                "value": "'left' | 'right' | 'up' | 'down' | 'up-left' | 'up-right' | 'down-left' | 'down-right'"
+            },
+            { "name": "SpeedDialType", "value": "'linear' | 'circle' | 'semi-circle' | 'quarter-circle'" }
+        ]
+    },
+    "state": {
+        "description": "Defines current inline state in SpeedDial component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "visible",
+                "optional": false,
+                "readonly": false,
+                "type": "boolean",
+                "description": "Current visible state as a boolean."
+            }
+        ]
+    }
+}

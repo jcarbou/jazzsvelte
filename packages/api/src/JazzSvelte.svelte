@@ -5,6 +5,7 @@
     import './base.css'
     import './common.css'
 
+    export const displayName = 'JazzSvelte'
     const { themePath, ripple } = JAZZ_SVELTE
 
     setContext<JazzSvelteContext>('JAZZ_SVELTE', JAZZ_SVELTE)

@@ -1,23 +1,36 @@
 <script lang="ts">
     import type { ButtonGroupPassThroughMethodOptions, ButtonGroupPassThroughOptions } from './buttonGroup.types'
-    import type { ButtonGroupContext } from '@jazzsvelte/button'
-    import type { HTMLSpanAttributes, CssStyle } from '@jazzsvelte/api'
+    import type { ButtonGroupContext, ButtonIconPos, ButtonSeverity, ButtonSize } from '@jazzsvelte/button'
+    import type { HTMLSpanAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
 
     import { setContext } from 'svelte'
-    import { JAZZ_SVELTE, resolvePT } from '@jazzsvelte/api'
+    import { resolvePT } from '@jazzsvelte/api'
+    import { defaultButtonGroupProps as DEFAULT, globalButtonGroupPT as globalPt } from './buttonGroup.config'
 
-    export let disabled: boolean = false
-    export let rounded: boolean = false
-    export let outlined: boolean = false
-    export let size: 'small' | 'normal' | 'large' | undefined = undefined
-    export let iconPos: 'top' | 'bottom' | 'left' | 'right' | undefined = undefined
-    export let visible: boolean = true
+    export let disabled: boolean = DEFAULT.disabled
+    export let rounded: boolean = DEFAULT.rounded
+    export let outlined: boolean = DEFAULT.outlined
+    export let size: ButtonSize | null = DEFAULT.size
+    export let iconPos: ButtonIconPos | null = DEFAULT.iconPos
+    export let severity: ButtonSeverity | null = DEFAULT.severity
+    export let visible: boolean = DEFAULT.visible
     export let pt: ButtonGroupPassThroughOptions | null = null
-    export let ptOptions: ButtonGroupPassThroughMethodOptions | null = null
-    export let unstyled: boolean = false
-    export let style: CssStyle = null
-    let className: string | null = null
+    export let ptOptions: PassThroughOptions | null = null
+    export let unstyled: boolean = DEFAULT.unstyled
+    export let style: CssStyle = DEFAULT.style
+    let className: string | null = DEFAULT.class
     export { className as class }
+    export const displayName = 'ButtonGroup'
+
+    $: ptContext = {
+        props: $$props,
+        context: { disabled },
+        ptOptions,
+        unstyled
+    } satisfies ButtonGroupPassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 
     // "root element"
     $: rootAttributes = resolvePT(
@@ -29,9 +42,8 @@
             'data-pc-section': 'root'
         },
         pt?.root,
-        JAZZ_SVELTE.pt?.buttonGroup?.root,
-        ptOptions,
-        unstyled
+        globalPt?.root,
+        ptContext
     ) satisfies HTMLSpanAttributes
 
     $: {
@@ -39,8 +51,9 @@
             disabled,
             rounded,
             outlined,
-            size,
-            iconPos
+            size: size || undefined,
+            iconPos: iconPos || undefined,
+            severity: severity || undefined
         })
     }
 </script>

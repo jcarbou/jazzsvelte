@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+/*import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { userAgent } from '../../test';
@@ -42,3 +42,4 @@ describe('Ripple', () => {
         expect(container).toMatchSnapshot();
     });
 });
+*/

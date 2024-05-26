@@ -1,133 +1,180 @@
-import type { TooltipOptions } from '../tooltip/tooltipOptions.types'
+import type { TooltipOptions } from '@jazzsvelte/tooltip'
 import type {
+    CssObject,
+    HTMLButtonAttributes,
     HTMLSVGAttributes,
     HTMLSpanAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
     PassThroughType
 } from '@jazzsvelte/api'
-import type { HTMLButtonAttributes } from 'svelte/elements'
 
-export type ButtonSize = 'small' | 'normal' | 'large' | undefined
-export type IconPos = 'top' | 'bottom' | 'left' | 'right' | undefined
+/**
+ * Defines types used by properties of the Button component.
+ * @group types
+ **/
+export type ButtonIconPos = 'top' | 'bottom' | 'left' | 'right'
+export type ButtonSeverity = 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help'
+export type ButtonSize = 'small' | 'normal' | 'large'
 
-export type ButtonGroupContext = {
-    disabled: boolean
-    rounded: boolean
-    outlined: boolean
-    size: ButtonSize
-    iconPos: IconPos
+/**
+ * Defines valid properties in Button component.
+ * @group baseProperties
+ */
+export interface BaseButtonProps {
+    /**
+     * Value of the badge.
+     * @default  null
+     */
+    badge?: string | null
+
+    /**
+     * CSS classes to add to root element.
+     * @default  null
+     */
+    class?: string | null
+
+    /**
+     * When present, it specifies that the element should be disabled.
+     * @default  false
+     */
+    disabled?: boolean
+
+    /**
+     * Name of the icon or JSX.Element for icon.
+     * @default  null
+     */
+    icon?: string | IconComponent | null
+
+    /**
+     * Position of the icon, valid values are "left", "right", "top" and "bottom".
+     * @default  left
+     */
+    iconPos?: 'top' | 'bottom' | 'left' | 'right' | null
+
+    /**
+     * Text of the button.
+     * @default  null
+     */
+    label?: string | null
+
+    /**
+     * Add a link style to the button.
+     * @default  false
+     */
+    link?: boolean
+
+    /**
+     * Display loading icon of the button
+     * @default  false
+     */
+    loading?: boolean
+
+    /**
+     * Name of the loading icon or JSX.Element for loading icon.
+     * @default  SpinnerIcon
+     */
+    loadingIcon?: string | IconComponent | null
+
+    /**
+     * Add a border class without a background initially.
+     * @default  false
+     */
+    outlined?: boolean
+
+    /**
+     * Add a plain textual class to the button without a background initially.
+     * @default  false
+     */
+    plain?: boolean
+
+    /**
+     * Uses to pass attributes to DOM elements inside the component.
+     * @default  null
+     */
+    pt?: ButtonPassThroughOptions
+
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @default  null
+     */
+    ptOptions?: ButtonPassThroughMethodOptions
+
+    /**
+     * Add a shadow to indicate elevation.
+     * @default  false
+     */
+    raised?: boolean
+
+    /**
+     * Add a circular border radius to the button.
+     * @default  false
+     */
+    rounded?: boolean
+
+    /**
+     * Defines the style of the button, valid values are "secondary", "success", "info", "warning", "danger", "help".
+     * @default  null
+     */
+    severity?: 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help' | null
+
+    /**
+     * Defines the size of the button, valid values are "small" and "large".
+     * @default  null
+     */
+    size?: 'small' | 'normal' | 'large' | null
+
+    /**
+     * Style to add to root element.
+     * @default  null
+     */
+    style?: string | CssObject | null
+
+    /**
+     * Add a textual class to the button without a background initially.
+     * @default  false
+     */
+    text?: boolean
+
+    /**
+     * Content of the tooltip.
+     * @default  null
+     */
+    tooltip?: string | null
+
+    /**
+     * Configuration of the tooltip, refer to the tooltip documentation for more information.
+     * @default  null
+     */
+    tooltipOptions?: TooltipOptions | null
+
+    /**
+     * When enabled, it removes component related styles in the core.
+     * @default  false
+     */
+    unstyled?: boolean
+
+    /**
+     * When present, it specifies that the element should be visible.
+     * @default  true
+     */
+    visible?: boolean
 }
 
 /**
  * Defines valid properties in Button component. In addition to these, all properties of HTMLButtonElement can be used in this component.
- * @group Properties
+ * @group properties
  */
-export interface ButtonProps extends Omit<HTMLButtonAttributes, 'disabled'> {
-    /**
-     * Used to get the child elements of the component.
-     * @readonly
-     */
-    //children?: HTMLElement | undefined
-    /**
-     * When present, it specifies that the element should be disabled.
-     * @defaultValue false
-     */
-    disabled?: boolean | undefined
-    /**
-     * Name of the icon or JSX.Element for icon.
-     */
-    icon?: string | undefined
-    /**
-     * Add a textual class to the button without a background initially.
-     * @defaultValue false
-     */
-    text?: boolean | undefined
-    /**
-     * Add a circular border radius to the button.
-     * @defaultValue false
-     */
-    rounded?: boolean | undefined
-    /**
-     * Add a shadow to indicate elevation.
-     * @defaultValue false
-     */
-    raised?: boolean | undefined
-    /**
-     * Add a border class without a background initially.
-     * @defaultValue false
-     */
-    outlined?: boolean | undefined
-    /**
-     * Add a link style to the button.
-     * @defaultValue false
-     */
-    link?: boolean | undefined
-    /**
-     * Defines the style of the button, valid values are "secondary", "success", "info", "warning", "danger", "help".
-     */
-    severity?: 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help' | undefined
-    /**
-     * Defines the size of the button, valid values are "small" and "large".
-     */
-    size?: ButtonSize
-    /**
-     * Position of the icon, valid values are "left", "right", "top" and "bottom".
-     * @defaultValue left
-     */
-    iconPos?: IconPos
-    /**
-     * Text of the button.
-     */
-    label?: string | undefined
-    /**
-     * Display loading icon of the button
-     * @defaultValue false
-     */
-    loading?: boolean | undefined
-    /**
-     * Name of the loading icon or JSX.Element for loading icon.
-     */
-    loadingIcon?: string | IconComponent | undefined
-    /**
-     * Add a plain textual class to the button without a background initially.
-     * @defaultValue false
-     */
-    plain?: boolean | undefined
-    /**
-     * Content of the tooltip.
-     */
-    tooltip?: string | undefined
-    /**
-     * Configuration of the tooltip, refer to the tooltip documentation for more information.
-     */
-    tooltipOptions?: TooltipOptions | undefined
-    /**
-     * When present, it specifies that the element should be visible.
-     * @defaultValue true
-     */
-    visible?: boolean | undefined
-    /**
-     * Uses to pass attributes to DOM elements inside the component.
-     * @type {ButtonPassThroughOptions}
-     */
-    pt?: ButtonPassThroughOptions
-    /**
-     * Used to configure passthrough(pt) options of the component.
-     * @type {PassThroughOptions}
-     */
-    ptOptions?: ButtonPassThroughMethodOptions
-    /**
-     * When enabled, it removes component related styles in the core.
-     * @defaultValue false
-     */
-    unstyled?: boolean
-}
+export interface ButtonProps extends Omit<HTMLButtonAttributes, 'disabled' | 'style'>, BaseButtonProps {}
 
+/**
+ * @group ptType
+ */
 export declare type ButtonPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, ButtonPassThroughMethodOptions>
 
 /**
  * Custom passthrough(pt) option method.
+ * @group ptOptionMethod
  */
 export interface ButtonPassThroughMethodOptions {
     props: ButtonProps
@@ -136,7 +183,7 @@ export interface ButtonPassThroughMethodOptions {
 
 /**
  * Custom passthrough(pt) options.
- * @see {@link ButtonProps.pt}
+ * @group ptOptions
  */
 export interface ButtonPassThroughOptions {
     /**
@@ -156,24 +203,18 @@ export interface ButtonPassThroughOptions {
      */
     label?: ButtonPassThroughType<HTMLSpanAttributes>
     /**
-     * Uses to pass attributes to the Tooltip component.
-     * @see {@link TooltipPassThroughOptions}
+     * Uses to pass attributes to the badge's DOM element.
      */
-    //tooltip?: TooltipPassThroughOptions
-    /**
-     * Used to manage all lifecycle hooks
-     * @see {@link ComponentHooks}
-     */
-    ///lifecycle?: ComponentLifecycle
+    badge?: ButtonPassThroughType<HTMLSpanAttributes>
 }
 
 /**
  * Defines current options in Button component.
+ * @group ptContextOption
  */
 export interface ButtonContext {
     /**
      * Current disabled state of the element as a boolean.
-     * @defaultValue false
      */
     disabled: boolean
 }

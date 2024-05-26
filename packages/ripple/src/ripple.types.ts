@@ -1,27 +1,31 @@
 import type { HTMLAttributes } from 'svelte/elements'
-import type { HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughOptions, PassThroughType } from '@jazzsvelte/api'
+import type { CssStyle, HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '@jazzsvelte/api'
 
 /**
  * Defines valid properties in Ripple component.
  * @group Properties
  */
-export interface RippleProps extends HTMLAttributes<HTMLSpanElement> {
+export interface BaseRippleProps {
     /**
-     * Uses to pass attributes to DOM elements inside the component.
-     * @type {RipplePassThroughOptions}
+     * CSS classes to add to root element
      */
-    pt?: RipplePassThroughOptions
+    class?: string | null
     /**
-     * Used to configure passthrough(pt) options of the component.
-     * @type {PassThroughOptions}
+     * CSS classes to add to root element
      */
-    ptOptions?: PassThroughOptions
+    style?: CssStyle | null
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
      */
     unstyled?: boolean
 }
+
+/**
+ * Defines valid properties in Ripple component.
+ * @group Properties
+ */
+export interface RippleProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'>, BaseRippleProps {}
 
 /**
  * Custom passthrough(pt) option method.

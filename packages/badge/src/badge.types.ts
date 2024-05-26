@@ -1,5 +1,11 @@
 import type { HTMLAttributes } from 'svelte/elements'
-import type { HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughOptions, PassThroughType } from '@jazzsvelte/api'
+import type {
+    CssStyle,
+    HTMLSpanAttributes,
+    PassThroughHTMLAttributes,
+    PassThroughOptions,
+    PassThroughType
+} from '@jazzsvelte/api'
 
 /**
  * Value to display inside the badge.
@@ -23,7 +29,7 @@ export type BadgeSize = 'normal' | 'medium' | 'large' | 'xlarge' | null | undefi
  * Defines valid properties in Badge component. In addition to these, all properties of HTMLSpanElement can be used in this component.
  * @group Properties
  */
-export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+export interface BaseBadgeProps {
     /**
      * Value to display inside the badge.
      *
@@ -40,6 +46,14 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
      */
     size?: BadgeSize
     /**
+     * CSS classes to add to root element
+     */
+    class?: string | null
+    /**
+     * CSS classes to add to root element
+     */
+    style?: CssStyle | null
+    /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {BadgePassThroughOptions}
      */
@@ -55,6 +69,12 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
      */
     unstyled?: boolean
 }
+
+/**
+ * Defines valid properties in Badge component. In addition to these, all properties of HTMLSpanElement can be used in this component.
+ * @group Properties
+ */
+export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'>, BaseBadgeProps {}
 
 /**
  * Custom passthrough(pt) option method.

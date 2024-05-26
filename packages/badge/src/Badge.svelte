@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { CssStyle, HTMLSpanAttributes } from '@jazzsvelte/api'
+    import type { CssStyle, HTMLSpanAttributes, PassThroughOptions } from '@jazzsvelte/api'
     import type {
         BadgePassThroughMethodOptions,
         BadgePassThroughOptions,
@@ -10,16 +10,27 @@
 
     import { JAZZ_SVELTE, resolvePT } from '@jazzsvelte/api'
     import { isEmpty, isNotEmpty } from '@jazzsvelte/object'
+    import { defaultBadgeProps as DEFAULT, globalBadgePT as globalPt } from './badge.config'
 
-    export let value: BadgeValue = null
-    export let severity: BadgeSeverity = null
-    export let size: BadgeSize = null
+    export let value: BadgeValue = DEFAULT.value
+    export let severity: BadgeSeverity = DEFAULT.severity
+    export let size: BadgeSize = DEFAULT.size
     export let pt: BadgePassThroughOptions | null = null
-    export let ptOptions: BadgePassThroughMethodOptions | null = null
-    export let unstyled: boolean = false
-    export let style: CssStyle = null
-    let className: string | null = null
+    export let ptOptions: PassThroughOptions | null = null
+    export let unstyled: boolean = DEFAULT.unstyled
+    export let style: CssStyle = DEFAULT.style
+    let className: string | null = DEFAULT.class
     export { className as class }
+    export const displayName = 'Badge'
+
+    $: ptContext = {
+        props: $$props,
+        ptOptions,
+        unstyled
+    } satisfies BadgePassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 
     // "root element"
     $: rootAttributes = resolvePT(
@@ -41,9 +52,8 @@
             'data-pc-section': 'root'
         },
         pt?.root,
-        JAZZ_SVELTE.pt?.badge?.root,
-        ptOptions,
-        unstyled
+        globalPt?.root,
+        ptContext
     ) satisfies HTMLSpanAttributes
 </script>
 

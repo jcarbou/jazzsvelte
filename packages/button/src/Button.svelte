@@ -1,49 +1,78 @@
 <script lang="ts">
-    import type { HTMLButtonAttributes } from 'svelte/elements'
-    import type { ButtonGroupContext, ButtonPassThroughMethodOptions, ButtonPassThroughOptions } from './button.types'
-    import type { JazzSvelteContext, HTMLSpanAttributes, CssStyle, IconComponent, ResolvedIconPT } from '@jazzsvelte/api'
+    import type {
+        ButtonIconPos,
+        ButtonPassThroughMethodOptions,
+        ButtonPassThroughOptions,
+        ButtonSeverity,
+        ButtonSize
+    } from './button.types'
+    import type {
+        JazzSvelteContext,
+        HTMLSpanAttributes,
+        HTMLButtonAttributes,
+        CssStyle,
+        IconComponent,
+        ResolvedIconPT,
+        PassThroughOptions
+    } from '@jazzsvelte/api'
     import type { TooltipOptions } from '@jazzsvelte/tooltip'
 
     import { resolveIconPT, resolvePT, JAZZ_SVELTE } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
-    import { SpinnerIcon } from '@jazzsvelte/spinner_icon'
     import { Ripple } from '@jazzsvelte/ripple'
     import { Badge } from '@jazzsvelte/badge'
-    import { getContext } from 'svelte'
+    import { createEventDispatcher, getContext } from 'svelte'
     import { SIZE_VALUE_TO_CSS, getIconPos, isIconPos } from './button.utils'
     import { tooltip, TooltipTargetDisabled } from '@jazzsvelte/tooltip'
+    import { defaultButtonProps as DEFAULT, globalButtonPT as globalPt } from './button.config'
+    import { ButtonGroupContext } from './buttonGroup.types'
 
-    export let disabled: boolean = false
-    export let icon: string | null = null
-    export let text: boolean = false
-    export let rounded: boolean = false
-    export let raised: boolean = false
-    export let outlined: boolean = false
-    export let link: boolean = false
-    export let severity: 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help' | null = null
-    export let iconPos: 'top' | 'bottom' | 'left' | 'right' | null = null
-    export let size: 'small' | 'normal' | 'large' | null = null
-    export let label: string | null = null
-    export let loading: boolean = false
-    export let loadingIcon: string | IconComponent | null = SpinnerIcon //'pi-spinner'
-    export let plain: boolean = false
+    export let disabled: boolean = DEFAULT.disabled
+    export let icon: string | IconComponent | null = DEFAULT.icon
+    export let text: boolean = DEFAULT.text
+    export let rounded: boolean = DEFAULT.rounded
+    export let raised: boolean = DEFAULT.raised
+    export let outlined: boolean = DEFAULT.outlined
+    export let link: boolean = DEFAULT.link
+    export let severity: ButtonSeverity | null = DEFAULT.severity
+    export let iconPos: ButtonIconPos | null = DEFAULT.iconPos
+    export let size: ButtonSize | null = DEFAULT.size
+    export let label: string | null = DEFAULT.label
+    export let loading: boolean = DEFAULT.loading
+    export let loadingIcon: string | IconComponent | null = DEFAULT.loadingIcon
+    export let plain: boolean = DEFAULT.plain
     let tooltipContent: string | null = null
     export { tooltipContent as tooltip }
     export let tooltipOptions: TooltipOptions | undefined = undefined
-    export let visible: boolean = true
+    export let visible: boolean = DEFAULT.visible
     export let pt: ButtonPassThroughOptions | null = null
-    export let ptOptions: ButtonPassThroughMethodOptions | null = null
-    export let unstyled: boolean = false
-    let className: string | null = null
+    export let ptOptions: PassThroughOptions | null = null
+    export let unstyled: boolean = DEFAULT.unstyled
+    let className: string | null = DEFAULT.class
     export { className as class }
-    export let style: CssStyle = null
-    export let badge: string | number | null = null
-    //export let badgeClass: string | null = null => Use badge slot instead
+    export let style: CssStyle = DEFAULT.style
+    export let badge: string | number | null = DEFAULT.badge
+    export const displayName = 'Button'
 
     let ripple = JAZZ_SVELTE.ripple
     const buttonGroup = getContext<ButtonGroupContext>('buttonGroup')
+    const dispatch = createEventDispatcher()
 
+    function onClick(ev: MouseEvent) {
+        if (!disabled) dispatch('click', { originEvent: ev })
+    }
+
+    $: _severity = severity ?? buttonGroup?.severity
     $: label = label ?? $$props['aria-label']
+    $: ptContext = {
+        props: $$props,
+        context: { disabled },
+        ptOptions,
+        unstyled
+    } satisfies ButtonPassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 
     // "root element"
     $: rootAttributes = resolvePT(
@@ -64,7 +93,7 @@
                     'p-button-loading-label-only': loading && !icon && !!label,
                     [`p-button-loading-${getIconPos(iconPos, buttonGroup)}`]: loading && !!label,
                     [`p-button-${SIZE_VALUE_TO_CSS[size || buttonGroup?.size || 'normal']}`]: !!(size || buttonGroup?.size),
-                    [`p-button-${severity}`]: !!severity,
+                    [`p-button-${_severity}`]: !!_severity,
                     'p-button-plain': plain
                 }
             ],
@@ -74,9 +103,8 @@
             'aria-label': label ? label + (badge ? ' ' + badge : '') : ''
         },
         pt?.root,
-        JAZZ_SVELTE.pt?.button?.root,
-        ptOptions,
-        unstyled
+        globalPt?.root,
+        ptContext
     ) satisfies HTMLButtonAttributes
 
     // "label element"
@@ -86,9 +114,8 @@
             'data-pc-section': 'label'
         },
         pt?.label,
-        JAZZ_SVELTE.pt?.button?.label,
-        ptOptions,
-        unstyled
+        globalPt?.label,
+        ptContext
     ) satisfies HTMLSpanAttributes
 
     // "icon element"
@@ -103,9 +130,8 @@
             ]
         },
         pt?.icon,
-        JAZZ_SVELTE.pt?.button?.icon,
-        ptOptions,
-        unstyled
+        globalPt?.icon,
+        ptContext
     ) satisfies ResolvedIconPT
 
     // "loading icon element"
@@ -122,10 +148,20 @@
             ]
         },
         pt?.loadingIcon,
-        JAZZ_SVELTE.pt?.button?.loadingIcon,
-        ptOptions,
-        unstyled
+        globalPt?.loadingIcon,
+        ptContext
     ) satisfies ResolvedIconPT
+
+    // "badge" element
+    $: badgeAttributes = resolvePT(
+        {
+            class: [],
+            'data-pc-section': 'badge'
+        },
+        pt?.badge,
+        globalPt?.badge,
+        ptContext
+    ) satisfies HTMLSpanAttributes
 
     $: showOnDisabled = !!tooltipOptions?.showOnDisabled satisfies boolean
 
@@ -139,7 +175,7 @@
             {...rootAttributes}
             {...$$restProps}
             use:tooltip={{ showOnDisabled, tooltipContent, tooltipOptions, jazzSvelteContext }}
-            on:click
+            on:click={onClick}
         >
             {#if icon && !loading}
                 <IconBuilder {resolvedIcon} />
@@ -150,7 +186,7 @@
                 <span {...labelAttributes}>{label}</span>
             {/if}
             {#if badge}
-                <Badge value={badge}></Badge>
+                <Badge value={badge} {...badgeAttributes}></Badge>
             {/if}
             <slot name="badge" />
             <slot />

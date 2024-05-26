@@ -1,26 +1,36 @@
 <script lang="ts">
-    import type { JazzSvelteContext, CssStyle, HTMLDivAttributes } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, CssStyle, HTMLDivAttributes, PassThroughOptions } from '@jazzsvelte/api'
     import type { ToastPassThroughMethodOptions, ToastPassThroughOptions, ToastPosition } from './toast.types'
 
     import { SvelteComponent, getContext } from 'svelte'
-    import { mergeCssStsyles, JAZZ_SVELTE, resolvePT, zIndex } from '@jazzsvelte/api'
+    import { mergeCssStsyles, resolvePT, zIndex } from '@jazzsvelte/api'
     import ToastMessage from './ToastMessage.svelte'
     import { toastMessages } from './toast.store'
-
     import { fade, fly } from 'svelte/transition'
+    import { defaultToastProps as DEFAULT, globalToastPT as globalPt } from './toast.config'
 
-    export let id: string = 'default'
-    export let position: ToastPosition | null = 'bottom-right'
-    let className: string | null = null
+    export let id: string = DEFAULT.id
+    export let position: ToastPosition | null = DEFAULT.position
+    let className: string | null = DEFAULT.class
     export { className as class }
-    export let content: typeof SvelteComponent | undefined = undefined
+    export let content: typeof SvelteComponent | null = DEFAULT.content
     export let pt: Omit<ToastPassThroughOptions, 'message'> | null = null
-    export let ptOptions: ToastPassThroughMethodOptions | null = null
-    export let unstyled: boolean = false
-    export let style: CssStyle = null
+    export let ptOptions: PassThroughOptions | null = null
+    export let unstyled: boolean = DEFAULT.unstyled
+    export let style: CssStyle = DEFAULT.style
+    export const displayName = 'Toast'
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
     const { inputStyle, ripple } = jazzSvelteContext
+
+    $: ptContext = {
+        props: $$props,
+        ptOptions,
+        unstyled
+    } satisfies ToastPassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 
     // "roor" elements
     $: rootAttributes = resolvePT(
@@ -58,9 +68,8 @@
             ])
         },
         pt?.root,
-        JAZZ_SVELTE.pt?.toast?.root,
-        ptOptions,
-        unstyled
+        globalPt?.root,
+        ptContext
     ) satisfies HTMLDivAttributes
 </script>
 

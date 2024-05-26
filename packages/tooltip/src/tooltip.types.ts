@@ -14,7 +14,7 @@ export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'mouse'
 
 export type TooltipActionOptions = {
     tooltipContent?: string | null
-    tooltipOptions?: TooltipOptions
+    tooltipOptions?: TooltipOptions | null
     showOnDisabled?: boolean
     jazzSvelteContext: JazzSvelteContext
 }
@@ -24,7 +24,7 @@ export type TooltipLayoutActionOptions = {
     tooltipLayoutState: TooltipLayoutActionState
     x: number | null
     y: number | null
-    options?: TooltipOptions
+    options?: TooltipOptions | null
 }
 
 export type TooltipLayoutActionState = {
@@ -36,8 +36,8 @@ export type TooltipLayoutActionState = {
  */
 export interface TooltipPassThroughMethodOptions {
     props: TooltipProps
-    state: TooltipState
-    context: TooltipContext
+    state?: TooltipState
+    context?: TooltipContext
 }
 
 /**
@@ -98,11 +98,11 @@ export interface TooltipState {
      * Current position state as a string.
      * @defaultValue right
      */
-    position: string
+    position?: string
     /**
      * Current className state as a string.
      */
-    className: string
+    class?: string
 }
 
 /**

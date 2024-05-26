@@ -6,7 +6,8 @@ import type {
     PassThroughMethodOptions,
     PtAttr,
     ResolvedIconPT,
-    MainElementAttributes
+    MainElementAttributes,
+    PassThroughOptions
 } from './pt.types'
 import { JAZZ_SVELTE } from './JazzSvelte'
 import { mergeCssClasses } from './cssClasses'
@@ -14,17 +15,26 @@ import { mergeCssStsyles } from './cssStyles'
 
 type Options<T, M> = PassThroughType<T, M> | undefined
 
-function ptToAttributes<ELT extends Element, M, PT_METHOD_PROPS>(
+function ptToAttributes<ELT extends Element, M, PROPS, STATE, CTX>(
     options: Options<PtAttr<ELT>, M>,
-    ptOptions?: PassThroughMethodOptions<PT_METHOD_PROPS> | null
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 ): PtAttr<ELT> {
     let attributes: PtAttr<ELT> = {}
 
     if (options) {
         if (isFunction(options)) {
-            const functionAttr = (options as PassThroughTypeFunction<PtAttr<ELT>, PassThroughMethodOptions<PT_METHOD_PROPS>>)(
-                ptOptions || undefined
-            )
+            const { props, context } = ptContext
+            const functionAttr = (options as PassThroughTypeFunction<PtAttr<ELT>, PassThroughMethodOptions<PROPS, STATE, CTX>>)({
+                props,
+                state,
+                context
+            })
             if (functionAttr) {
                 attributes = { ...functionAttr }
             }
@@ -38,20 +48,25 @@ function ptToAttributes<ELT extends Element, M, PT_METHOD_PROPS>(
     return attributes
 }
 
-export function resolvePT<ELT extends Element, M, PT_METHOD_PROPS>(
+export function resolvePT<ELT extends Element, M, PROPS, STATE, CTX>(
     elementAttributes: MainElementAttributes<ELT>,
     elementOptions: Options<PtAttr<ELT>, M>,
     globalOptions: Options<PtAttr<ELT>, M>,
-    ptOptions: PassThroughMethodOptions<PT_METHOD_PROPS> | null,
-    unstyled: boolean
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 ): Omit<PtAttr<ELT>, 'style'> & { style?: string } {
-    unstyled = unstyled || JAZZ_SVELTE.unstyled
+    const unstyled = ptContext.unstyled || JAZZ_SVELTE.unstyled
     let elementStyle = elementAttributes.style
     const elementClasses = elementAttributes.class
     elementStyle = !elementStyle ? [] : Array.isArray(elementStyle) ? elementStyle : [elementStyle]
 
-    const globalPtAttributes = ptToAttributes(globalOptions, ptOptions)
-    const elementPtAttributes = ptToAttributes(elementOptions, ptOptions)
+    const globalPtAttributes = ptToAttributes(globalOptions, ptContext)
+    const elementPtAttributes = ptToAttributes(elementOptions, ptContext)
     const classes = mergeCssClasses([...(unstyled ? [] : elementClasses), elementPtAttributes.class, globalPtAttributes.class])
     const styles = mergeCssStsyles([...elementStyle, globalPtAttributes.style, elementPtAttributes.style])
     const attributes: Omit<PtAttr<ELT>, 'style'> & { style?: string } = {
@@ -68,13 +83,18 @@ export function resolvePT<ELT extends Element, M, PT_METHOD_PROPS>(
     return attributes
 }
 
-export function resolveIconPT<M, PT_METHOD_PROPS>(
+export function resolveIconPT<M, PROPS, STATE, CTX>(
     icon: string | IconComponent | null,
     elementAttributes: MainElementAttributes<HTMLSpanElement> | MainElementAttributes<SVGSVGElement>,
     iconElementOptions: Options<PtAttr<HTMLSpanElement>, M> | Options<PtAttr<SVGSVGElement>, M>,
     iconGlobalOptions: Options<PtAttr<HTMLSpanElement>, M> | Options<PtAttr<SVGSVGElement>, M>,
-    ptOptions: PassThroughMethodOptions<PT_METHOD_PROPS> | null,
-    unstyled: boolean
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
 ): ResolvedIconPT {
     if (!icon) {
         return {}
@@ -90,8 +110,7 @@ export function resolveIconPT<M, PT_METHOD_PROPS>(
                 elementAttributes as MainElementAttributes<HTMLSpanElement>,
                 iconElementOptions as Options<PtAttr<HTMLSpanElement>, M>,
                 iconGlobalOptions as Options<PtAttr<HTMLSpanElement>, M>,
-                ptOptions,
-                unstyled
+                ptContext
             )
         }
     }
@@ -101,8 +120,7 @@ export function resolveIconPT<M, PT_METHOD_PROPS>(
             elementAttributes as MainElementAttributes<SVGSVGElement>,
             iconElementOptions as Options<PtAttr<SVGSVGElement>, M>,
             iconGlobalOptions as Options<PtAttr<SVGSVGElement>, M>,
-            ptOptions,
-            unstyled
+            ptContext
         )
     }
 }

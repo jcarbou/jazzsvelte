@@ -1,4 +1,5 @@
-import type { ButtonGroupContext, IconPos } from './button.types'
+import type { ButtonIconPos } from './button.types'
+import { ButtonGroupContext } from './buttonGroup.types'
 
 export const SIZE_VALUE_TO_CSS = {
     small: 'sm',
@@ -6,10 +7,10 @@ export const SIZE_VALUE_TO_CSS = {
     large: 'lg'
 }
 
-export function getIconPos(iconPos: IconPos | null, context: ButtonGroupContext): IconPos {
+export function getIconPos(iconPos: ButtonIconPos | null, context: ButtonGroupContext): ButtonIconPos {
     return iconPos ?? context?.iconPos ?? 'left'
 }
 
-export function isIconPos(iconPos: IconPos | null, context: ButtonGroupContext, values: IconPos[]): boolean {
+export function isIconPos(iconPos: ButtonIconPos | null, context: ButtonGroupContext, values: ButtonIconPos[]): boolean {
     return values.includes(getIconPos(iconPos, context))
 }

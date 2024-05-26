@@ -8,6 +8,12 @@
         "lint": "prettier --check . && eslint .",
         "format": "prettier --write \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\"",
         "format:check": "prettier --check \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\"",
+        "lint:fix": "lint --fix --ignore-path .gitignore .",
+
+        "importCmp": "pnpx tsx ./scripts/importCmp",
+        "importCmpDoc": "pnpx tsx ./scripts/importCmpDoc",
+        "generateCmp": "pnpx tsx ./scripts/generateCmp",
+
         "build:lib": "NODE_ENV=production INPUT_DIR=components/lib/ OUTPUT_DIR=dist/ npm run build:package",
         "build:package": "npm run build:check && rollup -c && gulp build-resources && npm run build:api",
         "dev:link": "NPM_LINK=true NODE_ENV=production INPUT_DIR=components/lib/ OUTPUT_DIR=dist/ npm run build:package:dev",
@@ -16,7 +22,6 @@
         "build:api": "npm run apiwebtypes && npm run apidoc",
         "build:check": "npm run lint && npm run format:check && npm run type:check && npm run security:check",
         "security:check": "npm audit --production --audit-level high",
-        "lint:fix": "lint --fix --ignore-path .gitignore .",
         "type:check": "tsc -p ./api-scripts/tsconfig.json",
         "apidoc": "node ./api-scripts/build-apidoc.js",
         "apiwebtypes": "node ./api-scripts/build-webtypes.js"
@@ -61,6 +66,7 @@
         "svelte": "^4.2.7",
         "svelte-check": "^3.6.0",
         "tslib": "^2.4.1",
+        "tsx": "^4.10.2",
         "typedoc": "0.24.8",
         "typescript": "5.1.6",
         "vite": "^5.0.3",

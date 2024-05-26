@@ -1,6 +1,6 @@
-import type { HTMLInputAttributes, PassThroughHTMLAttributes, PassThroughType } from '../utils/utils.types'
-import type { KeyFilterRegExp, ValidatedInputEvent } from '../keyfilter/keyfilter.types'
-import type { TooltipOptions } from '../tooltip/tooltipOptions.types'
+import type { CssStyle, HTMLInputAttributes, PassThroughHTMLAttributes, PassThroughType } from '@jazzsvelte/api'
+import type { KeyFilterRegExp, ValidatedInputEvent } from '@jazzsvelte/key_filter'
+import type { TooltipOptions } from '@jazzsvelte/tooltip'
 
 export interface InputTextEvent {
     validatedinput: ValidatedInputEvent
@@ -10,33 +10,44 @@ export interface InputTextEvent {
  * Defines valid properties in InputText component. In addition to these, all properties of HTMLInputElement can be used in this component.
  * @group Properties
  */
-export interface InputTextProps extends Omit<HTMLInputAttributes, 'onInput' | 'value' | 'size'> {
+export interface BaseInputTextProps {
+    /**
+     * When present, it specifies that the element should be disabled.
+     * @defaultValue false
+     */
+    disabled?: boolean
+    /**
+     * When present, it specifies that the component should have invalid state style.
+     * @defaultValue false
+     */
+    invalid?: boolean
     /**
      * Format definition of the keys to block.
+     * @defaultValue null
      */
-    keyfilter?: KeyFilterRegExp
+    keyFilter?: KeyFilterRegExp | null
     /**
      * Size of the input.
      */
-    size?: number | string | undefined
+    size?: number | string | null
     /**
      * Content of the tooltip.
      */
-    tooltip?: string | undefined
+    tooltip?: string | null
     /**
      * Configuration of the tooltip, refer to the tooltip documentation for more information.
      * @type {TooltipOptions}
      */
-    tooltipOptions?: TooltipOptions | undefined
+    tooltipOptions?: TooltipOptions | null
     /**
      * When enabled, instead of blocking keys, input is validated internally to test against the regular expression.
      * @defaultValue false
      */
-    validateOnly?: boolean | undefined
+    validateOnly?: boolean
     /**
      * The value of component
      */
-    value?: string | undefined
+    value?: string
     /**
      * Callback to invoke while typing value on input
      * @param {React.FormEvent<HTMLInputElement>} event - Browser event
@@ -53,13 +64,26 @@ export interface InputTextProps extends Omit<HTMLInputAttributes, 'onInput' | 'v
      * @type {PassThroughOptions}
      */
     ptOptions?: InputTextPassThroughMethodOptions
-
+    /**
+     * CSS classes to add to root element
+     */
+    class?: string | null
+    /**
+     * CSS classes to add to root element
+     */
+    style?: CssStyle | null
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
      */
     unstyled?: boolean
 }
+
+/**
+ * Defines valid properties in InputText component. In addition to these, all properties of HTMLInputElement can be used in this component.
+ * @group Properties
+ */
+export interface InputTextProps extends Omit<HTMLInputAttributes, 'onInput' | 'value' | 'size'>, BaseInputTextProps {}
 
 export declare type InputTextPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, InputTextPassThroughMethodOptions>
 
@@ -96,11 +120,6 @@ export interface InputTextPassThroughOptions {
  * Defines current options in InputText component.
  */
 export interface InputTextContext {
-    /**
-     * Current filled state of the component as a boolean.
-     * @defaultValue false
-     */
-    filled: boolean
     /**
      * Current disabled state of the component as a boolean.
      * @defaultValue false

@@ -1,5 +1,35 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Button > when Ripple is enabled button should have ripple effect 1`] = `
+<button
+  aria-label="test"
+  class="p-button p-component p-ripple"
+  data-pc-name="button"
+  data-pc-section="root"
+  data-tested-element="true"
+  ripple="true"
+>
+   
+  <span
+    class="p-button-label p-c"
+    data-pc-section="label"
+  >
+    test
+  </span>
+   
+   
+   
+   
+  <span
+    aria-hidden="true"
+    class="p-ink s-NbkuIkg1Y8eH"
+    role="presentation"
+  />
+  
+  <!--&lt;Ripple&gt;-->
+</button>
+`;
+
 exports[`Button > when aria-label prop is not exist aria-label prop should be equal to label prop 1`] = `
 <button
   aria-label="test"
@@ -71,36 +101,6 @@ exports[`Button > when badge is true it renders Button with badge 1`] = `
   </span>
    
   <!--&lt;Badge&gt;-->
-   
-   
-   
-  <span
-    aria-hidden="true"
-    class="p-ink s-NbkuIkg1Y8eH"
-    role="presentation"
-  />
-  
-  <!--&lt;Ripple&gt;-->
-</button>
-`;
-
-exports[`Button > when button is disabled the click event should not fire 1`] = `
-<button
-  aria-label="test"
-  class="p-button p-component p-ripple"
-  data-pc-name="button"
-  data-pc-section="root"
-  data-tested-element="true"
-  ripple="true"
->
-   
-  <span
-    class="p-button-label p-c"
-    data-pc-section="label"
-  >
-    test
-  </span>
-   
    
    
    
@@ -283,44 +283,6 @@ exports[`Button > when label prop is not exist label prop should be equal to ari
 `;
 
 exports[`Button > when using badge and label the aria-label should contain both values 1`] = `
-<button
-  aria-label="test lost"
-  class="p-button p-component p-ripple"
-  data-pc-name="button"
-  data-pc-section="root"
-  data-tested-element="true"
->
-   
-  <span
-    class="p-button-label p-c"
-    data-pc-section="label"
-  >
-    test
-  </span>
-   
-  <span
-    class="p-badge p-component s-sVlLiTEMwzBC"
-    data-pc-name="badge"
-    data-pc-section="root"
-  >
-    lost
-  </span>
-   
-  <!--&lt;Badge&gt;-->
-   
-   
-   
-  <span
-    aria-hidden="true"
-    class="p-ink s-NbkuIkg1Y8eH"
-    role="presentation"
-  />
-  
-  <!--&lt;Ripple&gt;-->
-</button>
-`;
-
-exports[`Button > when using badge and label the aria-label should contain both values 2`] = `
 <button
   aria-label="test lost"
   class="p-button p-component p-ripple"
