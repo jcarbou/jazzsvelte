@@ -13,12 +13,16 @@
     },
     "dependencies": {
         "@jazzsvelte/api": "workspace:^0.1.0",
+        "@jazzsvelte/utils": "workspace:^0.1.0",
         "@jazzsvelte/object": "workspace:^0.1.0",
-        "@jazzsvelte/icons": "workspace:^0.1.0"
-        
+        "@jazzsvelte/icons": "workspace:^0.1.0",
+        "@jazzsvelte/button": "workspace:^0.1.0",
+        "@jazzsvelte/ripple": "workspace:^0.1.0",
+        "@jazzsvelte/minus_icon": "workspace:^0.1.0",
+        "@jazzsvelte/plus_icon": "workspace:^0.1.0"
     },
     "keywords": [],
     "author": "Jerome Carbou",
     "license": "ISC",
     "type": "module"
-      }    
+}

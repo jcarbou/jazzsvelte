@@ -3,16 +3,16 @@ import type {
     CssObject,
     MenuItem,
     HTMLDivAttributes,
-    HTMLButtonPassThroughOAttributes,
     HTMLLIAttributes,
     HTMLAnchorAttributes,
     HTMLSVGAttributes,
     HTMLSpanAttributes,
-    HTMLComponentHooksAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
-    PassThroughType
+    PassThroughType,
+    HTMLULAttributes
 } from '@jazzsvelte/api'
+import { ButtonPassThroughOptions } from '@jazzsvelte/button'
 
 /**
  * Defines types used by properties of the SpeedDial component.
@@ -20,6 +20,11 @@ import type {
  **/
 export type SpeedDialDirection = 'left' | 'right' | 'up' | 'down' | 'up-left' | 'up-right' | 'down-left' | 'down-right'
 export type SpeedDialType = 'linear' | 'circle' | 'semi-circle' | 'quarter-circle'
+
+export type SpeedDialContext = {
+    onItemClick: (e: MouseEvent, item: MenuItem) => void
+    hide: () => void
+}
 
 /**
  * undefined
@@ -30,7 +35,7 @@ export interface BaseSpeedDialProps {
      * Style class of the button element.
      * @default  null
      */
-    buttonClassName?: string | null
+    buttonClass?: string | null
 
     /**
      * Inline style of the button element.
@@ -43,6 +48,12 @@ export interface BaseSpeedDialProps {
      * @default  null
      */
     buttonTemplate?: typeof SvelteComponent | null
+
+    /**
+     * CSS classes to add to root element.
+     * @default  null
+     */
+    class?: string | null
 
     /**
      * Specifies the opening direction of actions. Valid values are 'up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left' and 'down-right'
@@ -78,7 +89,7 @@ export interface BaseSpeedDialProps {
      * Style class of the mask element.
      * @default  null
      */
-    maskClassName?: string | null
+    maskClass?: string | null
 
     /**
      * Inline style of the mask element.
@@ -135,6 +146,12 @@ export interface BaseSpeedDialProps {
     type?: 'linear' | 'circle' | 'semi-circle' | 'quarter-circle'
 
     /**
+     * Style to add to root element.
+     * @default  null
+     */
+    style?: string | CssObject | null
+
+    /**
      * When enabled, it removes component related styles in the core.
      * @default  false
      */
@@ -179,11 +196,11 @@ export interface SpeedDialPassThroughOptions {
     /**
      * Uses to pass attributes to the Button component.
      */
-    button?: SpeedDialPassThroughType<HTMLButtonPassThroughOAttributes>
+    button?: ButtonPassThroughOptions
     /**
      * Uses to pass attributes to the menu's DOM element.
      */
-    menu?: SpeedDialPassThroughType<HTMLDivAttributes>
+    menu?: SpeedDialPassThroughType<HTMLULAttributes>
     /**
      * Uses to pass attributes to the menu item's DOM element.
      */
@@ -200,10 +217,6 @@ export interface SpeedDialPassThroughOptions {
      * Uses to pass attributes to the mask's DOM element.
      */
     mask?: SpeedDialPassThroughType<HTMLDivAttributes>
-    /**
-     * Used to manage all lifecycle hooks
-     */
-    hooks?: SpeedDialPassThroughType<HTMLComponentHooksAttributes>
 }
 
 /**

@@ -6,7 +6,26 @@
     },
     "methods": {
         "description": "Defines methods that can be accessed by the component's reference.",
-        "values": []
+        "values": [
+            {
+                "name": "focus",
+                "parameters": [
+                    {
+                        "name": "scrollTo",
+                        "type": "boolean",
+                        "description": "flag to control whether to scroll to the element, false by default."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Focus an input element if it does not already have focus."
+            },
+            {
+                "name": "blur",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Blur an input element."
+            }
+        ]
     },
     "types": {
         "description": "Defines types used by properties of the Button component.",

@@ -17,7 +17,7 @@
     } from '@jazzsvelte/api'
     import type { TooltipOptions } from '@jazzsvelte/tooltip'
 
-    import { resolveIconPT, resolvePT, JAZZ_SVELTE } from '@jazzsvelte/api'
+    import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
     import { Ripple } from '@jazzsvelte/ripple'
     import { Badge } from '@jazzsvelte/badge'
@@ -26,6 +26,7 @@
     import { tooltip, TooltipTargetDisabled } from '@jazzsvelte/tooltip'
     import { defaultButtonProps as DEFAULT, globalButtonPT as globalPt } from './button.config'
     import { ButtonGroupContext } from './buttonGroup.types'
+    import { focusEl } from '@jazzsvelte/dom'
 
     export let disabled: boolean = DEFAULT.disabled
     export let icon: string | IconComponent | null = DEFAULT.icon
@@ -53,8 +54,14 @@
     export let style: CssStyle = DEFAULT.style
     export let badge: string | number | null = DEFAULT.badge
     export const displayName = 'Button'
+    export const focus = (scrollTo?: boolean) => {
+        focusEl(buttonEl, scrollTo)
+    }
+    export const blur = () => {
+        buttonEl.blur()
+    }
 
-    let ripple = JAZZ_SVELTE.ripple
+    let buttonEl: HTMLButtonElement
     const buttonGroup = getContext<ButtonGroupContext>('buttonGroup')
     const dispatch = createEventDispatcher()
 
@@ -166,11 +173,13 @@
     $: showOnDisabled = !!tooltipOptions?.showOnDisabled satisfies boolean
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
+    $: ripple = jazzSvelteContext.ripple
 </script>
 
 {#if visible}
     <TooltipTargetDisabled {showOnDisabled} useTooltip={{ tooltipContent, tooltipOptions, jazzSvelteContext }}>
         <button
+            bind:this={buttonEl}
             {disabled}
             {...rootAttributes}
             {...$$restProps}

@@ -27,7 +27,7 @@
         "description": "Defines valid properties in SpeedDial component. In addition to these, all properties of HTMLDivElement can be used in this component.",
         "values": [
             {
-                "name": "buttonClassName",
+                "name": "buttonClass",
                 "optional": true,
                 "readonly": false,
                 "type": "string | null",
@@ -91,7 +91,7 @@
                 "description": "Whether to show a mask element behind the speeddial."
             },
             {
-                "name": "maskClassName",
+                "name": "maskClass",
                 "optional": true,
                 "readonly": false,
                 "type": "string | null",
@@ -111,7 +111,7 @@
                 "optional": true,
                 "readonly": false,
                 "type": "MenuItem[]",
-                "default": "null",
+                "default": "[]",
                 "description": "MenuModel instance to define the action items."
             },
             {

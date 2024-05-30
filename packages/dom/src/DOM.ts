@@ -154,6 +154,17 @@ export function setSingleEventListener(element: HTMLElement, eventName: string, 
 }
 
 /**
+ * Focus an input element if it does not already have focus.
+ *
+ * @param {HTMLElement} el a HTML element
+ * @param {boolean} scrollTo flag to control whether to scroll to the element, false by default
+ */
+export function focusEl(el: HTMLElement, scrollTo?: boolean): void {
+    const preventScroll = scrollTo === undefined ? true : !scrollTo
+    el && document.activeElement !== el && el.focus({ preventScroll })
+}
+
+/**
  * Find Collision Position for tooltip and his container element
  * @param position
  * @returns

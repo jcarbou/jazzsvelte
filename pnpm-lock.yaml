@@ -943,6 +943,10 @@ importers:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object
+    devDependencies:
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
 
   packages/button:
     dependencies:
@@ -952,6 +956,9 @@ importers:
       '@jazzsvelte/badge':
         specifier: workspace:^0.1.0
         version: link:../badge
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
@@ -1030,6 +1037,37 @@ importers:
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
         version: link:../dom
+
+  packages/speed_dial:
+    dependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/button':
+        specifier: workspace:^0.1.0
+        version: link:../button
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/minus_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/minus
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+      '@jazzsvelte/plus_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/plus
+      '@jazzsvelte/ripple':
+        specifier: workspace:^0.1.0
+        version: link:../ripple
+      '@jazzsvelte/utils':
+        specifier: workspace:^0.1.0
+        version: link:../utils
+    devDependencies:
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
 
   packages/test:
     dependencies:

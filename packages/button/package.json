@@ -14,6 +14,7 @@
     "dependencies": {
         "@jazzsvelte/api": "workspace:^0.1.0",
         "@jazzsvelte/badge": "workspace:^0.1.0",
+        "@jazzsvelte/dom": "workspace:^0.1.0",
         "@jazzsvelte/icons": "workspace:^0.1.0",
         "@jazzsvelte/object": "workspace:^0.1.0",
         "@jazzsvelte/ripple": "workspace:^0.1.0",

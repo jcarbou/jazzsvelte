@@ -1,33 +1,33 @@
 <script lang="ts">
-    import type {
-        SpeedDialPassThroughMethodOptions,
-        SpeedDialPassThroughOptions,
-        SpeedDialDirection,
-        SpeedDialType
+    import {
+        type SpeedDialPassThroughMethodOptions,
+        type SpeedDialPassThroughOptions,
+        type SpeedDialDirection,
+        type SpeedDialType,
+        SpeedDialContext
     } from './speedDial.types'
 
     import type {
-        JazzSvelteContext,
         HTMLDivAttributes,
-        HTMLButtonPassThroughOAttributes,
-        HTMLLIAttributes,
-        HTMLAnchorAttributes,
-        HTMLSpanAttributes,
-        HTMLComponentHooksAttributes,
         IconComponent,
         CssStyle,
-        ResolvedIconPT,
-        PassThroughOptions
+        PassThroughOptions,
+        HTMLULAttributes,
+        MenuItem,
+        CssObject
     } from '@jazzsvelte/api'
-    import type { TooltipOptions } from '@jazzsvelte/tooltip'
 
-    import { getContext } from 'svelte'
-    false
-    import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
-    import { IconBuilder } from '@jazzsvelte/icons'
+    import { SvelteComponent, setContext } from 'svelte'
+
+    import { mergeCssClasses, resolvePT } from '@jazzsvelte/api'
+    import { Button, ButtonProps } from '@jazzsvelte/button'
     import { defaultSpeedDialProps as DEFAULT, globalSpeedDialPT as globalPt } from './speedDial.config'
+    import SpeedDialMenuItem from './SpeedDialMenuItem.svelte'
+    import uniqueId from '../../utils/src/uniqueId'
+    import { findNextOptionIndex, findPrevOptionIndex } from './speedDial.utils'
 
-    export let buttonClassName: string | null = DEFAULT.buttonClassName
+    export let id: string | null = null
+    export let buttonClass: string | null = DEFAULT.buttonClass
     export let buttonStyle: string | CssObject | null = DEFAULT.buttonStyle
     export let buttonTemplate: typeof SvelteComponent | null = DEFAULT.buttonTemplate
     export let direction: SpeedDialDirection | null = DEFAULT.direction
@@ -35,7 +35,7 @@
     export let hideIcon: string | IconComponent | null = DEFAULT.hideIcon
     export let hideOnClickOutside: boolean = DEFAULT.hideOnClickOutside
     export let mask: boolean = DEFAULT.mask
-    export let maskClassName: string | null = DEFAULT.maskClassName
+    export let maskClass: string | null = DEFAULT.maskClass
     export let maskStyle: string | CssObject | null = DEFAULT.maskStyle
     export let model: MenuItem[] = DEFAULT.model
     export let radius: number = DEFAULT.radius
@@ -44,18 +44,30 @@
     export let transitionDelay: number = DEFAULT.transitionDelay
     export let type: SpeedDialType = DEFAULT.type
     export let unstyled: boolean = DEFAULT.unstyled
-    export let visible: boolean = DEFAULT.visible
+    let visibleProp: boolean = DEFAULT.visible
+    export { visibleProp as visible }
     export let pt: SpeedDialPassThroughOptions | null = null
     export let ptOptions: PassThroughOptions | null = null
     export let style: CssStyle | null = DEFAULT.style
     let className: string | null = DEFAULT.class
     export { className as class }
+    export let onHide: (() => void) | null = null
+    export let onShow: (() => void) | null = null
+    export let onVisibleChange: ((visible: boolean) => void) | null = null
 
     export const displayName = 'SpeedDial'
 
+    let visibleState = false
+    $: visible = onVisibleChange ? visibleProp : visibleState
+    let button: Button
+    let focused = false
+    let focusedOptionIndex = -1
+
     $: ptContext = {
         props: $$props,
-        context: {},
+        state: {
+            visible
+        },
         ptOptions,
         unstyled
     } satisfies SpeedDialPassThroughMethodOptions & {
@@ -63,11 +75,55 @@
         unstyled: boolean
     }
 
+    $: idState = id || (uniqueId('speedDial_') satisfies string)
+
+    let isItemClicked = false
+
+    const onItemClick = (e: MouseEvent | KeyboardEvent, item: MenuItem) => {
+        item.command && item.command({ originalEvent: e, item })
+        hide()
+
+        isItemClicked = true
+        e.preventDefault()
+    }
+
+    setContext<SpeedDialContext>('speedDial', {
+        onItemClick,
+        hide
+    })
+
     // "root element"
     $: rootAttributes = resolvePT(
         {
-            class: ['p-component', className, {}],
-            style,
+            id: idState,
+            class: [
+                'p-component',
+                'p-speeddial',
+                `p-speeddial-${type}`,
+                className,
+                {
+                    [`p-speeddial-direction-${direction}`]: type !== 'circle',
+                    'p-speeddial-opened': visible,
+                    'p-disabled': disabled
+                }
+            ],
+            style: [
+                style,
+                {
+                    alignItems: direction === 'up' || direction === 'down' ? 'center' : '',
+                    justifyContent: direction === 'left' || direction === 'right' ? 'center' : '',
+                    flexDirection:
+                        direction === 'up'
+                            ? 'column-reverse'
+                            : direction === 'down'
+                              ? 'column'
+                              : direction === 'left'
+                                ? 'row-reverse'
+                                : direction === 'right'
+                                  ? 'row'
+                                  : null
+                }
+            ],
             'data-pc-name': 'speedDial',
             'data-pc-section': 'root'
         },
@@ -77,53 +133,185 @@
     ) satisfies HTMLDivAttributes
 
     // "button" element
-    $: buttonAttributes = resolvePT(
-        {
-            class: [],
-            'data-pc-section': 'button'
-        },
-        pt?.button,
-        globalPt?.button,
-        ptContext
-    ) satisfies HTMLButtonPassThroughOAttributes
+    $: showIconVisible = ((!visible && !!showIcon) || !hideIcon) satisfies boolean
+    $: hideIconVisible = (visible && !!hideIcon) satisfies boolean
+    $: buttonAttributes = {
+        class: mergeCssClasses([
+            buttonClass,
+            'p-speeddial-button p-button-rounded',
+            {
+                'p-speeddial-rotate': rotateAnimation && !hideIcon
+            }
+        ]),
+        'data-pc-section': 'button',
+        role: 'button',
+        style: buttonStyle,
+        icon: showIconVisible ? showIcon : hideIconVisible ? hideIcon : null,
+        disabled: disabled,
+        //onKeyDown: onTogglerKeydown,
+        'aria-label': $$props['aria-label'],
+        'aria-expanded': visible,
+        'aria-haspopup': true,
+        'aria-controls': idState + '_list',
+        'aria-labelledby': $$props['aria-labelledby']
+        // pt?:  ???
+    } satisfies ButtonProps
+
+    function onClick(ev: { originEvent: MouseEvent }): void {
+        visible ? hide() : show()
+        onClick && onClick(ev)
+        isItemClicked = true
+    }
+
+    function hide(): void {
+        onVisibleChange ? onVisibleChange(false) : (visibleState = false)
+        onHide && onHide()
+    }
+
+    function show(): void {
+        onVisibleChange ? onVisibleChange(true) : (visibleState = true)
+        onShow && onShow()
+    }
 
     // "menu" element
     $: menuAttributes = resolvePT(
         {
-            class: [],
-            'data-pc-section': 'menu'
+            class: ['p-speeddial-list'],
+            'data-pc-section': 'menu',
+            style: {
+                flexDirection:
+                    direction === 'up'
+                        ? 'column-reverse'
+                        : direction === 'down'
+                          ? 'column'
+                          : direction === 'left'
+                            ? 'row-reverse'
+                            : direction === 'right'
+                              ? 'row'
+                              : null
+            },
+            role: 'menu',
+            tabIndex: '-1',
+            'on:focus': onMenuFocus,
+            'on:keyDown': onMenuKeyDown,
+            'on:blur': onMenuBlur,
+            'aria-activedescendant': focused ? focusedOptionId() : undefined
         },
         pt?.menu,
         globalPt?.menu,
         ptContext
-    ) satisfies HTMLDivAttributes
+    ) satisfies HTMLULAttributes
 
-    // "menuitem" element
-    $: menuitemAttributes = resolvePT(
-        {
-            class: [],
-            'data-pc-section': 'menuitem'
-        },
-        pt?.menuitem,
-        globalPt?.menuitem,
-        ptContext
-    ) satisfies HTMLLIAttributes
+    function onMenuFocus(): void {
+        focused = true
+    }
 
-    // "action" element
-    $: actionAttributes = resolvePT(
-        {
-            class: [],
-            'data-pc-section': 'action'
-        },
-        pt?.action,
-        globalPt?.action,
-        ptContext
-    ) satisfies HTMLAnchorAttributes
+    function onMenuBlur(): void {
+        focused = false
+        focusedOptionIndex = -1
+    }
+
+    function focusedOptionId(): string | null {
+        return focusedOptionIndex !== -1 ? '' + focusedOptionIndex : null
+    }
+
+    function navigateNextItem(event: Event, index: number | null = null, defaultFocusedOptionIndex: number | null = null): void {
+        const newIndex = findNextOptionIndex(index || focusedOptionIndex, model)
+
+        if (newIndex != null) {
+            focusedOptionIndex = newIndex
+        } else if (defaultFocusedOptionIndex !== null) {
+            focusedOptionIndex = defaultFocusedOptionIndex
+        }
+
+        event.preventDefault()
+    }
+
+    function navigatePrevItem(event: Event, index: number | null = null, defaultFocusedOptionIndex: number | null = null): void {
+        const newIndex = findPrevOptionIndex(index || focusedOptionIndex, model)
+
+        if (newIndex != null) {
+            focusedOptionIndex = newIndex
+        } else if (defaultFocusedOptionIndex !== null) {
+            focusedOptionIndex = defaultFocusedOptionIndex
+        }
+
+        event.preventDefault()
+    }
+
+    function onEnterKey(event: KeyboardEvent): void {
+        const item = model[focusedOptionIndex]
+
+        onItemClick(event, item)
+        onMenuBlur()
+        button.focus()
+    }
+
+    function onEscapeKey(): void {
+        hide()
+        button.focus()
+    }
+
+    function onHomeKey(event: KeyboardEvent): void {
+        event.preventDefault()
+        navigateNextItem(event, -1, -1)
+    }
+
+    function onEndKey(event: KeyboardEvent): void {
+        event.preventDefault()
+        navigatePrevItem(event, -1, -1)
+    }
+
+    function onMenuKeyDown(event: KeyboardEvent): void {
+        switch (event.code) {
+            case 'ArrowDown':
+                direction === 'down' ? navigateNextItem(event) : navigatePrevItem(event)
+                break
+            case 'ArrowUp':
+                direction === 'down' ? navigatePrevItem(event) : navigateNextItem(event)
+                break
+
+            case 'ArrowLeft':
+                ;['left', 'up-right', 'down-left'].includes(direction || '') ? navigateNextItem(event) : navigatePrevItem(event)
+                break
+
+            case 'ArrowRight':
+                ;['left', 'up-right', 'down-left'].includes(direction || '') ? navigatePrevItem(event) : navigateNextItem(event)
+                break
+
+            case 'Enter':
+            case 'Space':
+                onEnterKey(event)
+                break
+
+            case 'Escape':
+                onEscapeKey()
+                break
+
+            case 'Home':
+                onHomeKey(event)
+                break
+
+            case 'End':
+                onEndKey(event)
+                break
+
+            default:
+                break
+        }
+    }
 
     // "mask" element
     $: maskAttributes = resolvePT(
         {
-            class: [],
+            class: [
+                'p-speeddial-mask',
+                maskClass,
+                {
+                    'p-speeddial-mask-visible': visible
+                }
+            ],
+            style: maskStyle,
             'data-pc-section': 'mask'
         },
         pt?.mask,
@@ -131,37 +319,160 @@
         ptContext
     ) satisfies HTMLDivAttributes
 
-    // "hooks" element
-    $: hooksAttributes = resolvePT(
-        {
-            class: [],
-            'data-pc-section': 'hooks'
-        },
-        pt?.hooks,
-        globalPt?.hooks,
-        ptContext
-    ) satisfies HTMLComponentHooksAttributes
+    function getItemStyle(index: number): CssStyle {
+        const transitionDelay = calculateTransitionDelay(index)
+        const pointStyle = calculatePointStyle(index)
 
-    // "actionIcon" element
-    $: resolvedActionIcon = resolveIconPT(
-        actionIcon,
-        {
-            class: []
-        },
-        pt?.actionIcon,
-        globalPt?.actionIcon,
-        ptContext
-    ) satisfies ResolvedIconPT
+        return {
+            transitionDelay: `${transitionDelay}ms`,
+            ...pointStyle
+        }
+    }
 
-    let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
+    const calculateTransitionDelay = (index: number) => {
+        const length = model.length
+
+        return (visible ? index : length - index - 1) * transitionDelay
+    }
+
+    function calculatePointStyle(index: number): {
+        left?: string
+        top?: string
+        right?: string
+        bottom?: string
+    } {
+        if (type !== 'linear') {
+            const length = model.length
+            radius = radius || length * 20
+
+            if (type === 'circle') {
+                const step = (2 * Math.PI) / length
+
+                return {
+                    left: `calc(${radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`,
+                    top: `calc(${radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
+                }
+            } else if (type === 'semi-circle') {
+                const step = Math.PI / (length - 1)
+                const x = `calc(${radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`
+                const y = `calc(${radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
+
+                if (direction === 'up') {
+                    return { left: x, bottom: y }
+                } else if (direction === 'down') {
+                    return { left: x, top: y }
+                } else if (direction === 'left') {
+                    return { right: y, top: x }
+                } else if (direction === 'right') {
+                    return { left: y, top: x }
+                }
+            } else if (type === 'quarter-circle') {
+                const step = Math.PI / (2 * (length - 1))
+                const x = `calc(${radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`
+                const y = `calc(${radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
+
+                if (direction === 'up-left') {
+                    return { right: x, bottom: y }
+                } else if (direction === 'up-right') {
+                    return { left: x, bottom: y }
+                } else if (direction === 'down-left') {
+                    return { right: y, top: x }
+                } else if (direction === 'down-right') {
+                    return { left: y, top: x }
+                }
+            }
+        }
+
+        return {}
+    }
 </script>
 
 <div {...rootAttributes} {...$$restProps}>
-    <buttonpassthrougho {...buttonAttributes}></buttonpassthrougho>
-    <div {...menuAttributes}></div>
-    <li {...menuitemAttributes}></li>
-    <anchor {...actionAttributes}></anchor>
-    <div {...maskAttributes}></div>
-    <componenthooks {...hooksAttributes}></componenthooks>
-    <IconBuilder resolvedIcon={resolvedActionIcon} />
+    <Button bind:this={button} {...buttonAttributes} on:click={onClick} />
+    <ul {...menuAttributes}>
+        {#each model as item, index (index)}
+            <SpeedDialMenuItem id={`${idState}_${index}`} {item} style={getItemStyle(index)} {pt} {ptContext} {unstyled} />
+        {/each}
+    </ul>
 </div>
+<div {...maskAttributes}></div>
+
+<style>
+    @layer primereact {
+        .p-speeddial {
+            position: absolute;
+            display: flex;
+            z-index: 1;
+        }
+
+        .p-speeddial-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: top 0s linear 0.2s;
+            pointer-events: none;
+        }
+
+        :global(.p-speeddial-item) {
+            transform: scale(0);
+            opacity: 0;
+            transition:
+                transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+                opacity 0.8s;
+            will-change: transform;
+        }
+
+        :global(.p-speeddial-action) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .p-speeddial-circle :global(.p-speeddial-item),
+        .p-speeddial-semi-circle :global(.p-speeddial-item),
+        .p-speeddial-quarter-circle :global(.p-speeddial-item) {
+            position: absolute;
+        }
+
+        .p-speeddial-rotate {
+            transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+            will-change: transform;
+        }
+
+        .p-speeddial-mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 250ms cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .p-speeddial-mask-visible {
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .p-speeddial-opened .p-speeddial-list {
+            pointer-events: auto;
+        }
+
+        .p-speeddial-opened .p-speeddial-item {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .p-speeddial-opened .p-speeddial-rotate {
+            transform: rotate(45deg);
+        }
+    }
+</style>
