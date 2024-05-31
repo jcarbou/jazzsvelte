@@ -25,7 +25,7 @@
     import { SIZE_VALUE_TO_CSS, getIconPos, isIconPos } from './button.utils'
     import { tooltip, TooltipTargetDisabled } from '@jazzsvelte/tooltip'
     import { defaultButtonProps as DEFAULT, globalButtonPT as globalPt } from './button.config'
-    import { ButtonGroupContext } from './buttonGroup.types'
+    import type { ButtonGroupContext } from './buttonGroup.types'
     import { focusEl } from '@jazzsvelte/dom'
 
     export let disabled: boolean = DEFAULT.disabled

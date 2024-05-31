@@ -4,6 +4,7 @@
     "version": "0.1.0",
     "scripts": {
         "dev": "vite dev",
+        "dev:force": "vite dev --force",
         "build": "vite build",
         "preview": "vite preview",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -38,6 +39,7 @@
         "@jazzsvelte/infocircle_icon": "workspace:^0.1.0",
         "@jazzsvelte/object": "workspace:^0.1.0",
         "@jazzsvelte/ripple": "workspace:^0.1.0",
+        "@jazzsvelte/speed_dial": "workspace:^0.1.0",
         "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
         "@jazzsvelte/timescircle_icon": "workspace:^0.1.0",
         "@jazzsvelte/toast": "workspace:^0.1.0",

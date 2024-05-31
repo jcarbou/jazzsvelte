@@ -1,4 +1,5 @@
 import type { CssObject, CssStyle } from './pt.types'
+import { toKebabCase } from '@jazzsvelte/object'
 
 export function mergeCssStsyles(styles: (CssStyle | undefined)[]) {
     const cssObject = {}
@@ -20,7 +21,7 @@ export function mergeCssStsyles(styles: (CssStyle | undefined)[]) {
 function cleanCssObject(style: CssObject): CssObject {
     const cleanStyle: { [key: string]: string } = {}
     for (const [key, value] of Object.entries(style)) {
-        const newKey = key.trim()
+        const newKey = toKebabCase(key.trim())
         if (value === null || value === undefined) {
             continue
         }
@@ -41,7 +42,7 @@ function cssStringToCssObject(style: string): CssObject {
             const key = parts[0].trim()
             const value = parts[1].trim()
             if (key && value) {
-                cssObject[key] = value
+                cssObject[toKebabCase(key)] = value
             }
         }
     }

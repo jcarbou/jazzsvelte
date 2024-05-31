@@ -1,9 +1,9 @@
 <script lang="ts">
-    import {
-        type SpeedDialPassThroughMethodOptions,
-        type SpeedDialPassThroughOptions,
-        type SpeedDialDirection,
-        type SpeedDialType,
+    import type {
+        SpeedDialPassThroughMethodOptions,
+        SpeedDialPassThroughOptions,
+        SpeedDialDirection,
+        SpeedDialType,
         SpeedDialContext
     } from './speedDial.types'
 
@@ -20,7 +20,8 @@
     import { SvelteComponent, setContext } from 'svelte'
 
     import { mergeCssClasses, resolvePT } from '@jazzsvelte/api'
-    import { Button, ButtonProps } from '@jazzsvelte/button'
+    import type { ButtonProps } from '@jazzsvelte/button'
+    import { Button } from '@jazzsvelte/button'
     import { defaultSpeedDialProps as DEFAULT, globalSpeedDialPT as globalPt } from './speedDial.config'
     import SpeedDialMenuItem from './SpeedDialMenuItem.svelte'
     import uniqueId from '../../utils/src/uniqueId'
@@ -53,6 +54,7 @@
     export { className as class }
     export let onHide: (() => void) | null = null
     export let onShow: (() => void) | null = null
+    export let onClick: ((ev: MouseEvent) => void) | null = null
     export let onVisibleChange: ((visible: boolean) => void) | null = null
 
     export const displayName = 'SpeedDial'
@@ -157,9 +159,9 @@
         // pt?:  ???
     } satisfies ButtonProps
 
-    function onClick(ev: { originEvent: MouseEvent }): void {
+    function _onClick(ev: { originEvent: MouseEvent }): void {
         visible ? hide() : show()
-        onClick && onClick(ev)
+        onClick && onClick(ev.originEvent)
         isItemClicked = true
     }
 
@@ -192,9 +194,6 @@
             },
             role: 'menu',
             tabIndex: '-1',
-            'on:focus': onMenuFocus,
-            'on:keyDown': onMenuKeyDown,
-            'on:blur': onMenuBlur,
             'aria-activedescendant': focused ? focusedOptionId() : undefined
         },
         pt?.menu,
@@ -332,7 +331,7 @@
     const calculateTransitionDelay = (index: number) => {
         const length = model.length
 
-        return (visible ? index : length - index - 1) * transitionDelay
+        return (visible ? length - index - 1 : index) * transitionDelay
     }
 
     function calculatePointStyle(index: number): {
@@ -388,14 +387,16 @@
 </script>
 
 <div {...rootAttributes} {...$$restProps}>
-    <Button bind:this={button} {...buttonAttributes} on:click={onClick} />
-    <ul {...menuAttributes}>
+    <Button bind:this={button} {...buttonAttributes} on:click={_onClick} />
+    <ul {...menuAttributes} on:focus={onMenuFocus} on:keydown={onMenuKeyDown} on:blur{onMenuBlu}>
         {#each model as item, index (index)}
             <SpeedDialMenuItem id={`${idState}_${index}`} {item} style={getItemStyle(index)} {pt} {ptContext} {unstyled} />
         {/each}
     </ul>
 </div>
-<div {...maskAttributes}></div>
+{#if mask}
+    <div {...maskAttributes}></div>
+{/if}
 
 <style>
     @layer primereact {
@@ -466,7 +467,7 @@
             pointer-events: auto;
         }
 
-        .p-speeddial-opened .p-speeddial-item {
+        .p-speeddial-opened :global(.p-speeddial-item) {
             transform: scale(1);
             opacity: 1;
         }

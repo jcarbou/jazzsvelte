@@ -1,3 +1,3 @@
-import * as universal from "../../../../src/routes/toast/+page.ts";
+import * as universal from "../../../../src/routes/speeddial/+page.ts";
 export { universal };
-export { default as component } from "../../../../src/routes/toast/+page.svelte";
+export { default as component } from "../../../../src/routes/speeddial/+page.svelte";

@@ -35,9 +35,7 @@ declare module '$env/static/private' {
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
 	export const DriverData: string;
-	export const EFC_54212: string;
-	export const FPS_BROWSER_APP_PROFILE_STRING: string;
-	export const FPS_BROWSER_USER_PROFILE_STRING: string;
+	export const EFC_15268: string;
 	export const GIT_ASKPASS: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
@@ -83,6 +81,7 @@ declare module '$env/static/private' {
 	export const npm_package_dependencies__jazzsvelte_input_text: string;
 	export const npm_package_dependencies__jazzsvelte_object: string;
 	export const npm_package_dependencies__jazzsvelte_ripple: string;
+	export const npm_package_dependencies__jazzsvelte_speed_dial: string;
 	export const npm_package_dependencies__jazzsvelte_spinner_icon: string;
 	export const npm_package_dependencies__jazzsvelte_timescircle_icon: string;
 	export const npm_package_dependencies__jazzsvelte_toast: string;
@@ -141,6 +140,7 @@ declare module '$env/static/private' {
 	export const npm_package_scripts_check: string;
 	export const npm_package_scripts_check_watch: string;
 	export const npm_package_scripts_dev: string;
+	export const npm_package_scripts_dev_force: string;
 	export const npm_package_scripts_dev_link: string;
 	export const npm_package_scripts_dev_link_windows: string;
 	export const npm_package_scripts_format: string;
@@ -232,9 +232,7 @@ declare module '$env/dynamic/private' {
 		COMPUTERNAME: string;
 		ComSpec: string;
 		DriverData: string;
-		EFC_54212: string;
-		FPS_BROWSER_APP_PROFILE_STRING: string;
-		FPS_BROWSER_USER_PROFILE_STRING: string;
+		EFC_15268: string;
 		GIT_ASKPASS: string;
 		HOME: string;
 		HOMEDRIVE: string;
@@ -280,6 +278,7 @@ declare module '$env/dynamic/private' {
 		npm_package_dependencies__jazzsvelte_input_text: string;
 		npm_package_dependencies__jazzsvelte_object: string;
 		npm_package_dependencies__jazzsvelte_ripple: string;
+		npm_package_dependencies__jazzsvelte_speed_dial: string;
 		npm_package_dependencies__jazzsvelte_spinner_icon: string;
 		npm_package_dependencies__jazzsvelte_timescircle_icon: string;
 		npm_package_dependencies__jazzsvelte_toast: string;
@@ -338,6 +337,7 @@ declare module '$env/dynamic/private' {
 		npm_package_scripts_check: string;
 		npm_package_scripts_check_watch: string;
 		npm_package_scripts_dev: string;
+		npm_package_scripts_dev_force: string;
 		npm_package_scripts_dev_link: string;
 		npm_package_scripts_dev_link_windows: string;
 		npm_package_scripts_format: string;

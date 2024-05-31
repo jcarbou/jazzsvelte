@@ -4,14 +4,15 @@ import util from 'util'
 
 const exec = util.promisify(child_process.exec)
 
-import { readText, writeText } from '../scripts.utils'
+import { readText, toKebabCase, writeText } from '../scripts.utils'
 import { CmpContext } from '../scripts.types'
 
 const IMPORT_DOC_COMMON_REG_EXP = /import \{\s*(\w*)\s*\}.*@\/components\/doc\/common.*/gm
 const IMPORT2_DOC_COMMON_REG_EXP = /import\s*(\w*)\s*.*@\/components\/doc\/common.*/gm
 const IMPORT_CMP_REG_EXP = /import \{\s*(\w*)\s*\}.*@\/components\/lib\/(\w*)\/.*/gm
 
-export const CMP_DOC_MIGRATE: [RegExp, string][] = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const CMP_DOC_MIGRATE: [RegExp, any][] = [
     [
         IMPORT_DOC_COMMON_REG_EXP,
         `    import $1 from '$lib/doc/common/$1.svelte'
@@ -22,7 +23,7 @@ export const CMP_DOC_MIGRATE: [RegExp, string][] = [
         `    import $1 from '$lib/doc/common/$1.svelte'
 `
     ],
-    [IMPORT_CMP_REG_EXP, "    import $1 from '$lib/components/$2/$1.svelte'"],
+    [IMPORT_CMP_REG_EXP, (match, p1, p2) => `    import { ${p1} } from '@jazzsvelte/${toKebabCase(p1)}'`],
     [/export function.*/gm, '</script>'],
     [/export.*const.*=>.*/gm, '</script>'],
     // [/const.*=>.*/gm, '</script>'], // nor replace const showSuccess = () => {

@@ -25,8 +25,8 @@ function docExportPatch(content: string) {
 }
 
 function importCmpDocPatch(content: string, { CmpName }: CmpContext) {
-    const importCmpDocThemingRegExp = new RegExp(`import\\s*\\{\\s*${CmpName}\\s*\\}\\s*from.*`, 'gm')
-    content = content.replace(importCmpDocThemingRegExp, '')
+    // const importCmpDocThemingRegExp = new RegExp(`import\\s*\\{\\s*${CmpName}\\s*\\}\\s*from.*`, 'gm')
+    //content = content.replace(importCmpDocThemingRegExp, '')
     content = content.replace(/(.*)javascript:\s*`\s/gm, "$1javascript: `\n${importJS('" + CmpName + "')}")
     content = content.replace(/(.*)typescript:\s*`\s/gm, "$1typescript: `\n${importTS('" + CmpName + "')}")
     return content

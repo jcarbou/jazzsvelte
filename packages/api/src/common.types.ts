@@ -1,7 +1,7 @@
 import { CssObject, IconComponent } from './pt.types'
 
 export type MenuItem = {
-    disabled: boolean
+    disabled?: boolean
     label?: string
     icon?: string | IconComponent
     command?: (event: { originalEvent: MouseEvent | KeyboardEvent; item: MenuItem }) => void

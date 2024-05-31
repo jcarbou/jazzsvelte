@@ -331,6 +331,10 @@ export function toCapitalCase(str: string): string {
     return isNotEmpty(str) && isString(str) ? str[0].toUpperCase() + str.slice(1) : str
 }
 
+export function toKebabCase(str: string, separator: string = '-') {
+    return str.replace(/([a-z])([A-Z])/g, `$1${separator}$2`).toLowerCase()
+}
+
 export function trim(value: any): any {
     // trim only if the value is actually a string
     return isNotEmpty(value) && isString(value) ? value.trim() : value

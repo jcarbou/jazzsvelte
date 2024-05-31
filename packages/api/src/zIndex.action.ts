@@ -1,5 +1,6 @@
 import type { ActionReturn } from 'svelte/action'
 import type { JazzSvelteContext, ZIndexOptions } from './jazzSvelte.types'
+import { JAZZ_SVELTE } from './JazzSvelte'
 
 export type ZIndexActionOptions = {
     key: string
@@ -27,7 +28,9 @@ function getLastZIndex(key: string, autoZIndex: boolean, baseZIndex = 0): Entry 
     return zIndexes.find((obj) => (autoZIndex ? true : obj.key === key)) || { key, value: baseZIndex }
 }
 
-function setZIndex(key: keyof ZIndexOptions | string, el: HTMLElement, { autoZIndex, zIndex }: JazzSvelteContext): void {
+function setZIndex(key: keyof ZIndexOptions | string, el: HTMLElement, context: JazzSvelteContext): void {
+    const autoZIndex = context?.autoZIndex ?? JAZZ_SVELTE.autoZIndex
+    const zIndex = context?.zIndex ?? JAZZ_SVELTE.zIndex
     const baseZIndex = zIndex?.[key as keyof ZIndexOptions]
     if (el) {
         el.style.zIndex = String(generateZIndex(key, !!autoZIndex, baseZIndex))

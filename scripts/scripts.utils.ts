@@ -13,7 +13,7 @@ export function buildCmpContext(name: string): CmpContext {
         cmpname = start.toLocaleLowerCase() + end.toLocaleLowerCase(),
         cmp_name = toKebabCase(cmpName),
         cmpHomePath = `./packages/${cmp_name}`,
-        docHomePath = './packages/jazzsvelte_doc/src/',
+        docHomePath = './apps/jazzsvelte_doc/src',
         cmpDocHomePath = `${docHomePath}/lib/doc/${cmpName}`,
         cmpDocPagePath = `${docHomePath}/routes/${cmpname}`,
         cmpDocPageSveltePath = `${cmpDocPagePath}/+page.svelte`,

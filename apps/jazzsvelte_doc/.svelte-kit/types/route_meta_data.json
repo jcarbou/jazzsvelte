@@ -17,6 +17,9 @@
 	"/ripple": [
 		"src/routes/ripple/+page.ts"
 	],
+	"/speeddial": [
+		"src/routes/speeddial/+page.ts"
+	],
 	"/toast": [
 		"src/routes/toast/+page.ts"
 	],

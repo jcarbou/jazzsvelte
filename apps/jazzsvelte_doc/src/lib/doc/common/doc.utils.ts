@@ -1,3 +1,4 @@
+import { toKebabCase } from '@jazzsvelte/object'
 import type { Doc, DocSection } from './doc.types'
 
 export function onLinkClickScrollToAnchor(event: MouseEvent) {
@@ -38,7 +39,7 @@ export function findActiveDoc(docs: Doc[], y: number): Doc | null {
 export const projectName = 'JazzSvelte'
 
 export function importComponent(cmp: string) {
-    return `import ${cmp} from 'jazzsvelte/${cmp}'`
+    return `import { ${cmp} } from '@jazzsvelte/${toKebabCase(cmp, '_')}'`
 }
 
 export function importComponents(cmpOrCmpList: string | string[]) {
