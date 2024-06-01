@@ -1,5 +1,5 @@
 import type { CssStyle, HTMLInputAttributes, PassThroughHTMLAttributes, PassThroughType } from '@jazzsvelte/api'
-import type { KeyFilterRegExp, ValidatedInputEvent } from '@jazzsvelte/key_filter'
+import type { KeyFilterRegExp, ValidatedInputEvent } from '@jazzsvelte/key_filter_action'
 import type { TooltipOptions } from '@jazzsvelte/tooltip'
 
 export interface InputTextEvent {

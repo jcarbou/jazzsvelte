@@ -2,12 +2,12 @@
     import type { JazzSvelteContext, HTMLInputAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
     import type { TooltipOptions } from '@jazzsvelte/tooltip'
     import type { InputTextEvent, InputTextPassThroughMethodOptions, InputTextPassThroughOptions } from './inputText.types'
-    import type { KeyFilterRegExp, ValidatedInputEvent } from '@jazzsvelte/key_filter'
+    import type { KeyFilterRegExp, ValidatedInputEvent } from '@jazzsvelte/key_filter_action'
 
     import { resolvePT } from '@jazzsvelte/api'
     import { createEventDispatcher, getContext } from 'svelte'
     import { tooltip, TooltipTargetDisabled } from '@jazzsvelte/tooltip'
-    import { keyFilter } from '@jazzsvelte/key_filter'
+    import { keyFilter } from '@jazzsvelte/key_filter_action'
     import { defaultInputTextProps as DEFAULT, globalInputTextPT as globalPt } from './inputText.config'
 
     export let disabled: boolean = DEFAULT.disabled

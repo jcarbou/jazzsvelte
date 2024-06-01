@@ -26,6 +26,8 @@
     import SpeedDialMenuItem from './SpeedDialMenuItem.svelte'
     import uniqueId from '../../utils/src/uniqueId'
     import { findNextOptionIndex, findPrevOptionIndex } from './speedDial.utils'
+    import { focusEl } from '../../dom/src'
+    import { clickOutside } from '@jazzsvelte/click_outside_action'
 
     export let id: string | null = null
     export let buttonClass: string | null = DEFAULT.buttonClass
@@ -62,6 +64,7 @@
     let visibleState = false
     $: visible = onVisibleChange ? visibleProp : visibleState
     let button: Button
+    let menu: HTMLUListElement
     let focused = false
     let focusedOptionIndex = -1
 
@@ -79,13 +82,9 @@
 
     $: idState = id || (uniqueId('speedDial_') satisfies string)
 
-    let isItemClicked = false
-
     const onItemClick = (e: MouseEvent | KeyboardEvent, item: MenuItem) => {
         item.command && item.command({ originalEvent: e, item })
         hide()
-
-        isItemClicked = true
         e.preventDefault()
     }
 
@@ -134,6 +133,11 @@
         ptContext
     ) satisfies HTMLDivAttributes
 
+    function onClickOutSide(): void {
+        if (!hideOnClickOutside || !visible) return
+        hide()
+    }
+
     // "button" element
     $: showIconVisible = ((!visible && !!showIcon) || !hideIcon) satisfies boolean
     $: hideIconVisible = (visible && !!hideIcon) satisfies boolean
@@ -150,7 +154,6 @@
         style: buttonStyle,
         icon: showIconVisible ? showIcon : hideIconVisible ? hideIcon : null,
         disabled: disabled,
-        //onKeyDown: onTogglerKeydown,
         'aria-label': $$props['aria-label'],
         'aria-expanded': visible,
         'aria-haspopup': true,
@@ -162,7 +165,6 @@
     function _onClick(ev: { originEvent: MouseEvent }): void {
         visible ? hide() : show()
         onClick && onClick(ev.originEvent)
-        isItemClicked = true
     }
 
     function hide(): void {
@@ -173,6 +175,40 @@
     function show(): void {
         onVisibleChange ? onVisibleChange(true) : (visibleState = true)
         onShow && onShow()
+    }
+
+    function onTogglerArrowUp(event: KeyboardEvent): void {
+        focused = true
+        focusEl(menu)
+        show()
+        navigatePrevItem(event)
+        event.preventDefault()
+    }
+
+    function onTogglerArrowDown(event: KeyboardEvent): void {
+        focused = true
+        focusEl(menu)
+        show()
+        navigateNextItem(event)
+        event.preventDefault()
+    }
+
+    function onTogglerKeydown(event: KeyboardEvent): void {
+        switch (event.code) {
+            case 'ArrowDown':
+            case 'ArrowLeft':
+                onTogglerArrowDown(event)
+                break
+            case 'ArrowUp':
+            case 'ArrowRight':
+                onTogglerArrowUp(event)
+                break
+            case 'Escape':
+                onEscapeKey()
+                break
+            default:
+                break
+        }
     }
 
     // "menu" element
@@ -211,7 +247,7 @@
     }
 
     function focusedOptionId(): string | null {
-        return focusedOptionIndex !== -1 ? '' + focusedOptionIndex : null
+        return focusedOptionIndex !== -1 ? `${idState}_${focusedOptionIndex}` : null
     }
 
     function navigateNextItem(event: Event, index: number | null = null, defaultFocusedOptionIndex: number | null = null): void {
@@ -386,11 +422,19 @@
     }
 </script>
 
-<div {...rootAttributes} {...$$restProps}>
-    <Button bind:this={button} {...buttonAttributes} on:click={_onClick} />
-    <ul {...menuAttributes} on:focus={onMenuFocus} on:keydown={onMenuKeyDown} on:blur{onMenuBlu}>
+<div {...rootAttributes} {...$$restProps} use:clickOutside on:clickoutside={onClickOutSide}>
+    <Button bind:this={button} {...buttonAttributes} on:click={_onClick} on:keydown={onTogglerKeydown} />
+    <ul bind:this={menu} {...menuAttributes} on:focus={onMenuFocus} on:keydown={onMenuKeyDown} on:blur={onMenuBlur}>
         {#each model as item, index (index)}
-            <SpeedDialMenuItem id={`${idState}_${index}`} {item} style={getItemStyle(index)} {pt} {ptContext} {unstyled} />
+            <SpeedDialMenuItem
+                id={`${idState}_${index}`}
+                {item}
+                active={focusedOptionIndex === index}
+                style={getItemStyle(index)}
+                {pt}
+                {ptContext}
+                {unstyled}
+            />
         {/each}
     </ul>
 </div>

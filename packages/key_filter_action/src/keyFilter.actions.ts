@@ -56,7 +56,7 @@ export function keyFilter(inputElement: HTMLInputElement, options: KeyFilterOpti
         const clipboard = event.clipboardData?.getData('text')
 
         if (!clipboard) return // loop over each letter pasted and if any fail prevent the paste
-        ;[...clipboard].forEach((c) => {
+        clipboard.split('').forEach((c) => {
             if (!regExp.test(c)) {
                 event.preventDefault()
                 return false

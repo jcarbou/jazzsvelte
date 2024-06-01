@@ -185,6 +185,8 @@
             {...$$restProps}
             use:tooltip={{ showOnDisabled, tooltipContent, tooltipOptions, jazzSvelteContext }}
             on:click={onClick}
+            on:keydown
+            on:keyup
         >
             {#if icon && !loading}
                 <IconBuilder {resolvedIcon} />

@@ -701,6 +701,15 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../button
 
+  packages/click_outside_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+
   packages/dom:
     dependencies:
       '@jazzsvelte/object':
@@ -721,18 +730,15 @@ importers:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
-      '@jazzsvelte/key_filter':
+      '@jazzsvelte/key_filter_action':
         specifier: workspace:^0.1.0
-        version: link:../key_filter
+        version: link:../key_filter_action
       '@jazzsvelte/tooltip':
         specifier: workspace:^0.1.0
         version: link:../tooltip
 
-  packages/key_filter:
+  packages/key_filter_action:
     dependencies:
-      '@jazzsvelte/api':
-        specifier: workspace:^0.1.0
-        version: link:../api
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
         version: link:../dom
@@ -759,6 +765,9 @@ importers:
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
+      '@jazzsvelte/click_outside_action':
+        specifier: workspace:^0.1.0
+        version: link:../click_outside_action
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons

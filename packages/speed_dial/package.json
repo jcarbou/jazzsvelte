@@ -13,6 +13,7 @@
     },
     "dependencies": {
         "@jazzsvelte/api": "workspace:^0.1.0",
+        "@jazzsvelte/click_outside_action": "workspace:^0.1.0",
         "@jazzsvelte/utils": "workspace:^0.1.0",
         "@jazzsvelte/object": "workspace:^0.1.0",
         "@jazzsvelte/icons": "workspace:^0.1.0",

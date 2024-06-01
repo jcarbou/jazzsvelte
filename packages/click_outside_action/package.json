@@ -1,5 +1,5 @@
 {
-    "name": "@jazzsvelte/input_text",
+    "name": "@jazzsvelte/click_outside_action",
     "version": "0.1.0",
     "description": "",
     "main": "src/index.ts",
@@ -8,9 +8,8 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@jazzsvelte/api": "workspace:^0.1.0",
-        "@jazzsvelte/tooltip": "workspace:^0.1.0",
-        "@jazzsvelte/key_filter_action": "workspace:^0.1.0"
+        "@jazzsvelte/dom": "workspace:^0.1.0",
+        "@jazzsvelte/object": "workspace:^0.1.0"
     },
     "keywords": [],
     "author": "",
