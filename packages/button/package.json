@@ -19,6 +19,7 @@
         "@jazzsvelte/object": "workspace:^0.1.0",
         "@jazzsvelte/ripple": "workspace:^0.1.0",
         "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
+        "@jazzsvelte/stop_propagation_action": "workspace:^0.1.0",
         "@jazzsvelte/tooltip": "workspace:^0.1.0"
     },
     "keywords": [],

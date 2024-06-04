@@ -27,6 +27,12 @@ export function containerTest<CMP extends SvelteComponent>(
             }
         })
 
-        callback(container.querySelector('[data-tested-element]'), component.getTestedComponent(), component)
+        await callback(container.querySelector('[data-tested-element]'), component.getTestedComponent(), component)
+    })
+}
+
+export async function later(delay: number) {
+    return new Promise(function (resolve) {
+        setTimeout(resolve, delay)
     })
 }

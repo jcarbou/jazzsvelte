@@ -5,13 +5,13 @@
     "main": "src/index.ts",
     "sideEffects": false,
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-      "@jazzsvelte/api": "workspace:^0.1.0"
+        "@jazzsvelte/api": "workspace:^0.1.0"
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
-  }
-  
+    "license": "ISC",
+    "type": "module"
+}

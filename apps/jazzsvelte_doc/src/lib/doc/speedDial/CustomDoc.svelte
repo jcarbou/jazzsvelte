@@ -155,6 +155,7 @@ ${importTS(
             transitionDelay={80}
             showIcon="pi pi-bars"
             hideIcon="pi pi-times"
+            rotateAnimation={false}
             buttonClass="p-button-outlined"
         />
     </div>

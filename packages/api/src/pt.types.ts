@@ -31,7 +31,7 @@ export type ResolvedIconPT = {
     svgAttributes?: Omit<PtAttr<SVGSVGElement>, 'style'> & { style?: string }
 }
 
-export type PassThroughTypeFunction<T, O> = (options?: O) => T | void
+export type PassThroughTypeFunction<T, O> = (options: O) => T | void
 export type PassThroughType<T, O> = T | PassThroughTypeFunction<T, O> | string | null | undefined
 export type PassThroughHTMLAttributes<T> = Omit<T, 'style'> & {
     style?: string | { [key: string]: string }

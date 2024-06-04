@@ -8,7 +8,7 @@
         BadgeValue
     } from './badge.types'
 
-    import { JAZZ_SVELTE, resolvePT } from '@jazzsvelte/api'
+    import { resolvePT } from '@jazzsvelte/api'
     import { isEmpty, isNotEmpty } from '@jazzsvelte/object'
     import { defaultBadgeProps as DEFAULT, globalBadgePT as globalPt } from './badge.config'
 

@@ -33,6 +33,8 @@ export const defaultSpeedDialProps: Omit<Required<BaseSpeedDialProps>, 'pt' | 'p
     radius: 0,
     rotateAnimation: true,
     showIcon: PlusIcon,
+    getTooltip: null,
+    tooltipOptions: null,
     transitionDelay: 30,
     type: 'linear',
     unstyled: false,

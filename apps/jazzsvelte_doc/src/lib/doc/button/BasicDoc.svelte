@@ -5,25 +5,26 @@
 
     import type { DocSection } from '$lib/doc/common/doc.types'
     import { importJS, importTS } from '../common/doc.utils'
+    import { showToast } from '@jazzsvelte/toast'
 
     export let docSection: DocSection
 
     const code = {
         basic: `
-<Button label="Submit" />
+        <Button label="Submit" on:click={() => showToast({ summary: 'Clicked', detail: 'Basic button click' })}></Button>
         `,
         javascript: `
-${importJS('Button')}
+${importJS('Button', `import { showToast } from '@jazzsvelte/toast'`)}
 
 <div class="card flex justify-content-center">
-    <Button label="Submit" />
+    <Button label="Submit" on:click={() => showToast({ summary: 'Clicked', detail: 'Basic button click' })}></Button>
 </div>
         `,
         typescript: `
-${importTS(`Button`)}
+${importTS(`Button`, `import { showToast } from '@jazzsvelte/toast'`)}
 
 <div class="card flex justify-content-center">
-    <Button label="Submit" />
+    <Button label="Submit" on:click={() => showToast({ summary: 'Clicked', detail: 'Basic button click' })}></Button>
 </div>
         `
     }
@@ -35,6 +36,6 @@ ${importTS(`Button`)}
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <Button label="Submit"></Button>
+    <Button label="Submit" on:click={() => showToast({ summary: 'Clicked', detail: 'Basic button click' })}></Button>
 </div>
 <DocSectionCode {code} />

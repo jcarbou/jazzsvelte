@@ -16,11 +16,12 @@
         MenuItem,
         CssObject
     } from '@jazzsvelte/api'
+    import type { TooltipGetter, TooltipOptions } from '@jazzsvelte/tooltip'
+    import type { ButtonProps } from '@jazzsvelte/button'
 
     import { SvelteComponent, setContext } from 'svelte'
 
     import { mergeCssClasses, resolvePT } from '@jazzsvelte/api'
-    import type { ButtonProps } from '@jazzsvelte/button'
     import { Button } from '@jazzsvelte/button'
     import { defaultSpeedDialProps as DEFAULT, globalSpeedDialPT as globalPt } from './speedDial.config'
     import SpeedDialMenuItem from './SpeedDialMenuItem.svelte'
@@ -49,6 +50,8 @@
     export let unstyled: boolean = DEFAULT.unstyled
     let visibleProp: boolean = DEFAULT.visible
     export { visibleProp as visible }
+    export let getTooltip: TooltipGetter<MenuItem> = DEFAULT.getTooltip
+    export let tooltipOptions: TooltipOptions | null = DEFAULT.tooltipOptions
     export let pt: SpeedDialPassThroughOptions | null = null
     export let ptOptions: PassThroughOptions | null = null
     export let style: CssStyle | null = DEFAULT.style
@@ -56,7 +59,7 @@
     export { className as class }
     export let onHide: (() => void) | null = null
     export let onShow: (() => void) | null = null
-    export let onClick: ((ev: MouseEvent) => void) | null = null
+    export let onClick: ((ev: Event) => void) | null = null
     export let onVisibleChange: ((visible: boolean) => void) | null = null
 
     export const displayName = 'SpeedDial'
@@ -89,6 +92,8 @@
     }
 
     setContext<SpeedDialContext>('speedDial', {
+        getTooltip,
+        tooltipOptions,
         onItemClick,
         hide
     })
@@ -139,14 +144,14 @@
     }
 
     // "button" element
-    $: showIconVisible = ((!visible && !!showIcon) || !hideIcon) satisfies boolean
+    $: showIconVisible = ((!visible && !!showIcon) || rotateAnimation) satisfies boolean
     $: hideIconVisible = (visible && !!hideIcon) satisfies boolean
     $: buttonAttributes = {
         class: mergeCssClasses([
             buttonClass,
             'p-speeddial-button p-button-rounded',
             {
-                'p-speeddial-rotate': rotateAnimation && !hideIcon
+                'p-speeddial-rotate': rotateAnimation
             }
         ]),
         'data-pc-section': 'button',
@@ -162,9 +167,9 @@
         // pt?:  ???
     } satisfies ButtonProps
 
-    function _onClick(ev: { originEvent: MouseEvent }): void {
+    function _onClick(ev: MouseEvent): void {
         visible ? hide() : show()
-        onClick && onClick(ev.originEvent)
+        onClick && onClick(ev)
     }
 
     function hide(): void {
@@ -193,7 +198,7 @@
         event.preventDefault()
     }
 
-    function onTogglerKeydown(event: KeyboardEvent): void {
+    function onButtonKeydown(event: KeyboardEvent): void {
         switch (event.code) {
             case 'ArrowDown':
             case 'ArrowLeft':
@@ -229,7 +234,7 @@
                               : null
             },
             role: 'menu',
-            tabIndex: '-1',
+            tabindex: -1,
             'aria-activedescendant': focused ? focusedOptionId() : undefined
         },
         pt?.menu,
@@ -423,7 +428,8 @@
 </script>
 
 <div {...rootAttributes} {...$$restProps} use:clickOutside on:clickoutside={onClickOutSide}>
-    <Button bind:this={button} {...buttonAttributes} on:click={_onClick} on:keydown={onTogglerKeydown} />
+    <Button bind:this={button} {...buttonAttributes} on:click={_onClick} on:keydown={onButtonKeydown} />
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <ul bind:this={menu} {...menuAttributes} on:focus={onMenuFocus} on:keydown={onMenuKeyDown} on:blur={onMenuBlur}>
         {#each model as item, index (index)}
             <SpeedDialMenuItem
@@ -486,7 +492,7 @@
             position: absolute;
         }
 
-        .p-speeddial-rotate {
+        :global(.p-speeddial-rotate) {
             transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
             will-change: transform;
         }
@@ -516,7 +522,7 @@
             opacity: 1;
         }
 
-        .p-speeddial-opened .p-speeddial-rotate {
+        .p-speeddial-opened :global(.p-speeddial-rotate) {
             transform: rotate(45deg);
         }
     }

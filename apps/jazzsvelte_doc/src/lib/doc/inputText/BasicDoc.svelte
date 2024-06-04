@@ -35,6 +35,6 @@ ${importTS('InputText', "let value : string = ''")}
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <InputText bind:value />
+    <InputText bind:value keyFilter="int" />
 </div>
 <DocSectionCode {code} />

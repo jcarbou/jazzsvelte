@@ -5,6 +5,7 @@
     import { globalSpeedDialPT as globalPt } from './speedDial.config'
     import { getContext } from 'svelte'
     import { IconBuilder } from '@jazzsvelte/icons'
+    import { getTooltipContent, tooltip } from '@jazzsvelte/tooltip'
     import { Ripple } from '@jazzsvelte/ripple'
 
     export let item: MenuItem
@@ -56,13 +57,15 @@
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
     let speedDialContext = getContext<SpeedDialContext>('speedDial')
+    let { getTooltip, tooltipOptions } = speedDialContext
 
     $: ripple = jazzSvelteContext.ripple
+    $: tooltipContent = getTooltipContent(getTooltip, item)
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-missing-attribute -->
-<a {...actionAttributes} on:click={onItemClick}>
+<a {...actionAttributes} on:click={onItemClick} use:tooltip={{ tooltipContent, tooltipOptions, jazzSvelteContext }}>
     <IconBuilder resolvedIcon={resolvedActionIcon} />
 
     {#if !item.disabled && $ripple}

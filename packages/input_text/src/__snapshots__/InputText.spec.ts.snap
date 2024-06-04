@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InputText > when input has className only 1 className is printed 1`] = `
+<input
+  class="p-inputtext p-component jest p-filled"
+  data-pc-name="inputtext"
+  data-pc-section="root"
+  data-tested-element="true"
+/>
+`;
+
+exports[`InputText > when input is blank it should not have filled state 1`] = `
+<input
+  class="p-inputtext p-component"
+  data-pc-name="inputtext"
+  data-pc-section="root"
+  data-tested-element="true"
+/>
+`;
+
+exports[`InputText > when input is enabled then input accepts data entry and have filled state 1`] = `
+<input
+  class="p-inputtext p-component"
+  data-pc-name="inputtext"
+  data-pc-section="root"
+  data-tested-element="true"
+/>
+`;
+
+exports[`InputText > when input is is set for validation only 1`] = `
+<input
+  class="p-inputtext p-component p-filled"
+  data-pc-name="inputtext"
+  data-pc-section="root"
+  data-tested-element="true"
+/>
+`;

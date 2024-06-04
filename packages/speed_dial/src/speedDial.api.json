@@ -72,7 +72,7 @@
                 "readonly": false,
                 "type": "string | IconComponent | null",
                 "default": "null",
-                "description": "Hide icon of the button element."
+                "description": "Hide icon of the button element (Used only if 'rotateAnimation' is false)"
             },
             {
                 "name": "hideOnClickOutside",
@@ -153,6 +153,22 @@
                 "type": "string | IconComponent | null",
                 "default": "null",
                 "description": "Show icon of the button element."
+            },
+            {
+                "name": "getTooltip",
+                "optional": true,
+                "readonly": false,
+                "type": "((item: MenuItem) => string | undefined | null) | string | null",
+                "default": "null",
+                "description": "Tooltip builder."
+            },
+            {
+                "name": "tooltipOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "TooltipOptions | null",
+                "default": "null",
+                "description": "Configuration of the tooltip, refer to the tooltip documentation for more information."
             },
             {
                 "name": "transitionDelay",

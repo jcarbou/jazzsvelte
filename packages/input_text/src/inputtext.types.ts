@@ -29,7 +29,7 @@ export interface BaseInputTextProps {
     /**
      * Size of the input.
      */
-    size?: number | string | null
+    size?: number | null
     /**
      * Content of the tooltip.
      */
@@ -83,7 +83,7 @@ export interface BaseInputTextProps {
  * Defines valid properties in InputText component. In addition to these, all properties of HTMLInputElement can be used in this component.
  * @group Properties
  */
-export interface InputTextProps extends Omit<HTMLInputAttributes, 'onInput' | 'value' | 'size'>, BaseInputTextProps {}
+export interface InputTextProps extends Omit<HTMLInputAttributes, 'onInput' | 'value' | 'size' | 'style'>, BaseInputTextProps {}
 
 export declare type InputTextPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, InputTextPassThroughMethodOptions>
 

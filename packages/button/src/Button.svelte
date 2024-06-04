@@ -21,12 +21,13 @@
     import { IconBuilder } from '@jazzsvelte/icons'
     import { Ripple } from '@jazzsvelte/ripple'
     import { Badge } from '@jazzsvelte/badge'
-    import { createEventDispatcher, getContext } from 'svelte'
+    import { getContext } from 'svelte'
     import { SIZE_VALUE_TO_CSS, getIconPos, isIconPos } from './button.utils'
     import { tooltip, TooltipTargetDisabled } from '@jazzsvelte/tooltip'
     import { defaultButtonProps as DEFAULT, globalButtonPT as globalPt } from './button.config'
     import type { ButtonGroupContext } from './buttonGroup.types'
     import { focusEl } from '@jazzsvelte/dom'
+    import { stopProgagation } from '@jazzsvelte/stop_propagation_action'
 
     export let disabled: boolean = DEFAULT.disabled
     export let icon: string | IconComponent | null = DEFAULT.icon
@@ -63,11 +64,6 @@
 
     let buttonEl: HTMLButtonElement
     const buttonGroup = getContext<ButtonGroupContext>('buttonGroup')
-    const dispatch = createEventDispatcher()
-
-    function onClick(ev: MouseEvent) {
-        if (!disabled) dispatch('click', { originEvent: ev })
-    }
 
     $: _severity = severity ?? buttonGroup?.severity
     $: label = label ?? $$props['aria-label']
@@ -184,7 +180,8 @@
             {...rootAttributes}
             {...$$restProps}
             use:tooltip={{ showOnDisabled, tooltipContent, tooltipOptions, jazzSvelteContext }}
-            on:click={onClick}
+            use:stopProgagation={{ eventName: 'click', stopCondition: () => disabled }}
+            on:click
             on:keydown
             on:keyup
         >

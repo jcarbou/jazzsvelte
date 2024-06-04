@@ -47,6 +47,9 @@ importers:
       '@testing-library/svelte':
         specifier: ^5.1.0
         version: 5.1.0(svelte@4.2.11)(vite@5.1.3(@types/node@20.11.19)(sass@1.71.0)(terser@5.27.2))(vitest@1.3.0(@types/node@20.11.19)(jsdom@24.0.0)(sass@1.71.0)(terser@5.27.2))
+      '@testing-library/user-event':
+        specifier: ^14.5.2
+        version: 14.5.2(@testing-library/dom@9.3.4)
       '@types/eslint':
         specifier: 8.56.0
         version: 8.56.0
@@ -684,6 +687,9 @@ importers:
       '@jazzsvelte/spinner_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/spinner
+      '@jazzsvelte/stop_propagation_action':
+        specifier: workspace:^0.1.0
+        version: link:../stop_propagation_action
       '@jazzsvelte/tooltip':
         specifier: workspace:^0.1.0
         version: link:../tooltip
@@ -736,6 +742,10 @@ importers:
       '@jazzsvelte/tooltip':
         specifier: workspace:^0.1.0
         version: link:../tooltip
+    devDependencies:
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
 
   packages/key_filter_action:
     dependencies:
@@ -783,6 +793,9 @@ importers:
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../ripple
+      '@jazzsvelte/tooltip':
+        specifier: workspace:^0.1.0
+        version: link:../tooltip
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
         version: link:../utils
@@ -790,6 +803,15 @@ importers:
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
+
+  packages/stop_propagation_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
 
   packages/test:
     dependencies:
@@ -1549,6 +1571,12 @@ packages:
         optional: true
       vitest:
         optional: true
+
+  '@testing-library/user-event@14.5.2':
+    resolution: {integrity: sha512-YAh82Wh4TIrxYLmfGcixwD18oIjyC1pFQC2Y01F2lzV2HTMiYrI0nze0FD0ocB//CKS/7jIUgae+adPqxK5yCQ==}
+    engines: {node: '>=12', npm: '>=6'}
+    peerDependencies:
+      '@testing-library/dom': '>=7.21.4'
 
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -5522,6 +5550,10 @@ snapshots:
     optionalDependencies:
       vite: 5.1.3(@types/node@20.11.19)(sass@1.71.0)(terser@5.27.2)
       vitest: 1.3.0(@types/node@20.11.19)(jsdom@24.0.0)(sass@1.71.0)(terser@5.27.2)
+
+  '@testing-library/user-event@14.5.2(@testing-library/dom@9.3.4)':
+    dependencies:
+      '@testing-library/dom': 9.3.4
 
   '@trysound/sax@0.2.0': {}
 

@@ -12,19 +12,7 @@
         "test": "vitest",
         "lint": "prettier --check . && eslint .",
         "format": "prettier --write \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\"",
-        "format:check": "prettier --check \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\"",
-        "build:lib": "NODE_ENV=production INPUT_DIR=components/lib/ OUTPUT_DIR=dist/ npm run build:package",
-        "build:package": "npm run build:check && rollup -c && gulp build-resources && npm run build:api",
-        "dev:link": "NPM_LINK=true NODE_ENV=production INPUT_DIR=components/lib/ OUTPUT_DIR=dist/ npm run build:package:dev",
-        "dev:link:windows": "set NPM_LINK=true && set NODE_ENV=production&& set INPUT_DIR=components/lib/&& set OUTPUT_DIR=dist/&& npm run build:package:dev",
-        "build:package:dev": "npm run build:check && rollup -c --watch && gulp build-resources && npm run build:api",
-        "build:api": "npm run apiwebtypes && npm run apidoc",
-        "build:check": "npm run lint && npm run format:check && npm run type:check && npm run security:check",
-        "security:check": "npm audit --production --audit-level high",
-        "lint:fix": "lint --fix --ignore-path .gitignore .",
-        "type:check": "tsc -p ./api-scripts/tsconfig.json",
-        "apidoc": "node ./api-scripts/build-apidoc.js",
-        "apiwebtypes": "node ./api-scripts/build-webtypes.js"
+        "format:check": "prettier --check \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\""
     },
     "dependencies": {
         "@jazzsvelte/api": "workspace:^0.1.0",

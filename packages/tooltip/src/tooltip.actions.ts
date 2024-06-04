@@ -23,7 +23,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
         }
     }
 
-    const { tooltipContent, showOnDisabled, jazzSvelteContext, tooltipAttributes } = actionOptions
+    const { tooltipContent, showOnDisabled, jazzSvelteContext } = actionOptions
 
     if (!tooltipContent || showOnDisabled) return {}
 

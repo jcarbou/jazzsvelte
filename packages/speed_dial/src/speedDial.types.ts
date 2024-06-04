@@ -12,6 +12,7 @@ import type {
     PassThroughType,
     HTMLULAttributes
 } from '@jazzsvelte/api'
+import type { TooltipGetter, TooltipOptions } from '@jazzsvelte/tooltip'
 import { ButtonPassThroughOptions } from '@jazzsvelte/button'
 
 /**
@@ -22,6 +23,8 @@ export type SpeedDialDirection = 'left' | 'right' | 'up' | 'down' | 'up-left' | 
 export type SpeedDialType = 'linear' | 'circle' | 'semi-circle' | 'quarter-circle'
 
 export type SpeedDialContext = {
+    getTooltip?: TooltipGetter<MenuItem>
+    tooltipOptions?: TooltipOptions | null
     onItemClick: (e: MouseEvent, item: MenuItem) => void
     hide: () => void
 }
@@ -68,7 +71,7 @@ export interface BaseSpeedDialProps {
     disabled?: boolean
 
     /**
-     * Hide icon of the button element.
+     * Hide icon of the button element (Used only if 'rotateAnimation' is false).
      * @default  null
      */
     hideIcon?: string | IconComponent | null
@@ -132,6 +135,18 @@ export interface BaseSpeedDialProps {
      * @default  null
      */
     showIcon?: string | IconComponent | null
+
+    /**
+     * Tooltip builder.
+     * @default  null
+     */
+    getTooltip?: TooltipGetter<MenuItem>
+
+    /**
+     * Activation and configuration of the tooltip, refer to the tooltip documentation for more information.
+     * @default  null
+     */
+    tooltipOptions?: TooltipOptions | null
 
     /**
      * Transition delay step for each action item.

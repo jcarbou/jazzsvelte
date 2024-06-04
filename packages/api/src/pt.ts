@@ -29,7 +29,7 @@ function ptToAttributes<ELT extends Element, M, PROPS, STATE, CTX>(
 
     if (options) {
         if (isFunction(options)) {
-            const { props, context } = ptContext
+            const { props, context, state } = ptContext
             const functionAttr = (options as PassThroughTypeFunction<PtAttr<ELT>, PassThroughMethodOptions<PROPS, STATE, CTX>>)({
                 props,
                 state,

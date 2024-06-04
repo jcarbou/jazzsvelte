@@ -9,6 +9,7 @@
     import { tooltip, TooltipTargetDisabled } from '@jazzsvelte/tooltip'
     import { keyFilter } from '@jazzsvelte/key_filter_action'
     import { defaultInputTextProps as DEFAULT, globalInputTextPT as globalPt } from './inputText.config'
+    import { focusEl } from '../../dom/src'
 
     export let disabled: boolean = DEFAULT.disabled
     let keyFilterType: KeyFilterRegExp | null = DEFAULT.keyFilter
@@ -24,12 +25,18 @@
     let className: string | null = null
     export { className as class }
     export let style: CssStyle = null
-
+    export let size: number | null = DEFAULT.size
     // TODO
     export let invalid: boolean = DEFAULT.invalid
-    export let size: string | number | null = DEFAULT.size
-
     export const displayName = 'InptText'
+    export const focus = (scrollTo?: boolean) => {
+        focusEl(inputEl, scrollTo)
+    }
+    export const blur = () => {
+        inputEl.blur()
+    }
+
+    let inputEl: HTMLInputElement
 
     $: ptContext = {
         props: $$props,
@@ -75,7 +82,9 @@
         {disabled}
         {...rootAttributes}
         {...$$restProps}
+        size={size || undefined}
         bind:value
+        bind:this={inputEl}
         on:paste
         on:keydown
         on:input

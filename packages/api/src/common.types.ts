@@ -3,6 +3,7 @@ import { CssObject, IconComponent } from './pt.types'
 export type MenuItem = {
     disabled?: boolean
     label?: string
+    description?: string
     icon?: string | IconComponent
     command?: (event: { originalEvent: MouseEvent | KeyboardEvent; item: MenuItem }) => void
     template?: string

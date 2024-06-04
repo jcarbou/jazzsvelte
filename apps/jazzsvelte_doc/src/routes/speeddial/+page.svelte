@@ -7,13 +7,13 @@
     import ImportDoc from '$lib/doc/speedDial/ImportDoc.svelte'
     import LinearDoc from '$lib/doc/speedDial/LinearDoc.svelte'
     import MaskDoc from '$lib/doc/speedDial/MaskDoc.svelte'
-    import PTDoc from '$lib/doc/speedDial/pt/PTDoc.svelte'
+    import PTDoc from '$lib/doc/speedDial/pt/PtDoc.svelte'
     import Wireframe from '$lib/doc/speedDial/pt/Wireframe.svelte'
     import QuarterCircleDoc from '$lib/doc/speedDial/QuarterCircleDoc.svelte'
     import SemiCircleDoc from '$lib/doc/speedDial/SemiCircleDoc.svelte'
-    //import StyledDoc from '$lib/doc/speedDial/theming/StyledDoc.svelte'
+    import StyledDoc from '$lib/doc/speedDial/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/speedDial/theming/TailwindDoc.svelte'
-    //import TooltipDoc from '$lib/doc/speedDial/TooltipDoc.svelte'
+    import TooltipDoc from '$lib/doc/speedDial/TooltipDoc.svelte'
 
     const docs = [
         {
@@ -41,11 +41,11 @@
             label: 'Quarter Circle',
             component: QuarterCircleDoc
         },
-        /*{
+        {
             id: 'tooltip',
             label: 'Tooltip',
             component: TooltipDoc
-        },*/
+        },
         {
             id: 'mask',
             label: 'Mask',
@@ -83,11 +83,11 @@
     ]
 
     const themingDocs = [
-        /*{
+        {
             id: 'styled',
             label: 'Styled',
             component: StyledDoc
-        },*/
+        },
         {
             id: 'unstyled',
             label: 'Unstyled',

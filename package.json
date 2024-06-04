@@ -9,22 +9,9 @@
         "format": "prettier --write \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\"",
         "format:check": "prettier --check \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\"",
         "lint:fix": "lint --fix --ignore-path .gitignore .",
-
         "importCmp": "pnpx tsx ./scripts/importCmp",
         "importCmpDoc": "pnpx tsx ./scripts/importCmpDoc",
-        "generateCmp": "pnpx tsx ./scripts/generateCmp",
-
-        "build:lib": "NODE_ENV=production INPUT_DIR=components/lib/ OUTPUT_DIR=dist/ npm run build:package",
-        "build:package": "npm run build:check && rollup -c && gulp build-resources && npm run build:api",
-        "dev:link": "NPM_LINK=true NODE_ENV=production INPUT_DIR=components/lib/ OUTPUT_DIR=dist/ npm run build:package:dev",
-        "dev:link:windows": "set NPM_LINK=true && set NODE_ENV=production&& set INPUT_DIR=components/lib/&& set OUTPUT_DIR=dist/&& npm run build:package:dev",
-        "build:package:dev": "npm run build:check && rollup -c --watch && gulp build-resources && npm run build:api",
-        "build:api": "npm run apiwebtypes && npm run apidoc",
-        "build:check": "npm run lint && npm run format:check && npm run type:check && npm run security:check",
-        "security:check": "npm audit --production --audit-level high",
-        "type:check": "tsc -p ./api-scripts/tsconfig.json",
-        "apidoc": "node ./api-scripts/build-apidoc.js",
-        "apiwebtypes": "node ./api-scripts/build-webtypes.js"
+        "generateCmp": "pnpx tsx ./scripts/generateCmp"
     },
     "devDependencies": {
         "@fontsource/fira-mono": "^4.5.10",
@@ -40,6 +27,7 @@
         "@sveltejs/vite-plugin-svelte": "^3.0.0",
         "@testing-library/jest-dom": "^6.4.5",
         "@testing-library/svelte": "^5.1.0",
+        "@testing-library/user-event": "^14.5.2",
         "@types/eslint": "8.56.0",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.10.2",

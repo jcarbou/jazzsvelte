@@ -12,6 +12,8 @@ export declare type TooltipPassThroughType<T> = PassThroughType<PassThroughHTMLA
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'mouse'
 
+export type TooltipGetter<ITEM> = ((item: ITEM) => string | undefined | null) | keyof ITEM | null
+
 export type TooltipActionOptions = {
     tooltipContent?: string | null
     tooltipOptions?: TooltipOptions | null

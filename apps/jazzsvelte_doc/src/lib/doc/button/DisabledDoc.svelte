@@ -5,6 +5,7 @@
 
     import type { DocSection } from '$lib/doc/common/doc.types'
     import { importJS, importTS } from '../common/doc.utils'
+    import { showToast } from '@jazzsvelte/toast'
 
     export let docSection: DocSection
 
@@ -35,6 +36,10 @@ ${importTS('Button')}
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <Button label="Submit" disabled />
+    <Button
+        label="Submit"
+        disabled
+        on:click={() => showToast({ severity: 'error', summary: 'Error', detail: 'Disabled button must not triggr click event' })}
+    />
 </div>
 <DocSectionCode {code} />

@@ -41,6 +41,8 @@ export function keyFilter(inputElement: HTMLInputElement, options: KeyFilterOpti
         if (validateOnly || IS_ANDROID) return
         if (event.ctrlKey || event.altKey) return
 
+        console.log('===========> keydown ' + event.key)
+
         validateKey(event, event.key)
     }
 
@@ -56,12 +58,9 @@ export function keyFilter(inputElement: HTMLInputElement, options: KeyFilterOpti
         const clipboard = event.clipboardData?.getData('text')
 
         if (!clipboard) return // loop over each letter pasted and if any fail prevent the paste
-        clipboard.split('').forEach((c) => {
-            if (!regExp.test(c)) {
-                event.preventDefault()
-                return false
-            }
-        })
+        if (!validateText(clipboard)) {
+            event.preventDefault()
+        }
     }
 
     function validateKey(event: KeyboardEvent | InputEvent, key: string | null | undefined) {
@@ -69,9 +68,16 @@ export function keyFilter(inputElement: HTMLInputElement, options: KeyFilterOpti
             return
         }
 
-        if (!regExp.test(key)) {
+        if (!regExp.test(key) || inputElement.disabled) {
             event.preventDefault()
         }
+    }
+
+    function validateText(text: string | null | undefined): boolean {
+        if (text === null || text === undefined || text.length === 0) return true
+        if (inputElement.disabled) return false
+        if (!keyFilterType) return true
+        return !text.split('').find((c) => !regExp.test(c))
     }
 
     function input(event: Event) {
@@ -79,20 +85,16 @@ export function keyFilter(inputElement: HTMLInputElement, options: KeyFilterOpti
         let valid = true
 
         if (keyFilterType && validateOnly) {
-            valid = validate(value)
+            valid = validateText(value)
         }
 
         inputElement.dispatchEvent(new CustomEvent('validatedinput', { detail: { event, valid } }))
         inputElement.classList.toggle('p-filled', !isEmpty(value))
     }
 
-    function validate(value: string | null | undefined) {
-        return !value || regExp.test(value)
-    }
-
-    !IS_ANDROID && inputElement.addEventListener('keydown', keydown)
-    IS_ANDROID && inputElement.addEventListener('beforeinput', beforeinput)
-    inputElement.addEventListener('paste', paste)
+    !validateOnly && !IS_ANDROID && inputElement.addEventListener('keydown', keydown)
+    !validateOnly && IS_ANDROID && inputElement.addEventListener('beforeinput', beforeinput)
+    !validateOnly && inputElement.addEventListener('paste', paste)
 
     return {
         destroy() {
