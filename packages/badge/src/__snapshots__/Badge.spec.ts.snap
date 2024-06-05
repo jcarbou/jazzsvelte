@@ -1,0 +1,89 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Badge > default 1`] = `
+<span
+  class="p-badge p-component p-badge-dot s-8HMn8itYTtQw"
+  data-pc-name="badge"
+  data-pc-section="root"
+  data-tested-element="true"
+>
+  null
+</span>
+`;
+
+exports[`Badge > severity danger 1`] = `
+<span
+  class="p-badge p-component p-badge-dot p-badge-danger s-8HMn8itYTtQw"
+  data-pc-name="badge"
+  data-pc-section="root"
+  data-tested-element="true"
+>
+  null
+</span>
+`;
+
+exports[`Badge > severity info 1`] = `
+<span
+  class="p-badge p-component p-badge-dot p-badge-info s-8HMn8itYTtQw"
+  data-pc-name="badge"
+  data-pc-section="root"
+  data-tested-element="true"
+>
+  null
+</span>
+`;
+
+exports[`Badge > severity success 1`] = `
+<span
+  class="p-badge p-component p-badge-dot p-badge-success s-8HMn8itYTtQw"
+  data-pc-name="badge"
+  data-pc-section="root"
+  data-tested-element="true"
+>
+  null
+</span>
+`;
+
+exports[`Badge > severity warning 1`] = `
+<span
+  class="p-badge p-component p-badge-dot p-badge-warning s-8HMn8itYTtQw"
+  data-pc-name="badge"
+  data-pc-section="root"
+  data-tested-element="true"
+>
+  null
+</span>
+`;
+
+exports[`Badge > size large 1`] = `
+<span
+  class="p-badge p-component p-badge-dot p-badge-lg s-8HMn8itYTtQw"
+  data-pc-name="badge"
+  data-pc-section="root"
+  data-tested-element="true"
+>
+  null
+</span>
+`;
+
+exports[`Badge > size xlarge 1`] = `
+<span
+  class="p-badge p-component p-badge-dot p-badge-xl s-8HMn8itYTtQw"
+  data-pc-name="badge"
+  data-pc-section="root"
+  data-tested-element="true"
+>
+  null
+</span>
+`;
+
+exports[`Badge > value 1`] = `
+<span
+  class="p-badge p-component s-8HMn8itYTtQw"
+  data-pc-name="badge"
+  data-pc-section="root"
+  data-tested-element="true"
+>
+  22
+</span>
+`;

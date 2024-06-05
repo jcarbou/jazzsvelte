@@ -1,0 +1,116 @@
+html {
+    font-size: 14px
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-weight: 400;
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.layout-wrapper,body {
+    background-color: var(--surface-ground)
+}
+
+a {
+    text-decoration: none
+}
+
+::-moz-selection {
+    background-color: var(--highlight-bg);
+    color: var(--highlight-text-color)
+}
+
+::selection {
+    background-color: var(--highlight-bg);
+    color: var(--highlight-text-color)
+}
+
+h1,h2,h3,h4,h5,h6 {
+    margin: 1.5rem 0 1rem;
+    font-family: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--surface-900)
+}
+
+h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child,h6:first-child {
+    margin-top: 0
+}
+
+h1 {
+    font-size: 2rem
+}
+
+h2 {
+    font-size: 1.5rem
+}
+
+h3 {
+    font-size: 1.25rem
+}
+
+h4 {
+    font-size: 1.125rem
+}
+
+h5 {
+    font-size: 1rem
+}
+
+h6 {
+    font-size: .875rem
+}
+
+p {
+    line-height: 1.75;
+    margin: 0 0 1rem
+}
+
+input[type=number] {
+    -moz-appearance: textfield
+}
+
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0
+}
+
+.p-toast.p-toast-top-left,.p-toast.p-toast-top-right {
+    top: 7rem
+}
+
+.px-link {
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    text-align: left;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.px-link:focus-visible {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: var(--focus-ring)
+}
+
+.px-link:disabled {
+    cursor: default
+}
+
+button {
+    font-family: var(--font-family);
+    font-feature-settings: var(--font-feature-settings)
+}

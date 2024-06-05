@@ -62,7 +62,10 @@ export const JAZZ_SVELTE: JazzSvelte = Object.seal({
      *  Method to configure JassSvelte on stratup
      * @param options
      */
-    config: (options: Partial<JazzSvelteOptions>) => {
+    config: (options: Partial<JazzSvelteOptions> | null) => {
+        if (!options) {
+            return
+        }
         // Properies set on startup then not editable
         JAZZ_SVELTE.unstyled = !!options.unstyled
         JAZZ_SVELTE.appendTo = options.appendTo

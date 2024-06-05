@@ -662,7 +662,7 @@ export interface JazzSvelte {
      * Method to configure JassSvelte on stratup
      * @param options options
      */
-    config: (options: Partial<JazzSvelteOptions>) => void
+    config: (options: Partial<JazzSvelteOptions> | null) => void
 }
 
 /**

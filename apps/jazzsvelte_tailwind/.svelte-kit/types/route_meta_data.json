@@ -1,0 +1,26 @@
+{
+	"/": [
+		"src/routes/+page.ts"
+	],
+	"/badge": [
+		"src/routes/badge/+page.ts"
+	],
+	"/button": [
+		"src/routes/button/+page.ts"
+	],
+	"/inputtext": [
+		"src/routes/inputtext/+page.ts"
+	],
+	"/ripple": [
+		"src/routes/ripple/+page.ts"
+	],
+	"/speeddial": [
+		"src/routes/speeddial/+page.ts"
+	],
+	"/toast": [
+		"src/routes/toast/+page.ts"
+	],
+	"/tooltip": [
+		"src/routes/tooltip/+page.ts"
+	]
+}

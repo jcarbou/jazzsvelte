@@ -37,3 +37,7 @@ export function mergeCssClasses(entries: ClassNameEntry[]) {
 
     return undefined
 }
+
+export function classNames(...entries: ClassNameEntry[]) {
+    return mergeCssClasses(entries)
+}

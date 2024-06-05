@@ -68,7 +68,7 @@
     $: _severity = severity ?? buttonGroup?.severity
     $: label = label ?? $$props['aria-label']
     $: ptContext = {
-        props: $$props,
+        props: { ...DEFAULT, ...$$props },
         context: { disabled },
         ptOptions,
         unstyled

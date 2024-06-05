@@ -3,7 +3,7 @@
 import type { SvelteComponent } from 'svelte'
 import type { HTMLAttributes, HTMLButtonAttributes as SvelteHTMLButtonAttributes } from 'svelte/elements'
 
-export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: boolean }
+export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: any }
 
 export type CssObject = { [key: string]: string | null | undefined }
 export type CssStyle = string | CssObject | null

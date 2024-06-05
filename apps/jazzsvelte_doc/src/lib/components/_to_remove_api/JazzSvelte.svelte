@@ -1,17 +1,25 @@
 <script lang="ts">
-    import type { JazzSvelteContext } from './JazzSvelte.types'
+    import type { JazzSvelteContext, JazzSvelteOptions } from './JazzSvelte.types'
     import { JAZZ_SVELTE } from './JazzSvelte'
     import { setContext } from 'svelte'
     import './base.css'
     import './common.css'
+    import type { Readable } from 'svelte/store'
+    import type { BooleanStore } from '@jazzsvelte/utils'
 
-    const { themePath, ripple } = JAZZ_SVELTE
+    export let config: Partial<JazzSvelteOptions> | null = null
+
+    let unstyled: boolean = false
+    let themePath: Readable<string>
+    let ripple: BooleanStore
 
     setContext<JazzSvelteContext>('JAZZ_SVELTE', JAZZ_SVELTE)
 </script>
 
 <svelte:head>
-    <link rel="stylesheet" href="themes/{$themePath}/theme.css" />
+    {#if !unstyled}
+        <link rel="stylesheet" href="themes/{$themePath}/theme.css" />
+    {/if}
     {#if $ripple}
         <style type="text/css">
             .p-ripple {
