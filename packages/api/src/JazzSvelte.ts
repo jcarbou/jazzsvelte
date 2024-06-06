@@ -1,7 +1,7 @@
 import { FilterMatchMode } from './FilterMatchMode'
 import { createBooleanStore } from '@jazzsvelte/utils'
 import { derived, writable } from 'svelte/store'
-import type { InputStyleType, JazzSvelte, JazzSvelteOptions } from './jazzSvelte.types'
+import type { InputStyleType, JazzSvelteConfig, JazzSvelteOptions } from './jazzSvelte.types'
 
 const theme = writable('lara-light-amber')
 const darkMode = createBooleanStore(false)
@@ -11,7 +11,7 @@ const themePath = derived([theme, darkMode], ([$theme, $darkMode]) => $theme.rep
  * Configuration options for the JazzSvelte components.
  * For documentation of JAZZ_SVELTE properties, see typescript interface JazzSvelte
  */
-export const JAZZ_SVELTE: JazzSvelte = Object.seal({
+export const JAZZ_SVELTE: JazzSvelteConfig = Object.seal({
     unstyled: false,
     appendTo: null,
     styleContainer: null,
@@ -62,7 +62,8 @@ export const JAZZ_SVELTE: JazzSvelte = Object.seal({
      *  Method to configure JassSvelte on stratup
      * @param options
      */
-    config: (options: Partial<JazzSvelteOptions>) => {
+    config: (options: Partial<JazzSvelteOptions> | null) => {
+        if (!options) return
         // Properies set on startup then not editable
         JAZZ_SVELTE.unstyled = !!options.unstyled
         JAZZ_SVELTE.appendTo = options.appendTo
@@ -70,7 +71,6 @@ export const JAZZ_SVELTE: JazzSvelte = Object.seal({
         JAZZ_SVELTE.autoZIndex = !options.autoZIndex
         options.zIndex && (JAZZ_SVELTE.zIndex = options.zIndex)
         options.ptOptions !== undefined && (JAZZ_SVELTE.ptOptions = options.ptOptions)
-        options.pt !== undefined && (JAZZ_SVELTE.pt = options.pt)
 
         // Properties set on startup and editable (svelte writable store)
         JAZZ_SVELTE.darkMode.set(!!options.darkMode)

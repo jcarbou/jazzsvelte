@@ -1,19 +1,3 @@
-<script lang="ts">
-    import DocSectionCode from '$lib/common/DocSectionCode.svelte'
-    import Section from '$lib/landing/Section.svelte'
-    import { Button } from '@jazzsvelte/button'
-
-    const code1Text = `
-<Button label="Primary" />
-<Button label="Secondary" severity="secondary" />
-<Button label="Success" severity="success" />
-<Button label="Info" severity="info" />
-<Button label="Warning" severity="warning" />
-<Button label="Help" severity="help" />
-<Button label="Danger" severity="danger" />
-        `
-
-    const code2Text = `
 import { classNames } from '@jazzsvelte/api'
 import { buttonPT } from '@jazzsvelte/button'
 
@@ -135,28 +119,3 @@ buttonPT({
         class: classNames({ 'ml-2 w-4 h-4 leading-none flex items-center justify-center': props.badge })
     })
 })
-    `
-
-    const code1 = {
-        basic: code1Text,
-        javascript: code1Text,
-        typescript: code1Text
-    }
-    const code2 = {
-        basic: code2Text
-    }
-</script>
-
-<Section title="Buttons" detail="Exmples of tailwind configuration for jazzsvelte Button.">
-    <div class="card flex flex-wrap justify-center gap-3">
-        <Button label="Primary" />
-        <Button label="Secondary" severity="secondary" />
-        <Button label="Success" severity="success" />
-        <Button label="Info" severity="info" />
-        <Button label="Warning" severity="warning" />
-        <Button label="Help" severity="help" />
-        <Button label="Danger" severity="danger" />
-    </div>
-</Section>
-<DocSectionCode code={code1} hideToggleCode={true} />
-<DocSectionCode code={code2} hideToggleCode={true} />
