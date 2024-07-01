@@ -1,0 +1,419 @@
+{
+    "description": "SplitButton groups a set of commands in an overlay with a default command.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            },
+            {
+                "name": "hide",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Used to hide the popup."
+            },
+            {
+                "name": "show",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Used to show the popup."
+            }
+        ]
+    },
+    "props": {
+        "description": "Defines valid properties in SplitButton component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "buttonClass",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "ClassName of the button."
+            },
+            {
+                "name": "buttonProps",
+                "optional": true,
+                "readonly": false,
+                "type": "any",
+                "default": "null",
+                "description": "Props for the main button, any prop is passed implicity to the button element."
+            },
+            {
+                "name": "disabled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When present, it specifies that the component should be disabled."
+            },
+            {
+                "name": "dropdownIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Name of the dropdown icon or JSX.Element for dropdown icon."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Name of the icon."
+            },
+            {
+                "name": "label",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Text of the button."
+            },
+            {
+                "name": "loading",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Display loading icon of the button"
+            },
+            {
+                "name": "loadingIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Name of the loading icon or JSX.Element for loading icon."
+            },
+            {
+                "name": "menuButtonClass",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "ClassName of the menu dropdown button."
+            },
+            {
+                "name": "menuButtonProps",
+                "optional": true,
+                "readonly": false,
+                "type": "any",
+                "default": "null",
+                "description": "Props for the dropdown button, any prop is passed implicity to the dropdown button element."
+            },
+            {
+                "name": "menuClass",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "ClassName class of the overlay menu."
+            },
+            {
+                "name": "menuStyle",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Inline style of the overlay menu."
+            },
+            {
+                "name": "model",
+                "optional": true,
+                "readonly": false,
+                "type": "MenuItem[]",
+                "default": "null",
+                "description": "MenuModel instance to define the overlay items."
+            },
+            {
+                "name": "outlined",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a border class without a background initially."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "SplitButtonPassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "SplitButtonPassThroughMethodOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "raised",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a shadow to indicate elevation."
+            },
+            {
+                "name": "rounded",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a circular border radius to the button."
+            },
+            {
+                "name": "severity",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonSeverity | null",
+                "default": "null",
+                "description": "Defines the style of the button, valid values are \"secondary\", \"success\", \"info\", \"warning\", \"danger\", \"contrast\"."
+            },
+            {
+                "name": "size",
+                "optional": true,
+                "readonly": false,
+                "type": "${SplitButtonSize} | null",
+                "default": "null",
+                "description": "Defines the size of the button, valid values are \"small\" and \"large\"."
+            },
+            {
+                "name": "text",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a textual class to the button without a background initially."
+            },
+            {
+                "name": "tooltip",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Content of the tooltip."
+            },
+            {
+                "name": "tooltipOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "TooltipOptions",
+                "default": "null",
+                "description": "Configuration of the tooltip, refer to the tooltip documentation for more information."
+            },
+            {
+                "name": "transitionOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "CSSTransitionProps",
+                "default": "null",
+                "description": "The properties of CSSTransition can be customized, except for \"nodeRef\" and \"in\" properties."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            },
+            {
+                "name": "visible",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "When present, it specifies that the element should be visible."
+            }
+        ]
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onClick",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent<HTMLElement, MouseEvent>",
+                        "description": "Browser event"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when main button is clicked."
+            },
+            {
+                "name": "onHide",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Callback to invoke when overlay panel becomes hidden."
+            },
+            {
+                "name": "onShow",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Callback to invoke when overlay panel becomes visible."
+            }
+        ]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "SplitButtonProps"
+            }
+        ]
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "button",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonPassThroughO",
+                "description": "Uses to pass attributes to the Button component."
+            },
+            {
+                "name": "menuButton",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonPassThroughO",
+                "description": "Uses to pass attributes to the Button component."
+            },
+            {
+                "name": "menu",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the menu's DOM element."
+            },
+            {
+                "name": "menuList",
+                "optional": true,
+                "readonly": false,
+                "type": "UList",
+                "description": "Uses to pass attributes to the menu list's DOM element."
+            },
+            {
+                "name": "separator",
+                "optional": true,
+                "readonly": false,
+                "type": "LI",
+                "description": "Uses to pass attributes to the separator's DOM element."
+            },
+            {
+                "name": "menuIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the menu icon's DOM element."
+            },
+            {
+                "name": "menuLabel",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the menu label's DOM element."
+            },
+            {
+                "name": "anchor",
+                "optional": true,
+                "readonly": false,
+                "type": "Anchor",
+                "description": "Uses to pass attributes to the anchor's DOM element."
+            },
+            {
+                "name": "menuItem",
+                "optional": true,
+                "readonly": false,
+                "type": "LI",
+                "description": "Uses to pass attributes to the menu item's DOM element."
+            },
+            {
+                "name": "tooltip",
+                "optional": true,
+                "readonly": false,
+                "type": "TooltipPassThrough",
+                "description": "Uses to pass attributes tooltip's DOM element."
+            },
+            {
+                "name": "hooks",
+                "optional": true,
+                "readonly": false,
+                "type": "ComponentHooks",
+                "description": "Used to manage all lifecycle hooks"
+            },
+            {
+                "name": "transition",
+                "optional": true,
+                "readonly": false,
+                "type": "SplitButtonPassThr",
+                "description": "Used to control React Transition API."
+            }
+        ]
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": true,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "types": {
+        "description": "Defines types used by properties of the SplitButton component.",
+        "values": [{ "name": "SplitButtonSize", "value": "'small' | 'normal' | 'large'" }]
+    },
+    "state": {
+        "description": "Defines current inline state in SplitButton component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "id",
+                "optional": false,
+                "readonly": false,
+                "type": "string",
+                "description": "Current id state as a boolean."
+            },
+            {
+                "name": "overlayVisible",
+                "optional": false,
+                "readonly": false,
+                "type": "boolean",
+                "description": "Current overlay visible state as a boolean."
+            }
+        ]
+    }
+}

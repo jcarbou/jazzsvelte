@@ -54,6 +54,7 @@
     export { className as class }
     export let style: CssStyle = DEFAULT.style
     export let badge: string | number | null = DEFAULT.badge
+
     export const displayName = 'Button'
     export const focus = (scrollTo?: boolean) => {
         focusEl(buttonEl, scrollTo)

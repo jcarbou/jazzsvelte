@@ -1,5 +1,7 @@
 import { isFunction } from '@jazzsvelte/object'
 
+type AppendTo = null | HTMLElement | 'self' | (() => HTMLElement | 'self')
+
 /**
  * Test if OS is Android
  * @returns
@@ -93,17 +95,47 @@ export function getOuterHeight(el: HTMLElement | null, margin?: boolean): number
     return 0
 }
 
+export function getHiddenElementOuterHeight(element: HTMLElement): number {
+    if (element) {
+        element.style.visibility = 'hidden'
+        element.style.display = 'block'
+        const elementHeight = element.offsetHeight
+        element.style.display = 'none'
+        element.style.visibility = 'visible'
+        return elementHeight
+    }
+    return 0
+}
+
+export function getHiddenElementOuterWidth(element: HTMLElement): number {
+    if (element) {
+        element.style.visibility = 'hidden'
+        element.style.display = 'block'
+        const elementWidth = element.offsetWidth
+        element.style.display = 'none'
+        element.style.visibility = 'visible'
+        return elementWidth
+    }
+    return 0
+}
+
 /**
  * Get element offset
  */
-export function getOffset(el: HTMLElement | null): { top: number | 'auto'; left: number | 'auto' } {
-    if (el) {
-        const rect = el.getBoundingClientRect()
-        return {
-            top: rect.top + (document.documentElement.scrollTop || document.body.scrollTop || 0),
-            left: rect.left + (document.documentElement.scrollLeft || document.body.scrollLeft || 0)
-        }
+export function getOffsetNumbers(el: HTMLElement): { top: number; left: number } {
+    const rect = el.getBoundingClientRect()
+    return {
+        top: rect.top + (document.documentElement.scrollTop || document.body.scrollTop || 0),
+        left: rect.left + (document.documentElement.scrollLeft || document.body.scrollLeft || 0)
     }
+}
+
+/**
+ * Get element offset
+ */
+export function getOffset(el: HTMLElement | null): { top: number; left: number } | { top: 'auto'; left: 'auto' } {
+    if (el) return getOffsetNumbers(el)
+
     return {
         top: 'auto',
         left: 'auto'
@@ -142,6 +174,24 @@ export function getWindowScrollTop(): number {
     return doc.scrollTop - (doc.clientTop || 0)
 }
 
+let calculatedScrollbarWidth: null | number = null
+
+export function calculateScrollbarWidth(el?: HTMLElement): number {
+    if (el) {
+        const style = getComputedStyle(el)
+        return el.offsetWidth - el.clientWidth - parseFloat(style.borderLeftWidth) - parseFloat(style.borderRightWidth)
+    } else {
+        if (calculatedScrollbarWidth != null) return calculatedScrollbarWidth
+        const scrollDiv = document.createElement('div')
+        scrollDiv.className = 'p-scrollbar-measure'
+        document.body.appendChild(scrollDiv)
+        const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
+        document.body.removeChild(scrollDiv)
+        calculatedScrollbarWidth = scrollbarWidth
+        return scrollbarWidth
+    }
+}
+
 /**
  * Add event listener. If the element already have the same listener, it isn't added
  * @param element - element
@@ -162,6 +212,23 @@ export function setSingleEventListener(element: HTMLElement, eventName: string, 
 export function focusEl(el: HTMLElement, scrollTo?: boolean): void {
     const preventScroll = scrollTo === undefined ? true : !scrollTo
     el && document.activeElement !== el && el.focus({ preventScroll })
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function addStyles(element: any, styles: { [key: string]: string } = {}): void {
+    if (element) {
+        Object.entries(styles).forEach(([key, value]) => (element.style[key] = value))
+    }
+}
+
+/**
+ * Get element matching  given selector
+ * @param el a HTML element
+ * @param selector
+ * @returns
+ */
+export function findSingleEl(el: HTMLElement, selector: string): HTMLElement | null {
+    return el ? el.querySelector(selector) : null
 }
 
 /**
@@ -349,5 +416,118 @@ export function flipfitCollision(
     alignWithAt[position.at.y]('y')
     if (callback && isFunction(callback)) {
         callback(position)
+    }
+}
+
+export function alignOverlay(overlay: HTMLElement, target: HTMLElement, appendTo: AppendTo, calculateMinWidth = true) {
+    if (overlay && target) {
+        if (appendTo === 'self') {
+            relativePosition(overlay, target)
+        } else {
+            calculateMinWidth && (overlay.style.minWidth = getOuterWidth(target) + 'px')
+            absolutePosition(overlay, target)
+        }
+    }
+}
+
+export function relativePosition(element: HTMLElement, target: HTMLElement) {
+    if (element && target) {
+        const elementDimensions = getElementDimensions(element)
+        const targetHeight = target.offsetHeight
+        const targetOffset = target.getBoundingClientRect()
+        const viewport = getViewport()
+        let top
+        let left
+
+        if (targetOffset.top + targetHeight + elementDimensions.height > viewport.height) {
+            top = -1 * elementDimensions.height
+
+            if (targetOffset.top + top < 0) {
+                top = -1 * targetOffset.top
+            }
+
+            element.style.transformOrigin = 'bottom'
+        } else {
+            top = targetHeight
+            element.style.transformOrigin = 'top'
+        }
+
+        if (elementDimensions.width > viewport.width) {
+            // element wider then viewport and cannot fit on screen (align at left side of viewport)
+            left = targetOffset.left * -1
+        } else if (targetOffset.left + elementDimensions.width > viewport.width) {
+            // element wider then viewport but can be fit on screen (align at right side of viewport)
+            left = (targetOffset.left + elementDimensions.width - viewport.width) * -1
+        } else {
+            // element fits on screen (align with target)
+            left = 0
+        }
+
+        element.style.top = top + 'px'
+        element.style.left = left + 'px'
+    }
+}
+
+export function getHiddenElementDimensions(element: HTMLElement) {
+    const dimensions: { width?: number; height?: number } = {}
+
+    if (element) {
+        element.style.visibility = 'hidden'
+        element.style.display = 'block'
+        dimensions.width = element.offsetWidth
+        dimensions.height = element.offsetHeight
+        element.style.display = 'none'
+        element.style.visibility = 'visible'
+    }
+
+    return dimensions
+}
+
+export function getElementDimensions(element: HTMLElement): { width: number; height: number } {
+    const dimensions = element.offsetParent
+        ? { width: element.offsetWidth, height: element.offsetHeight }
+        : getHiddenElementDimensions(element)
+
+    return { width: dimensions.width || 0, height: dimensions.width || 0 }
+}
+
+export function absolutePosition(element: HTMLElement, target: HTMLElement, align = 'left') {
+    if (element && target) {
+        const elementDimensions = getElementDimensions(element)
+        const elementOuterHeight = elementDimensions.height
+        const elementOuterWidth = elementDimensions.width
+        const targetOuterHeight = target.offsetHeight
+        const targetOuterWidth = target.offsetWidth
+        const targetOffset = target.getBoundingClientRect()
+        const windowScrollTop = getWindowScrollTop()
+        const windowScrollLeft = getWindowScrollLeft()
+        const viewport = getViewport()
+        let top
+        let left
+
+        if (targetOffset.top + targetOuterHeight + elementOuterHeight > viewport.height) {
+            top = targetOffset.top + windowScrollTop - elementOuterHeight
+
+            if (top < 0) {
+                top = windowScrollTop
+            }
+
+            element.style.transformOrigin = 'bottom'
+        } else {
+            top = targetOuterHeight + targetOffset.top + windowScrollTop
+            element.style.transformOrigin = 'top'
+        }
+
+        const targetOffsetPx = targetOffset.left
+        const alignOffset = align === 'left' ? 0 : elementOuterWidth - targetOuterWidth
+
+        if (targetOffsetPx + targetOuterWidth + elementOuterWidth > viewport.width) {
+            left = Math.max(0, targetOffsetPx + windowScrollLeft + targetOuterWidth - elementOuterWidth)
+        } else {
+            left = targetOffsetPx - alignOffset + windowScrollLeft
+        }
+
+        element.style.top = top + 'px'
+        element.style.left = left + 'px'
     }
 }

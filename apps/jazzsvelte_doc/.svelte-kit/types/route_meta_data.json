@@ -20,6 +20,9 @@
 	"/speeddial": [
 		"src/routes/speeddial/+page.ts"
 	],
+	"/tieredmenu": [
+		"src/routes/tieredmenu/+page.ts"
+	],
 	"/toast": [
 		"src/routes/toast/+page.ts"
 	],

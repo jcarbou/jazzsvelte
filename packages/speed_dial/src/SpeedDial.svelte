@@ -25,7 +25,7 @@
     import { Button } from '@jazzsvelte/button'
     import { defaultSpeedDialProps as DEFAULT, globalSpeedDialPT as globalPt } from './speedDial.config'
     import SpeedDialMenuItem from './SpeedDialMenuItem.svelte'
-    import uniqueId from '../../utils/src/uniqueId'
+    import { uniqueId } from '@jazzsvelte/utils'
     import { findNextOptionIndex, findPrevOptionIndex } from './speedDial.utils'
     import { focusEl } from '../../dom/src'
     import { clickOutside } from '@jazzsvelte/click_outside_action'

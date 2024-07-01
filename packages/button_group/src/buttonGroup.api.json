@@ -1,0 +1,77 @@
+{
+  "methods": {
+    "description": "Defines methods that can be accessed by the component's reference.",
+    "values": []
+  },
+  "props": {
+    "description": "",
+    "values": [
+      {
+        "name": "class",
+        "optional": true,
+        "readonly": false,
+        "type": "string | null",
+        "default": "null",
+        "description": "CSS classes to add to root element."
+      },
+      {
+        "name": "style",
+        "optional": true,
+        "readonly": false,
+        "type": "string | CssObject | null",
+        "default": "null",
+        "description": "Style to add to root element."
+      }
+    ]
+  },
+  "callbacks": {
+    "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+    "values": []
+  },
+  "ptMethodOptions": {
+    "description": "Custom passthrough(pt) option method.",
+    "relatedProp": "",
+    "callbacks": [],
+    "values": [
+      {
+        "name": "props",
+        "optional": false,
+        "readonly": false,
+        "type": "ButtonGroupProps",
+        "description": "Defines valid properties."
+      },
+      {
+        "name": "global",
+        "optional": false,
+        "readonly": false,
+        "type": "undefined | object",
+        "description": "Defines passthrough(pt) options in global config."
+      }
+    ]
+  },
+  "ptOptions": {
+    "description": "Custom passthrough(pt) options.",
+    "relatedProp": "pt",
+    "callbacks": [],
+    "values": [
+      {
+        "name": "root",
+        "optional": true,
+        "readonly": false,
+        "type": "ButtonGroupPassThr",
+        "description": "Used to pass attributes to the root's DOM element."
+      }
+    ]
+  },
+  "meta": {
+    "RootType": "ButtonGroupPassThr",
+    "omitAttributes": "'style'",
+    "icon": false,
+    "tooltip": false,
+    "svelteComponent": false
+  },
+  "types": {
+    "description": "Defines types used by properties of the ButtonGroup component.",
+    "values": []
+  }
+}

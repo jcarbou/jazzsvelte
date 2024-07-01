@@ -1,0 +1,136 @@
+{
+    "description": "Badge represents people using icons, labels and images.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLSpanElement",
+                "description": "Used to get container element."
+            }
+        ]
+    },
+    "props": {
+        "description": "Defines valid properties in Badge component. In addition to these, all properties of HTMLSpanElement can be used in this component.",
+        "values": [
+            {
+                "name": "children",
+                "optional": true,
+                "readonly": true,
+                "type": "ReactNode",
+                "default": "null",
+                "description": "Used to get the child elements of the component."
+            },
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "BadgePassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "BadgePassThroughMethodOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "severity",
+                "optional": true,
+                "readonly": false,
+                "type": "${BadgeSeverity} | null",
+                "default": "null",
+                "description": "Severity type of the badge."
+            },
+            {
+                "name": "size",
+                "optional": true,
+                "readonly": false,
+                "type": "${BadgeSeverity} | null",
+                "default": "null",
+                "description": "Size of the badge, valid options are \"large\" and \"xlarge\"."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            },
+            {
+                "name": "value",
+                "optional": true,
+                "readonly": false,
+                "type": "any",
+                "default": "null",
+                "description": "Value to display inside the badge."
+            }
+        ]
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": []
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "BadgeProps"
+            }
+        ]
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the root's DOM element."
+            }
+        ]
+    },
+    "meta": {
+        "RootType": "Span",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "types": {
+        "description": "Defines types used by properties of the Badge component.",
+        "values": [
+            { "name": "BadgeSeverity", "value": "'success' | 'info' | 'warning' | 'danger'" },
+            { "name": "BadgeSize", "value": "'normal' | 'medium' | 'large' | 'xlarge'" }
+        ]
+    }
+}

@@ -105,13 +105,12 @@ import type { ToastPassThroughOptions } from '../toast/toast.types'
 // import { ToggleButtonPassThroughOptions } from '../togglebutton/togglebutton'
 // import { ToolbarPassThroughOptions } from '../toolbar/toolbar'
 import type { TooltipPassThroughOptions } from '../tooltip/tooltip.types'
+import type { AppendTo } from '@jazzsvelte/api'
 // import { TreePassThroughOptions } from '../tree/tree'
 // import { TreeSelectPassThroughOptions } from '../treeselect/treeselect'
 // import { TreeTablePassThroughOptions } from '../treetable/treetable'
 // import { VirtualScrollerPassThroughOptions } from '../virtualscroller/virtualscroller'
 export type InputStyleType = 'outlined' | 'filled'
-
-export type AppendToType = 'self' | HTMLElement | undefined | null | (() => HTMLElement)
 
 export type StyleContainerType = ShadowRoot | HTMLElement | undefined | null
 
@@ -572,7 +571,7 @@ export interface JazzSvelte {
     /**
      * This option allows components with overlays like dropdowns or popups to be mounted into either the component or any DOM element, such as document body and self.
      */
-    appendTo: AppendToType
+    appendTo: AppendTo
 
     /**
      * This option allows `useStyle` to insert dynamic CSS styles into a specific container. This is useful when styles need to be scoped such as in a Shadow DOM.
@@ -678,7 +677,7 @@ export interface JazzSvelteOptions {
     /**
      * This option allows components with overlays like dropdowns or popups to be mounted into either the component or any DOM element, such as document body and self.
      */
-    appendTo?: AppendToType
+    appendTo?: AppendTo
 
     /**
      * This option allows `useStyle` to insert dynamic CSS styles into a specific container. This is useful when styles need to be scoped such as in a Shadow DOM.
@@ -761,7 +760,7 @@ export interface JazzSvelteOptions {
 
 export interface JazzSvelteContext {
     //    unstyled?: boolean
-    appendTo?: AppendToType
+    appendTo?: AppendTo
     styleContainer?: StyleContainerType
     zIndex?: Partial<ZIndexOptions>
     autoZIndex?: boolean

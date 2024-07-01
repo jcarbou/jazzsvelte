@@ -29,6 +29,7 @@
         "@jazzsvelte/ripple": "workspace:^0.1.0",
         "@jazzsvelte/speed_dial": "workspace:^0.1.0",
         "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
+        "@jazzsvelte/tiered_menu": "workspace:^0.1.0",
         "@jazzsvelte/timescircle_icon": "workspace:^0.1.0",
         "@jazzsvelte/toast": "workspace:^0.1.0",
         "@jazzsvelte/tooltip": "workspace:^0.1.0",

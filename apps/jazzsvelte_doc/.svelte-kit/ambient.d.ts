@@ -35,7 +35,7 @@ declare module '$env/static/private' {
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
 	export const DriverData: string;
-	export const EFC_7200: string;
+	export const EFC_13676: string;
 	export const FPS_BROWSER_APP_PROFILE_STRING: string;
 	export const FPS_BROWSER_USER_PROFILE_STRING: string;
 	export const GIT_ASKPASS: string;
@@ -85,6 +85,7 @@ declare module '$env/static/private' {
 	export const npm_package_dependencies__jazzsvelte_ripple: string;
 	export const npm_package_dependencies__jazzsvelte_speed_dial: string;
 	export const npm_package_dependencies__jazzsvelte_spinner_icon: string;
+	export const npm_package_dependencies__jazzsvelte_tiered_menu: string;
 	export const npm_package_dependencies__jazzsvelte_timescircle_icon: string;
 	export const npm_package_dependencies__jazzsvelte_toast: string;
 	export const npm_package_dependencies__jazzsvelte_tooltip: string;
@@ -222,7 +223,7 @@ declare module '$env/dynamic/private' {
 		COMPUTERNAME: string;
 		ComSpec: string;
 		DriverData: string;
-		EFC_7200: string;
+		EFC_13676: string;
 		FPS_BROWSER_APP_PROFILE_STRING: string;
 		FPS_BROWSER_USER_PROFILE_STRING: string;
 		GIT_ASKPASS: string;
@@ -272,6 +273,7 @@ declare module '$env/dynamic/private' {
 		npm_package_dependencies__jazzsvelte_ripple: string;
 		npm_package_dependencies__jazzsvelte_speed_dial: string;
 		npm_package_dependencies__jazzsvelte_spinner_icon: string;
+		npm_package_dependencies__jazzsvelte_tiered_menu: string;
 		npm_package_dependencies__jazzsvelte_timescircle_icon: string;
 		npm_package_dependencies__jazzsvelte_toast: string;
 		npm_package_dependencies__jazzsvelte_tooltip: string;

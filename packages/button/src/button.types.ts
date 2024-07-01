@@ -14,7 +14,7 @@ import type {
  * @group types
  **/
 export type ButtonIconPos = 'top' | 'bottom' | 'left' | 'right'
-export type ButtonSeverity = 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help'
+export type ButtonSeverity = 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help' | 'contrast'
 export type ButtonSize = 'small' | 'normal' | 'large'
 
 /**
@@ -50,7 +50,7 @@ export interface BaseButtonProps {
      * Position of the icon, valid values are "left", "right", "top" and "bottom".
      * @default  left
      */
-    iconPos?: 'top' | 'bottom' | 'left' | 'right' | null
+    iconPos?: ButtonIconPos | null
 
     /**
      * Text of the button.
@@ -116,13 +116,13 @@ export interface BaseButtonProps {
      * Defines the style of the button, valid values are "secondary", "success", "info", "warning", "danger", "help".
      * @default  null
      */
-    severity?: 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help' | null
+    severity?: ButtonSeverity | null
 
     /**
      * Defines the size of the button, valid values are "small" and "large".
      * @default  null
      */
-    size?: 'small' | 'normal' | 'large' | null
+    size?: ButtonSize | null
 
     /**
      * Style to add to root element.

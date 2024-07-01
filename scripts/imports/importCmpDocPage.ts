@@ -15,14 +15,14 @@ function fixImportCaseError(content: string): string {
 }
 
 function importCmpDocPatch(content: string, context: CmpContext): string {
-    const { cmpname } = context
+    const { cmpname, cmpName } = context
     const importCmpDocThemingRegExp = new RegExp(
         `import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmpname}\\/(\\w*)\\/.*`,
         'gm'
     )
     const importCmpDocRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmpname}.*`, 'gm')
-    content = content.replace(importCmpDocThemingRegExp, `    import $1 from '$lib/doc/${cmpname}/$2/$1.svelte'`)
-    return content.replace(importCmpDocRegExp, `    import $1 from '$lib/doc/${cmpname}/$1.svelte'`)
+    content = content.replace(importCmpDocThemingRegExp, `    import $1 from '$lib/doc/${cmpName}/$2/$1.svelte'`)
+    return content.replace(importCmpDocRegExp, `    import $1 from '$lib/doc/${cmpName}/$1.svelte'`)
 }
 
 function removeXXXDemo(content: string): string {
@@ -31,7 +31,7 @@ function removeXXXDemo(content: string): string {
 }
 
 export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
-    const { cmpDocPageSveltePath, cmpDocPageSvelteTsPath, prCmpDocPagePath, prCmpDocPageDirPath } = context
+    const { cmpDocPageSveltePath, cmpDocPagePath, cmpDocPageSvelteTsPath, prCmpDocPagePath, prCmpDocPageDirPath } = context
     const { test, override } = options
     let filePath = cmpDocPageSveltePath
 
@@ -67,5 +67,5 @@ export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
     )
     console.log(`"${cmpDocPageSvelteTsPath}" generated !`)
 
-    prettierFormat(cmpDocPageSveltePath)
+    prettierFormat(cmpDocPagePath)
 }

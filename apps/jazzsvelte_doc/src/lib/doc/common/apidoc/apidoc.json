@@ -741,7 +741,7 @@
                             "name": "appendTo",
                             "optional": true,
                             "readonly": false,
-                            "type": "AppendToType",
+                            "type": "AppendTo",
                             "description": "This option allows components with overlays like dropdowns or popups to be mounted into either the component or any DOM element, such as document body and self."
                         },
                         {
@@ -846,7 +846,7 @@
                             "name": "setAppendTo",
                             "optional": true,
                             "readonly": false,
-                            "type": "Dispatch<SetStateAction<AppendToType>>",
+                            "type": "Dispatch<SetStateAction<AppendTo>>",
                             "description": "Sets the \"appendTo\" state of the context."
                         },
                         {
@@ -3392,8 +3392,8 @@
                 "InputStyleType": {
                     "values": "\"outlined\" | \"filled\""
                 },
-                "AppendToType": {
-                    "values": "\"self\" | HTMLElement | undefined | null | Function"
+                "AppendTo": {
+                    "values": "\"self\" |\"body\" | HTMLElement | undefined | null | Function"
                 },
                 "StyleContainerType": {
                     "values": "ShadowRoot | HTMLElement | undefined | null"
@@ -9253,7 +9253,7 @@
                             "name": "appendTo",
                             "optional": true,
                             "readonly": false,
-                            "type": "AppendToType",
+                            "type": "AppendTo",
                             "description": "This option allows components with overlays like dropdowns or popups to be mounted into either the component or any DOM element, such as document body and self."
                         },
                         {
@@ -9358,7 +9358,7 @@
                             "name": "setAppendTo",
                             "optional": true,
                             "readonly": false,
-                            "type": "Dispatch<SetStateAction<AppendToType>>",
+                            "type": "Dispatch<SetStateAction<AppendTo>>",
                             "description": "Sets the \"appendTo\" state of the context."
                         },
                         {

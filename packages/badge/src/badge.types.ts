@@ -17,13 +17,13 @@ export type BadgeValue = string | number | null | undefined
  * Severity type of the badge.
  * @defaultValue null
  */
-export type BadgeSeverity = 'success' | 'info' | 'warning' | 'danger' | null | undefined
+export type BadgeSeverity = 'success' | 'info' | 'warning' | 'danger'
 
 /**
  * Size of the badge, valid options are "large" and "xlarge".
  * @defaultValue null
  */
-export type BadgeSize = 'normal' | 'medium' | 'large' | 'xlarge' | null | undefined
+export type BadgeSize = 'normal' | 'medium' | 'large' | 'xlarge'
 
 /**
  * Defines valid properties in Badge component. In addition to these, all properties of HTMLSpanElement can be used in this component.
@@ -39,12 +39,12 @@ export interface BaseBadgeProps {
      * Severity type of the badge.
      * @defaultValue null
      */
-    severity?: BadgeSeverity
+    severity?: BadgeSeverity | null
     /**
      * Size of the badge, valid options are "large" and "xlarge".
      * @defaultValue null
      */
-    size?: BadgeSize
+    size?: BadgeSize | null
     /**
      * CSS classes to add to root element
      */

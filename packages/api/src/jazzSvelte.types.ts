@@ -3,6 +3,7 @@
 import type { Readable, Writable } from 'svelte/store'
 import type { BooleanStore } from '@jazzsvelte/utils'
 import type { PassThroughOptions } from './pt.types'
+import { AppendTo } from './common.types'
 
 /**
  * Value (of type S) or function with current value as argument and returning new value
@@ -15,8 +16,6 @@ export type SetStateAction<S> = S | ((prevState: S) => S)
 export type Dispatch<A> = (action: A) => void
 
 export type InputStyleType = 'outlined' | 'filled'
-
-export type AppendToType = 'self' | HTMLElement | undefined | null | (() => HTMLElement)
 
 export type StyleContainerType = ShadowRoot | HTMLElement | undefined | null
 
@@ -82,7 +81,7 @@ export interface JazzSvelteConfig {
     /**
      * This option allows components with overlays like dropdowns or popups to be mounted into either the component or any DOM element, such as document body and self.
      */
-    appendTo: AppendToType
+    appendTo: AppendTo
 
     /**
      * This option allows `useStyle` to insert dynamic CSS styles into a specific container. This is useful when styles need to be scoped such as in a Shadow DOM.
@@ -183,7 +182,7 @@ export interface JazzSvelteOptions {
     /**
      * This option allows components with overlays like dropdowns or popups to be mounted into either the component or any DOM element, such as document body and self.
      */
-    appendTo?: AppendToType
+    appendTo?: AppendTo
 
     /**
      * This option allows `useStyle` to insert dynamic CSS styles into a specific container. This is useful when styles need to be scoped such as in a Shadow DOM.
@@ -261,7 +260,7 @@ export interface JazzSvelteOptions {
 
 export interface JazzSvelteContext {
     //    unstyled?: boolean
-    appendTo?: AppendToType
+    appendTo?: AppendTo
     styleContainer?: StyleContainerType
     zIndex?: Partial<ZIndexOptions>
     autoZIndex?: boolean

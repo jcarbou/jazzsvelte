@@ -1,10 +1,10 @@
-type Handler = (evt: object) => void
+type Handler<EVENT> = (evt: EVENT) => void
 
-export default function EventBus() {
-    const allHandlers = new Map<string, Handler[]>()
+export default function EventBus<EVENT>() {
+    const allHandlers = new Map<string, Handler<EVENT>[]>()
 
     return {
-        on(type: string, handler: Handler) {
+        on(type: string, handler: Handler<EVENT>) {
             let handlers = allHandlers.get(type)
 
             if (!handlers) handlers = [handler]
@@ -12,12 +12,12 @@ export default function EventBus() {
 
             allHandlers.set(type, handlers)
         },
-        off(type: string, handler: Handler) {
+        off(type: string, handler: Handler<EVENT>) {
             const handlers = allHandlers.get(type)
 
             handlers && handlers.splice(handlers.indexOf(handler) >>> 0, 1)
         },
-        emit(type: string, evt: object) {
+        emit(type: string, evt: EVENT) {
             const handlers = allHandlers.get(type)
 
             handlers && handlers.slice().forEach((handler) => handler(evt))

@@ -13,8 +13,8 @@
     import { defaultBadgeProps as DEFAULT, globalBadgePT as globalPt } from './badge.config'
 
     export let value: BadgeValue = DEFAULT.value
-    export let severity: BadgeSeverity = DEFAULT.severity
-    export let size: BadgeSize = DEFAULT.size
+    export let severity: BadgeSeverity | null = DEFAULT.severity
+    export let size: BadgeSize | null = DEFAULT.size
     export let pt: BadgePassThroughOptions | null = null
     export let ptOptions: PassThroughOptions | null = null
     export let unstyled: boolean = DEFAULT.unstyled

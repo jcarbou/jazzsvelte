@@ -5,8 +5,9 @@
 
     import { getContext } from 'svelte'
     import { fade } from 'svelte/transition'
-    import { JAZZ_SVELTE, resolvePT, zIndex } from '@jazzsvelte/api'
+    import { resolvePT, zIndex } from '@jazzsvelte/api'
     import { tooltipLayout } from './tooltip.actions'
+    import { globalButtonPT as globalPt } from './tooltip.config'
 
     export let targetElement: HTMLElement
     export let tooltipLayoutState: TooltipLayoutActionState
@@ -41,7 +42,7 @@
     $: rootAttributes = resolvePT(
         { class: ['p-tooltip p-component', options?.class, classNameState], style },
         pt?.root,
-        JAZZ_SVELTE.pt?.tooltip?.root,
+        globalPt?.root,
         ptContext
     ) satisfies HTMLDivAttributes
 
@@ -49,17 +50,12 @@
     $: arrowAttributes = resolvePT(
         { class: ['p-tooltip-arrow'] },
         pt?.arrow,
-        JAZZ_SVELTE.pt?.tooltip?.arrow,
+        globalPt?.arrow,
         ptContext
     ) satisfies HTMLDivAttributes
 
     // "text" element
-    $: textAttributes = resolvePT(
-        { class: ['p-tooltip-text'] },
-        pt?.text,
-        JAZZ_SVELTE.pt?.tooltip?.text,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    $: textAttributes = resolvePT({ class: ['p-tooltip-text'] }, pt?.text, globalPt?.text, ptContext) satisfies HTMLDivAttributes
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
 </script>
