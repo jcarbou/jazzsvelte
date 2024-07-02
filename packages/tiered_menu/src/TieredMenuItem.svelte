@@ -11,13 +11,13 @@
         PassThroughOptions
     } from '@jazzsvelte/api'
 
-    import { isSelectedItem } from './tieredMenu.utils'
     import { getContext } from 'svelte'
     import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
     import { globalTieredMenuPT as globalPt } from './tieredMenu.config'
     import { Ripple } from '@jazzsvelte/ripple'
     import TieredMenuSub from './TieredMenuSub.svelte'
+    import { isSelectedItem } from './tieredMenu.utils'
 
     export let menuSubId: string
     export let processedItem: ProcessedItem
@@ -31,7 +31,7 @@
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
     const { ripple } = jazzSvelteContext
-    const { menuId, submenuIcon, unstyled, pt, ptOptions, onItemClick, onItemMouseEnter, modelContext } =
+    const { menuId, submenuIcon, unstyled, pt, ptOptions, onItemClick, onItemMouseEnter, activeItemPath } =
         getContext<TieredMenuTreeContext>('tieredMenuTree')
 
     const item = processedItem.item
@@ -39,7 +39,7 @@
     $: visible = item.visible !== false
     $: key = `${menuId}_${processedItem.key}` satisfies string
     $: focused = (focusedItemId === key) satisfies boolean
-    $: active = isSelectedItem(modelContext(), processedItem) satisfies boolean
+    $: active = isSelectedItem($activeItemPath, processedItem) satisfies boolean
     $: grouped = processedItem.isGrouped satisfies boolean
     $: ariaSetSize = model.filter((processedItem) => processedItem.isVisible && !processedItem.isSeparator)
         .length satisfies number
@@ -205,7 +205,7 @@
             {focusedItemId}
             ariaLabelledby={key}
             level={level + 1}
-            parentActive={isSelectedItem(modelContext(), processedItem)}
+            parentActive={active}
         />
     {/if}
 </li>

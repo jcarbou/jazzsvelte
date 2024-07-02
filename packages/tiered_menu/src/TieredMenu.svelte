@@ -1,7 +1,7 @@
 <script lang="ts">
     import type {
-        FocusedItemInfo,
-        ModelContext,
+        ActiveItemPathStore,
+        FocusedItemInfoStore,
         ProcessedItem,
         ProcessedItemEvent,
         TieredMenuPassThroughMethodOptions,
@@ -21,6 +21,7 @@
     } from '@jazzsvelte/api'
 
     import { getContext, setContext } from 'svelte'
+    import { derived } from 'svelte/store'
     import { resolvePT, zIndex } from '@jazzsvelte/api'
     import { defaultTieredMenuProps as DEFAULT, globalTieredMenuPT as globalPt } from './tieredMenu.config'
     import { fade } from 'svelte/transition'
@@ -28,7 +29,8 @@
     import { OverlayService, createBooleanStore, uniqueId } from '@jazzsvelte/utils'
     import { findSingleEl, focusEl, getOuterWidth, alignOverlay, addStyles } from '@jazzsvelte/dom'
     import {
-        addActiveItem,
+        createActiveItemPathStore,
+        createFocusedItemInfoStore,
         createProcessedItems,
         findFirstFocusedItemIndex,
         findFirstItemIndex,
@@ -80,7 +82,7 @@
         popup && !visible && _show(event)
     }
 
-    let visible: boolean = false
+    let visible: boolean = !popup
     const id = uniqueId('tieredMenu_')
 
     $: ptContext = {
@@ -141,38 +143,36 @@
     $: matchMediaQuery = breakpoint ? `screen and (max-width: ${breakpoint})` : (null satisfies string | null)
     let focused: boolean = false
     let isMobileMode = createBooleanStore(false)
+    let activeItemPath: ActiveItemPathStore = createActiveItemPathStore()
+    let focusedItemInfo: FocusedItemInfoStore = createFocusedItemInfoStore()
+    let visibleItems = derived<[ActiveItemPathStore, FocusedItemInfoStore], ProcessedItem[]>(
+        [activeItemPath, focusedItemInfo],
+        ([$activeItemPath, $focusedItemInfo]) => {
+            const processedItem = $activeItemPath.find((p) => p.key === $focusedItemInfo.parentKey)
+            const processed = processedItem ? processedItem.items : processedItems
+            return processed || []
+        }
+    )
     let menu: TieredMenuSub
-    let activeItemPath: ProcessedItem[] = []
-    let visibleItems: ProcessedItem[] = []
-    let focusedItemInfo: FocusedItemInfo = { index: -1, level: 0, parentKey: '' }
     let dirty: boolean = false
     let relatedTargetEl: HTMLElement | null = null
     let targetEl: HTMLElement | null = null
     let containerEl: HTMLDivElement | null = null
     $: focusedItemId =
-        focusedItemInfo.index !== -1
-            ? `${id}${focusedItemInfo.parentKey ? '_' + focusedItemInfo.parentKey : ''}_${focusedItemInfo.index}`
+        $focusedItemInfo.index !== -1
+            ? `${id}${$focusedItemInfo.parentKey ? '_' + $focusedItemInfo.parentKey : ''}_${$focusedItemInfo.index}`
             : null
     let searchValue: string | null = null
     let searchTimeoutId: ReturnType<typeof setTimeout> | null = null
     let focusTrigger: boolean = false
 
-    function modelContext(): ModelContext {
-        return {
-            activeItemPath,
-            visibleItems,
-            focusedItemInfo
-        }
-    }
-
     function onItemChange(event: ProcessedItemEvent) {
         const { processedItem, isFocus } = event
-        const result = addActiveItem(modelContext(), processedItem)
 
-        if (!result) return
+        if (!processedItem) return
 
-        focusedItemInfo = result.newFocusedItemInfo
-        activeItemPath = result.newActiveItemPath
+        activeItemPath.add(processedItem)
+        focusedItemInfo.setByProcessedItem(processedItem)
         dirty = dirty || !!processedItem.items
 
         isFocus && focusEl(menu.getElement())
@@ -198,17 +198,16 @@
             return
         }
 
-        const context = modelContext()
         const grouped = processedItem.isGrouped
         const root = processedItem.isRoot
-        const selected = isSelectedItem(context, processedItem)
+        const selected = isSelectedItem($activeItemPath, processedItem)
         const menuElement = menu.getElement()
 
         if (selected) {
-            const { index, key, level, parentKey } = processedItem
+            const { key } = processedItem
 
-            activeItemPath = activeItemPath.filter((p) => key !== p.key && key.startsWith(p.key))
-            focusedItemInfo = { index, level, parentKey }
+            $activeItemPath.filter((p) => key !== p.key && key.startsWith(p.key))
+            focusedItemInfo.setByProcessedItem(processedItem)
 
             if (!grouped) {
                 dirty = !root
@@ -225,11 +224,14 @@
             focusEl(menuElement)
             onItemChange(event)
         } else {
-            const rootProcessedItem = root ? processedItem : activeItemPath.find((p) => p.parentKey === null)
+            const rootProcessedItem = root ? processedItem : $activeItemPath.find((p) => p.parentKey === null)
             const rootProcessedItemIndex = rootProcessedItem ? rootProcessedItem.index : -1
 
             _hide(originalEvent, true)
-            focusedItemInfo = { index: rootProcessedItemIndex, parentKey: rootProcessedItem ? rootProcessedItem.parentKey : '' }
+            focusedItemInfo.set({
+                index: rootProcessedItemIndex,
+                parentKey: rootProcessedItem ? rootProcessedItem.parentKey : ''
+            })
         }
     }
 
@@ -240,9 +242,7 @@
             onShow && onShow(event)
             relatedTargetEl = ((event as MouseEvent).relatedTarget as HTMLElement) || null
         }
-        const context = modelContext()
-
-        focusedItemInfo = { index: findFirstFocusedItemIndex(context), level: 0, parentKey: '' }
+        focusedItemInfo.set({ index: findFirstFocusedItemIndex($activeItemPath, $visibleItems), level: 0, parentKey: '' })
     }
 
     function _hide(event: Event, isFocus?: boolean) {
@@ -253,21 +253,21 @@
 
         const menuElement = menu.getElement()
 
-        activeItemPath = []
-        focusedItemInfo = { index: -1, level: 0, parentKey: '' }
+        activeItemPath.clear()
+        focusedItemInfo.clear()
         isFocus && focusEl(relatedTargetEl || targetEl || menuElement)
         dirty = false
     }
 
     function onArrowUpKey(event: KeyboardEvent) {
-        const context = modelContext()
+        const focusItemIndex = $focusedItemInfo.index
         if (event.altKey) {
             if (popup && targetEl) {
                 focusEl(targetEl)
             }
 
-            if (focusedItemInfo.index !== -1) {
-                const processedItem = visibleItems[focusedItemInfo.index]
+            if (focusItemIndex !== -1) {
+                const processedItem = $visibleItems[focusItemIndex]
                 const grouped = !!processedItem?.items?.length
 
                 !grouped && onItemChange({ originalEvent: event, processedItem })
@@ -277,9 +277,9 @@
             event.preventDefault()
         } else {
             const itemIndex =
-                focusedItemInfo.index !== -1
-                    ? findPrevItemIndex(context, focusedItemInfo.index)
-                    : findLastFocusedItemIndex(context)
+                focusItemIndex !== -1
+                    ? findPrevItemIndex($visibleItems, focusItemIndex)
+                    : findLastFocusedItemIndex($activeItemPath, $visibleItems)
 
             changeFocusedItemIndex(itemIndex)
             event.preventDefault()
@@ -287,39 +287,39 @@
     }
 
     function onArrowDownKey(event: KeyboardEvent) {
-        const context = modelContext()
+        const focusItemIndex = $focusedItemInfo.index
         const itemIndex =
-            focusedItemInfo.index !== -1 ? findNextItemIndex(context, focusedItemInfo.index) : findFirstFocusedItemIndex(context)
+            focusItemIndex !== -1
+                ? findNextItemIndex($visibleItems, focusItemIndex)
+                : findFirstFocusedItemIndex($activeItemPath, $visibleItems)
 
         changeFocusedItemIndex(itemIndex)
         event.preventDefault()
     }
 
     function onArrowLeftKey(event: KeyboardEvent): void {
-        const context = modelContext()
-        const processedItem = getFocusedItem(context)
-        const parentItem = getFocusedItemParent(context)
+        const processedItem = getFocusedItem($focusedItemInfo, $visibleItems)
+        const parentItem = getFocusedItemParent($activeItemPath, $focusedItemInfo, $visibleItems)
         const root = processedItem?.isRoot
 
         if (!root) {
-            focusedItemInfo = { index: -1, parentKey: parentItem?.parentKey || '' }
+            focusedItemInfo.set({ index: -1, parentKey: parentItem?.parentKey || '' })
             searchValue = ''
             setTimeout(() => (focusTrigger = true), 0)
         }
 
-        activeItemPath = activeItemPath.filter((p) => p.parentKey !== focusedItemInfo.parentKey)
+        activeItemPath.filter((p) => p.parentKey !== $focusedItemInfo.parentKey)
 
         event.preventDefault()
     }
 
     function onArrowRightKey(event: KeyboardEvent): void {
-        const context = modelContext()
-        const processedItem = getFocusedItem(context)
+        const processedItem = getFocusedItem($focusedItemInfo, $visibleItems)
         const grouped = processedItem.isGrouped
 
         if (grouped) {
             onItemChange({ originalEvent: event, processedItem })
-            focusedItemInfo = { index: -1, parentKey: processedItem.key }
+            focusedItemInfo.set({ index: -1, parentKey: processedItem.key })
             searchValue = ''
             setTimeout(() => (focusTrigger = true), 0)
         }
@@ -328,19 +328,17 @@
     }
 
     function onHomeKey(event: KeyboardEvent): void {
-        const context = modelContext()
-        changeFocusedItemIndex(findFirstItemIndex(context))
+        changeFocusedItemIndex(findFirstItemIndex($visibleItems))
         event.preventDefault()
     }
 
     function onEndKey(event: KeyboardEvent): void {
-        const context = modelContext()
-        changeFocusedItemIndex(findLastItemIndex(context))
+        changeFocusedItemIndex(findLastItemIndex($visibleItems))
         event.preventDefault()
     }
 
     function onEnterKey(event: KeyboardEvent): void {
-        if (focusedItemInfo.index !== -1) {
+        if ($focusedItemInfo.index !== -1) {
             const element = findSingleEl(menu.getElement(), `li[id="${`${focusedItemId}`}"]`)
             const anchorElement = element && findSingleEl(element, '[data-pc-section="action"]')
 
@@ -352,21 +350,17 @@
     }
 
     function onEscapeKey(event: KeyboardEvent): void {
-        const context = modelContext()
-
         _hide(event, true)
         if (!popup) {
-            focusedItemInfo = { ...focusedItemInfo, index: findFirstFocusedItemIndex(context) }
+            focusedItemInfo.partialUpdate({ index: findFirstFocusedItemIndex($activeItemPath, $visibleItems) })
         }
 
         event.preventDefault()
     }
 
     function onTabKey(event: Event): void {
-        const context = modelContext()
-
-        if (focusedItemInfo.index !== -1) {
-            const processedItem = getFocusedItem(context)
+        if ($focusedItemInfo.index !== -1) {
+            const processedItem = getFocusedItem($focusedItemInfo, $visibleItems)
             const grouped = processedItem.isGrouped
 
             !grouped && onItemChange({ originalEvent: event, processedItem })
@@ -376,8 +370,8 @@
     }
 
     function changeFocusedItemIndex(index: number) {
-        if (focusedItemInfo.index !== index) {
-            focusedItemInfo = { ...focusedItemInfo, index }
+        if ($focusedItemInfo.index !== index) {
+            focusedItemInfo.partialUpdate({ index })
             scrollInView()
         }
     }
@@ -390,11 +384,9 @@
     }
 
     function searchItem(char: string): boolean {
-        const context = modelContext()
-
         searchValue = (searchValue || '') + char
 
-        const itemIndex = searchItemIndex(context, searchValue)
+        const itemIndex = searchItemIndex($activeItemPath, $focusedItemInfo, $visibleItems, searchValue)
 
         if (itemIndex !== -1) {
             changeFocusedItemIndex(itemIndex)
@@ -436,19 +428,19 @@
     }*/
 
     function _onFocus(event: Event): void {
-        const context = modelContext()
         focused = true
-        focusedItemInfo =
-            focusedItemInfo.index !== -1
-                ? focusedItemInfo
-                : { index: findFirstFocusedItemIndex(context), level: 0, parentKey: '' }
+        focusedItemInfo.updateIfNotSet({
+            index: findFirstFocusedItemIndex($activeItemPath, $visibleItems),
+            level: 0,
+            parentKey: ''
+        })
 
         onFocus && onFocus(event)
     }
 
     function _onBlur(event: Event): void {
         focused = true
-        focusedItemInfo = { index: -1, level: 0, parentKey: '' }
+        focusedItemInfo.clear()
         searchValue = ''
         dirty = false
         onBlur && onBlur(event)
@@ -538,7 +530,7 @@
         onItemMouseEnter,
         ariaLabel: $$restProps.ariaLabel,
         ariaOrientation: 'vertical',
-        modelContext,
+        activeItemPath,
         isMobileMode: () => $isMobileMode
     })
 </script>

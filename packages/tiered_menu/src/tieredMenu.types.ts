@@ -13,6 +13,20 @@ import type {
     AppendTo,
     PassThroughOptions
 } from '@jazzsvelte/api'
+import { Writable } from 'svelte/store'
+
+export interface ActiveItemPathStore extends Omit<Writable<ProcessedItem[]>, 'update' | 'set'> {
+    add: (processedItem: ProcessedItem) => void
+    clear: () => void
+    filter: (fn: (p: ProcessedItem) => boolean) => void
+}
+
+export interface FocusedItemInfoStore extends Omit<Writable<FocusedItemInfo>, 'update'> {
+    setByProcessedItem: (processedItem: ProcessedItem) => void
+    clear: () => void
+    partialUpdate: (data: Partial<FocusedItemInfo>) => void
+    updateIfNotSet: (data: FocusedItemInfo) => void
+}
 
 export type TieredMenuTreeContext = {
     menuId: string
@@ -29,8 +43,8 @@ export type TieredMenuTreeContext = {
     onItemMouseEnter: (event: { originalEvent: Event; processedItem: ProcessedItem }) => void
     ariaLabel?: string
     ariaOrientation: 'horizontal' | 'vertical' | null | undefined
-    modelContext: () => ModelContext
     isMobileMode: () => boolean
+    activeItemPath: ActiveItemPathStore
 }
 
 export type ProcessedItem = {
@@ -59,12 +73,6 @@ export type ProcessedItemEvent = {
     originalEvent: Event
     processedItem: ProcessedItem
     isFocus?: boolean
-}
-
-export type ModelContext = {
-    activeItemPath: ProcessedItem[]
-    visibleItems: ProcessedItem[]
-    focusedItemInfo: FocusedItemInfo
 }
 
 /**

@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { TieredMenuPassThroughMethodOptions, TieredMenuProps, TieredMenuTreeContext } from './tieredMenu.types'
     import type { ProcessedItem } from './tieredMenu.types'
-    import { resolvePT, type HTMLULAttributes, type PassThroughOptions } from '@jazzsvelte/api'
 
+    import { resolvePT, type HTMLULAttributes, type PassThroughOptions } from '@jazzsvelte/api'
     import { getContext, onMount } from 'svelte'
     import { globalTieredMenuPT as globalPt } from './tieredMenu.config'
     import {
@@ -19,7 +19,7 @@
     export let focusedItemId: string | null
     export let id: string
     export let root: boolean = false
-    export let parentActive: boolean = false
+    export let parentActive: boolean = true
     export let ariaLabelledby: string = ''
     export let model: ProcessedItem[]
     export let menuProps: TieredMenuProps
@@ -82,7 +82,7 @@
         {
             class: [root ? 'p-tieredmenu-root-list' : 'p-submenu-list'],
             style: {
-                display: !root && parentActive ? 'block' : 'none'
+                display: root ? undefined! : parentActive ? 'block' : 'none'
             },
             'data-pc-section': root ? 'menubar' : 'menu',
             role: root ? 'menubar' : 'menu',

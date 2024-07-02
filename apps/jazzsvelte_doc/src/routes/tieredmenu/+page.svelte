@@ -27,13 +27,13 @@
             id: 'popup',
             label: 'Popup',
             component: PopupDoc
-        },
+        }
         /*{
             id: 'template',
             label: 'Template',
             component: TemplateDoc
         },*/
-        {
+        /*  {
             id: 'command',
             label: 'Command',
             component: CommandDoc
@@ -47,10 +47,10 @@
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
-        }
+        }*/
     ]
     const ptDocs = [
-        {
+        /* {
             id: 'pt.wireframe',
             label: 'Wireframe',
             component: Wireframe
@@ -59,7 +59,7 @@
             id: 'pt.tieredmenu.options',
             label: 'TieredMenu PT Options',
             component: DocApiTable
-        }
+        }*/
     ]
 
     const themingDocs = [
