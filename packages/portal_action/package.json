@@ -1,0 +1,14 @@
+{
+    "name": "@jazzsvelte/portal_action",
+    "version": "0.1.0",
+    "description": "Code from https://github.com/romkor/svelte-portal",
+    "main": "src/index.ts",
+    "sideEffects": false,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {},
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

@@ -118,4 +118,59 @@
     .layout-topbar-inner .layout-topbar-icon svg {
         width: 36px;
     }
+
+    @media screen and (min-width: 1920px) {
+        .layout-topbar-inner {
+            max-width: 1728px;
+            margin: 0 auto;
+        }
+    }
+
+    @media screen and (max-width: 1199px) {
+        .layout-topbar-inner {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+        .layout-topbar-inner.menu-button {
+            display: block;
+        }
+
+        .layout-topbar-logo-container {
+            width: auto;
+            margin-right: 0;
+        }
+
+        .layout-topbar-inner.DocSearch-Button {
+            width: 2rem;
+            height: 2rem;
+            overflow: hidden;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .layout-topbar-inner.DocSearch-Button .DocSearch-Search-Icon {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .layout-topbar-inner.DocSearch-Button .DocSearch-Button-Placeholder,
+        .layout-topbar-inner.DocSearch-Button .DocSearch-Button-Keys {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 575px) {
+        .layout-topbar-inner {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .layout-topbar-inner .layout-topbar-logo {
+            display: none;
+        }
+
+        .layout-topbar-inner .layout-topbar-icon {
+            display: inline-flex;
+        }
+    }
 </style>

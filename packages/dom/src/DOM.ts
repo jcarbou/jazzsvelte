@@ -1,6 +1,6 @@
 import { isFunction } from '@jazzsvelte/object'
 
-type AppendTo = null | HTMLElement | 'self' | (() => HTMLElement | 'self')
+export type AppendTo = null | HTMLElement | 'self' | 'body' | (() => HTMLElement | 'self' | 'body')
 
 /**
  * Test if OS is Android

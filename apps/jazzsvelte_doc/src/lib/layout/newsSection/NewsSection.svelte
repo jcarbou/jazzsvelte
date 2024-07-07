@@ -108,4 +108,21 @@
     .layout-news-close:hover {
         background-color: rgba(255, 255, 255, 0.2);
     }
+
+    @media screen and (max-width: 1199px) {
+        .layout-news-active .layout-sidebar {
+            top: 0;
+        }
+    }
+
+    @media screen and (max-width: 575px) {
+        .layout-news {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            font-size: 12px;
+        }
+        .layout-news > i {
+            display: none;
+        }
+    }
 </style>

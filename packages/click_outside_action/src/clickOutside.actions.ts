@@ -23,7 +23,7 @@ export function clickOutside(node: HTMLElement, options: ClickOutsideOptions): A
         if (getAdditionalElements) {
             inElements.push(...getAdditionalElements())
         }
-        if (inElements.find((elementOrNull) => elementOrNull && !elementOrNull.contains(target))) {
+        if (!inElements.find((elementOrNull) => !!elementOrNull?.contains(target))) {
             node.dispatchEvent(new CustomEvent('clickoutside'))
         }
     }

@@ -19,10 +19,11 @@ export function matchMedia(element: HTMLElement, options: MatchMediaOptions): Ac
     }
     const matcher = window.matchMedia(query)
     matcher.addEventListener('change', onChange)
+    matches.set(matcher.matches)
 
     return {
         destroy() {
-            matcher.addEventListener('change', onChange)
+            matcher.removeEventListener('change', onChange)
         }
     }
 }

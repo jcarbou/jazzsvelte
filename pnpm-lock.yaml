@@ -948,6 +948,8 @@ importers:
 
   packages/object: {}
 
+  packages/portal_action: {}
+
   packages/ripple:
     dependencies:
       '@jazzsvelte/api':
@@ -1057,6 +1059,9 @@ importers:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object
+      '@jazzsvelte/portal_action':
+        specifier: workspace:^0.1.0
+        version: link:../portal_action
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../ripple

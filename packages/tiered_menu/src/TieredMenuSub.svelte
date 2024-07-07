@@ -20,7 +20,8 @@
     export let id: string
     export let root: boolean = false
     export let parentActive: boolean = true
-    export let ariaLabelledby: string = ''
+    export let ariaLabelledby: string | null = null
+    export let ariaActiveDescendant: string | null = null
     export let model: ProcessedItem[]
     export let menuProps: TieredMenuProps
     export let level: number
@@ -82,7 +83,7 @@
         {
             class: [root ? 'p-tieredmenu-root-list' : 'p-submenu-list'],
             style: {
-                display: root ? undefined! : parentActive ? 'block' : 'none'
+                display: root ? undefined : parentActive ? 'block' : 'none'
             },
             'data-pc-section': root ? 'menubar' : 'menu',
             role: root ? 'menubar' : 'menu',
@@ -91,7 +92,7 @@
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
             'aria-orientation': ariaOrientation,
-            'aria-activedescendant': focusedItemId
+            'aria-activedescendant': ariaActiveDescendant
         },
         pt?.menu,
         globalPt?.menu,

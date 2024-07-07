@@ -98,4 +98,25 @@
     .layout-wrapper {
         background-color: var(--surface-ground);
     }
+
+    @media screen and (min-width: 1920px) {
+        .layout-content {
+            max-width: 1728px;
+            margin: 0 auto;
+        }
+    }
+
+    @media screen and (max-width: 1199px) {
+        .layout-content {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 575px) {
+        .layout-content {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
 </style>

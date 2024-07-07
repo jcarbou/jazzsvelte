@@ -2,13 +2,22 @@ import type { MenuItem } from '@jazzsvelte/api'
 import type { ActiveItemPathStore, FocusedItemInfo, FocusedItemInfoStore, ProcessedItem } from './tieredMenu.types'
 import { writable } from 'svelte/store'
 
+function toSateId(processedItems: ProcessedItem[]): string {
+    return processedItems.map((item) => item.key).join(' | ')
+}
+
 export function createActiveItemPathStore(): ActiveItemPathStore {
-    const { subscribe, set, update } = writable<ProcessedItem[]>([])
+    const { subscribe, update } = writable<ProcessedItem[]>([])
 
     return {
         subscribe,
         clear: () => {
-            set([])
+            update((state: ProcessedItem[]) => {
+                const newState: ProcessedItem[] = []
+                if (toSateId(state) === toSateId(newState)) return state
+                //console.log(`Add Active = ${newState.map((it) => it.item.label).join(' => ')}`)
+                return newState
+            })
         },
         add: (processedItem: ProcessedItem) => {
             update((state: ProcessedItem[]) => {
@@ -17,37 +26,63 @@ export function createActiveItemPathStore(): ActiveItemPathStore {
                 if (isGrouped) {
                     newState.push(processedItem)
                 }
+                if (toSateId(state) === toSateId(newState)) return state
+                //console.log(`Add Active = ${newState.map((it) => it.item.label).join(' => ')}`)
                 return newState
             })
         },
         filter: (fn: (p: ProcessedItem) => boolean) => {
             update((state: ProcessedItem[]) => {
-                return state.filter(fn)
+                const newState = state.filter(fn)
+                if (toSateId(state) === toSateId(newState)) return state
+                //console.log(`Filter Active = ${newState.map((it) => it.item.label).join(' => ')}`)
+                return newState
             })
         }
     }
 }
+
+function isSameFocusedItemInfo(a: FocusedItemInfo, b: FocusedItemInfo): boolean {
+    return a.index === b.index && a.level === b.level && a.parentKey === b.parentKey
+}
+const DEFAULT_FOCUSED_ITEM_INFO = { index: -1, level: 0, parentKey: null }
 export function createFocusedItemInfoStore(): FocusedItemInfoStore {
-    const { subscribe, set, update: update } = writable<FocusedItemInfo>({ index: -1, level: 0, parentKey: '' })
+    const { subscribe, update: update } = writable<FocusedItemInfo>(DEFAULT_FOCUSED_ITEM_INFO)
 
     return {
         subscribe,
-        set,
+        set: (newState: FocusedItemInfo) => {
+            update((state) => {
+                return isSameFocusedItemInfo(state, newState) ? state : newState
+            })
+        },
         clear: () => {
-            set({ index: -1, level: 0, parentKey: '' })
+            update((state) => {
+                const newState = DEFAULT_FOCUSED_ITEM_INFO
+                return isSameFocusedItemInfo(state, newState) ? state : newState
+            })
         },
         setByProcessedItem: (processedItem: ProcessedItem) => {
-            const { index, level, parentKey } = processedItem
-            set({ index, level, parentKey })
+            update((state) => {
+                const { index, level, parentKey } = processedItem
+                const newState = { index, level, parentKey }
+                return isSameFocusedItemInfo(state, newState) ? state : newState
+            })
         },
         partialUpdate: (data: Partial<FocusedItemInfo>) => {
-            update((state) => ({
-                ...state,
-                data
-            }))
+            update((state) => {
+                const newState = {
+                    ...state,
+                    ...data
+                }
+                return isSameFocusedItemInfo(state, newState) ? state : newState
+            })
         },
-        updateIfNotSet: (data: FocusedItemInfo) => {
-            update((state) => (state.index !== -1 ? state : data))
+        updateIfNotSet: (newState: FocusedItemInfo) => {
+            update((state) => {
+                if (state.index !== -1) return state
+                return isSameFocusedItemInfo(state, newState) ? state : newState
+            })
         }
     }
 }
@@ -71,10 +106,10 @@ export function createProcessedItems(
                 items: null,
                 isSeparator: !!item.separator,
                 isDisabled: !!item.disabled,
-                isVisible: item?.visible !== false,
+                isVisible: item.visible !== false,
                 isValid: !item.separator && !item.disabled,
                 isRoot: !parent,
-                isGrouped: !!items?.length
+                isGrouped: !!item.items?.length
             }
 
             if (item.items?.length) {
@@ -86,7 +121,7 @@ export function createProcessedItems(
 }
 
 function _isValidItem(processedItem: ProcessedItem | null): boolean {
-    return !!processedItem && !processedItem.isValid
+    return !!processedItem && processedItem.isValid
 }
 
 export function getItemLabel(processedItem: ProcessedItem | null): string | null {
@@ -105,7 +140,7 @@ export function isSelectedItem(activeItemPath: ProcessedItem[], processedItem: P
     return activeItemPath.some((p) => p.key === (processedItem?.key || null))
 }
 
-export function getFocusedItem(focusedItemInfo: FocusedItemInfo, visibleItems: ProcessedItem[]): ProcessedItem {
+export function getFocusedItem(focusedItemInfo: FocusedItemInfo, visibleItems: ProcessedItem[]): ProcessedItem | null {
     return visibleItems[focusedItemInfo.index]
 }
 
@@ -115,6 +150,7 @@ export function getFocusedItemParent(
     visibleItems: ProcessedItem[]
 ): ProcessedItem | null {
     const processedItem = getFocusedItem(focusedItemInfo, visibleItems)
+    if (!processedItem) return null
     return activeItemPath.find((p) => p.key === processedItem.parentKey) || null
 }
 

@@ -8,7 +8,8 @@
         PassThroughOptions,
         HTMLSpanAttributes
     } from '@jazzsvelte/api'
-    import type { ToastMessagePassThroughMethodOptions, ToastPassThroughOptions, ToastSeverity } from './toast.types'
+    import type { ToastPassThroughOptions, ToastSeverity } from './toast.types'
+    import type { ToastMessagePassThroughMethodOptions } from './toastMessage.types'
 
     import { SvelteComponent, type ComponentType } from 'svelte'
     import { JAZZ_SVELTE, resolveIconPT, resolvePT, localeOption } from '@jazzsvelte/api'
@@ -146,7 +147,6 @@
     ) satisfies HTMLDivAttributes
 
     function _onMouseEnter(event: MouseEvent) {
-       
         // do not continue if the user has canceled the event
         if (event.defaultPrevented) return
 

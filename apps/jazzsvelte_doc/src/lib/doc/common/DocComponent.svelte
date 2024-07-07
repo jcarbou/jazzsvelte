@@ -210,4 +210,17 @@
             display: none;
         }
     }
+
+    @media screen and (max-width: 575px) {
+        .doc-tabmenu {
+            li {
+                flex: 1 1 0;
+
+                button {
+                    width: 100%;
+                    min-width: auto;
+                }
+            }
+        }
+    }
 </style>

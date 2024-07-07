@@ -4,7 +4,7 @@ import { generateCmpFile } from '../scripts.utils'
 export function render(api: CmpApiDoc, { CmpName, cmpName }: CmpContext): string {
     return `import  { screen, fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/svelte';
     import {describe, expect, vi} from 'vitest'
-    import ${CmpName}from './${CmpName}.svelte';
+    import ${CmpName} from './${CmpName}.svelte';
     import { containerTest, snapshot} from '@jazzsvelte/test'
     
     describe('Button', () => { 

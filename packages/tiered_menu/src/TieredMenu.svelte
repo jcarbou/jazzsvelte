@@ -20,9 +20,10 @@
         OnEvent
     } from '@jazzsvelte/api'
 
-    import { getContext, setContext } from 'svelte'
+    import { portal } from '@jazzsvelte/portal_action'
+    import { getContext, setContext, tick } from 'svelte'
     import { derived } from 'svelte/store'
-    import { resolvePT, zIndex } from '@jazzsvelte/api'
+    import { mergeCssStsyles, resolvePT, zIndex } from '@jazzsvelte/api'
     import { defaultTieredMenuProps as DEFAULT, globalTieredMenuPT as globalPt } from './tieredMenu.config'
     import { fade } from 'svelte/transition'
     import TieredMenuSub from './TieredMenuSub.svelte'
@@ -82,7 +83,7 @@
         popup && !visible && _show(event)
     }
 
-    let visible: boolean = !popup
+    $: visible = !popup satisfies boolean
     const id = uniqueId('tieredMenu_')
 
     $: ptContext = {
@@ -119,7 +120,7 @@
                     'p-ripple-disabled': $ripple === false
                 }
             ],
-            style,
+            style: mergeCssStsyles([style, popupStyle]),
             'data-pc-name': 'tieredMenu',
             'data-pc-section': 'root'
         },
@@ -128,20 +129,10 @@
         ptContext
     ) satisfies HTMLDivAttributes
 
-    // "transition" element
-    /*$: transitionAttributes = resolvePT(
-        {
-            class: [],
-            'data-pc-section': 'transition'
-        },
-        pt?.transition,
-        globalPt?.transition,
-        ptContext
-    ) satisfies HTMLTieredMenuPassThroAttributes*/
-
     $: processedItems = createProcessedItems(model) satisfies ProcessedItem[] | null
     $: matchMediaQuery = breakpoint ? `screen and (max-width: ${breakpoint})` : (null satisfies string | null)
     let focused: boolean = false
+    let popupStyle: string | null = ''
     let isMobileMode = createBooleanStore(false)
     let activeItemPath: ActiveItemPathStore = createActiveItemPathStore()
     let focusedItemInfo: FocusedItemInfoStore = createFocusedItemInfoStore()
@@ -164,7 +155,6 @@
             : null
     let searchValue: string | null = null
     let searchTimeoutId: ReturnType<typeof setTimeout> | null = null
-    let focusTrigger: boolean = false
 
     function onItemChange(event: ProcessedItemEvent) {
         const { processedItem, isFocus } = event
@@ -194,7 +184,7 @@
     function onItemClick(event: ProcessedItemEvent) {
         const { originalEvent, processedItem } = event
 
-        if (processedItem.item.disabled || $isMobileMode) {
+        if (processedItem.item.disabled) {
             return
         }
 
@@ -206,7 +196,7 @@
         if (selected) {
             const { key } = processedItem
 
-            $activeItemPath.filter((p) => key !== p.key && key.startsWith(p.key))
+            activeItemPath.filter((p) => key !== p.key && key.startsWith(p.key))
             focusedItemInfo.setByProcessedItem(processedItem)
 
             if (!grouped) {
@@ -230,19 +220,21 @@
             _hide(originalEvent, true)
             focusedItemInfo.set({
                 index: rootProcessedItemIndex,
-                parentKey: rootProcessedItem ? rootProcessedItem.parentKey : ''
+                parentKey: rootProcessedItem ? rootProcessedItem.parentKey : null
             })
         }
     }
 
-    function _show(event: Event): void {
+    async function _show(event: Event) {
+        focusedItemInfo.set({ index: findFirstFocusedItemIndex($activeItemPath, $visibleItems), level: 0, parentKey: null })
         if (popup) {
             targetEl = event.currentTarget as HTMLElement
             visible = true
             onShow && onShow(event)
             relatedTargetEl = ((event as MouseEvent).relatedTarget as HTMLElement) || null
+            await tick()
+            onPopupShow()
         }
-        focusedItemInfo.set({ index: findFirstFocusedItemIndex($activeItemPath, $visibleItems), level: 0, parentKey: '' })
     }
 
     function _hide(event: Event, isFocus?: boolean) {
@@ -303,9 +295,8 @@
         const root = processedItem?.isRoot
 
         if (!root) {
-            focusedItemInfo.set({ index: -1, parentKey: parentItem?.parentKey || '' })
+            focusedItemInfo.set({ index: parentItem?.index ?? -1, parentKey: parentItem?.parentKey || null })
             searchValue = ''
-            setTimeout(() => (focusTrigger = true), 0)
         }
 
         activeItemPath.filter((p) => p.parentKey !== $focusedItemInfo.parentKey)
@@ -315,13 +306,11 @@
 
     function onArrowRightKey(event: KeyboardEvent): void {
         const processedItem = getFocusedItem($focusedItemInfo, $visibleItems)
-        const grouped = processedItem.isGrouped
 
-        if (grouped) {
+        if (processedItem?.isGrouped) {
             onItemChange({ originalEvent: event, processedItem })
-            focusedItemInfo.set({ index: -1, parentKey: processedItem.key })
+            focusedItemInfo.set({ index: 0, parentKey: processedItem.key })
             searchValue = ''
-            setTimeout(() => (focusTrigger = true), 0)
         }
 
         event.preventDefault()
@@ -361,9 +350,10 @@
     function onTabKey(event: Event): void {
         if ($focusedItemInfo.index !== -1) {
             const processedItem = getFocusedItem($focusedItemInfo, $visibleItems)
-            const grouped = processedItem.isGrouped
 
-            !grouped && onItemChange({ originalEvent: event, processedItem })
+            if (processedItem) {
+                !processedItem.isGrouped && onItemChange({ originalEvent: event, processedItem })
+            }
         }
 
         _hide(event)
@@ -404,42 +394,38 @@
         return itemIndex !== -1
     }
 
-    function _alignOverlay(): void {
+    function onPopupShow(): void {
         if (!containerEl || !targetEl) return
+
+        addStyles(containerEl, { position: 'absolute', top: '0', left: '0' })
         const calculateMinWidth = getOuterWidth(targetEl) > getOuterWidth(containerEl)
 
         alignOverlay(containerEl, targetEl, appendTo, calculateMinWidth)
-    }
 
-    /* function onEnter(): void {
-        //if (autoZIndex) {
-        //    ZIndexUtils.set('menu', containerEl, jazzSvelteContext.autoZIndex, baseZIndex || jazzSvelteContext.zIndex?.menu)
-        //}
-
-        addStyles(containerEl, { position: 'absolute', top: '0', left: '0' })
-        _alignOverlay()
-        focusEl(menu.getElement())
+        const m = menu.getElement()
+        focusEl(m)
         scrollInView()
 
+        popupStyle = containerEl.getAttribute('style')
         if (breakpoint) {
             //containerEl.setAttribute(attributeSelectorState, '');
             //createStyle();
         }
-    }*/
+    }
 
     function _onFocus(event: Event): void {
         focused = true
         focusedItemInfo.updateIfNotSet({
             index: findFirstFocusedItemIndex($activeItemPath, $visibleItems),
             level: 0,
-            parentKey: ''
+            parentKey: null
         })
 
         onFocus && onFocus(event)
     }
 
     function _onBlur(event: Event): void {
-        focused = true
+        focused = false
         focusedItemInfo.clear()
         searchValue = ''
         dirty = false
@@ -470,11 +456,11 @@
                 onHomeKey(event)
                 break
 
-            case 'Space':
             case 'End':
                 onEndKey(event)
                 break
 
+            case 'Space':
             case 'Enter':
             case 'NumpadEnter':
                 onEnterKey(event)
@@ -515,6 +501,13 @@
         }
     }
 
+    function onClickOutside(event: Event): void {
+        if (!visible) return
+
+        // Defer hide to be compliant with toggle function (toggle must be call before _hide)
+        _hide(event, !popup)
+    }
+
     setContext<TieredMenuTreeContext>('tieredMenuTree', {
         menuId: id,
         popup,
@@ -543,8 +536,9 @@
         transition:fade={{ duration: 300 }}
         role="none"
         on:click={onRootClick}
-        on:clickoutside={(ev) => _hide(ev, !popup)}
+        on:clickoutside={onClickOutside}
         on:windowresize={(ev) => !$isMobileMode && _hide(ev, true)}
+        use:portal={popup ? 'body' : 'none'}
         use:windowResize
         use:clickOutside={{ getAdditionalElements: () => [targetEl] }}
         use:zIndex={{ key: 'menu', jazzSvelteContext }}
@@ -556,6 +550,7 @@
             menuProps={$$props}
             model={processedItems}
             ariaLabelledBy={$$restProps.ariaLabelledBy}
+            ariaActiveDescendant={focused ? focusedItemId : undefined}
             level={0}
             onHide={_hide}
             root

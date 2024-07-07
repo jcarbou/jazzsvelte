@@ -49,4 +49,28 @@
         margin: 0;
         padding: 0;
     }
+
+    @media screen and (max-width: 1199px) {
+        .layout-sidebar {
+            top: 0;
+            left: 0;
+            position: fixed;
+            z-index: 1102;
+            height: 100%;
+            transform: translateX(-100%);
+            background-color: var(--mobile-menu-bg);
+            backdrop-filter: blur(20px);
+            width: 300px;
+            opacity: 0;
+        }
+
+        .layout-sidebar nav {
+            padding: 1rem 1rem;
+        }
+
+        .layout-sidebar.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
 </style>

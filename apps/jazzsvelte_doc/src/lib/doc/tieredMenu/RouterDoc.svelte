@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation'
     import { importJS, importTS } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
@@ -26,17 +27,15 @@
         {
             label: 'Programmatic',
             icon: 'pi pi-link',
-            command: () => {
-                ///router.push('/installation')
-            }
+            command: () => goto('/installation')
         },
         {
             label: 'External',
             icon: 'pi pi-home',
             items: [
                 {
-                    label: 'React.js',
-                    url: 'https://react.dev/'
+                    label: 'Svelte',
+                    url: 'https://svelte.dev//'
                 },
                 {
                     label: 'Vite.js',

@@ -50,4 +50,10 @@
         overflow-x: hidden;
         align-self: flex-start;
     }
+
+    @media screen and (max-width: 1199px) {
+        .doc-section-nav {
+            display: none;
+        }
+    }
 </style>

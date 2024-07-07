@@ -1,3 +1,4 @@
+import { ComponentType } from 'svelte'
 import { CssObject, IconComponent } from './pt.types'
 
 export type MenuItem = {
@@ -15,11 +16,13 @@ export type MenuItem = {
     separator?: boolean
     style?: CssObject | string
     target?: string
-    template?: string
+    template?: ComponentType | null
     url?: string
     visible?: boolean
+    badge?: string | number
+    shortcut?: string
 }
 
-export type AppendTo = null | HTMLElement | 'self' | 'body' | (() => HTMLElement | 'self')
+export type AppendTo = null | HTMLElement | 'self' | 'body' | (() => HTMLElement | 'self' | 'body')
 
 export type OnEvent = null | ((event: Event) => void)

@@ -190,12 +190,16 @@
         on:click={(event) => _onItemClick(event, processedItem)}
         on:mouseenter={(event) => _onItemMouseEnter(event, processedItem)}
     >
-        <a href={url || '#'} {...actionAttributes} on:focus={(event) => event.stopPropagation()}>
-            {#if icon}<IconBuilder {resolvedIcon} />{/if}
-            {#if item.label}<span {...labelAttributes}>{item.label}</span>{/if}
-            {#if grouped}<IconBuilder resolvedIcon={resolvedSubmenuIcon} />{/if}
-            {#if !disabled && $ripple}<Ripple />{/if}
-        </a>
+        {#if item.template}
+            <svelte:component this={item.template} {item} />
+        {:else}
+            <a href={url || '#'} {...actionAttributes} on:focus={(event) => event.stopPropagation()}>
+                {#if icon}<IconBuilder {resolvedIcon} />{/if}
+                {#if item.label}<span {...labelAttributes}>{item.label}</span>{/if}
+                {#if grouped}<IconBuilder resolvedIcon={resolvedSubmenuIcon} />{/if}
+                {#if !disabled && $ripple}<Ripple />{/if}
+            </a>
+        {/if}
     </div>
     {#if !!processedItem.items}
         <TieredMenuSub

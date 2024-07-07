@@ -1,23 +1,17 @@
 <script lang="ts">
-import { importJS, importTS} from '../common/doc.utils'
+    import { importJS, importTS } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
     import { Badge } from '@jazzsvelte/badge'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
-    
+    import MenuItemTemplate from './MenuItemTemplate.svelte'
+    import type { MenuItem } from '@jazzsvelte/api'
+
     export let docSection: DocSection
 
-    const itemRenderer = (item) => (
-        <a class="flex align-items-center p-menuitem-link">
-            <span class={item.icon} />
-            <span class="mx-2">{item.label}</span>
-            {item.badge && <Badge class="ml-auto" value={item.badge} />}
-            {item.shortcut && <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>}
-        </a>
-
-    const items = [
+    const items: MenuItem[] = [
         {
             label: 'File',
             icon: 'pi pi-file',
@@ -30,19 +24,19 @@ import { importJS, importTS} from '../common/doc.utils'
                             label: 'Document',
                             icon: 'pi pi-file',
                             shortcut: '⌘+N',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         },
                         {
                             label: 'Image',
                             icon: 'pi pi-image',
                             shortcut: '⌘+I',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         },
                         {
                             label: 'Video',
                             icon: 'pi pi-video',
                             shortcut: '⌘+L',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         }
                     ]
                 },
@@ -50,13 +44,13 @@ import { importJS, importTS} from '../common/doc.utils'
                     label: 'Open',
                     icon: 'pi pi-folder-open',
                     shortcut: '⌘+O',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
                     shortcut: '⌘+P',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         },
@@ -68,13 +62,13 @@ import { importJS, importTS} from '../common/doc.utils'
                     label: 'Copy',
                     icon: 'pi pi-copy',
                     shortcut: '⌘+C',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Delete',
                     icon: 'pi pi-times',
                     shortcut: '⌘+D',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         },
@@ -82,7 +76,7 @@ import { importJS, importTS} from '../common/doc.utils'
             label: 'Search',
             icon: 'pi pi-search',
             shortcut: '⌘+S',
-            template: itemRenderer
+            template: MenuItemTemplate
         },
         {
             separator: true
@@ -95,17 +89,17 @@ import { importJS, importTS} from '../common/doc.utils'
                     label: 'Slack',
                     icon: 'pi pi-slack',
                     badge: 2,
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Whatsapp',
                     icon: 'pi pi-whatsapp',
                     badge: 3,
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         }
-    ];
+    ]
 
     const code = {
         basic: `
@@ -115,7 +109,7 @@ import { importJS, importTS} from '../common/doc.utils'
 ${importJS('TieredMenu')}import { TieredMenu } from 'primereact/tieredmenu';
 import { Badge } from 'primereact/badge';
 
-    const itemRenderer = (item) => (
+    const MenuItemTemplate = (item) => (
         <a class="flex align-items-center p-menuitem-link">
             <span class={item.icon} />
             <span class="mx-2">{item.label}</span>
@@ -136,19 +130,19 @@ import { Badge } from 'primereact/badge';
                             label: 'Document',
                             icon: 'pi pi-file',
                             shortcut: '⌘+N',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         },
                         {
                             label: 'Image',
                             icon: 'pi pi-image',
                             shortcut: '⌘+I',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         },
                         {
                             label: 'Video',
                             icon: 'pi pi-video',
                             shortcut: '⌘+L',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         }
                     ]
                 },
@@ -156,13 +150,13 @@ import { Badge } from 'primereact/badge';
                     label: 'Open',
                     icon: 'pi pi-folder-open',
                     shortcut: '⌘+O',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
                     shortcut: '⌘+P',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         },
@@ -174,13 +168,13 @@ import { Badge } from 'primereact/badge';
                     label: 'Copy',
                     icon: 'pi pi-copy',
                     shortcut: '⌘+C',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Delete',
                     icon: 'pi pi-times',
                     shortcut: '⌘+D',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         },
@@ -188,7 +182,7 @@ import { Badge } from 'primereact/badge';
             label: 'Search',
             icon: 'pi pi-search',
             shortcut: '⌘+S',
-            template: itemRenderer
+            template: MenuItemTemplate
         },
         {
             separator: true
@@ -201,13 +195,13 @@ import { Badge } from 'primereact/badge';
                     label: 'Slack',
                     icon: 'pi pi-slack',
                     badge: 2,
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Whatsapp',
                     icon: 'pi pi-whatsapp',
                     badge: 3,
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         }
@@ -220,7 +214,7 @@ ${importTS('TieredMenu')}import { TieredMenu } from 'primereact/tieredmenu';
 import { MenuItem } from 'primereact/menuitem';
 import { Badge } from 'primereact/badge';
 
-    const itemRenderer = (item) => (
+    const MenuItemTemplate = (item) => (
         <a class="flex align-items-center p-menuitem-link">
             <span class={item.icon} />
             <span class="mx-2">{item.label}</span>
@@ -241,19 +235,19 @@ import { Badge } from 'primereact/badge';
                             label: 'Document',
                             icon: 'pi pi-file',
                             shortcut: '⌘+N',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         },
                         {
                             label: 'Image',
                             icon: 'pi pi-image',
                             shortcut: '⌘+I',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         },
                         {
                             label: 'Video',
                             icon: 'pi pi-video',
                             shortcut: '⌘+L',
-                            template: itemRenderer
+                            template: MenuItemTemplate
                         }
                     ]
                 },
@@ -261,13 +255,13 @@ import { Badge } from 'primereact/badge';
                     label: 'Open',
                     icon: 'pi pi-folder-open',
                     shortcut: '⌘+O',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
                     shortcut: '⌘+P',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         },
@@ -279,13 +273,13 @@ import { Badge } from 'primereact/badge';
                     label: 'Copy',
                     icon: 'pi pi-copy',
                     shortcut: '⌘+C',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Delete',
                     icon: 'pi pi-times',
                     shortcut: '⌘+D',
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         },
@@ -293,7 +287,7 @@ import { Badge } from 'primereact/badge';
             label: 'Search',
             icon: 'pi pi-search',
             shortcut: '⌘+S',
-            template: itemRenderer
+            template: MenuItemTemplate
         },
         {
             separator: true
@@ -306,13 +300,13 @@ import { Badge } from 'primereact/badge';
                     label: 'Slack',
                     icon: 'pi pi-slack',
                     badge: 2,
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 },
                 {
                     label: 'Whatsapp',
                     icon: 'pi pi-whatsapp',
                     badge: 3,
-                    template: itemRenderer
+                    template: MenuItemTemplate
                 }
             ]
         }
@@ -320,8 +314,7 @@ import { Badge } from 'primereact/badge';
         <TieredMenu model={items} breakpoint="767px" />
 
         `
-    };
-
+    }
 </script>
 
 <DocSectionText {docSection}>
