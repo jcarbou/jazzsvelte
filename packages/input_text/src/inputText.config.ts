@@ -27,7 +27,8 @@ export const defaultInputTextProps: Omit<Required<BaseInputTextProps>, 'pt' | 'p
     size: null,
     unstyled: false,
     class: null,
-    style: null
+    style: null,
+    variant: null
 }
 
 /**

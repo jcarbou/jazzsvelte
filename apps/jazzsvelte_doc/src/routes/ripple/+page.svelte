@@ -8,7 +8,8 @@
     import StyledDoc from '$lib/doc/ripple/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/ripple/theming/TailwindDoc.svelte'
     import { JAZZ_SVELTE } from '@jazzsvelte/api'
-    import { projectName } from '$lib/doc/common/doc.utils'
+    import { apiDataToDocs, projectName } from '$lib/doc/common/doc.utils'
+    import { rippleApiData } from '@jazzsvelte/ripple'
 
     const docs = [
         {
@@ -65,6 +66,6 @@
     header="Ripple"
     description="Ripple component adds ripple effect to the host element."
     componentDocs={docs}
-    apiDocs={['Ripple']}
+    apiDocs={[apiDataToDocs(rippleApiData)]}
     {themingDocs}
 />

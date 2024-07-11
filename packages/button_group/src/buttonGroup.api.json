@@ -1,77 +1,181 @@
 {
-  "methods": {
-    "description": "Defines methods that can be accessed by the component's reference.",
-    "values": []
-  },
-  "props": {
-    "description": "",
-    "values": [
-      {
-        "name": "class",
-        "optional": true,
-        "readonly": false,
-        "type": "string | null",
-        "default": "null",
-        "description": "CSS classes to add to root element."
-      },
-      {
-        "name": "style",
-        "optional": true,
-        "readonly": false,
-        "type": "string | CssObject | null",
-        "default": "null",
-        "description": "Style to add to root element."
-      }
-    ]
-  },
-  "callbacks": {
-    "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
-    "values": []
-  },
-  "ptMethodOptions": {
-    "description": "Custom passthrough(pt) option method.",
-    "relatedProp": "",
-    "callbacks": [],
-    "values": [
-      {
-        "name": "props",
-        "optional": false,
-        "readonly": false,
-        "type": "ButtonGroupProps",
-        "description": "Defines valid properties."
-      },
-      {
-        "name": "global",
-        "optional": false,
-        "readonly": false,
-        "type": "undefined | object",
-        "description": "Defines passthrough(pt) options in global config."
-      }
-    ]
-  },
-  "ptOptions": {
-    "description": "Custom passthrough(pt) options.",
-    "relatedProp": "pt",
-    "callbacks": [],
-    "values": [
-      {
-        "name": "root",
-        "optional": true,
-        "readonly": false,
-        "type": "ButtonGroupPassThr",
-        "description": "Used to pass attributes to the root's DOM element."
-      }
-    ]
-  },
-  "meta": {
-    "RootType": "ButtonGroupPassThr",
-    "omitAttributes": "'style'",
-    "icon": false,
-    "tooltip": false,
-    "svelteComponent": false
-  },
-  "types": {
-    "description": "Defines types used by properties of the ButtonGroup component.",
-    "values": []
-  }
+    "id": "buttonGroup",
+    "label": "ButtonGroup",
+    "description": "Multiple buttons are grouped when wrapped inside an element with ButtonGroup component.",
+    "methods": {
+        "label": "Methods",
+        "shortLabel": "Methods",
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": []
+    },
+    "props": {
+        "label": "ButtonGroupProps",
+        "shortLabel": "Props",
+        "description": "",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "disabled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When present, it specifies that the element should be disabled."
+            },
+            {
+                "name": "iconPos",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonIconPos | null",
+                "default": "'left'",
+                "description": "Position of the icon, valid values are \"left\", \"right\", \"top\" and \"bottom\"."
+            },
+            {
+                "name": "outlined",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a border class without a background initially."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonPassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonPassThroughMethodOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "rounded",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Add a circular border radius to the button."
+            },
+            {
+                "name": "severity",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonSeverity | null",
+                "default": "null",
+                "description": "Defines the style of the button, valid values are \"secondary\", \"success\", \"info\", \"warning\", \"danger\", \"help\"."
+            },
+            {
+                "name": "size",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonSize | null",
+                "default": "null",
+                "description": "Defines the size of the button, valid values are \"small\" and \"large\"."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            },
+            {
+                "name": "visible",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "When present, it specifies that the element should be visible."
+            }
+        ]
+    },
+    "callbacks": {
+        "label": "Callbacks",
+        "shortLabel": "Callbacks",
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": []
+    },
+    "ptMethodOptions": {
+        "label": "ButtonGroupPassThroughMethodOptions",
+        "shortLabel": "PtMethodOptions",
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "ButtonGroupProps",
+                "description": "Defines valid properties."
+            },
+            {
+                "name": "global",
+                "optional": false,
+                "readonly": false,
+                "type": "undefined | object",
+                "description": "Defines passthrough(pt) options in global config."
+            }
+        ]
+    },
+    "ptContext": {
+        "label": "ButtonGroupContext",
+        "shortLabel": "Context",
+        "values": []
+    },
+    "ptOptions": {
+        "label": "ButtonGroupPassThroughOptions",
+        "shortLabel": "PtOptions",
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonGroupPassThr",
+                "description": "Used to pass attributes to the root's DOM element."
+            }
+        ]
+    },
+    "meta": {
+        "RootType": "ButtonGroupPassThr",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Defines types used by properties of the ButtonGroup component.",
+        "values": [
+            { "name": "ButtonIconPos", "value": "'top' | 'bottom' | 'left' | 'right'" },
+            { "name": "ButtonSeverity", "value": "'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help'" },
+            { "name": "ButtonSize", "value": "'small' | 'normal' | 'large'" }
+        ]
+    }
 }

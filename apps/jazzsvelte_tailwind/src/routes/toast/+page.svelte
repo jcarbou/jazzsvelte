@@ -106,7 +106,7 @@
     header="Toast"
     description="Toast is used to display messages in an overlay."
     componentDocs={docs}
-    apiDocs={['Toast']}
+    oldApiDocs={['Toast']}
     {ptDocs}
     {themingDocs}
 />;

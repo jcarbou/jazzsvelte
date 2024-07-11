@@ -7,7 +7,7 @@
     import BasicDoc from '$lib/doc/inputtext/BasicDoc.svelte'
     import DisabledDoc from '$lib/doc/inputtext/DisabledDoc.svelte'
     import FloatlabelDoc from '$lib/doc/inputtext/FloatlabelDoc.svelte'
-//    import FormikDoc from '$lib/doc/inputtext/form/FormikDoc.svelte'
+    //    import FormikDoc from '$lib/doc/inputtext/form/FormikDoc.svelte'
     //import HookformDoc from '$lib/doc/inputtext/form/HookformDoc.svelte'
     import HelptextDoc from '$lib/doc/inputtext/HelptextDoc.svelte'
     import IconsDoc from '$lib/doc/inputtext/IconsDoc.svelte'
@@ -134,7 +134,7 @@
     header="InputText"
     description="InputText is an extension to standard input element with theming and keyfiltering."
     componentDocs={docs}
-    apiDocs={['InputText']}
+    oldApiDocs={['InputText']}
     {ptDocs}
     {themingDocs}
 />

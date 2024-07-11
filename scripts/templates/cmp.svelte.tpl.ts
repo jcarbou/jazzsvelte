@@ -29,7 +29,7 @@ ${icon ? `   import { IconBuilder } from '@jazzsvelte/icons'` : ''}
 
 ${eachValue(
     omitValues(props, ['class', 'style', 'tooltip', 'pt', 'ptOptions']),
-    ({ name, codeType }) => `   export let ${name}: ${codeType} = DEFAULT.${name}`
+    ({ name, type }) => `   export let ${name}: ${type} = DEFAULT.${name}`
 )}
    export let pt: ${CmpName}PassThroughOptions | null = null
    export let ptOptions: PassThroughOptions | null = null

@@ -65,6 +65,6 @@
     header="Ripple"
     description="Ripple component adds ripple effect to the host element."
     componentDocs={docs}
-    apiDocs={['Ripple']}
+    oldApiDocs={['Ripple']}
     {themingDocs}
 />

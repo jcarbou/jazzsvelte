@@ -10,9 +10,10 @@
     import SizeDoc from '$lib/doc/badge/SizeDoc.svelte'
     import StyledDoc from '$lib/doc/badge/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/badge/theming/TailwindDoc.svelte'
-    import { projectName } from '$lib/doc/common/doc.utils'
+    import { apiDataToDocs, projectName } from '$lib/doc/common/doc.utils'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
+    import { badgeApiData } from '@jazzsvelte/badge'
 
     const docs = [
         {
@@ -97,7 +98,7 @@
     header="Badge"
     description="Badge is a small status indicator for another element."
     componentDocs={docs}
-    apiDocs={['Badge']}
+    apiDocs={[apiDataToDocs(badgeApiData)]}
     {ptDocs}
     {themingDocs}
 />;

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { apiDataToDocs } from '$lib/doc/common/doc.utils'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import AccessibilityDoc from '$lib/doc/tooltip/AccessibilityDoc.svelte'
@@ -16,6 +17,7 @@
     import TemplateDoc from '$lib/doc/tooltip/TemplateDoc.svelte'
     import StyledDoc from '$lib/doc/tooltip/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/tooltip/theming/TailwindDoc.svelte'
+    import { tooltipApiData } from '@jazzsvelte/tooltip'
 
     const docs = [
         {
@@ -119,7 +121,7 @@
     header="Tooltip"
     description="Tooltip functionality is integrated within various PrimeReact components."
     componentDocs={docs}
-    apiDocs={['Tooltip', 'TooltipOptions']}
+    apiDocs={[apiDataToDocs(tooltipApiData)]}
     {ptDocs}
     {themingDocs}
 />

@@ -108,7 +108,7 @@
     header="Speed Dial"
     description="SpeedDial is a floating button with a popup menu."
     componentDocs={docs}
-    apiDocs={['SpeedDial']}
+    oldApiDocs={['SpeedDial']}
     {ptDocs}
     {themingDocs}
 />;

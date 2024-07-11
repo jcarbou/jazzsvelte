@@ -29,31 +29,31 @@
     import { focusEl } from '@jazzsvelte/dom'
     import { stopProgagation } from '@jazzsvelte/stop_propagation_action'
 
+    export let badge: string | number | null = DEFAULT.badge
+    let className: string | null = DEFAULT.class
+    export { className as class }
     export let disabled: boolean = DEFAULT.disabled
     export let icon: string | IconComponent | null = DEFAULT.icon
-    export let text: boolean = DEFAULT.text
-    export let rounded: boolean = DEFAULT.rounded
-    export let raised: boolean = DEFAULT.raised
-    export let outlined: boolean = DEFAULT.outlined
-    export let link: boolean = DEFAULT.link
-    export let severity: ButtonSeverity | null = DEFAULT.severity
     export let iconPos: ButtonIconPos | null = DEFAULT.iconPos
-    export let size: ButtonSize | null = DEFAULT.size
     export let label: string | null = DEFAULT.label
+    export let link: boolean = DEFAULT.link
     export let loading: boolean = DEFAULT.loading
     export let loadingIcon: string | IconComponent | null = DEFAULT.loadingIcon
+    export let outlined: boolean = DEFAULT.outlined
     export let plain: boolean = DEFAULT.plain
+    export let pt: ButtonPassThroughOptions | null = null
+    export let ptOptions: PassThroughOptions | null = null
+    export let raised: boolean = DEFAULT.raised
+    export let rounded: boolean = DEFAULT.rounded
+    export let severity: ButtonSeverity | null = DEFAULT.severity
+    export let size: ButtonSize | null = DEFAULT.size
+    export let style: CssStyle = DEFAULT.style
+    export let text: boolean = DEFAULT.text
     let tooltipContent: string | null = null
     export { tooltipContent as tooltip }
     export let tooltipOptions: TooltipOptions | undefined = undefined
-    export let visible: boolean = DEFAULT.visible
-    export let pt: ButtonPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
     export let unstyled: boolean = DEFAULT.unstyled
-    let className: string | null = DEFAULT.class
-    export { className as class }
-    export let style: CssStyle = DEFAULT.style
-    export let badge: string | number | null = DEFAULT.badge
+    export let visible: boolean = DEFAULT.visible
 
     export const displayName = 'Button'
     export const focus = (scrollTo?: boolean) => {

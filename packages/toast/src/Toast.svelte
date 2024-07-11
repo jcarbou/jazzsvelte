@@ -24,7 +24,7 @@
     const { inputStyle, ripple } = jazzSvelteContext
 
     $: ptContext = {
-        props: $$props,
+        props: { ...DEFAULT, ...$$props },
         ptOptions,
         unstyled
     } satisfies ToastPassThroughMethodOptions & {

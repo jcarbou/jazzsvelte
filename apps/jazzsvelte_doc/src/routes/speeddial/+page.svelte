@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { apiDataToDocs } from '$lib/doc/common/doc.utils'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import AccessibilityDoc from '$lib/doc/speedDial/AccessibilityDoc.svelte'
@@ -14,6 +15,7 @@
     import StyledDoc from '$lib/doc/speedDial/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/speedDial/theming/TailwindDoc.svelte'
     import TooltipDoc from '$lib/doc/speedDial/TooltipDoc.svelte'
+    import { speedDialApiData } from '@jazzsvelte/speed_dial'
 
     const docs = [
         {
@@ -108,7 +110,7 @@
     header="Speed Dial"
     description="SpeedDial is a floating button with a popup menu."
     componentDocs={docs}
-    apiDocs={['SpeedDial']}
+    apiDocs={[apiDataToDocs(speedDialApiData)]}
     {ptDocs}
     {themingDocs}
 />;

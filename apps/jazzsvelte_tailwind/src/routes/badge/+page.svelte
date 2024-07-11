@@ -97,7 +97,7 @@
     header="Badge"
     description="Badge is a small status indicator for another element."
     componentDocs={docs}
-    apiDocs={['Badge']}
+    oldApiDocs={['Badge']}
     {ptDocs}
     {themingDocs}
 />;

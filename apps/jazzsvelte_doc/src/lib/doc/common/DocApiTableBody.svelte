@@ -1,11 +1,13 @@
 <script lang="ts">
     import type { ApiTableInfo, DataItem } from './doc.types'
-    import { JAZZ_SVELTE } from '@jazzsvelte/api'
     import { getContext } from 'svelte'
-    import DocApiTableContext from './DocApiTableContext.svelte'
+    import DocApiTableColumName from './DocApiTableColumName.svelte'
+    import DocApiTableColumnType from './DocApiTableColumnType.svelte'
+    import DocApiTableColumText from './DocApiTableColumText.svelte'
+    import DocApiTableColumnValue from './DocApiTableColumnValue.svelte'
+    import DocApiTableColumnParameters from './DocApiTableColumnParameters.svelte'
 
-    const { darkMode } = JAZZ_SVELTE
-    const { data, isPT } = getContext<ApiTableInfo>('apiTabelInfo')
+    const { data, isPT, headers } = getContext<ApiTableInfo>('apiTabelInfo')
 </script>
 
 {#each data as item, index (index)}
@@ -17,76 +19,33 @@
         </tr>
     {:else}
         <tr>
-            {#each Object.entries(item) as [key, value], index (index)}
-                {#if key !== 'readonly' && key !== 'optional' && key !== 'deprecated'}
-                    <td>
-                        {#if key === 'parameters' && Array.isArray(value)}
-                            {#each value as subValue, index (index)}
-                                <div class="doc-option-params">
-                                    <span class="doc-option-parameter-name">{subValue.name}: </span>
-                                    <span class="doc-option-parameter-type">
-                                        <DocApiTableContext value={subValue.type} />
-                                    </span>
-                                    <br />
-                                </div>
-                            {/each}
-                        {:else if key === 'default' && typeof value === 'string'}
-                            <div class="doc-option-default" class:doc-option-dark={$darkMode} class:doc-option-light={!$darkMode}>
-                                <DocApiTableContext value={value || 'null'} deprecated={item['deprecated']} />
-                            </div>
-                        {:else if key === 'type' && typeof value === 'string'}
-                            <span class="doc-option-type">
-                                <DocApiTableContext {value} deprecated={item['deprecated']} />
-                            </span>
-                        {:else if key === 'returnType' && typeof value === 'string'}
-                            <div
-                                class="doc-option-returnType"
-                                class:doc-option-dark={$darkMode}
-                                class:doc-option-light={!$darkMode}
-                            >
-                                <DocApiTableContext {value} deprecated={item['deprecated']} />
-                            </div>
-                        {:else if key === 'description' || key === 'values'}
-                            <span class="doc-option-description">{value}</span>
-                        {:else if typeof value === 'string'}
-                            <DocApiTableContext {value} isLinkableOption={key === 'name'} deprecated={item['deprecated']} />
-                        {/if}
-                    </td>
-                {/if}
+            {#each headers as key, index (index)}
+                {@const value = item[key]}
+                <td>
+                    {#if key === 'parameters' && Array.isArray(value)}
+                        <DocApiTableColumnParameters {value} deprecated={item['deprecated']} />
+                    {:else if key === 'default' && typeof value === 'string'}
+                        <DocApiTableColumnValue value={'' + value} deprecated={item['deprecated']} />
+                    {:else if key === 'returnType' && typeof value === 'string'}
+                        <DocApiTableColumnValue value={'' + value} deprecated={item['deprecated']} />
+                    {:else if key === 'type'}
+                        <DocApiTableColumnType value={'' + value} />
+                    {:else if key === 'value'}
+                        <DocApiTableColumnType value={'' + value} />
+                    {:else if key === 'description' || key === 'values'}
+                        <DocApiTableColumText value={'' + value} deprecated={item['deprecated']} />
+                    {:else if key === 'name'}
+                        <DocApiTableColumName value={'' + value} deprecated={item['deprecated']} />
+                    {:else if typeof value === 'string'}
+                        <DocApiTableColumText value={'' + value} deprecated={item['deprecated']} />
+                    {/if}
+                </td>
             {/each}
         </tr>
     {/if}
 {/each}
 
 <style lang="scss">
-    .doc-option-type {
-        font-family:
-            ui-monospace,
-            SFMono-Regular,
-            'SF Mono',
-            Menlo,
-            Consolas,
-            Liberation Mono,
-            monospace;
-        color: var(--primary-500);
-        font-weight: 500;
-
-        .doc-option-type-options-container {
-            display: flex;
-            align-items: center;
-        }
-
-        span.doc-option-type-options {
-            color: var(--primary-700);
-        }
-
-        &.doc-option-link {
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
-
     :global(.doc-option-name),
     td > i:not(.pi) {
         font-family:
@@ -132,67 +91,12 @@
         }
     }
 
-    .doc-option-default,
-    .doc-option-returnType {
-        font-family:
-            ui-monospace,
-            SFMono-Regular,
-            'SF Mono',
-            Menlo,
-            Consolas,
-            Liberation Mono,
-            monospace;
-        font-weight: 400;
-        font-style: normal;
-        display: flex;
-        border-width: 1px;
-        border-style: solid;
-        border-radius: 6px;
-        padding: 2px 6px;
-        max-width: min-content;
-    }
-
-    .doc-option-parameter-name {
-        font-family:
-            ui-monospace,
-            SFMono-Regular,
-            'SF Mono',
-            Menlo,
-            Consolas,
-            Liberation Mono,
-            monospace;
-        color: var(--primary-700);
-    }
-
-    .doc-option-parameter-type {
-        font-family:
-            ui-monospace,
-            SFMono-Regular,
-            'SF Mono',
-            Menlo,
-            Consolas,
-            Liberation Mono,
-            monospace;
-        color: var(--primary-500);
-    }
-
-    .doc-option-params {
-        font-family:
-            ui-monospace,
-            SFMono-Regular,
-            'SF Mono',
-            Menlo,
-            Consolas,
-            Liberation Mono,
-            monospace;
-    }
-
-    .doc-option-light {
+    :global(.doc-option-light) {
         background: var(--bluegray-50);
         border-color: var(--bluegray-100);
     }
 
-    .doc-option-dark {
+    :global(.doc-option-dark) {
         background: var(--bluegray-800);
         border-color: var(--bluegray-800);
     }

@@ -21,6 +21,20 @@ export type Doc = {
     docApiData?: DocApiData
 }
 
+export type LinkTargets = Record<string, string>
+
+export type LinkEntry = {
+    index: number
+    linkTarget: string
+    apiId: string
+    label: string
+}
+
+export type ApiDocs = {
+    doc: Doc
+    linkTargets: LinkTargets
+}
+
 export type DocWithChildren = Doc & {
     children: Doc[]
 }

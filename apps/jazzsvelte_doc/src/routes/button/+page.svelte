@@ -2,7 +2,6 @@
     import AccessibilityDoc from '$lib/doc/button/AccessibilityDoc.svelte'
     import BadgesDoc from '$lib/doc/button/BadgesDoc.svelte'
     import BasicDoc from '$lib/doc/button/BasicDoc.svelte'
-    import ButtonGroup from '$lib/doc/button/ButtonGroupDoc.svelte'
     import DisabledDoc from '$lib/doc/button/DisabledDoc.svelte'
     import IcononlyDoc from '$lib/doc/button/IcononlyDoc.svelte'
     import IconsDoc from '$lib/doc/button/IconsDoc.svelte'
@@ -21,10 +20,10 @@
     import TextDoc from '$lib/doc/button/TextDoc.svelte'
     import StyledDoc from '$lib/doc/button/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/button/theming/TailwindDoc.svelte'
-    import { projectName } from '$lib/doc/common/doc.utils'
+    import { apiDataToDocs, projectName } from '$lib/doc/common/doc.utils'
     import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
-    import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
+    import { buttonApiData } from '@jazzsvelte/button'
 
     const docs = [
         {
@@ -98,11 +97,6 @@
             component: BadgesDoc
         },
         {
-            id: 'buttonset',
-            label: 'Button Group',
-            component: ButtonGroup
-        },
-        {
             id: 'sizes',
             label: 'Sizes',
             component: SizesDoc
@@ -164,7 +158,7 @@
     header="Button"
     description="Button is an extension to standard input element with icons and theming."
     componentDocs={docs}
-    apiDocs={['Button']}
+    apiDocs={[apiDataToDocs(buttonApiData)]}
     {ptDocs}
     {themingDocs}
 />

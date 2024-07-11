@@ -1,94 +1,113 @@
 {
-  "description": "Ripple component adds ripple effect to the host element.",
-  "methods": {
-    "description": "Defines methods that can be accessed by the component's reference.",
-    "values": []
-  },
-  "props": {
-    "description": "Defines valid properties in Ripple component.",
-    "values": [
-      {
-        "name": "class",
-        "optional": true,
-        "readonly": false,
-        "type": "string | null",
-        "default": "null",
-        "description": "CSS classes to add to root element."
-      },
-      {
-        "name": "pt",
-        "optional": true,
-        "readonly": false,
-        "type": "RipplePassThroughOptions",
-        "default": "null",
-        "description": "Uses to pass attributes to DOM elements inside the component."
-      },
-      {
-        "name": "ptOptions",
-        "optional": true,
-        "readonly": false,
-        "type": "RipplePassThroughMethodOptions",
-        "default": "null",
-        "description": "Used to configure passthrough(pt) options of the component."
-      },
-      {
-        "name": "style",
-        "optional": true,
-        "readonly": false,
-        "type": "string | CssObject | null",
-        "default": "null",
-        "description": "Style to add to root element."
-      },
-      {
-        "name": "unstyled",
-        "optional": true,
-        "readonly": false,
-        "type": "boolean",
-        "default": "false",
-        "description": "When enabled, it removes component related styles in the core."
-      }
-    ]
-  },
-  "callbacks": {
-    "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
-    "values": []
-  },
-  "ptMethodOptions": {
-    "description": "Custom passthrough(pt) option method.",
-    "relatedProp": "",
-    "callbacks": [],
-    "values": [
-      {
-        "name": "props",
-        "optional": false,
-        "readonly": false,
-        "type": "RippleProps"
-      }
-    ]
-  },
-  "ptOptions": {
-    "description": "Custom passthrough(pt) options.",
-    "relatedProp": "pt",
-    "callbacks": [],
-    "values": [
-      {
-        "name": "root",
-        "optional": true,
-        "readonly": false,
-        "type": "Div",
-        "description": "Uses to pass attributes to the root's DOM element."
-      }
-    ]
-  },
-  "meta": {
-    "RootType": "Div",
-    "omitAttributes": "'style'",
-    "icon": false,
-    "tooltip": false,
-    "svelteComponent": false
-  },
-  "types": {
-    "description": "Defines types used by properties of the Ripple component.",
-    "values": []
-  }
+    "id": "ripple",
+    "label": "Ripple",
+    "description": "Ripple component adds ripple effect to the host element.",
+    "methods": {
+        "label": "Methods",
+        "shortLabel": "Methods",
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": []
+    },
+    "props": {
+        "label": "RippleProps",
+        "shortLabel": "Props",
+        "description": "Defines valid properties in Ripple component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "RipplePassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "RipplePassThroughMethodOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ]
+    },
+    "callbacks": {
+        "label": "Callbacks",
+        "shortLabel": "Callbacks",
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": []
+    },
+    "ptMethodOptions": {
+        "label": "RipplePassThroughMethodOptions",
+        "shortLabel": "PtMethodOptions",
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "RippleProps"
+            }
+        ]
+    },
+    "ptContext": {
+        "label": "RippleContext",
+        "shortLabel": "Context",
+        "values": []
+    },
+    "ptOptions": {
+        "label": "RipplePassThroughOptions",
+        "shortLabel": "PtOptions",
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            }
+        ]
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Defines types used by properties of the Ripple component.",
+        "values": []
+    }
 }

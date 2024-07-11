@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { DocSection, ApiTableInfo, DataItem, DocApiData } from './doc.types'
+    import type { DocSection, ApiTableInfo, DocApiData } from './doc.types'
     import { setContext } from 'svelte'
     import { isNotEmpty } from '@jazzsvelte/object'
     import DocSectionText from './DocSectionText.svelte'

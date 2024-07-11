@@ -1,24 +1,26 @@
 <script lang="ts">
+    import { apiDataToDocs } from '$lib/doc/common/doc.utils'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
 
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
 
-    import AccessibilityDoc from '$lib/doc/inputtext/AccessibilityDoc.svelte'
-    import BasicDoc from '$lib/doc/inputtext/BasicDoc.svelte'
-    import DisabledDoc from '$lib/doc/inputtext/DisabledDoc.svelte'
-    import FloatlabelDoc from '$lib/doc/inputtext/FloatlabelDoc.svelte'
-//    import FormikDoc from '$lib/doc/inputtext/form/FormikDoc.svelte'
-    //import HookformDoc from '$lib/doc/inputtext/form/HookformDoc.svelte'
-    import HelptextDoc from '$lib/doc/inputtext/HelptextDoc.svelte'
-    import IconsDoc from '$lib/doc/inputtext/IconsDoc.svelte'
-    import ImportDoc from '$lib/doc/inputtext/ImportDoc.svelte'
-    import InvalidDoc from '$lib/doc/inputtext/InvalidDoc.svelte'
-    import KeyfilterDoc from '$lib/doc/inputtext/KeyfilterDoc.svelte'
-    import PtDoc from '$lib/doc/inputtext/pt/PtDoc.svelte'
-    import Wireframe from '$lib/doc/inputtext/pt/Wireframe.svelte'
-    import SizesDoc from '$lib/doc/inputtext/SizesDoc.svelte'
-    import StyledDoc from '$lib/doc/inputtext/theming/StyledDoc.svelte'
-    import TailwindDoc from '$lib/doc/inputtext/theming/TailwindDoc.svelte'
+    import AccessibilityDoc from '$lib/doc/inputText/AccessibilityDoc.svelte'
+    import BasicDoc from '$lib/doc/inputText/BasicDoc.svelte'
+    import DisabledDoc from '$lib/doc/inputText/DisabledDoc.svelte'
+    import FloatlabelDoc from '$lib/doc/inputText/FloatlabelDoc.svelte'
+    //    import FormikDoc from '$lib/doc/inputText/form/FormikDoc.svelte'
+    //import HookformDoc from '$lib/doc/inputText/form/HookformDoc.svelte'
+    import HelptextDoc from '$lib/doc/inputText/HelptextDoc.svelte'
+    import IconsDoc from '$lib/doc/inputText/IconsDoc.svelte'
+    import ImportDoc from '$lib/doc/inputText/ImportDoc.svelte'
+    import InvalidDoc from '$lib/doc/inputText/InvalidDoc.svelte'
+    import KeyfilterDoc from '$lib/doc/inputText/KeyfilterDoc.svelte'
+    import PtDoc from '$lib/doc/inputText/pt/PtDoc.svelte'
+    import Wireframe from '$lib/doc/inputText/pt/Wireframe.svelte'
+    import SizesDoc from '$lib/doc/inputText/SizesDoc.svelte'
+    import StyledDoc from '$lib/doc/inputText/theming/StyledDoc.svelte'
+    import TailwindDoc from '$lib/doc/inputText/theming/TailwindDoc.svelte'
+    import { inputTextApiData } from '@jazzsvelte/input_text'
 
     const docs = [
         {
@@ -134,7 +136,7 @@
     header="InputText"
     description="InputText is an extension to standard input element with theming and keyfiltering."
     componentDocs={docs}
-    apiDocs={['InputText']}
+    apiDocs={[apiDataToDocs(inputTextApiData)]}
     {ptDocs}
     {themingDocs}
 />

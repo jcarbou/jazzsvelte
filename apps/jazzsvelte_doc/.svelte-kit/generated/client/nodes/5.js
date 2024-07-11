@@ -1,3 +1,3 @@
-import * as universal from "../../../../src/routes/inputtext/+page.ts";
+import * as universal from "../../../../src/routes/buttongroup/+page.ts";
 export { universal };
-export { default as component } from "../../../../src/routes/inputtext/+page.svelte";
+export { default as component } from "../../../../src/routes/buttongroup/+page.svelte";

@@ -18,7 +18,7 @@
     const { ripple: hasRipple } = JAZZ_SVELTE
 
     $: ptContext = {
-        props: $$props,
+        props: { ...DEFAULT, ...$$props },
         ptOptions,
         unstyled
     } satisfies RipplePassThroughMethodOptions & {

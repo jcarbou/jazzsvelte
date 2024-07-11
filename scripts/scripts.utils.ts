@@ -118,13 +118,6 @@ export function readApiDoc(apiPath: string): CmpApiDoc {
             }, new Set())
         ).map((type) => ({ name: type }))
     }
-    apiDoc.props.values.forEach((propValue) => {
-        propValue.codeType = propValue.type
-        apiDoc.types.values.forEach((typeValue) => {
-            propValue.type = propValue.type.replace('${' + typeValue.name + '}', typeValue.value)
-            propValue.codeType = propValue.codeType.replace('${' + typeValue.name + '}', typeValue.name)
-        })
-    })
 
     return apiDoc
 }

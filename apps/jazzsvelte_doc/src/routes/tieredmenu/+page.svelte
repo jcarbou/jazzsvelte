@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { apiDataToDocs } from '$lib/doc/common/doc.utils'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import AccessibilityDoc from '$lib/doc/tieredMenu/AccessibilityDoc.svelte'
@@ -11,6 +12,7 @@
     import TemplateDoc from '$lib/doc/tieredMenu/TemplateDoc.svelte'
     import StyledDoc from '$lib/doc/tieredMenu/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/tieredMenu/theming/TailwindDoc.svelte'
+    import { tieredMenuApiData } from '@jazzsvelte/tiered_menu'
 
     const docs = [
         {
@@ -88,7 +90,7 @@
     header="TieredMenu"
     description="TieredMenu displays submenus in nested overlays."
     componentDocs={docs}
-    apiDocs={['TieredMenu', 'MenuItem']}
+    apiDocs={[apiDataToDocs(tieredMenuApiData)]}
     {ptDocs}
     {themingDocs}
 />;

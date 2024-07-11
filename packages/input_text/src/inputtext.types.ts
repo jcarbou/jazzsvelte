@@ -77,6 +77,11 @@ export interface BaseInputTextProps {
      * @defaultValue false
      */
     unstyled?: boolean
+    /**
+     * Specify the variant property as filled to display the component with a higher visual emphasis than the default outlined style.
+     * @defaultValue null
+     */
+    variant?: string | null
 }
 
 /**

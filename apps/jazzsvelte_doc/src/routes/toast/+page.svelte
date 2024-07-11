@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { apiDataToDocs } from '$lib/doc/common/doc.utils'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import AccessibilityDoc from '$lib/doc/toast/AccessibilityDoc.svelte'
@@ -14,6 +15,7 @@
     import TemplateDoc from '$lib/doc/toast/TemplateDoc.svelte'
     import StyledDoc from '$lib/doc/toast/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/toast/theming/TailwindDoc.svelte'
+    import { toastApiData } from '@jazzsvelte/toast'
 
     const docs = [
         {
@@ -106,7 +108,7 @@
     header="Toast"
     description="Toast is used to display messages in an overlay."
     componentDocs={docs}
-    apiDocs={['Toast']}
+    apiDocs={[apiDataToDocs(toastApiData)]}
     {ptDocs}
     {themingDocs}
 />;

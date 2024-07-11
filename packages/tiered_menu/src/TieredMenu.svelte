@@ -87,7 +87,7 @@
     const id = uniqueId('tieredMenu_')
 
     $: ptContext = {
-        props: $$props,
+        props: { ...DEFAULT, ...$$props },
         context: {
             active: false
         },

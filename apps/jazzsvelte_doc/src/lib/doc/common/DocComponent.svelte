@@ -1,7 +1,7 @@
 <script lang="ts">
     import { setContext } from 'svelte'
-    import type { Doc } from './doc.types'
-    import { buildApiDocs } from './docApiData'
+    import type { LinkTargets, ApiDocs, Doc } from './doc.types'
+    import { buildApiDocs } from './oldDocApiData'
     import DocApiSection from './DocApiSection.svelte'
     import DocSectionNav from './DocSectionNav.svelte'
     import DocSections from './DocSections.svelte'
@@ -12,8 +12,9 @@
     export let hideTabMenu: boolean = false
     export let header: string
     export let themingDocs: Doc[] = []
-    let apiDocNames: string[]
-    export { apiDocNames as apiDocs }
+    let oldApiDocNames: string[] | null = null
+    export { oldApiDocNames as oldApiDocs }
+    export let apiDocs: ApiDocs[] | null = null
     export let apiExclude: { [key: string]: string } | null = null
     export let ptDescription: string | null = null
     export let ptDocs: Doc[] | null = null
@@ -21,7 +22,7 @@
 
     let tab: number = 0
     let mainTitle = ''
-    let apiDocs: Doc[] | undefined
+    let _apiDocs: Doc[] | undefined
 
     const activateTab = (i: number) => {
         tab = i
@@ -34,9 +35,18 @@
     }
 
     $: {
-        if (apiDocNames) {
-            apiDocs = buildApiDocs(apiDocNames, apiExclude)
-            setContext('apiDocs', apiDocs)
+        if (apiDocs) {
+            _apiDocs = apiDocs.map((apiDoc) => apiDoc.doc)
+            setContext<Doc[]>('apiDocs', _apiDocs)
+            setContext<LinkTargets>(
+                'apiDocsLinkTargets',
+                apiDocs.reduce((targets, apiDoc) => ({ ...targets, ...apiDoc.linkTargets }), {})
+            )
+        }
+        if (oldApiDocNames) {
+            _apiDocs = buildApiDocs(oldApiDocNames, apiExclude)
+            setContext('apiDocs', _apiDocs)
+            setContext<LinkTargets>('apiDocsLinkTargets', {})
         }
     }
 </script>
@@ -83,8 +93,8 @@
             </div>
         {:else if tab === 1}
             <div class="doc-tabpanel">
-                {#if apiDocs}
-                    <DocApiSection {header} docs={apiDocs} />
+                {#if _apiDocs}
+                    <DocApiSection {header} docs={_apiDocs} />
                 {:else}
                     <div class="doc-main">
                         <div class="doc-intro">

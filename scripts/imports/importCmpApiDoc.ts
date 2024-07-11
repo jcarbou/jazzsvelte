@@ -10,18 +10,22 @@ type DocItem = {
     description?: string
 }
 
+type DocEntity = {
+    label?: string
+    shortLabel?: string
+    description?: string
+    values?: DocItem[]
+    props?: DocItem[]
+}
+
 type NewApiDoc = {
-    props: {
-        values: DocItem[]
-    }
-    ptMethodOptions: {
-        values?: DocItem[]
-        props?: DocItem[]
-    }
-    ptOptions: {
-        values?: DocItem[]
-        props?: DocItem[]
-    }
+    id: string
+    label: string
+    description: string
+    props: DocEntity
+    methods: DocEntity
+    ptMethodOptions: DocEntity
+    ptOptions: DocEntity
     meta: {
         RootType: string
         omitAttributes: string
@@ -29,18 +33,9 @@ type NewApiDoc = {
         tooltip: boolean
         svelteComponent: boolean
     }
-    types: {
-        description: string
-        values: DocItem[]
-    }
-    ptContext?: {
-        values?: DocItem[]
-        props?: DocItem[]
-    }
-    state?: {
-        values?: DocItem[]
-        props?: DocItem[]
-    }
+    types: DocEntity
+    ptContext?: DocEntity
+    state?: DocEntity
 }
 
 type OldApiDoc = {
@@ -51,7 +46,7 @@ type OldApiDoc = {
 }
 
 export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
-    const { cmpname, CmpName, cmpSrcPath, apiPath, prApiDocPath } = context
+    const { cmpname, CmpName, cmpName, cmpSrcPath, apiPath, prApiDocPath } = context
 
     if (!fileExist(prApiDocPath)) {
         console.log(`File ${prApiDocPath} doen't exist !`)
@@ -63,6 +58,9 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
     const newCmpApiDoc = cmpApiDoc.components[CmpName]
     let filePath = apiPath
 
+    newCmpApiDoc.id = cmpName
+    newCmpApiDoc.label = CmpName
+
     if (options.test) {
         filePath += '.test.' + apiPath.split('.').slice(-1)
     } else if (!options.override && fileExist(filePath)) {
@@ -70,7 +68,7 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
         return
     }
 
-    newCmpApiDoc.props.values.forEach((item: DocItem) => {
+    newCmpApiDoc.props.values?.forEach((item: DocItem) => {
         const { type, optional } = item
         if (optional) {
             switch (type) {
@@ -93,16 +91,26 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
         }
         if (type.indexOf('IconType') === 0) {
             item.type = 'string | IconComponent' + (optional ? ' | null' : '')
+            item.description = item.description?.replace('JSX.Element', 'IconComponent')
         }
     })
+    newCmpApiDoc.props.label = `${CmpName}Props`
+    newCmpApiDoc.props.shortLabel = `Props`
+
+    newCmpApiDoc.methods.label = `Methods`
+    newCmpApiDoc.methods.shortLabel = `Methods`
 
     newCmpApiDoc.ptMethodOptions = cmpApiDoc.interfaces.values[`${CmpName}PassThroughMethodOptions`]
     newCmpApiDoc.ptMethodOptions.values = newCmpApiDoc.ptMethodOptions.props
     delete newCmpApiDoc.ptMethodOptions.props
+    newCmpApiDoc.ptMethodOptions.label = `${CmpName}PassThroughMethodOptions`
+    newCmpApiDoc.ptMethodOptions.shortLabel = `${CmpName}PtMethodOptions`
 
     newCmpApiDoc.ptOptions = cmpApiDoc.interfaces.values[`${CmpName}PassThroughOptions`]
     newCmpApiDoc.ptOptions.values = newCmpApiDoc.ptOptions.props
     delete newCmpApiDoc.ptOptions.props
+    newCmpApiDoc.ptOptions.label = `${CmpName}PassThroughOptions`
+    newCmpApiDoc.ptOptions.shortLabel = `${CmpName}PtOptions`
 
     if (newCmpApiDoc.ptOptions.values) {
         newCmpApiDoc.ptOptions.values.forEach((item) => {
@@ -126,13 +134,15 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
     newCmpApiDoc.meta = {
         RootType: newCmpApiDoc.ptOptions?.values?.find((item) => item.name === 'root')?.type || 'div',
         omitAttributes: "'style'",
-        icon: !!newCmpApiDoc.props.values.find(({ type }) => type.includes('IconComponent')),
-        tooltip: !!newCmpApiDoc.props.values.find(({ name }) => name.includes('Tooltip')),
-        svelteComponent: !!newCmpApiDoc.props.values.find(({ type }) => type === 'typeof SvelteComponent | null')
+        icon: !!newCmpApiDoc.props.values?.find(({ type }) => type.includes('IconComponent')),
+        tooltip: !!newCmpApiDoc.props.values?.find(({ name }) => name.includes('Tooltip')),
+        svelteComponent: !!newCmpApiDoc.props.values?.find(({ type }) => type === 'typeof SvelteComponent | null')
     }
 
     newCmpApiDoc.types = {
-        description: `Defines types used by properties of the ${CmpName} component.`,
+        label: 'Props types',
+        shortLabel: 'Props types',
+        description: `Types used by properties of the ${CmpName} component.`,
         values: []
     }
 
@@ -140,16 +150,20 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
     if (newCmpApiDoc.ptContext) {
         newCmpApiDoc.ptContext.values = newCmpApiDoc.ptContext.props
         delete newCmpApiDoc.ptContext.props
+        newCmpApiDoc.ptOptions.label = `${CmpName}Context`
+        newCmpApiDoc.ptOptions.shortLabel = `Context`
     }
 
     newCmpApiDoc.state = cmpApiDoc.interfaces.values[`${CmpName}State`]
     if (newCmpApiDoc.state) {
         newCmpApiDoc.state.values = newCmpApiDoc.state.props
         delete newCmpApiDoc.state.props
+        newCmpApiDoc.state.label = `${CmpName}State`
+        newCmpApiDoc.state.shortLabel = `Context`
     }
 
-    if (!newCmpApiDoc.props.values.find(({ name }) => name === 'style')) {
-        newCmpApiDoc.props.values.push({
+    if (!newCmpApiDoc.props.values?.find(({ name }) => name === 'style')) {
+        newCmpApiDoc.props.values?.push({
             name: 'style',
             optional: true,
             readonly: false,
@@ -159,8 +173,8 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
         })
     }
 
-    if (!newCmpApiDoc.props.values.find(({ name }) => name === 'class')) {
-        newCmpApiDoc.props.values.push({
+    if (!newCmpApiDoc.props.values?.find(({ name }) => name === 'class')) {
+        newCmpApiDoc.props.values?.push({
             name: 'class',
             optional: true,
             readonly: false,
@@ -170,11 +184,11 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
         })
     }
 
-    newCmpApiDoc.props.values = newCmpApiDoc.props.values.filter(({ name }) => {
+    newCmpApiDoc.props.values = newCmpApiDoc.props.values?.filter(({ name }) => {
         return name !== 'children'
     })
 
-    newCmpApiDoc.props.values.sort((a, b) => a.name.localeCompare(b.name))
+    newCmpApiDoc.props.values?.sort((a, b) => a.name.localeCompare(b.name))
 
     mkDir(cmpSrcPath)
     writeText(filePath, JSON.stringify(newCmpApiDoc, null, 2))

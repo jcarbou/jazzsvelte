@@ -72,7 +72,7 @@
     let focusedOptionIndex = -1
 
     $: ptContext = {
-        props: $$props,
+        props: { ...DEFAULT, ...$$props },
         state: {
             visible
         },

@@ -1,27 +1,18 @@
 {
+    "id": "badge",
+    "label": "Badge",
     "description": "Badge represents people using icons, labels and images.",
     "methods": {
+        "label": "Methods",
+        "shortLabel": "Methods",
         "description": "Defines methods that can be accessed by the component's reference.",
-        "values": [
-            {
-                "name": "getElement",
-                "parameters": [],
-                "returnType": "HTMLSpanElement",
-                "description": "Used to get container element."
-            }
-        ]
+        "values": []
     },
     "props": {
+        "label": "BadgeProps",
+        "shortLabel": "Props",
         "description": "Defines valid properties in Badge component. In addition to these, all properties of HTMLSpanElement can be used in this component.",
         "values": [
-            {
-                "name": "children",
-                "optional": true,
-                "readonly": true,
-                "type": "ReactNode",
-                "default": "null",
-                "description": "Used to get the child elements of the component."
-            },
             {
                 "name": "class",
                 "optional": true,
@@ -50,7 +41,7 @@
                 "name": "severity",
                 "optional": true,
                 "readonly": false,
-                "type": "${BadgeSeverity} | null",
+                "type": "BadgeSeverity | null",
                 "default": "null",
                 "description": "Severity type of the badge."
             },
@@ -58,7 +49,7 @@
                 "name": "size",
                 "optional": true,
                 "readonly": false,
-                "type": "${BadgeSeverity} | null",
+                "type": "BadgeSeverity | null",
                 "default": "null",
                 "description": "Size of the badge, valid options are \"large\" and \"xlarge\"."
             },
@@ -89,10 +80,14 @@
         ]
     },
     "callbacks": {
+        "label": "Callbacks",
+        "shortLabel": "Callbacks",
         "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
         "values": []
     },
     "ptMethodOptions": {
+        "label": "BadgePassThroughMethodOptions",
+        "shortLabel": "PtMethodOptions",
         "description": "Custom passthrough(pt) option method.",
         "relatedProp": "",
         "callbacks": [],
@@ -105,7 +100,14 @@
             }
         ]
     },
+    "ptContext": {
+        "label": "BadgeContext",
+        "shortLabel": "Context",
+        "values": []
+    },
     "ptOptions": {
+        "label": "BadgePassThroughOptions",
+        "shortLabel": "PtOptions",
         "description": "Custom passthrough(pt) options.",
         "relatedProp": "pt",
         "callbacks": [],
@@ -127,7 +129,9 @@
         "svelteComponent": false
     },
     "types": {
-        "description": "Defines types used by properties of the Badge component.",
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the Badge component.",
         "values": [
             { "name": "BadgeSeverity", "value": "'success' | 'info' | 'warning' | 'danger'" },
             { "name": "BadgeSize", "value": "'normal' | 'medium' | 'large' | 'xlarge'" }

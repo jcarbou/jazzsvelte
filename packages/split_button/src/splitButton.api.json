@@ -1,6 +1,10 @@
 {
+    "id": "splitButton",
+    "label": "SplitButton",
     "description": "SplitButton groups a set of commands in an overlay with a default command.",
     "methods": {
+        "label": "Methods",
+        "shortLabel": "Methods",
         "description": "Defines methods that can be accessed by the component's reference.",
         "values": [
             {
@@ -24,6 +28,8 @@
         ]
     },
     "props": {
+        "label": "SplitButtonProps",
+        "shortLabel": "Props",
         "description": "Defines valid properties in SplitButton component. In addition to these, all properties of HTMLDivElement can be used in this component.",
         "values": [
             {
@@ -237,6 +243,8 @@
         ]
     },
     "callbacks": {
+        "label": "Callbacks",
+        "shortLabel": "Callbacks",
         "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
         "values": [
             {
@@ -267,6 +275,8 @@
         ]
     },
     "ptMethodOptions": {
+        "label": "SplitButtonPassThroughMethodOptions",
+        "shortLabel": "PtMethodOptions",
         "description": "Custom passthrough(pt) option method.",
         "relatedProp": "",
         "callbacks": [],
@@ -279,7 +289,14 @@
             }
         ]
     },
+    "ptContext": {
+        "label": "SpliButtonContext",
+        "shortLabel": "Context",
+        "values": []
+    },
     "ptOptions": {
+        "label": "SplitButtonPassThroughOptions",
+        "shortLabel": "PtOptions",
         "description": "Custom passthrough(pt) options.",
         "relatedProp": "pt",
         "callbacks": [],
@@ -392,6 +409,8 @@
         "svelteComponent": false
     },
     "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
         "description": "Defines types used by properties of the SplitButton component.",
         "values": [{ "name": "SplitButtonSize", "value": "'small' | 'normal' | 'large'" }]
     },

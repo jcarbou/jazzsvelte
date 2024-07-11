@@ -64,7 +64,7 @@
     const menuId: string = uniqueId('splitButton_menuButton_')
 
     $: ptContext = {
-        props: $$props,
+        props: { ...DEFAULT, ...$$props },
         //context: {},
         ptOptions,
         unstyled

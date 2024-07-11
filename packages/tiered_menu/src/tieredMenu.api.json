@@ -1,6 +1,10 @@
 {
+    "id": "tieredMenu",
+    "label": "TieredMenu",
     "description": "TieredMenu is an input component that provides real-time suggestions when being typed.",
     "methods": {
+        "label": "Methods",
+        "shortLabel": "Methods",
         "description": "Defines methods that can be accessed by the component's reference.",
         "values": [
             {
@@ -24,6 +28,8 @@
         ]
     },
     "props": {
+        "label": "TierredMenuProps",
+        "shortLabel": "Props",
         "description": "Defines valid properties in TieredMenu component. In addition to these, all properties of HTMLDivElement can be used in this component.",
         "values": [
             {
@@ -141,6 +147,8 @@
         ]
     },
     "callbacks": {
+        "label": "Callbacks",
+        "shortLabel": "Callbacks",
         "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
         "values": [
             {
@@ -198,6 +206,8 @@
         ]
     },
     "ptMethodOptions": {
+        "label": "TieredMenuPassThroughMethodOptions",
+        "shortLabel": "PtMethodOptions",
         "description": "Custom passthrough(pt) option method.",
         "relatedProp": "",
         "callbacks": [],
@@ -223,6 +233,8 @@
         ]
     },
     "ptOptions": {
+        "label": "TieredMenuPassThroughOptions",
+        "shortLabel": "PtOptions",
         "description": "Custom passthrough(pt) options.",
         "relatedProp": "pt",
         "callbacks": [],
@@ -314,10 +326,14 @@
         "svelteComponent": false
     },
     "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
         "description": "Defines types used by properties of the TieredMenu component.",
         "values": []
     },
     "ptContext": {
+        "label": "TieredMenuContext",
+        "shortLabel": "Context",
         "description": "Defines current options in TieredMenu component.",
         "relatedProp": "",
         "callbacks": [],

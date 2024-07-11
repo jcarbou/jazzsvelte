@@ -11,23 +11,26 @@
     import { defaultInputTextProps as DEFAULT, globalInputTextPT as globalPt } from './inputText.config'
     import { focusEl } from '../../dom/src'
 
+    let className: string | null = null
+    export { className as class }
     export let disabled: boolean = DEFAULT.disabled
     let keyFilterType: KeyFilterRegExp | null = DEFAULT.keyFilter
     export { keyFilterType as keyFilter }
+    // TODO
+    export let invalid: boolean = DEFAULT.invalid
+    export let pt: InputTextPassThroughOptions | null = null
+    export let ptOptions: PassThroughOptions | null = null
+    export let style: CssStyle = null
+    export let size: number | null = DEFAULT.size
     let tooltipContent: string | null = DEFAULT.tooltip
     export { tooltipContent as tooltip }
     export let tooltipOptions: TooltipOptions | null = DEFAULT.tooltipOptions
+    export let unstyled: boolean = false
     export let validateOnly: boolean = DEFAULT.validateOnly
     export let value: string = DEFAULT.value
-    export let pt: InputTextPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let unstyled: boolean = false
-    let className: string | null = null
-    export { className as class }
-    export let style: CssStyle = null
-    export let size: number | null = DEFAULT.size
     // TODO
-    export let invalid: boolean = DEFAULT.invalid
+    export let variant: string | null = DEFAULT.variant
+
     export const displayName = 'InptText'
     export const focus = (scrollTo?: boolean) => {
         focusEl(inputEl, scrollTo)
@@ -39,7 +42,7 @@
     let inputEl: HTMLInputElement
 
     $: ptContext = {
-        props: $$props,
+        props: { ...DEFAULT, ...$$props },
         context: { disabled },
         ptOptions,
         unstyled

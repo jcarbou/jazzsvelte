@@ -12,19 +12,20 @@
     import { isEmpty, isNotEmpty } from '@jazzsvelte/object'
     import { defaultBadgeProps as DEFAULT, globalBadgePT as globalPt } from './badge.config'
 
-    export let value: BadgeValue = DEFAULT.value
-    export let severity: BadgeSeverity | null = DEFAULT.severity
-    export let size: BadgeSize | null = DEFAULT.size
-    export let pt: BadgePassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let unstyled: boolean = DEFAULT.unstyled
-    export let style: CssStyle = DEFAULT.style
     let className: string | null = DEFAULT.class
     export { className as class }
+    export let pt: BadgePassThroughOptions | null = null
+    export let ptOptions: PassThroughOptions | null = null
+    export let severity: BadgeSeverity | null = DEFAULT.severity
+    export let size: BadgeSize | null = DEFAULT.size
+    export let style: CssStyle = DEFAULT.style
+    export let unstyled: boolean = DEFAULT.unstyled
+    export let value: BadgeValue = DEFAULT.value
+
     export const displayName = 'Badge'
 
     $: ptContext = {
-        props: $$props,
+        props: { ...DEFAULT, ...$$props },
         ptOptions,
         unstyled
     } satisfies BadgePassThroughMethodOptions & {

@@ -5,6 +5,9 @@
 	"/badge": [
 		"src/routes/badge/+page.ts"
 	],
+	"/buttongroup": [
+		"src/routes/buttongroup/+page.ts"
+	],
 	"/button": [
 		"src/routes/button/+page.ts"
 	],

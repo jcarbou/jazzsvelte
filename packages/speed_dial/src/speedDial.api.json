@@ -1,6 +1,10 @@
 {
+    "id": "speedDial",
+    "label": "SpeedDial",
     "description": "When pressed, a floating action button can display multiple primary actions that can be performed on a page.",
     "methods": {
+        "label": "Methods",
+        "shortLabel": "Methods",
         "description": "Defines methods that can be accessed by the component's reference.",
         "values": [
             {
@@ -24,6 +28,8 @@
         ]
     },
     "props": {
+        "label": "SpeedDialProps",
+        "shortLabel": "Props",
         "description": "Defines valid properties in SpeedDial component. In addition to these, all properties of HTMLDivElement can be used in this component.",
         "values": [
             {
@@ -54,7 +60,7 @@
                 "name": "direction",
                 "optional": true,
                 "readonly": false,
-                "type": "${SpeedDialDirection} | null",
+                "type": "SpeedDialDirection | null",
                 "default": "'up'",
                 "description": "Specifies the opening direction of actions. Valid values are 'up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left' and 'down-right'"
             },
@@ -182,7 +188,7 @@
                 "name": "type",
                 "optional": true,
                 "readonly": false,
-                "type": "${SpeedDialType}",
+                "type": "SpeedDialType",
                 "default": "'linear'",
                 "description": "Specifies the opening type of actions."
             },
@@ -205,6 +211,8 @@
         ]
     },
     "callbacks": {
+        "label": "Callbacks",
+        "shortLabel": "Callbacks",
         "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
         "values": [
             {
@@ -248,6 +256,8 @@
         ]
     },
     "ptMethodOptions": {
+        "label": "SpeedDialPassThroughMethodOptions",
+        "shortLabel": "PtMethodOptions",
         "description": "Custom passthrough(pt) option method.",
         "relatedProp": "",
         "callbacks": [],
@@ -266,7 +276,14 @@
             }
         ]
     },
+    "ptContext": {
+        "label": "SpeedDialContext",
+        "shortLabel": "Context",
+        "values": []
+    },
     "ptOptions": {
+        "label": "SpeedDialPassThroughOptions",
+        "shortLabel": "PtOptions",
         "description": "Custom passthrough(pt) options.",
         "relatedProp": "pt",
         "callbacks": [],
@@ -336,6 +353,8 @@
         "svelteComponent": true
     },
     "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
         "description": "Defines types used by properties of the SpeedDial component.",
         "values": [
             {

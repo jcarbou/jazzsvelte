@@ -147,6 +147,10 @@
                             "to": "/button"
                         },
                         {
+                            "name": "ButtonGroup",
+                            "to": "/buttongroup"
+                        },
+                        {
                             "name": "Speed Dial",
                             "to": "/speeddial"
                         },
