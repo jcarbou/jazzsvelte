@@ -23,6 +23,11 @@
 
     export const displayName = 'ButtonGroup'
 
+    export function getElement(): HTMLSpanElement {
+        return rootEl
+    }
+    let rootEl: HTMLSpanElement
+
     $: ptContext = {
         props: { ...DEFAULT, ...$$props },
         context: { disabled },
@@ -60,7 +65,7 @@
 </script>
 
 {#if visible}
-    <span {...rootAttributes} {...$$restProps}>
+    <span bind:this={rootEl} {...rootAttributes} {...$$restProps}>
         <slot />
     </span>
 {/if}

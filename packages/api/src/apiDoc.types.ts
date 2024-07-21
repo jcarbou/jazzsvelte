@@ -32,6 +32,8 @@ export type ApiDocDataEntities = {
     ptOptions?: ApiDocEntity
     ptMethodOptions?: ApiDocEntity
     callbacks?: ApiDocEntity
+    events?: ApiDocEntity
+    state?: ApiDocEntity
 }
 
 export type ApiDocDataEntityKeys = keyof ApiDocDataEntities

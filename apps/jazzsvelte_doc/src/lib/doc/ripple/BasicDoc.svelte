@@ -4,6 +4,7 @@
     import { Ripple } from '@jazzsvelte/ripple'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
@@ -15,32 +16,24 @@
 </div>
         `,
         javascript: `
-import React from 'react';
-import { Ripple } from 'primereact/ripple';
+${importJS('Ripple')}
 
-
-        <div class="card flex justify-content-center align-items-center">
-            <div class="bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold p-ripple">
-                Click Me
-                <Ripple />
-            </div>
-        </div>
-
-
+<div class="card flex justify-content-center align-items-center">
+    <div class="bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold p-ripple">
+        Click Me
+        <Ripple />
+    </div>
+</div>
         `,
         typescript: `
-import React from 'react';
-import { Ripple } from 'primereact/ripple';
+${importTS('Ripple')}
 
-
-        <div class="card flex justify-content-center align-items-center">
-            <div class="bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold p-ripple">
-                Click Me
-                <Ripple />
-            </div>
-        </div>
-
-
+<div class="card flex justify-content-center align-items-center">
+    <div class="bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold p-ripple">
+        Click Me
+        <Ripple />
+    </div>
+</div>
         `
     }
 </script>

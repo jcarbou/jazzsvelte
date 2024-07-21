@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importJS, importObject, importTS } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
 
@@ -9,7 +9,7 @@
 
     const code = {
         basic: `
-
+ ${importObject('showToast', 'toast')}
         `
     }
 </script>

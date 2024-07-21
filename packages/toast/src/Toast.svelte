@@ -2,7 +2,7 @@
     import type { JazzSvelteContext, CssStyle, HTMLDivAttributes, PassThroughOptions } from '@jazzsvelte/api'
     import type { ToastPassThroughMethodOptions, ToastPassThroughOptions, ToastPosition } from './toast.types'
 
-    import { SvelteComponent, getContext } from 'svelte'
+    import { getContext } from 'svelte'
     import { mergeCssStsyles, resolvePT, zIndex } from '@jazzsvelte/api'
     import ToastMessage from './ToastMessage.svelte'
     import { toastMessages } from './toast.store'
@@ -13,7 +13,6 @@
     export let position: ToastPosition | null = DEFAULT.position
     let className: string | null = DEFAULT.class
     export { className as class }
-    export let content: typeof SvelteComponent | null = DEFAULT.content
     export let pt: Omit<ToastPassThroughOptions, 'message'> | null = null
     export let ptOptions: PassThroughOptions | null = null
     export let unstyled: boolean = DEFAULT.unstyled
@@ -76,8 +75,8 @@
 <div {...rootAttributes} use:zIndex={{ key: 'toast', jazzSvelteContext }}>
     {#each $toastMessages.filter((m) => m.toastId === id) as toastMessage (toastMessage.id)}
         <div in:fly={{ y: 100, duration: 650 }} out:fade={{ duration: 300 }}>
-            {#if content}
-                <svelte:component this={content} {...$$props} />
+            {#if toastMessage.customMessage}
+                <svelte:component this={toastMessage.customMessage} {...toastMessage} {...toastMessage.customProps} />
             {:else}
                 <ToastMessage {...toastMessage} />
             {/if}

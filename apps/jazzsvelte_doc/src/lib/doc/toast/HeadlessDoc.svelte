@@ -3,33 +3,37 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-    import { Toast } from '@jazzsvelte/toast'
+    import { Toast, type ToastMessageStatus } from '@jazzsvelte/toast'
     //import ProgressBar from '$lib/components/progressbar/ProgressBar.svelte'
     import type { DocSection } from '$lib/doc/common/doc.types'
     import { closeToast, showToast } from '@jazzsvelte/toast'
     import { writable, type Writable } from 'svelte/store'
-    import HeadlessToast from './HeadlessToast.svelte'
+    import HeadlessToast from './HeadlessToastMessage.svelte'
+    import HeadlessToastMessage from './HeadlessToastMessage.svelte'
 
     export let docSection: DocSection
 
     const progress: Writable<number> = writable(0)
     let interval: ReturnType<typeof setInterval> | null = null
-    let toastId: string | null = null
+    let toastMessage: ToastMessageStatus | null = null
 
     function clear() {
         $progress = 0
-        toastId && closeToast(toastId)
+        toastMessage && closeToast(toastMessage)
         interval && clearInterval(interval)
         interval = null
     }
 
     function show() {
         if (!interval) {
-            toastId = showToast({
+            toastMessage = showToast({
                 toastId: 'headless',
                 summary: 'Uploading your files.',
-                progress,
-                clear
+                customMessage: HeadlessToastMessage,
+                customProps: {
+                    progress,
+                    clear
+                }
             })
 
             $progress = 0
@@ -204,7 +208,6 @@ import { ProgressBar } from 'primereact/progressbar';
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <Toast id="headless" position="top-center" content={HeadlessToast} />
     <Button on:click={show} label="View" />
 </div>
 <DocSectionCode {code} />

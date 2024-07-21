@@ -8,42 +8,50 @@
         PassThroughOptions,
         HTMLSpanAttributes
     } from '@jazzsvelte/api'
-    import type { ToastPassThroughOptions, ToastSeverity } from './toast.types'
-    import type { ToastMessagePassThroughMethodOptions } from './toastMessage.types'
 
+    import type {
+        ToastMessageStatus,
+        ToastSeverity,
+        ToastMessagePassThroughOptions,
+        ToastMessagePassThroughMethodOptions
+    } from './toastMessage.types'
+
+    import { defaultToastMessageProps as DEFAULT, globalToastMessagePT as globalPt } from './toastMessage.config'
     import { SvelteComponent, type ComponentType } from 'svelte'
-    import { JAZZ_SVELTE, resolveIconPT, resolvePT, localeOption } from '@jazzsvelte/api'
+    import { resolveIconPT, resolvePT, localeOption } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
-    import { TimesIcon } from '@jazzsvelte/times_icon'
     import { ripple } from '@jazzsvelte/ripple'
     import { InfoCircleIcon } from '@jazzsvelte/infocircle_icon'
     import { ExclamationTriangleIcon } from '@jazzsvelte/exclamationtriangle_icon'
     import { TimesCircleIcon } from '@jazzsvelte/timescircle_icon'
     import { CheckIcon } from '@jazzsvelte/check_icon'
-    import { clearCloseToastTimer, closeToast } from './toast.store'
-
-    export const displayName = 'ToastMessage'
+    import { closeToast } from './toast.store'
 
     export let id: string
-    export let severity: ToastSeverity | null = null
-    export let summary: string | null = null
-    export let detail: string | null = null
-    export let content: typeof SvelteComponent | null = null
-    export let closable: boolean = true
-    export let icon: string | IconComponent | null = null
-    export let closeIcon: string | IconComponent | null = TimesIcon
-    export let sticky: boolean = false
-    export let onClose: ((id: string) => void) | null = null
-    export let onClick: ((id: string) => void) | null = null
-    export let contentClass: string | null = null
-    export let contentStyle: CssStyle | null = null
-    export let pt: Omit<ToastPassThroughOptions, 'message'> | null = null
+    export let timerId: ReturnType<typeof setTimeout> | null = null
+    export let status: ToastMessageStatus
+    export let severity: ToastSeverity | null = DEFAULT.severity
+    export let summary: string | null = DEFAULT.summary
+    export let detail: string | null = DEFAULT.detail
+    export let customContent: typeof SvelteComponent | null = DEFAULT.customContent
+    export let customProps: Record<string, any> | null = DEFAULT.customProps
+    export let closable: boolean = DEFAULT.closable
+    export let icon: string | IconComponent | null = DEFAULT.icon
+    export let closeIcon: string | IconComponent | null = DEFAULT.closeIcon
+    export let sticky: boolean = DEFAULT.sticky
+    export let onClose: ((id: string) => void) | null = DEFAULT.onClose
+    export let onClick: ((id: string) => void) | null = DEFAULT.onClick
+    export let contentClass: string | null = DEFAULT.contentClass
+    export let contentStyle: CssStyle | null = DEFAULT.contentStyle
+    export let pt: Omit<ToastMessagePassThroughOptions, 'message'> | null = null
     export let ptOptions: PassThroughOptions | null = null
-    let className: string | null = null
+    let className: string | null = DEFAULT.class
     export { className as class }
-    export let ariaCloseLabel: string = localeOption('close')
-    export let unstyled: boolean = false
-    export let style: CssStyle = null
+    export let ariaCloseLabel: string | null = DEFAULT.ariaCloseLabel || null
+    export let unstyled: boolean = DEFAULT.unstyled
+    export let style: CssStyle = DEFAULT.style
+
+    export const displayName = 'ToastMessage'
 
     const icons: { [key: string]: ComponentType } = {
         info: InfoCircleIcon,
@@ -67,7 +75,7 @@
         _icon,
         { class: ['p-toast-message-icon'] },
         pt?.icon,
-        JAZZ_SVELTE.pt?.toast?.icon,
+        globalPt?.icon,
         ptContext
     ) satisfies ResolvedIconPT
 
@@ -78,7 +86,7 @@
             'aria-label': ariaCloseLabel || localeOption('close')
         },
         pt?.closeButton,
-        JAZZ_SVELTE.pt?.toast?.closeButton,
+        globalPt?.closeButton,
         ptContext
     ) satisfies HTMLButtonAttributes
 
@@ -87,7 +95,7 @@
         closeIcon,
         { class: ['p-toast-icon-close-icon'] },
         pt?.closeButtonIcon,
-        JAZZ_SVELTE.pt?.toast?.closeButtonIcon,
+        globalPt?.closeButtonIcon,
         ptContext
     ) satisfies ResolvedIconPT
 
@@ -98,7 +106,7 @@
             style: contentStyle
         },
         pt?.content,
-        JAZZ_SVELTE.pt?.toast?.content,
+        globalPt?.content,
         ptContext
     ) satisfies HTMLDivAttributes
 
@@ -118,7 +126,7 @@
             'aria-atomic': 'true'
         },
         pt?.root,
-        JAZZ_SVELTE.pt?.toast?.message,
+        globalPt?.message,
         ptContext
     ) satisfies HTMLDivAttributes
 
@@ -126,7 +134,7 @@
     $: textAttributes = resolvePT(
         { class: ['p-toast-message-text'] },
         pt?.text,
-        JAZZ_SVELTE.pt?.toast?.text,
+        globalPt?.text,
         ptContext
     ) satisfies HTMLDivAttributes
 
@@ -134,7 +142,7 @@
     $: summaryAttributes = resolvePT(
         { class: ['p-toast-summary'] },
         pt?.summary,
-        JAZZ_SVELTE.pt?.toast?.summary,
+        globalPt?.summary,
         ptContext
     ) satisfies HTMLSpanAttributes
 
@@ -142,7 +150,7 @@
     $: detailAttributes = resolvePT(
         { class: ['p-toast-detail'] },
         pt?.detail,
-        JAZZ_SVELTE.pt?.toast?.detail,
+        globalPt?.detail,
         ptContext
     ) satisfies HTMLDivAttributes
 
@@ -151,7 +159,7 @@
         if (event.defaultPrevented) return
 
         // stop timer while user has focused message
-        !sticky && clearCloseToastTimer(id)
+        !sticky && timerId !== null && clearTimeout(timerId)
     }
 
     function _onClick() {
@@ -159,7 +167,7 @@
     }
 
     $: _onClose = () => {
-        closeToast(id)
+        closeToast(status)
         onClose?.(id)
     }
 </script>
@@ -167,8 +175,8 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div on:mouseenter={_onMouseEnter} on:click={_onClick} {...messageAttributes}>
     <div {...contentAttributes}>
-        {#if content}
-            <svelte:component this={content} {...$$props} />
+        {#if customContent}
+            <svelte:component this={customContent} {...$$props} {...customProps} />
         {:else}
             {#if _icon}
                 <IconBuilder {resolvedIcon} />

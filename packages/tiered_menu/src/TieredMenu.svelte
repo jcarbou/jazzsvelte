@@ -53,17 +53,16 @@
     export let autoZIndex: boolean = DEFAULT.autoZIndex
     export let baseZIndex: number = DEFAULT.baseZIndex
     export let breakpoint: string | null = DEFAULT.breakpoint
-    export let model: MenuItem[] = DEFAULT.model
-    export let popup: boolean = DEFAULT.popup
-    export let scrollHeight: string | null = DEFAULT.scrollHeight
-    export let submenuIcon: string | IconComponent | null = DEFAULT.submenuIcon
-    //export let transitionOptions: CSSTransitionProps = DEFAULT.transitionOptions
-    export let unstyled: boolean = DEFAULT.unstyled
-    export let pt: TieredMenuPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let style: CssStyle | null = DEFAULT.style
     let className: string | null = DEFAULT.class
     export { className as class }
+    export let model: MenuItem[] = DEFAULT.model
+    export let popup: boolean = DEFAULT.popup
+    export let pt: TieredMenuPassThroughOptions | null = null
+    export let ptOptions: PassThroughOptions | null = null
+    export let scrollHeight: string | null = DEFAULT.scrollHeight
+    export let style: CssStyle | null = DEFAULT.style
+    export let submenuIcon: string | IconComponent | null = DEFAULT.submenuIcon
+    export let unstyled: boolean = DEFAULT.unstyled
 
     export let onHide: OnEvent = null
     export let onShow: OnEvent = null
@@ -71,6 +70,9 @@
     export let onFocus: OnEvent = null
 
     export const displayName = 'TieredMenu'
+    export function getElement(): HTMLDivElement | null {
+        return containerEl
+    }
     export function toggle(event: Event): void {
         if (popup) {
             visible ? _hide(event) : _show(event)

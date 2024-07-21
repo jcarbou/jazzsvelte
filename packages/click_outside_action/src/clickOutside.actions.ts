@@ -11,7 +11,10 @@ interface Attributes {
 export type ClickOutsideEvent = CustomEvent<{ event: Event }>
 
 /** Dispatch event on click outside of node (or list of nodes) */
-export function clickOutside(node: HTMLElement, options: ClickOutsideOptions): ActionReturn<ClickOutsideOptions, Attributes> {
+export function clickOutside(
+    node: HTMLElement,
+    options: ClickOutsideOptions = {}
+): ActionReturn<ClickOutsideOptions, Attributes> {
     const handleClick = (event: MouseEvent) => {
         if (!(event.target instanceof HTMLElement) || event.defaultPrevented) {
             return

@@ -1,72 +1,85 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importJS, importObject, importTS, importType } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-    import { Toast } from '@jazzsvelte/toast'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+
+    import type { ToastMessageStatus } from '@jazzsvelte/toast'
     import { closeToast, showToast } from '@jazzsvelte/toast'
 
     export let docSection: DocSection
 
-    let toastMessageId: string | null = null
+    let toastMessage: ToastMessageStatus | null = null
 
     function showMessage() {
-        toastMessageId = showToast({ severity: 'info', summary: 'Sticky', detail: 'Message Content', sticky: true })
+        toastMessage = showToast({ severity: 'info', summary: 'Sticky', detail: 'Message Content', sticky: true })
     }
 
     function closeMessage() {
-        closeToast(toastMessageId)
-        toastMessageId = null
+        closeToast(toastMessage)
+        toastMessage = null
     }
 
     const code = {
         basic: `
-<Toast ref={toast} />
-<Button on:click={showSticky} label="Sticky" severity="success" />
-<Button on:click={clear} label="Clear" />
+let toastMessage: ToastMessageStatus | null = null
+
+function showMessage() {
+    toastMessage = showToast({ severity: 'info', summary: 'Sticky', detail: 'Message Content', sticky: true })
+}
+
+function closeMessage() {
+    closeToast(toastMessage)
+    toastMessage = null
+}
         `,
         javascript: `
-${importJS('Toast')}import { Button } from 'primereact/button';
+${importJS(
+    ['Button'],
+    importObject('showToast', 'toast'),
+    importObject('closeToast', 'toast'),
+    `
+    let toastMessage = null
 
+    function showMessage() {
+        toastMessage = showToast({ severity: 'info', summary: 'Sticky', detail: 'Message Content', sticky: true })
+    }
 
-    const toast = useRef(null);
+    function closeMessage() {
+        closeToast(toastMessage)
+        toastMessage = null
+    }
+`
+)}
 
-        toast.current.show({ severity: 'info', summary: 'Sticky', detail: 'Message Content', sticky: true });
-    };
-
-        toast.current.clear();
-    };
-        <div class="card flex justify-content-center">
-            <Toast ref={toast} />
-            <div class="flex flex-wrap gap-2">
-                <Button on:click={showSticky} label="Sticky" severity="success" />
-                <Button on:click={clear} label="Clear" />
-            </div>
-        </div>
-
+<Button on:click={showMessage} label="Sticky" />
+<Button on:click={closeMessage} label="Clear" severity="secondary" />         
         `,
         typescript: `
-${importTS('Toast')}import { Button } from 'primereact/button';
+${importTS(
+    ['Button'],
+    importType('ToastMessageStatus', 'toast'),
+    importObject('showToast', 'toast'),
+    importObject('closeToast', 'toast'),
+    `
+    let toastMessage: ToastMessageStatus | null = null
 
+    function showMessage() {
+        toastMessage = showToast({ severity: 'info', summary: 'Sticky', detail: 'Message Content', sticky: true })
+    }
 
-    const toast = useRef<Toast>(null);
+    function closeMessage() {
+        closeToast(toastMessage)
+        toastMessage = null
+    }
+`
+)}
 
-        toast.current?.show({ severity: 'info', summary: 'Sticky', detail: 'Message Content', sticky: true });
-    };
-
-       toast.current?.clear();
-    };
-        <div class="card flex justify-content-center">
-            <Toast ref={toast} />
-            <div class="flex flex-wrap gap-2">
-                <Button on:click={showSticky} label="Sticky" severity="success" />
-                <Button on:click={clear} label="Clear" />
-            </div>
-        </div>
-
-        `
+<Button on:click={showMessage} label="Sticky" />
+<Button on:click={closeMessage} label="Clear" severity="secondary" />
+         `
     }
 </script>
 

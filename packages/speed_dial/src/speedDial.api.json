@@ -10,7 +10,7 @@
             {
                 "name": "getElement",
                 "parameters": [],
-                "returnType": "HTMLDivElement",
+                "returnType": "HTMLDivElement | null",
                 "description": "Used to get container element."
             },
             {
@@ -55,6 +55,14 @@
                 "type": "typeof SvelteComponent | null ",
                 "default": "null",
                 "description": "Template of button element."
+            },
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Style class of the root element."
             },
             {
                 "name": "direction",
@@ -142,7 +150,7 @@
                 "readonly": false,
                 "type": "number",
                 "default": "0",
-                "description": "Radius for *circle types."
+                "description": "Radius for circle types."
             },
             {
                 "name": "rotateAnimation",
@@ -159,6 +167,14 @@
                 "type": "string | IconComponent | null",
                 "default": "null",
                 "description": "Show icon of the button element."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Inline style of the root element."
             },
             {
                 "name": "getTooltip",
@@ -299,7 +315,7 @@
                 "name": "button",
                 "optional": true,
                 "readonly": false,
-                "type": "ButtonPassThroughO",
+                "type": "ButtonPassThroughOptions",
                 "description": "Uses to pass attributes to the Button component."
             },
             {
@@ -336,13 +352,6 @@
                 "readonly": false,
                 "type": "Div",
                 "description": "Uses to pass attributes to the mask's DOM element."
-            },
-            {
-                "name": "hooks",
-                "optional": true,
-                "readonly": false,
-                "type": "ComponentHooks",
-                "description": "Used to manage all lifecycle hooks"
             }
         ]
     },
@@ -365,6 +374,8 @@
         ]
     },
     "state": {
+        "label": "SpeedDialState",
+        "shortLabel": "State",
         "description": "Defines current inline state in SpeedDial component.",
         "relatedProp": "",
         "callbacks": [],

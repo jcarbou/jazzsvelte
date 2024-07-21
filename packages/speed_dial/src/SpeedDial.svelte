@@ -30,10 +30,11 @@
     import { focusEl } from '../../dom/src'
     import { clickOutside } from '@jazzsvelte/click_outside_action'
 
-    export let id: string | null = null
     export let buttonClass: string | null = DEFAULT.buttonClass
     export let buttonStyle: string | CssObject | null = DEFAULT.buttonStyle
     export let buttonTemplate: typeof SvelteComponent | null = DEFAULT.buttonTemplate
+    let className: string | null = DEFAULT.class
+    export { className as class }
     export let direction: SpeedDialDirection | null = DEFAULT.direction
     export let disabled: boolean = DEFAULT.disabled
     export let hideIcon: string | IconComponent | null = DEFAULT.hideIcon
@@ -42,27 +43,40 @@
     export let maskClass: string | null = DEFAULT.maskClass
     export let maskStyle: string | CssObject | null = DEFAULT.maskStyle
     export let model: MenuItem[] = DEFAULT.model
+    export let pt: SpeedDialPassThroughOptions | null = null
+    export let ptOptions: PassThroughOptions | null = null
     export let radius: number = DEFAULT.radius
     export let rotateAnimation: boolean = DEFAULT.rotateAnimation
     export let showIcon: string | IconComponent | null = DEFAULT.showIcon
+    export let style: CssStyle | null = DEFAULT.style
+    export let getTooltip: TooltipGetter<MenuItem> = DEFAULT.getTooltip
+    export let tooltipOptions: TooltipOptions | null = DEFAULT.tooltipOptions
     export let transitionDelay: number = DEFAULT.transitionDelay
     export let type: SpeedDialType = DEFAULT.type
     export let unstyled: boolean = DEFAULT.unstyled
     let visibleProp: boolean = DEFAULT.visible
     export { visibleProp as visible }
-    export let getTooltip: TooltipGetter<MenuItem> = DEFAULT.getTooltip
-    export let tooltipOptions: TooltipOptions | null = DEFAULT.tooltipOptions
-    export let pt: SpeedDialPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let style: CssStyle | null = DEFAULT.style
-    let className: string | null = DEFAULT.class
-    export { className as class }
+
     export let onHide: (() => void) | null = null
     export let onShow: (() => void) | null = null
     export let onClick: ((ev: Event) => void) | null = null
     export let onVisibleChange: ((visible: boolean) => void) | null = null
 
     export const displayName = 'SpeedDial'
+
+    export function getElement(): HTMLDivElement {
+        return rootEl
+    }
+    let rootEl: HTMLDivElement
+    export function hide(): void {
+        onVisibleChange ? onVisibleChange(false) : (visibleState = false)
+        onHide && onHide()
+    }
+
+    export function show(): void {
+        onVisibleChange ? onVisibleChange(true) : (visibleState = true)
+        onShow && onShow()
+    }
 
     let visibleState = false
     $: visible = onVisibleChange ? visibleProp : visibleState
@@ -83,7 +97,7 @@
         unstyled: boolean
     }
 
-    $: idState = id || (uniqueId('speedDial_') satisfies string)
+    $: idState = uniqueId('speedDial_') satisfies string
 
     const onItemClick = (e: MouseEvent | KeyboardEvent, item: MenuItem) => {
         item.command && item.command({ originalEvent: e, item })
@@ -170,16 +184,6 @@
     function _onClick(ev: MouseEvent): void {
         visible ? hide() : show()
         onClick && onClick(ev)
-    }
-
-    function hide(): void {
-        onVisibleChange ? onVisibleChange(false) : (visibleState = false)
-        onHide && onHide()
-    }
-
-    function show(): void {
-        onVisibleChange ? onVisibleChange(true) : (visibleState = true)
-        onShow && onShow()
     }
 
     function onTogglerArrowUp(event: KeyboardEvent): void {
@@ -427,7 +431,7 @@
     }
 </script>
 
-<div {...rootAttributes} {...$$restProps} use:clickOutside on:clickoutside={onClickOutSide}>
+<div bind:this={rootEl} {...rootAttributes} {...$$restProps} use:clickOutside on:clickoutside={onClickOutSide}>
     <Button bind:this={button} {...buttonAttributes} on:click={_onClick} on:keydown={onButtonKeydown} />
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <ul bind:this={menu} {...menuAttributes} on:focus={onMenuFocus} on:keydown={onMenuKeyDown} on:blur={onMenuBlur}>

@@ -5,20 +5,24 @@ import type { ApiDocEntity, ApiDocData, ApiDocDataEntityKeys } from '@jazzsvelte
 const API_DATA_SECTIONS: ApiDocDataEntityKeys[] = [
     'props',
     'types',
+    'events',
     'methods',
     'callbacks',
     'ptContext',
     'ptOptions',
+    'state',
     'ptMethodOptions'
 ]
 const API_DATA_HEADERS: Record<ApiDocDataEntityKeys, string[]> = {
     props: ['name', 'type', 'default', 'description'],
     types: ['name', 'value'],
     methods: ['name', 'parameters', 'returnType', 'description'],
+    callbacks: ['name', 'parameters', 'description'],
     ptContext: ['name', 'type', 'description'],
     ptOptions: ['name', 'type', 'description'],
+    state: ['name', 'type', 'description'],
     ptMethodOptions: ['name', 'type', 'optional', 'readonly'],
-    callbacks: ['name', 'type', 'description']
+    events: ['name', 'parameters', 'description']
 }
 
 export function upperFirst(s: string): string {
@@ -56,6 +60,14 @@ export function apiDataToDocs(data: ApiDocData): ApiDocs {
     if (types) {
         for (const type of types.values) {
             linkTargets[type.name] = `api_doc_${data.id}_types.${type.name}`
+        }
+    }
+    const ptOptions = data['ptOptions']
+    if (ptOptions) {
+        for (const ptOption of ptOptions.values) {
+            if (!ptOption.type?.includes('PassThroughOption')) {
+                ptOption.type = `HTML${ptOption.type}Element`
+            }
         }
     }
     return {
@@ -121,6 +133,14 @@ export function findActiveDoc(docs: Doc[], y: number): Doc | null {
 
 export const projectName = 'JazzSvelte'
 
+export function importObject(objectId: string, projectId: string) {
+    return `import { ${objectId} } from '@jazzsvelte/${projectId}'`
+}
+
+export function importType(objectId: string, projectId: string) {
+    return `import type { ${objectId} } from '@jazzsvelte/${projectId}'`
+}
+
 export function importComponent(cmp: string) {
     return `import { ${cmp} } from '@jazzsvelte/${toKebabCase(cmp, '_')}'`
 }
@@ -137,7 +157,7 @@ export function importJS(cmpOrCmpList: string | string[], ...codeList: string[])
 }
 
 export function importTS(cmpOrCmpList: string | string[], ...codeList: string[]) {
-    return scriptTS([...importComponents(cmpOrCmpList), ...codeList].join('\n'))
+    return scriptTS([...importComponents(cmpOrCmpList), ...codeList].join('\n   '))
 }
 
 export function scriptJS(code: string) {

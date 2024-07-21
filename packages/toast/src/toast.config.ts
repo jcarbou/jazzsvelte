@@ -19,7 +19,6 @@ export function toastPT(options: ToastPassThroughOptions) {
 export const defaultToastProps: Omit<Required<BaseToastProps>, 'pt' | 'ptOptions'> = {
     id: 'default',
     position: 'bottom-right',
-    content: null,
     unstyled: false,
     class: null,
     style: null

@@ -16,7 +16,6 @@
     export let disabled: boolean = DEFAULT.disabled
     let keyFilterType: KeyFilterRegExp | null = DEFAULT.keyFilter
     export { keyFilterType as keyFilter }
-    // TODO
     export let invalid: boolean = DEFAULT.invalid
     export let pt: InputTextPassThroughOptions | null = null
     export let ptOptions: PassThroughOptions | null = null
@@ -28,18 +27,23 @@
     export let unstyled: boolean = false
     export let validateOnly: boolean = DEFAULT.validateOnly
     export let value: string = DEFAULT.value
-    // TODO
     export let variant: string | null = DEFAULT.variant
 
     export const displayName = 'InptText'
     export const focus = (scrollTo?: boolean) => {
-        focusEl(inputEl, scrollTo)
+        focusEl(rootEl, scrollTo)
     }
     export const blur = () => {
-        inputEl.blur()
+        rootEl.blur()
     }
 
-    let inputEl: HTMLInputElement
+    export function getElement(): HTMLInputElement {
+        return rootEl
+    }
+    let rootEl: HTMLInputElement
+
+    const jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
+    const { inputStyle } = jazzSvelteContext
 
     $: ptContext = {
         props: { ...DEFAULT, ...$$props },
@@ -59,7 +63,9 @@
                 className,
                 {
                     'p-disabled': disabled,
-                    'p-filled': !!value
+                    'p-filled': !!value,
+                    'p-invalid': invalid,
+                    'p-variant-filled': variant ? variant === 'filled' : $inputStyle === 'filled'
                 }
             ],
             style,
@@ -73,8 +79,6 @@
 
     $: showOnDisabled = !!tooltipOptions?.showOnDisabled satisfies boolean
 
-    let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
-
     // Forward validatedinput event
     const dispatchValidatedInput = createEventDispatcher<InputTextEvent>()
     const onValidatedInput = (e: ValidatedInputEvent) => dispatchValidatedInput('validatedinput', e)
@@ -87,9 +91,12 @@
         {...$$restProps}
         size={size || undefined}
         bind:value
-        bind:this={inputEl}
+        bind:this={rootEl}
+        on:focus
+        on:blur
         on:paste
         on:keydown
+        on:keyup
         on:input
         on:validatedinput={onValidatedInput}
         on:beforeinput

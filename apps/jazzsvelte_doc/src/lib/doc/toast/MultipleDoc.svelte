@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importJS, importObject, importTS } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
@@ -19,46 +19,48 @@
 
     const code = {
         basic: `
-<Toast ref={toast} />
-<Button on:click={showMultiple} label="Multiple" class="p-button-warning" />
+showToastList([
+    { severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000 },
+    { severity: 'info', summary: 'Info', detail: 'Message Content', life: 3050 },
+    { severity: 'warn', summary: 'Warning', detail: 'Message Content', life: 3100 },
+    { severity: 'error', summary: 'Error', detail: 'Message Content', life: 3150 }
+])
         `,
         javascript: `
-${importJS('Toast')}
-import { Button } from 'primereact/button';
+${importJS(
+    ['Button'],
+    importObject('showToastList', 'toast'),
+    `
+   function showMultiple() {
+       showToastList([
+           { severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000 },
+           { severity: 'info', summary: 'Info', detail: 'Message Content', life: 3050 },
+           { severity: 'warn', summary: 'Warning', detail: 'Message Content', life: 3100 },
+           { severity: 'error', summary: 'Error', detail: 'Message Content', life: 3150 }
+       ])
+   }
+`
+)}
 
-    const toast = useRef(null);
-
-        toast.current.show([
-            { severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000 },
-            { severity: 'info', summary: 'Info', detail: 'Message Content', life: 3050 },
-            { severity: 'warn', summary: 'Warning', detail: 'Message Content', life: 3100 },
-            { severity: 'error', summary: 'Error', detail: 'Message Content', life: 3150 }
-        ]);
-    };
-        <div class="card flex justify-content-center gap-2">
-            <Toast ref={toast} />
-            <Button on:click={showMultiple} label="Multiple" severity='warning' />
-        </div>
-
-        `,
+<Button on:click={showMultiple} label="Multiple" severity="warning" />
+       `,
         typescript: `
-${importTS('Toast')}
-import { Button } from 'primereact/button';
+${importTS(
+    ['Button'],
+    importObject('showToastList', 'toast'),
+    `
+   function showMultiple() {
+       showToastList([
+           { severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000 },
+           { severity: 'info', summary: 'Info', detail: 'Message Content', life: 3050 },
+           { severity: 'warn', summary: 'Warning', detail: 'Message Content', life: 3100 },
+           { severity: 'error', summary: 'Error', detail: 'Message Content', life: 3150 }
+       ])
+   }
+`
+)}
 
-    const toast = useRef<Toast>(null);
-
-        toast.current?.show([
-            { severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000 },
-            { severity: 'info', summary: 'Info', detail: 'Message Content', life: 3050 },
-            { severity: 'warn', summary: 'Warning', detail: 'Message Content', life: 3100 },
-            { severity: 'error', summary: 'Error', detail: 'Message Content', life: 3150 }
-        ]);
-    };
-        <div class="card flex justify-content-center gap-2">
-            <Toast ref={toast} />
-            <Button on:click={showMultiple} label="Multiple" severity='warning' />
-        </div>
-
+<Button on:click={showMultiple} label="Multiple" severity="warning" />
         `
     }
 </script>

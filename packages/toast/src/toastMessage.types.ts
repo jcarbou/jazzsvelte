@@ -12,6 +12,7 @@ import type { SvelteComponent } from 'svelte'
 
 export type MessageInfo = { message: string }
 export type ToastSeverity = 'success' | 'info' | 'warn' | 'error'
+export type ToastMessageStatus = { id: string; isClosed: boolean }
 
 export declare type ToastMessagePassThroughType<T> = PassThroughType<
     PassThroughHTMLAttributes<T>,
@@ -81,7 +82,14 @@ export interface ToastMessagePassThroughOptions {
  * Defines message options in Toast component.
  */
 export interface BaseToastMessageProps {
+    /**
+     * Internal identifier
+     */
     id: string
+    /**
+     * Internal timeout identifier
+     */
+    timerId?: ReturnType<typeof setTimeout>
     /**
      * Severity level of the message.
      * @defaultValue info
@@ -98,7 +106,16 @@ export interface BaseToastMessageProps {
     /**
      * Custom content of the message. If enabled, summary and details properties are ignored.
      */
-    content?: typeof SvelteComponent | undefined
+    customContent?: typeof SvelteComponent | null
+    /**
+     * Custom message. If enabled, a customMessage is instanciate instead of a ToastMessage.
+     */
+    customMessage?: typeof SvelteComponent | null
+    /**
+     * Additional Props for "content"  or "customMessage" SvelteComponent
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    customProps?: Record<string, any> | null
     /**
      * Whether the message can be closed manually using the close icon.
      * @defaultValue true
@@ -119,11 +136,11 @@ export interface BaseToastMessageProps {
     /**
      * Callback to invoke when a message is removed.
      */
-    onClose: ((id: string) => void) | null
+    onClose?: ((id: string) => void) | null
     /**
      * Callback to invoke when an active message is clicking.
      */
-    onClick: ((id: string) => void) | null
+    onClick?: ((id: string) => void) | null
     /**
      * Style class of the content.
      */
@@ -131,16 +148,13 @@ export interface BaseToastMessageProps {
     /**
      * Style of the content.
      */
-    contentStyle: CssStyle | null
+    contentStyle?: CssStyle | null
 
     /**
      * Delay in milliseconds to close the message automatically.
+     * @default 3000
      */
-    //life?: number | undefined
-    /**
-     * Key of the Toast to display the message.
-     */
-    //group?: string | undefined
+    life?: number | undefined
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ToastPassThroughOptions}
@@ -186,148 +200,17 @@ export interface ToastState {
     messages: string[]
 }
 
-/**
- * Message options for toast component
- */
-export interface ToastMessage {
+export interface ShowToastProps extends Omit<ToastMessageProps, 'id' | 'timerId'> {
     /**
-     * Unique id of the message.
+     * Toast group id
      */
-    id: string
+    toastId?: string
+}
 
+export type StoreToastMessage = ToastMessageProps & {
     /**
      * Toast group id
      */
     toastId: string
-
-    /**
-     * Severity of the message.
-     */
-    severity?: ToastSeverity | undefined
-    /**
-     * Summary content of the message.
-     */
-    summary?: string | undefined
-    /**
-     * Detail content of the message.  TODO Add slot section
-     */
-    detail?: string | undefined
-    /**
-     * Custom content of the message. If enabled, summary and details properties are ignored.
-     */
-    content?: typeof SvelteComponent | undefined
-    /**
-     * Whether the message can be closed manually using the close icon.
-     * @defaultValue true
-     */
-    closable?: boolean | undefined
-    /**
-     * Icon of the message.
-     */
-    icon?: string | undefined
-    /**
-     * Icon of the close button.
-     */
-    closeIcon?: string | IconComponent | undefined
-    /**
-     * When enabled, message is not removed automatically.
-     */
-    sticky?: boolean | undefined
-    /**
-     * Delay in milliseconds to close the message automatically.
-     * @defaultValue 3000
-     */
-    life?: number | undefined
-    /**
-     * Style class of the message.
-     */
-    class?: string | undefined
-    /**
-     * Inline style of the message.
-     */
-    style?: CssStyle | undefined
-    /**
-     * Style class of the message content.
-     */
-    contentClassName?: string | undefined
-    /**
-     * Inline style of the message content.
-     */
-    contentStyle?: CssStyle | undefined
-    /**
-     * Uses to pass attributes to DOM elements inside the component.
-     * @type {Omit<ToastPassThroughOptions, 'message'>}
-     */
-    pt?: Omit<ToastMessagePassThroughOptions, 'message'>
-    /**
-     * Used to configure passthrough(pt) options of the component.
-     * @type {PassThroughOptions}
-     */
-    ptOptions?: ToastMessagePassThroughMethodOptions
-}
-
-/**
- * Defines current content values and refs for headless development.
- * @see {@link ContentProps.message}
- */
-interface ContentPropsMessage {
-    /**
-     * Summary of the toast.
-     * @readonly
-     */
-    summary: string
-    /**
-     * Detail of the toast.
-     * @readonly
-     */
-    detail: string
-}
-
-/**
- * Defines current content values and refs for headless development.
- * @see {@link ToastProps.content}
- */
-export interface ContentProps {
-    /**
-     * Toast's props values.
-     */
-    message: ContentPropsMessage
-}
-
-/**
- * **PrimeReact - Toast**
- *
- * _Toast is used to display messages in an overlay._
- *
- * [Live Demo](https://www.primereact.org/toast/)
- * --- ---
- * ![PrimeReact](https://primefaces.org/cdn/primereact/images/logo-100.png)
- *
- * @group Component
- */
-export declare class Toast /*extends SvelteComponent<ToastProps>*/ {
-    /**
-     * Used to show the message.
-     * @param {ToastMessage | ToastMessage[]} message - Message to show
-     */
-    public show(message: ToastMessage | ToastMessage[]): void
-    /**
-     * Clears the all messages from Toast.
-     */
-    public clear(): void
-    /**
-     * Used to add new messages after removing all old messages.
-     * @param {ToastMessage | ToastMessage[]} message - Message to replace
-     */
-    public replace(message: ToastMessage | ToastMessage[]): void
-    /**
-     * Used to remove messages.
-     * @param {ToastMessage | ToastMessage[]} message - Message to remove
-     */
-    public remove(message: ToastMessage | ToastMessage[]): void
-    /**
-     * Used to get container element.
-     * @return {HTMLDivElement} Container element
-     */
-    public getElement(): HTMLDivElement
+    status: ToastMessageStatus
 }

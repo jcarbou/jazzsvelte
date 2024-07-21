@@ -24,6 +24,11 @@
 
     export const displayName = 'Badge'
 
+    export function getElement(): HTMLSpanElement {
+        return rootEl
+    }
+    let rootEl: HTMLSpanElement
+
     $: ptContext = {
         props: { ...DEFAULT, ...$$props },
         ptOptions,
@@ -58,7 +63,7 @@
     ) satisfies HTMLSpanAttributes
 </script>
 
-<span {...rootAttributes} {...$$restProps}>{value}</span>
+<span bind:this={rootEl} {...rootAttributes} {...$$restProps}>{value}</span>
 
 <svelte:head>
     <style type="text/css">

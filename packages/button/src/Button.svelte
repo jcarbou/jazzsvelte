@@ -62,6 +62,9 @@
     export const blur = () => {
         buttonEl.blur()
     }
+    export function getElement(): HTMLButtonElement {
+        return buttonEl
+    }
 
     let buttonEl: HTMLButtonElement
     const buttonGroup = getContext<ButtonGroupContext>('buttonGroup')
@@ -183,8 +186,19 @@
             use:tooltip={{ showOnDisabled, tooltipContent, tooltipOptions, jazzSvelteContext }}
             use:stopProgagation={{ eventName: 'click', stopCondition: () => disabled }}
             on:click
+            on:mousedown
+            on:mouseup
+            on:mouseover
+            on:mousemove
+            on:mouseout
+            on:focus
+            on:blur
             on:keydown
             on:keyup
+            on:touchstart
+            on:touchend
+            on:touchmove
+            on:touchcancel
         >
             {#if icon && !loading}
                 <IconBuilder {resolvedIcon} />

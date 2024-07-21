@@ -3,25 +3,26 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import { importObject, importJS, importTS, scriptJS } from '../common/doc.utils'
 
     export let docSection: DocSection
 
     const code = {
         basic: `
-//_app.js
-import { PrimeReactProvider } from 'primereact/api';
-
-
-    const value = {
+${importJS(
+    [],
+    importObject('JazzSvelte', 'api'),
+    `
+    const config = {
         ripple: false,
         ...
-    };
-        <PrimeReactProvider value={value}>
-            <App />
-        </PrimeReactProvider>
-
-
-        `
+    }`
+)}
+    
+<JazzSvelte {config}>
+   <App />
+<JazzSvelte>
+`
     }
 </script>
 

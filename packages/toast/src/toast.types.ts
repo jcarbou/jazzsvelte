@@ -1,16 +1,6 @@
-import type {
-    HTMLDivAttributes,
-    PassThroughHTMLAttributes,
-    PassThroughOptions,
-    PassThroughType,
-    CssStyle,
-    IconComponent
-} from '@jazzsvelte/api'
-import type { SvelteComponent } from 'svelte'
+import type { HTMLDivAttributes, PassThroughHTMLAttributes, PassThroughOptions, PassThroughType, CssStyle } from '@jazzsvelte/api'
 
-export type MessageInfo = { message: string }
 export type ToastPosition = 'center' | 'top-center' | 'top-left' | 'top-right' | 'bottom-center' | 'bottom-left' | 'bottom-right'
-export type ToastSeverity = 'success' | 'info' | 'warn' | 'error'
 
 export declare type ToastPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, ToastPassThroughMethodOptions>
 
@@ -33,114 +23,6 @@ export interface ToastPassThroughOptions {
 }
 
 /**
- * Message options for toast component
- */
-export interface ToastMessage {
-    /**
-     * Unique id of the message.
-     */
-    id: string
-
-    /**
-     * Toast group id
-     */
-    toastId: string
-
-    /**
-     * Severity of the message.
-     */
-    severity?: ToastSeverity | undefined
-    /**
-     * Summary content of the message.
-     */
-    summary?: string | undefined
-    /**
-     * Detail content of the message.  TODO Add slot section
-     */
-    detail?: string | undefined
-    /**
-     * Custom content of the message. If enabled, summary and details properties are ignored.
-     */
-    content?: typeof SvelteComponent | undefined
-    /**
-     * Whether the message can be closed manually using the close icon.
-     * @defaultValue true
-     */
-    closable?: boolean | undefined
-    /**
-     * Icon of the message.
-     */
-    icon?: string | undefined
-    /**
-     * Icon of the close button.
-     */
-    closeIcon?: string | IconComponent | undefined
-    /**
-     * When enabled, message is not removed automatically.
-     */
-    sticky?: boolean | undefined
-    /**
-     * Delay in milliseconds to close the message automatically.
-     * @defaultValue 3000
-     */
-    life?: number | undefined
-    /**
-     * Style class of the message.
-     */
-    class?: string | undefined
-    /**
-     * Inline style of the message.
-     */
-    style?: CssStyle | undefined
-    /**
-     * Style class of the message content.
-     */
-    contentClassName?: string | undefined
-    /**
-     * Inline style of the message content.
-     */
-    contentStyle?: CssStyle | undefined
-    /**
-     * Uses to pass attributes to DOM elements inside the component.
-     * @type {Omit<ToastPassThroughOptions, 'message'>}
-     */
-    pt?: Omit<ToastPassThroughOptions, 'message'>
-    /**
-     * Used to configure passthrough(pt) options of the component.
-     * @type {PassThroughOptions}
-     */
-    ptOptions?: ToastPassThroughMethodOptions
-}
-
-/**
- * Defines current content values and refs for headless development.
- * @see {@link ContentProps.message}
- */
-interface ContentPropsMessage {
-    /**
-     * Summary of the toast.
-     * @readonly
-     */
-    summary: string
-    /**
-     * Detail of the toast.
-     * @readonly
-     */
-    detail: string
-}
-
-/**
- * Defines current content values and refs for headless development.
- * @see {@link ToastProps.content}
- */
-export interface ContentProps {
-    /**
-     * Toast's props values.
-     */
-    message: ContentPropsMessage
-}
-
-/**
  * Defines valid properties in Toast component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group Properties
  */
@@ -158,15 +40,6 @@ export interface BaseToastProps {
      */
     position?: ToastPosition | null
 
-    /**
-     * Specifies a custom content for the toast. For more complex markup, use the "content" slot instead.
-     *  @defaultValue null
-     */
-    content?: typeof SvelteComponent | null
-    /**
-     * The properties of CSSTransition can be customized, except for "nodeRef" and "in" properties.
-     */
-    ///transitionOptions?: CSSTransitionProps | undefined;
     /**
      * DOM element instance where the component should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located.
      * @defaultValue self

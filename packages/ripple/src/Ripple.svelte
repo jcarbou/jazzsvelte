@@ -6,14 +6,18 @@
     import { ripple } from './ripple.action'
     import { defaultRippleProps as DEFAULT, globalRipplePT as globalPt } from './ripple.config'
 
-    export let style: CssStyle | null = DEFAULT.style
     let className: string | null = DEFAULT.class
-    export { className as class }
-    export let unstyled: boolean = DEFAULT.unstyled
     export let pt: RipplePassThroughOptions | null = null
     export let ptOptions: PassThroughOptions | null = null
+    export { className as class }
+    export let style: CssStyle | null = DEFAULT.style
+    export let unstyled: boolean = DEFAULT.unstyled
 
     export const displayName = 'Ripple'
+    export function getElement(): HTMLSpanElement {
+        return rootEl
+    }
+    let rootEl: HTMLSpanElement
 
     const { ripple: hasRipple } = JAZZ_SVELTE
 
@@ -40,7 +44,7 @@
 </script>
 
 {#if $hasRipple}
-    <span {...rootAttributes} use:ripple></span>
+    <span bind:this={rootEl} {...rootAttributes} use:ripple></span>
 {/if}
 
 <style>

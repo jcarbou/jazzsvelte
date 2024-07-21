@@ -234,6 +234,193 @@
             }
         ]
     },
+    "events": {
+        "label": "Events",
+        "shortLabel": "Events",
+        "description": "Add event listener to the component.",
+        "values": [
+            {
+                "name": "on:click",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Click event listener"
+            },
+            {
+                "name": "on:mousedown",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Mouse Down event listener"
+            },
+            {
+                "name": "on:mouseup",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Mouse Up event listener"
+            },
+            {
+                "name": "on:mouseover",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Mouse Over event listener"
+            },
+            {
+                "name": "on:mousemove",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Mouse Move event listener"
+            },
+            {
+                "name": "on:mouseout",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Mouse Out event listener"
+            },
+            {
+                "name": "on:mouseout",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Mouse Out event listener"
+            },
+            {
+                "name": "on:focus",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "FocusEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Focus event listener"
+            },
+            {
+                "name": "on:blur",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "FocusEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Blur event listener"
+            },
+            {
+                "name": "on:keydown",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "KeyboardEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Key Down event listener"
+            },
+            {
+                "name": "on:keyup",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "KeyboardEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Key Up event listener"
+            },
+            {
+                "name": "on:touchstart",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "TouchEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Touch Start event listener"
+            },
+            {
+                "name": "on:touchend",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "TouchEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Touch End event listener"
+            },
+            {
+                "name": "on:touchcancel",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "TouchEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Touch Cancel event listener"
+            },
+            {
+                "name": "on:touchmove",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "TouchEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Touch Move event listener"
+            }
+        ]
+    },
     "ptContext": {
         "label": "ButtonContext",
         "shortLabel": "Context",

@@ -13,7 +13,7 @@ const themePath = derived([theme, darkMode], ([$theme, $darkMode]) => $theme.rep
  */
 export const JAZZ_SVELTE: JazzSvelteConfig = Object.seal({
     unstyled: false,
-    appendTo: null,
+    appendTo: 'body',
     styleContainer: null,
     zIndex: {
         modal: 1100,
@@ -66,7 +66,7 @@ export const JAZZ_SVELTE: JazzSvelteConfig = Object.seal({
         if (!options) return
         // Properies set on startup then not editable
         JAZZ_SVELTE.unstyled = !!options.unstyled
-        JAZZ_SVELTE.appendTo = options.appendTo
+        JAZZ_SVELTE.appendTo = options.appendTo || 'body'
         JAZZ_SVELTE.styleContainer = options.styleContainer
         JAZZ_SVELTE.autoZIndex = !options.autoZIndex
         options.zIndex && (JAZZ_SVELTE.zIndex = options.zIndex)

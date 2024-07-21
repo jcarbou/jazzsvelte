@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importObject, importComponent, importJS, importTS } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
@@ -15,54 +15,61 @@
 
     const code = {
         basic: `
-<Button on:click={showInfo} label="Basic" />
-        `,
-        javascript: `
-${importJS(
-    ['Toast', 'Button'],
-    `
-import {showToast}  from 'toast/toast.store'
+// Main page
+<Toast />
 
-const showInfo  = () => {
-    showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
-}
+// Eveywhere
+showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
+   `,
+        javascript: `
+// Main page
+${importJS('Toast')}
+
+...
+<Toast />
+
+// Everywhere
+${importJS(
+    ['Button'],
+    importObject('showToast', 'toast'),
+    `
+   const showInfo  = () => {
+      showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
+   }
 `
 )}
 
-
-<div class="card flex justify-content-center">
-    <Toast ref={toast} />
-    <Button on:click={showInfo} label="Show" />
-</div>
-
-<!-- <Toast/> must be inserted in your main page -->
+<Button on:click={showInfo} label="Show" />
         `,
         typescript: `
-${importTS(
-    ['Toast', 'Button'],
-    `
-import {showToast}  from 'toast/toast.store'
+// Main page
+${importJS('Toast')}
 
-const showInfo  = () => {
-    showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
-}
+...
+<Toast />
+
+// Everywhere
+${importJS(
+    ['Button'],
+    importObject('showToast', 'toast'),
+    `
+   const showInfo  = () => {
+      showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
+   }
 `
 )}
 
-<div class="card flex justify-content-center">
-    <Button on:click={showInfo} label="Show" />
-</div>
-
-<!-- <Toast/> must be inserted in your main page -->
-        `
+<Button on:click={showInfo} label="Show" />
+`
     }
 </script>
 
 <DocSectionText {docSection}>
     <p>
-        Messages are displayed by calling the <i>show</i> method provided by the component ref. A single message is specified by
-        the Message interface that defines various properties such as <i>severity</i>, <i>summary</i> and{' '}
-        <i>detail</i>.
+        Messages are displayed by calling the <i>showToast</i> method. A single message is specified by the Message interface that
+        defines various properties such as <i>severity</i>, <i>summary</i> and{' '}
+        <i>detail</i>. The <i>ToastMessage</i> is generated and displayed inside the <i>Toast</i> component. So the
+        <i>Toast</i> component must be insetred in the main page of your application.
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">

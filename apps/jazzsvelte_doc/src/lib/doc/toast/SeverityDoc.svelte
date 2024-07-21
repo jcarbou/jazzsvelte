@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importObject, importJS, importTS, importType } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
     import { showToast } from '@jazzsvelte/toast'
-    import type { ToastSeverity } from '$lib/components/toast/toast.types'
+    import type { ToastSeverity } from '@jazzsvelte/toast'
 
     export let docSection: DocSection
 
@@ -16,67 +16,41 @@
 
     const code = {
         basic: `
-<Toast ref={toast} />
 <Button label="Success" class="p-button-success" on:click={showSuccess} />
 <Button label="Info" class="p-button-info" on:click={showInfo} />
 <Button label="Warn" class="p-button-warning" on:click={showWarn} />
 <Button label="Error" class="p-button-danger" on:click={showError} />
         `,
         javascript: `
-${importJS('Toast')}import { Button } from 'primereact/button';
-
-
-    const toast = useRef(null);
-
-        toast.current.show({severity:'success', summary: 'Success', detail:'Message Content', life: 3000});
+${importJS(
+    ['Button'],
+    importObject('showToast', 'toast'),
+    `
+    function showMessage(severity: ToastSeverity) {
+        showToast({ severity, summary: severity[0].toUpperCase() + severity.substring(1), detail: 'Message Content', life: 3000 })
     }
-
-        toast.current.show({severity:'info', summary: 'Info', detail:'Message Content', life: 3000});
-    }
-
-        toast.current.show({severity:'warn', summary: 'Warning', detail:'Message Content', life: 3000});
-    }
-
-        toast.current.show({severity:'error', summary: 'Error', detail:'Message Content', life: 3000});
-    }
-        <div class="card flex justify-content-center">
-            <Toast ref={toast} />
-            <div class="flex flex-wrap gap-2">
-                <Button label="Success" class="p-button-success" on:click={showSuccess} />
-                <Button label="Info" class="p-button-info" on:click={showInfo} />
-                <Button label="Warn" class="p-button-warning" on:click={showWarn} />
-                <Button label="Error" class="p-button-danger" on:click={showError} />
-            </div>
-        </div>
-
+`
+)}
+<Button label="Success" class="p-button-success" on:click={showSuccess} />
+<Button label="Info" class="p-button-info" on:click={showInfo} />
+<Button label="Warn" class="p-button-warning" on:click={showWarn} />
+<Button label="Error" class="p-button-danger" on:click={showError} />
         `,
         typescript: `
-${importTS('Toast')}import { Button } from 'primereact/button';
-
-
-    const toast = useRef<Toast>(null);
-
-        toast.current?.show({severity:'success', summary: 'Success', detail:'Message Content', life: 3000});
+${importTS(
+    ['Button'],
+    importType('ToastSeverity', 'toast'),
+    importObject('showToast', 'toast'),
+    `
+    function showMessage(severity) {
+        showToast({ severity, summary: severity[0].toUpperCase() + severity.substring(1), detail: 'Message Content', life: 3000 })
     }
-
-        toast.current?.show({severity:'info', summary: 'Info', detail:'Message Content', life: 3000});
-    }
-
-        toast.current?.show({severity:'warn', summary: 'Warning', detail:'Message Content', life: 3000});
-    }
-
-        toast.current?.show({severity:'error', summary: 'Error', detail:'Message Content', life: 3000});
-    }
-        <div class="card flex justify-content-center">
-            <Toast ref={toast} />
-            <div class="flex flex-wrap gap-2">
-                <Button label="Success" class="p-button-success" on:click={showSuccess} />
-                <Button label="Info" class="p-button-info" on:click={showInfo} />
-                <Button label="Warn" class="p-button-warning" on:click={showWarn} />
-                <Button label="Error" class="p-button-danger" on:click={showError} />
-            </div>
-        </div>
-
+`
+)}
+<Button label="Success" class="p-button-success" on:click={showSuccess} />
+<Button label="Info" class="p-button-info" on:click={showInfo} />
+<Button label="Warn" class="p-button-warning" on:click={showWarn} />
+<Button label="Error" class="p-button-danger" on:click={showError} />
         `
     }
 </script>

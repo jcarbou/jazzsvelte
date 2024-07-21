@@ -14,6 +14,7 @@
     import IconsDoc from '$lib/doc/inputText/IconsDoc.svelte'
     import ImportDoc from '$lib/doc/inputText/ImportDoc.svelte'
     import InvalidDoc from '$lib/doc/inputText/InvalidDoc.svelte'
+    import VariantDoc from '$lib/doc/inputText/VariantDoc.svelte'
     import KeyfilterDoc from '$lib/doc/inputText/KeyfilterDoc.svelte'
     import PtDoc from '$lib/doc/inputText/pt/PtDoc.svelte'
     import Wireframe from '$lib/doc/inputText/pt/Wireframe.svelte'
@@ -57,6 +58,11 @@
             id: 'floatlabel',
             label: 'Float Label',
             component: FloatlabelDoc
+        },
+        {
+            id: 'variant',
+            label: 'Filled',
+            component: VariantDoc
         },
         {
             id: 'invalid',

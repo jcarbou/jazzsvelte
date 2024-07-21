@@ -8,6 +8,12 @@
         "description": "Defines methods that can be accessed by the component's reference.",
         "values": [
             {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLInputElement",
+                "description": "Return root element."
+            },
+            {
                 "name": "focus",
                 "parameters": [
                     {
@@ -146,31 +152,102 @@
             }
         ]
     },
-    "callbacks": {
-        "label": "Callbacks",
-        "shortLabel": "Callbacks",
-        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+    "events": {
+        "label": "Events",
+        "shortLabel": "Events",
+        "description": "Add event listener to the component.",
         "values": [
             {
-                "name": "onInput",
+                "name": "on:focus",
                 "parameters": [
                     {
                         "name": "event",
                         "optional": false,
-                        "type": "FormEvent<HTMLInputElement>",
+                        "type": "FocusEvent",
                         "description": "Browser event"
-                    },
-                    {
-                        "name": "validatePattern",
-                        "optional": false,
-                        "type": "boolean",
-                        "description": "Whether to validate the value"
                     }
                 ],
-                "returnType": "void",
-                "description": "Callback to invoke while typing value on input"
+                "description": "Focus event listener"
+            },
+            {
+                "name": "on:blur",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "FocusEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Blur event listener"
+            },
+            {
+                "name": "on:keydown",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "KeyboardEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Key Down event listener"
+            },
+            {
+                "name": "on:keyup",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "KeyboardEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Key Up event listener"
+            },
+            {
+                "name": "on:input",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "InputEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Input event listener"
+            },
+            {
+                "name": "on:beforeinput",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "InputEvent",
+                        "description": "Browser event"
+                    }
+                ],
+                "description": "Befote Input event listener"
+            },
+            {
+                "name": "on:validatedinput",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "ValidatedInputEvent",
+                        "description": "Custom event : CustomEvent<{ event: Event; valid: boolean}>"
+                    }
+                ],
+                "description": "Validated Input event listener. Invoke while typing value on input"
             }
         ]
+    },
+    "callbacks": {
+        "label": "Callbacks",
+        "shortLabel": "Callbacks",
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": []
     },
     "ptMethodOptions": {
         "label": "InputTextPassThroughMethodOptions",

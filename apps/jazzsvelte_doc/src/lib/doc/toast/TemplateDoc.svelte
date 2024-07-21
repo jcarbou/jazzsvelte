@@ -7,21 +7,23 @@
 
     import type { DocSection } from '$lib/doc/common/doc.types'
     import TemplateToastMessage from './TemplateToastMessage.svelte'
-    import { closeToast, isToastMessageAlive, showToast } from '@jazzsvelte/toast'
+    import { closeToast, showToast, type ToastMessageStatus } from '@jazzsvelte/toast'
 
     export let docSection: DocSection
 
-    let toastMessageId: string | null = null
+    let toastMessage: ToastMessageStatus | null = null
 
     function showMessage() {
-        if (!isToastMessageAlive(toastMessageId)) {
-            toastMessageId = showToast({
+        if (!toastMessage || toastMessage.isClosed) {
+            toastMessage = showToast({
                 severity: 'success',
                 summary: 'Can you send me the report?',
                 sticky: true,
-                content: TemplateToastMessage,
-                reply: () => {
-                    closeToast(toastMessageId)
+                customContent: TemplateToastMessage,
+                customProps: {
+                    reply: () => {
+                        closeToast(toastMessage)
+                    }
                 }
             })
         }
@@ -29,96 +31,81 @@
 
     const code = {
         basic: `
-toastBC.current.show({
-    severity: 'success',
-    summary: 'Can you send me the report?',
-    sticky: true,
-    content: (props) => (
-        <div class="flex flex-column align-items-left" style="flex:1;">
-            <div class="flex align-items-center gap-2">
-                <Avatar image="/images/avatar/amyelsner.png" shape="circle" />
-                <span class="font-bold text-900">Amy Elsner</span>
-            </div>
-            <div class="font-medium text-lg my-3 text-900">{props.message.summary}</div>
-            <Button class="p-button-sm flex" label="Reply" severity="success" on:click={clear}></Button>
-        </div>
+let toastMessage: ToastMessageStatus | null = null
 
-});`,
+function showMessage() {
+    if (!toastMessage || toastMessage.isClosed) {
+        toastMessage = showToast({
+            severity: 'success',
+            summary: 'Can you send me the report?',
+            sticky: true,
+            customContent: TemplateToastMessage,
+            reply: () => {
+                closeToast(toastMessage)
+            }
+        })
+    }
+}
+`,
         javascript: `
-${importJS('Toast')}import { Button } from 'primereact/button';
-    import Avatar from '$lib/components/avatar/Avatar.svelte'
+// Parent
+let toastMessage = null
 
+function showMessage() {
+    if (!toastMessage || toastMessage.isClosed) {
+        toastMessage = showToast({
+            severity: 'success',
+            summary: 'Can you send me the report?',
+            sticky: true,
+            customContent: TemplateToastMessage,
+            reply: () => {
+                closeToast(toastMessage)
+            }
+        })
+    }
+}
 
-    
-    const toastBC = useRef(null);
+// Content : TemplateToastMessage
+${importJS(['Button'], 'export let summary: string | null = null', 'export let reply: () => void')}
 
-         toastBC.current.clear();
-        setVisible(false);
-    };
-
-        if (!visible) {
-            setVisible(true);
-            toastBC.current.clear();
-            toastBC.current.show({
-                severity: 'success',
-                summary: 'Can you send me the report?',
-                sticky: true,
-                content: (props) => (
-                    <div class="flex flex-column align-items-left" style="flex:1;">
-                        <div class="flex align-items-center gap-2">
-                            <Avatar image="/images/avatar/amyelsner.png" shape="circle" />
-                            <span class="font-bold text-900">Amy Elsner</span>
-                        </div>
-                        <div class="font-medium text-lg my-3 text-900">{props.message.summary}</div>
-                        <Button class="p-button-sm flex" label="Reply" severity="success" on:click={clear}></Button>
-                    </div>
-
-            });
-        }
-    };
-        <div class="card flex justify-content-center">
-            <Toast ref={toastBC} position="bottom-center" onRemove={clear} />
-            <Button on:click={confirm} label="Confirm" />
-        </div>
-
-        `,
+<div class="flex flex-column align-items-start" style="flex:1;">
+    <div class="flex align-items-center gap-2">
+        <!-- NOT_IMPLEMENTED <Avatar image="/images/avatar/amyelsner.png" shape="circle" />-->
+        <span class="font-bold text-900">Amy Elsner</span>
+    </div>
+    <div class="font-medium text-lg my-3 text-900">{summary}</div>
+    <Button class="p-button-sm flex" label="Reply" severity="success" on:click={reply}></Button>
+</div>
+ `,
         typescript: `
-${importTS('Toast')}import { Button } from 'primereact/button';
-    import Avatar from '$lib/components/avatar/Avatar.svelte'
+// Parent
+let toastMessage: ToastMessageStatus | null = null
 
+function showMessage() {
+    if (!toastMessage || toastMessage.isClosed) {
+        toastMessage = showToast({
+            severity: 'success',
+            summary: 'Can you send me the report?',
+            sticky: true,
+            customContent: TemplateToastMessage,
+            reply: () => {
+                closeToast(toastMessage)
+            }
+        })
+    }
+}
 
-    
-    const toastBC = useRef<Toast>(null);
+// Content : TemplateToastMessage
+${importJS(['Button'], 'export let summary: string | null = null', 'export let reply: () => void')}
 
-        toastBC.current?.clear();
-        setVisible(false);
-    };
-
-         if (!visible) {
-            setVisible(true);
-            toastBC.current?.clear();
-            toastBC.current.show({
-                severity: 'success',
-                summary: 'Can you send me the report?',
-                sticky: true,
-                content: (props) => (
-                    <div class="flex flex-column align-items-left" style="flex:1;">
-                        <div class="flex align-items-center gap-2">
-                            <Avatar image="/images/avatar/amyelsner.png" shape="circle" />
-                            <span class="font-bold text-900">Amy Elsner</span>
-                        </div>
-                        <div class="font-medium text-lg my-3 text-900">{props.message.summary}</div>
-                        <Button class="p-button-sm flex" label="Reply" severity="success" on:click={clear}></Button>
-                    </div>
-
-            });
-        }
-    };
-        <div class="card flex justify-content-center">
-            <Toast ref={toastBC} position="bottom-center" onRemove={clear} />
-            <Button on:click={confirm} label="Confirm" />
-        </div>
-
+<div class="flex flex-column align-items-start" style="flex:1;">
+    <div class="flex align-items-center gap-2">
+        <!-- NOT_IMPLEMENTED <Avatar image="/images/avatar/amyelsner.png" shape="circle" />-->
+        <span class="font-bold text-900">Amy Elsner</span>
+    </div>
+    <div class="font-medium text-lg my-3 text-900">{summary}</div>
+    <Button class="p-button-sm flex" label="Reply" severity="success" on:click={reply}></Button>
+</div>
         `
     }
 </script>

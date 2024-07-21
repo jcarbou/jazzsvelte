@@ -10,7 +10,7 @@
             {
                 "name": "getElement",
                 "parameters": [],
-                "returnType": "HTMLDivElement",
+                "returnType": "HTMLDivElement | null",
                 "description": "Used to get container element."
             },
             {
@@ -24,6 +24,18 @@
                 ],
                 "returnType": "void",
                 "description": "Toggles the visibility of the popup menu."
+            },
+            {
+                "name": "hide",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Used to hide the popup."
+            },
+            {
+                "name": "show",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Used to show the popup."
             }
         ]
     },
@@ -36,8 +48,8 @@
                 "name": "appendTo",
                 "optional": true,
                 "readonly": false,
-                "type": "null | HTMLElement | \"self\" | Function",
-                "default": "document.body",
+                "type": "null | HTMLElement | 'self' | 'body' | (() => HTMLElement | 'self' | 'body')",
+                "default": "body",
                 "description": "DOM element instance where the overlay panel should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located."
             },
             {
@@ -127,14 +139,6 @@
                 "type": "string | IconComponent | null",
                 "default": "null",
                 "description": "Icon of the submenu."
-            },
-            {
-                "name": "transitionOptions",
-                "optional": true,
-                "readonly": false,
-                "type": "CSSTransitionProps",
-                "default": "null",
-                "description": "The properties of CSSTransition can be customized, except for \"nodeRef\" and \"in\" properties."
             },
             {
                 "name": "unstyled",
@@ -308,13 +312,6 @@
                 "readonly": false,
                 "type": "Div",
                 "description": "Uses to pass attributes to the content's DOM element."
-            },
-            {
-                "name": "transition",
-                "optional": true,
-                "readonly": false,
-                "type": "TieredMenuPassThro",
-                "description": "Used to control React Transition API."
             }
         ]
     },
@@ -348,6 +345,8 @@
         ]
     },
     "state": {
+        "label": "TieredMenuState",
+        "shortLabel": "State",
         "description": "Defines current inline state in TieredMenu component.",
         "relatedProp": "",
         "callbacks": [],
