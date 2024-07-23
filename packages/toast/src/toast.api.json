@@ -2,82 +2,11 @@
     "id": "toast",
     "label": "Toast",
     "description": "Toast is used to display messages in an overlay.",
-    "methods": {
-        "label": "Methods",
-        "shortLabel": "Methods",
-        "description": "Defines methods that can be accessed by the component's reference.",
-        "values": [
-            {
-                "name": "clear",
-                "parameters": [],
-                "returnType": "void",
-                "description": "Clears the all messages from Toast."
-            },
-            {
-                "name": "getElement",
-                "parameters": [],
-                "returnType": "HTMLDivElement",
-                "description": "Used to get container element."
-            },
-            {
-                "name": "remove",
-                "parameters": [
-                    {
-                        "name": "message",
-                        "type": "ToastMessage | ToastMessage[]",
-                        "description": "Message to remove"
-                    }
-                ],
-                "returnType": "void",
-                "description": "Used to remove messages."
-            },
-            {
-                "name": "replace",
-                "parameters": [
-                    {
-                        "name": "message",
-                        "type": "ToastMessage | ToastMessage[]",
-                        "description": "Message to replace"
-                    }
-                ],
-                "returnType": "void",
-                "description": "Used to add new messages after removing all old messages."
-            },
-            {
-                "name": "show",
-                "parameters": [
-                    {
-                        "name": "message",
-                        "type": "ToastMessage | ToastMessage[]",
-                        "description": "Message to show"
-                    }
-                ],
-                "returnType": "void",
-                "description": "Used to show the message."
-            }
-        ]
-    },
     "props": {
         "label": "ToastProps",
         "shortLabel": "Props",
         "description": "Defines valid properties in Toast component. In addition to these, all properties of HTMLDivElement can be used in this component.",
         "values": [
-            {
-                "name": "appendTo",
-                "optional": true,
-                "readonly": false,
-                "type": "null | HTMLElement | \"self\" | Function",
-                "default": "self",
-                "description": "DOM element instance where the component should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located."
-            },
-            {
-                "name": "baseZIndex",
-                "optional": true,
-                "readonly": false,
-                "type": "number",
-                "default": "0",
-                "description": "Base zIndex value to add to initial layering of PrimeReact components which start from 1000."
-            },
             {
                 "name": "class",
                 "optional": true,
@@ -87,12 +16,12 @@
                 "description": "CSS classes to add to root element."
             },
             {
-                "name": "content",
-                "optional": true,
+                "name": "id",
+                "optional": false,
                 "readonly": false,
-                "type": "typeof SvelteComponent | null",
-                "default": "null",
-                "description": "Specifies a custom content for the toast. For more complex markup, use the \"content\" slot instead."
+                "type": "string",
+                "default": "default",
+                "description": "Toast identifier. Used by showToast to sent Toast messages to this Toast"
             },
             {
                 "name": "position",
@@ -127,57 +56,12 @@
                 "description": "Style to add to root element."
             },
             {
-                "name": "transitionOptions",
+                "name": "unstyled",
                 "optional": true,
                 "readonly": false,
-                "type": "CSSTransitionProps",
-                "default": "null",
-                "description": "The properties of CSSTransition can be customized, except for \"nodeRef\" and \"in\" properties."
-            }
-        ]
-    },
-    "callbacks": {
-        "label": "Callbacks",
-        "shortLabel": "Callbacks",
-        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
-        "values": [
-            {
-                "name": "onClick",
-                "parameters": [
-                    {
-                        "name": "message",
-                        "optional": false,
-                        "type": "ToastMessage",
-                        "description": "Clicked message"
-                    }
-                ],
-                "returnType": "void",
-                "description": "Callback to invoke when an active tab is collapsed by clicking on the header."
-            },
-            {
-                "name": "onHide",
-                "parameters": [],
-                "returnType": "void",
-                "description": "Callback to invoke when message becomes hidden."
-            },
-            {
-                "name": "onRemove",
-                "parameters": [
-                    {
-                        "name": "message",
-                        "optional": false,
-                        "type": "ToastMessage",
-                        "description": "Removed message"
-                    }
-                ],
-                "returnType": "void",
-                "description": "Callback to invoke when a message is removed."
-            },
-            {
-                "name": "onShow",
-                "parameters": [],
-                "returnType": "void",
-                "description": "Callback to invoke when message becomes visible."
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
             }
         ]
     },
@@ -193,12 +77,6 @@
                 "optional": false,
                 "readonly": false,
                 "type": "ToastProps"
-            },
-            {
-                "name": "state",
-                "optional": false,
-                "readonly": false,
-                "type": "ToastState"
             }
         ]
     },
@@ -215,69 +93,6 @@
                 "readonly": false,
                 "type": "Div",
                 "description": "Uses to pass attributes to the root's DOM element."
-            },
-            {
-                "name": "message",
-                "optional": true,
-                "readonly": false,
-                "type": "Div",
-                "description": "Uses to pass attributes to the message's DOM element."
-            },
-            {
-                "name": "content",
-                "optional": true,
-                "readonly": false,
-                "type": "Div",
-                "description": "Uses to pass attributes to the content's DOM element."
-            },
-            {
-                "name": "icon",
-                "optional": true,
-                "readonly": false,
-                "type": "Icon",
-                "description": "Uses to pass attributes to the icon's DOM element."
-            },
-            {
-                "name": "text",
-                "optional": true,
-                "readonly": false,
-                "type": "Div",
-                "description": "Uses to pass attributes to the text's DOM element."
-            },
-            {
-                "name": "summary",
-                "optional": true,
-                "readonly": false,
-                "type": "Span",
-                "description": "Uses to pass attributes to the summary's DOM element."
-            },
-            {
-                "name": "detail",
-                "optional": true,
-                "readonly": false,
-                "type": "Div",
-                "description": "Uses to pass attributes to the detail's DOM element."
-            },
-            {
-                "name": "closeButton",
-                "optional": true,
-                "readonly": false,
-                "type": "Button",
-                "description": "Uses to pass attributes to the close button's DOM element."
-            },
-            {
-                "name": "closeButtonIcon",
-                "optional": true,
-                "readonly": false,
-                "type": "Icon",
-                "description": "Uses to pass attributes to the close button icon's DOM element."
-            },
-            {
-                "name": "transition",
-                "optional": true,
-                "readonly": false,
-                "type": "ToastPassThroughTr",
-                "description": "Used to control React Transition API."
             }
         ]
     },
@@ -293,19 +108,5 @@
         "shortLabel": "Props types",
         "description": "Defines types used by properties of the Toast component.",
         "values": []
-    },
-    "state": {
-        "description": "Defines current inline state in Toast component.",
-        "relatedProp": "",
-        "callbacks": [],
-        "values": [
-            {
-                "name": "messages",
-                "optional": false,
-                "readonly": false,
-                "type": "any[]",
-                "description": "Current messages."
-            }
-        ]
     }
 }

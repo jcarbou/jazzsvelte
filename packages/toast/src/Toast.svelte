@@ -9,14 +9,15 @@
     import { fade, fly } from 'svelte/transition'
     import { defaultToastProps as DEFAULT, globalToastPT as globalPt } from './toast.config'
 
-    export let id: string = DEFAULT.id
-    export let position: ToastPosition | null = DEFAULT.position
     let className: string | null = DEFAULT.class
     export { className as class }
+    export let id: string = DEFAULT.id
+    export let position: ToastPosition | null = DEFAULT.position
     export let pt: Omit<ToastPassThroughOptions, 'message'> | null = null
     export let ptOptions: PassThroughOptions | null = null
-    export let unstyled: boolean = DEFAULT.unstyled
     export let style: CssStyle = DEFAULT.style
+    export let unstyled: boolean = DEFAULT.unstyled
+
     export const displayName = 'Toast'
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')

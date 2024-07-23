@@ -1,0 +1,313 @@
+{
+    "id": "toastMessage",
+    "label": "ToastMessage",
+    "description": "Toast is used to display messages in an overlay.",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the ToastMessage component.",
+        "values": [
+            { "name": "ToastMessageStatus", "value": "{ id: string; isClosed: boolean }" },
+            { "name": "ToastSeverity", "value": "'success' | 'info' | 'warn' | 'error'" }
+        ]
+    },
+    "props": {
+        "label": "ToastMessageProps",
+        "shortLabel": "Props",
+        "description": "Message options for toast component",
+        "values": [
+            {
+                "name": "id",
+                "optional": false,
+                "readonly": false,
+                "type": "string",
+                "description": "Internal property : Unique id of the message."
+            },
+            {
+                "name": "status",
+                "optional": false,
+                "readonly": false,
+                "type": "ToastMessageStatus",
+                "description": "Internal property : Message status."
+            },
+            {
+                "name": "timerId",
+                "optional": false,
+                "readonly": false,
+                "type": "ReturnType&lt;typeof setTimeout&gt;",
+                "description": "Internal property : auto close timeout identifier."
+            },
+            {
+                "name": "severity",
+                "optional": true,
+                "readonly": false,
+                "type": "ToastSeverity | null",
+                "default": "null",
+                "description": "Severity of the message : 'success' | 'info' | 'warn' | 'error'."
+            },
+            {
+                "name": "summary",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Summary content of the message."
+            },
+            {
+                "name": "detail",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Detail content of the message."
+            },
+            {
+                "name": "customContent",
+                "optional": true,
+                "readonly": false,
+                "type": "SvelteComponent | null",
+                "default": "null",
+                "description": "Custom content of the message. If enabled, the given component receives all props and <i>customProps</i> and replace summary and details section."
+            },
+            {
+                "name": "customMessage",
+                "optional": true,
+                "readonly": false,
+                "type": "SvelteComponent | null",
+                "default": "null",
+                "description": "Custom message. If enabled, the given component receives all props and <i>customProps</i> and replace the default <i>ToastMessage</i>."
+            },
+            {
+                "name": "customProps",
+                "optional": true,
+                "readonly": false,
+                "type": "Record<string, any> | null",
+                "default": "null",
+                "description": "Additional Props for <i>customContent<i/>  or <i>customMessage</i> SvelteComponent"
+            },
+            {
+                "name": "closable",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "Whether the message can be closed manually using the close icon."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Icon of the message."
+            },
+            {
+                "name": "closeIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "TimesIcon",
+                "description": "Icon of the close button."
+            },
+            {
+                "name": "sticky",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, message is not removed automatically."
+            },
+            {
+                "name": "life",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "3000",
+                "description": "Delay in milliseconds to close the message automatically."
+            },
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Style class of the message."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "CssStyle | null",
+                "default": "null",
+                "description": "Inline style of the message."
+            },
+            {
+                "name": "contentClass",
+                "optional": true,
+                "readonly": false,
+                "type": "string",
+                "default": "null",
+                "description": "Style class of the message content."
+            },
+            {
+                "name": "contentStyle",
+                "optional": true,
+                "readonly": false,
+                "type": "CssStyle | null",
+                "default": "null",
+                "description": "Inline style of the message content."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "ToastMessagePassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ]
+    },
+    "callbacks": {
+        "label": "Callbacks",
+        "shortLabel": "Callbacks",
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onClick",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "optional": false,
+                        "type": "ToastMessageStatus",
+                        "description": "Clicked message status"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when an active tab is collapsed by clicking on the header."
+            },
+            {
+                "name": "onClose",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "optional": false,
+                        "type": "ToastMessageStatus",
+                        "description": "Clicked message status"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when a message is removed."
+            }
+        ]
+    },
+    "ptMethodOptions": {
+        "label": "ToastMessagePassThroughMethodOptions",
+        "shortLabel": "PtMethodOptions",
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "ToastMessageProps"
+            }
+        ]
+    },
+    "ptOptions": {
+        "label": "ToastMessagePassThroughOptions",
+        "shortLabel": "PtOptions",
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "message",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the message's DOM element."
+            },
+            {
+                "name": "content",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the content's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "text",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the text's DOM element."
+            },
+            {
+                "name": "summary",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the summary's DOM element."
+            },
+            {
+                "name": "detail",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the detail's DOM element."
+            },
+            {
+                "name": "closeButton",
+                "optional": true,
+                "readonly": false,
+                "type": "Button",
+                "description": "Uses to pass attributes to the close button's DOM element."
+            },
+            {
+                "name": "closeButtonIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the close button icon's DOM element."
+            }
+        ]
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": true
+    }
+}

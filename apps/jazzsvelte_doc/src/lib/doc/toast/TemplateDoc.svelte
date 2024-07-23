@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importJS, importObject, importTS, importType } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
@@ -40,8 +40,10 @@ function showMessage() {
             summary: 'Can you send me the report?',
             sticky: true,
             customContent: TemplateToastMessage,
-            reply: () => {
-                closeToast(toastMessage)
+            customProps: {
+                reply: () => {
+                    closeToast(toastMessage)
+                }
             }
         })
     }
@@ -49,6 +51,12 @@ function showMessage() {
 `,
         javascript: `
 // Parent
+${importJS(
+    ['Button'],
+    importObject('showToast', 'toast'),
+    importObject('closeToast', 'toast'),
+    "import TemplateToastMessage from './TemplateToastMessage'",
+    `
 let toastMessage = null
 
 function showMessage() {
@@ -58,15 +66,20 @@ function showMessage() {
             summary: 'Can you send me the report?',
             sticky: true,
             customContent: TemplateToastMessage,
-            reply: () => {
-                closeToast(toastMessage)
+            customProps: {
+                reply: () => {
+                    closeToast(toastMessage)
+                }
             }
         })
     }
-}
+}`
+)}
 
-// Content : TemplateToastMessage
-${importJS(['Button'], 'export let summary: string | null = null', 'export let reply: () => void')}
+<Button on:click={showMessage} label="Confirm" />
+
+// Custom Content : TemplateToastMessage
+${importJS(['Button'], 'export let summary = null', 'export let reply')}
 
 <div class="flex flex-column align-items-start" style="flex:1;">
     <div class="flex align-items-center gap-2">
@@ -79,6 +92,13 @@ ${importJS(['Button'], 'export let summary: string | null = null', 'export let r
  `,
         typescript: `
 // Parent
+${importTS(
+    ['Button'],
+    importType('ToastMessageStatus', 'toast'),
+    importObject('showToast', 'toast'),
+    importObject('closeToast', 'toast'),
+    "import TemplateToastMessage from './TemplateToastMessage'",
+    `
 let toastMessage: ToastMessageStatus | null = null
 
 function showMessage() {
@@ -88,15 +108,20 @@ function showMessage() {
             summary: 'Can you send me the report?',
             sticky: true,
             customContent: TemplateToastMessage,
-            reply: () => {
-                closeToast(toastMessage)
+            customProps: {
+                reply: () => {
+                    closeToast(toastMessage)
+                }
             }
         })
     }
-}
+}`
+)}
 
-// Content : TemplateToastMessage
-${importJS(['Button'], 'export let summary: string | null = null', 'export let reply: () => void')}
+<Button on:click={showMessage} label="Confirm" />
+
+// Custom Content : TemplateToastMessage
+${importTS(['Button'], 'export let summary: string | null = null', 'export let reply: () => void')}
 
 <div class="flex flex-column align-items-start" style="flex:1;">
     <div class="flex align-items-center gap-2">

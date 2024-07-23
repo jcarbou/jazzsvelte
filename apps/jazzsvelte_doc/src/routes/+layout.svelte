@@ -68,7 +68,6 @@
     <Toast id="bottomLeft" position="bottom-left" />
     <Toast id="bottomCenter" position="bottom-center" />
     <Toast id="bottomRight" position="bottom-right" />
-    <Toast id="headless" position="top-center" content={HeadlessToast} />
 </JazzSvelte>
 
 <style>

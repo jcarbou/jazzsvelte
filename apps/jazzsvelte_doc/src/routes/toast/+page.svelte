@@ -15,7 +15,7 @@
     import TemplateDoc from '$lib/doc/toast/TemplateDoc.svelte'
     import StyledDoc from '$lib/doc/toast/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/toast/theming/TailwindDoc.svelte'
-    import { toastApiData } from '@jazzsvelte/toast'
+    import { toastApiData, toastMessageApiData } from '@jazzsvelte/toast'
 
     const docs = [
         {
@@ -108,7 +108,7 @@
     header="Toast"
     description="Toast is used to display messages in an overlay."
     componentDocs={docs}
-    apiDocs={[apiDataToDocs(toastApiData)]}
+    apiDocs={[apiDataToDocs(toastMessageApiData), apiDataToDocs(toastApiData)]}
     {ptDocs}
     {themingDocs}
 />;

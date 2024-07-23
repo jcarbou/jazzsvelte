@@ -10,7 +10,6 @@ import type {
 } from '@jazzsvelte/api'
 import type { SvelteComponent } from 'svelte'
 
-export type MessageInfo = { message: string }
 export type ToastSeverity = 'success' | 'info' | 'warn' | 'error'
 export type ToastMessageStatus = { id: string; isClosed: boolean }
 
@@ -67,15 +66,6 @@ export interface ToastMessagePassThroughOptions {
      * Uses to pass attributes to the close button icon's DOM element.
      */
     closeButtonIcon?: ToastMessagePassThroughType<HTMLSpanAttributes>
-    /**
-     * Used to manage all lifecycle hooks
-     * @see {@link ComponentHooks}
-     */
-    //hooks?: ComponentHooks
-    /**
-     * Used to control React Transition API.
-     */
-    // transition?: ToastPassThroughTransitionType;
 }
 
 /**
@@ -83,28 +73,44 @@ export interface ToastMessagePassThroughOptions {
  */
 export interface BaseToastMessageProps {
     /**
-     * Internal identifier
+     * Internal property : Unique id of the message.
      */
     id: string
     /**
-     * Internal timeout identifier
+     * Internal property : Message status
+     */
+    status: ToastMessageStatus
+    /**
+     * Internal property : auto close timeout identifier
      */
     timerId?: ReturnType<typeof setTimeout>
     /**
-     * Severity level of the message.
-     * @defaultValue info
+     * Aria label for close button
      */
-    severity?: ToastSeverity | null
+    ariaCloseLabel?: string | null
     /**
-     * Summary content of the message.
+     * CSS classes to add to root element
      */
-    summary?: string | null
+    class?: string | null
     /**
-     * Detail content of the message.
+     * Whether the message can be closed manually using the close icon.
+     * @defaultValue true
      */
-    detail?: string | null
+    closable?: boolean
     /**
-     * Custom content of the message. If enabled, summary and details properties are ignored.
+     * Style class of the content.
+     */
+    contentClass?: string | null
+    /**
+     * Style of the content.
+     */
+    contentStyle?: CssStyle | null
+    /**
+     * Icon of the close button.
+     */
+    closeIcon?: string | IconComponent | null
+    /**
+     * Custom content of the message. If enabled, the given component receives all props and <i>customProps</i> and replace summary and details section.
      */
     customContent?: typeof SvelteComponent | null
     /**
@@ -117,44 +123,21 @@ export interface BaseToastMessageProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     customProps?: Record<string, any> | null
     /**
-     * Whether the message can be closed manually using the close icon.
-     * @defaultValue true
+     * Detail content of the message.
      */
-    closable?: boolean
+    detail?: string | null
     /**
      * Icon of the message.
      */
     icon?: string | IconComponent | null
     /**
-     * Icon of the close button.
-     */
-    closeIcon?: string | IconComponent | null
-    /**
-     * When enabled, message is not removed automatically.
-     */
-    sticky?: boolean | undefined
-    /**
      * Callback to invoke when a message is removed.
      */
-    onClose?: ((id: string) => void) | null
+    onClose?: ((status: ToastMessageStatus) => void) | null
     /**
      * Callback to invoke when an active message is clicking.
      */
-    onClick?: ((id: string) => void) | null
-    /**
-     * Style class of the content.
-     */
-    contentClass?: string | null
-    /**
-     * Style of the content.
-     */
-    contentStyle?: CssStyle | null
-
-    /**
-     * Delay in milliseconds to close the message automatically.
-     * @default 3000
-     */
-    life?: number | undefined
+    onClick?: ((status: ToastMessageStatus) => void) | null
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ToastPassThroughOptions}
@@ -166,17 +149,22 @@ export interface BaseToastMessageProps {
      */
     ptOptions?: PassThroughOptions
     /**
-     * Aria label for close button
+     * Severity level of the message.
+     * @defaultValue info
      */
-    ariaCloseLabel?: string | null
+    severity?: ToastSeverity | null
     /**
-     * CSS classes to add to root element
+     * When enabled, message is not removed automatically.
      */
-    class?: string | null
+    sticky?: boolean | undefined
     /**
      * CSS classes to add to root element
      */
     style?: CssStyle | null
+    /**
+     * Summary content of the message.
+     */
+    summary?: string | null
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
@@ -200,11 +188,16 @@ export interface ToastState {
     messages: string[]
 }
 
-export interface ShowToastProps extends Omit<ToastMessageProps, 'id' | 'timerId'> {
+export interface ShowToastProps extends Omit<ToastMessageProps, 'id' | 'status' | 'timerId'> {
     /**
      * Toast group id
      */
     toastId?: string
+    /**
+     * Delay in milliseconds to close the message automatically.
+     * @default 3000
+     */
+    life?: number | undefined
 }
 
 export type StoreToastMessage = ToastMessageProps & {
@@ -212,5 +205,9 @@ export type StoreToastMessage = ToastMessageProps & {
      * Toast group id
      */
     toastId: string
-    status: ToastMessageStatus
+    /**
+     * Delay in milliseconds to close the message automatically.
+     * @default 3000
+     */
+    life?: number | undefined
 }

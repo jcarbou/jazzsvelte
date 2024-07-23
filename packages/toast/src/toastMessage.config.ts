@@ -18,7 +18,7 @@ export function toastMessagePT(options: ToastMessagePassThroughOptions) {
 /**
  * Default ToastMessages  props
  */
-export const defaultToastMessageProps: Omit<Required<BaseToastMessageProps>, 'id' | 'timerId' | 'pt' | 'ptOptions'> = {
+export const defaultToastMessageProps: Omit<Required<BaseToastMessageProps>, 'id' | 'timerId' | 'status' | 'pt' | 'ptOptions'> = {
     summary: null,
     detail: null,
     customContent: null,
@@ -28,9 +28,6 @@ export const defaultToastMessageProps: Omit<Required<BaseToastMessageProps>, 'id
     icon: null,
     closeIcon: TimesIcon,
     sticky: false,
-    life: 3000,
-    //onMouseEnter: null,
-    //onMouseLeave: null,
     onClose: null,
     onClick: null,
     contentClass: null,
@@ -39,8 +36,7 @@ export const defaultToastMessageProps: Omit<Required<BaseToastMessageProps>, 'id
     ariaCloseLabel: localeOption('close'),
     unstyled: false,
     severity: null,
-    style: null,
-    toastId: 'default'
+    style: null
 }
 
 /**

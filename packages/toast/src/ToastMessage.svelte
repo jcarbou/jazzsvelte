@@ -30,26 +30,27 @@
     export let id: string
     export let timerId: ReturnType<typeof setTimeout> | null = null
     export let status: ToastMessageStatus
-    export let severity: ToastSeverity | null = DEFAULT.severity
-    export let summary: string | null = DEFAULT.summary
-    export let detail: string | null = DEFAULT.detail
-    export let customContent: typeof SvelteComponent | null = DEFAULT.customContent
-    export let customProps: Record<string, any> | null = DEFAULT.customProps
+
+    export { className as class }
+    let className: string | null = DEFAULT.class
+    export let ariaCloseLabel: string | null = DEFAULT.ariaCloseLabel || null
     export let closable: boolean = DEFAULT.closable
-    export let icon: string | IconComponent | null = DEFAULT.icon
     export let closeIcon: string | IconComponent | null = DEFAULT.closeIcon
-    export let sticky: boolean = DEFAULT.sticky
-    export let onClose: ((id: string) => void) | null = DEFAULT.onClose
-    export let onClick: ((id: string) => void) | null = DEFAULT.onClick
     export let contentClass: string | null = DEFAULT.contentClass
     export let contentStyle: CssStyle | null = DEFAULT.contentStyle
+    export let customContent: typeof SvelteComponent | null = DEFAULT.customContent
+    export let customProps: Record<string, any> | null = DEFAULT.customProps
+    export let detail: string | null = DEFAULT.detail
+    export let icon: string | IconComponent | null = DEFAULT.icon
+    export let onClose: ((status: ToastMessageStatus) => void) | null = DEFAULT.onClose
+    export let onClick: ((status: ToastMessageStatus) => void) | null = DEFAULT.onClick
     export let pt: Omit<ToastMessagePassThroughOptions, 'message'> | null = null
     export let ptOptions: PassThroughOptions | null = null
-    let className: string | null = DEFAULT.class
-    export { className as class }
-    export let ariaCloseLabel: string | null = DEFAULT.ariaCloseLabel || null
-    export let unstyled: boolean = DEFAULT.unstyled
+    export let severity: ToastSeverity | null = DEFAULT.severity
+    export let sticky: boolean = DEFAULT.sticky
     export let style: CssStyle = DEFAULT.style
+    export let summary: string | null = DEFAULT.summary
+    export let unstyled: boolean = DEFAULT.unstyled
 
     export const displayName = 'ToastMessage'
 
@@ -163,12 +164,12 @@
     }
 
     function _onClick() {
-        onClick?.(id)
+        onClick?.(status)
     }
 
     $: _onClose = () => {
         closeToast(status)
-        onClose?.(id)
+        onClose?.(status)
     }
 </script>
 
