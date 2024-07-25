@@ -31,6 +31,7 @@ export type TooltipLayoutActionOptions = {
 
 export type TooltipLayoutActionState = {
     setMouseOverTooltip: (state: boolean) => void
+    onContentChange: () => void
 }
 
 /**

@@ -3,6 +3,7 @@ import type { TooltipActionOptions, TooltipLayoutActionOptions, TooltipLayoutAct
 
 import { getOuterWidth, getOuterHeight, findCollisionPosition, flipfitCollision, setSingleEventListener } from '@jazzsvelte/dom'
 import Tooltip from './Tooltip.svelte'
+import { tick } from 'svelte'
 
 /**
  * Action on element that declare the tooltip
@@ -19,8 +20,13 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
     const tooltipLayoutState: TooltipLayoutActionState = {
         setMouseOverTooltip: (state: boolean) => {
             mouseOverTooltip = state
-            if (!state) hide()
-        }
+            if (!state) {
+                setTimeout(() => {
+                    hide()
+                }, 50) // delay required if autoHide = false
+            }
+        },
+        onContentChange: () => {}
     }
 
     const { tooltipContent, showOnDisabled, jazzSvelteContext } = actionOptions
@@ -40,8 +46,6 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
     let showTimeout: ReturnType<typeof setTimeout> | null = null
     let hideTimeout: ReturnType<typeof setTimeout> | null = null
 
-    //console.log(`Tooltip on ${eventOption} show ${options.position || 'right'} "${content}"`)
-
     function show({ x, y }: { x?: number; y?: number }) {
         // showDelay implementation
         if (!mouseTracked && showDelay > 0) {
@@ -50,7 +54,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
             }
             showTimeout = setTimeout(() => {
                 showTimeout = null
-                if ((eventOption === 'hover' && mouseOverTarget) || (eventOption === 'focus' && targetFocus)) {
+                if ((listenMouse && mouseOverTarget) || (listenFocus && targetFocus)) {
                     _show({})
                 }
             }, showDelay)
@@ -63,6 +67,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
 
     function _show({ x, y }: { x?: number; y?: number }) {
         if (tooltipComponent) {
+            if ((x === undefined || y === undefined || !mouseTracked) && tooltipComponent.isVisible()) return
             tooltipComponent.$set({ visible: true, x, y })
             return
         }
@@ -70,6 +75,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
         if (!tooltipAnchorEl || !tooltipAnchorEl.parentElement) return
         const contextMap = new Map()
         contextMap.set('JAZZ_SVELTE', jazzSvelteContext)
+
         tooltipComponent = new Tooltip({
             props: {
                 targetElement: element,
@@ -107,7 +113,8 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
 
     function _hide() {
         if (!autoHide && (mouseOverTarget || mouseOverTooltip)) return
-        if (!tooltipComponent) return // The showDelay can generate this uuse case
+        if (!tooltipComponent) return // The showDelay can generate this use case
+        if (listenFocus && targetFocus) return
         tooltipComponent.$set({
             visible: false
         })
@@ -125,7 +132,9 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
 
     function mouseLeave() {
         mouseOverTarget = false
-        setTimeout(() => hide(), 50) // delay required if autoHide = false
+        setTimeout(() => {
+            hide()
+        }, 50) // delay required if autoHide = false
     }
 
     function blur() {
@@ -135,7 +144,6 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
 
     function mouseMove(event: MouseEvent) {
         if (!tooltipComponent || !actionOptions.tooltipOptions?.mouseTrack) return
-
         tooltipComponent.$set({
             visible: true,
             x: event.pageX,
@@ -143,12 +151,13 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
         })
     }
 
-    function updateTooltipContent(actionOptions: TooltipActionOptions) {
-        if (!tooltipComponent || tooltipContent === actionOptions?.tooltipContent) return
-
+    async function updateTooltipContent(actionOptions: TooltipActionOptions) {
+        if (!tooltipComponent) return
         tooltipComponent.$set({
             content: actionOptions?.tooltipContent
         })
+        await tick()
+        tooltipLayoutState.onContentChange()
     }
 
     listenMouse && element.addEventListener('mouseenter', mouseEnter)
@@ -160,7 +169,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
     return {
         destroy() {
             tooltipComponent?.$destroy()
-            listenMouse && element.removeEventListener('mouseover', mouseEnter)
+            listenMouse && element.removeEventListener('mouseenter', mouseEnter)
             listenMouse && element.removeEventListener('mouseleave', mouseLeave)
             listenMouse && element.removeEventListener('mousemove', mouseMove)
             listenFocus && element.removeEventListener('focus', focus)
@@ -185,6 +194,10 @@ export function tooltipLayout(
 
     function mouseLeave() {
         actionOptions.tooltipLayoutState.setMouseOverTooltip(false)
+    }
+
+    actionOptions.tooltipLayoutState.onContentChange = () => {
+        layout(actionOptions)
     }
 
     /**
@@ -267,12 +280,25 @@ export function tooltipLayout(
                 element.classList.toggle(`p-tooltip-bottom`, newPosition === 'bottom')
                 element.classList.toggle(`p-tooltip-center`, newPosition === 'center')
 
-                // setPositionState(newPosition);
-
                 const style = getComputedStyle(element)
+                let left = parseFloat(style.left),
+                    top = parseFloat(style.top)
 
-                if (position === 'left') element.style.left = parseFloat(style.left) - parseFloat(style.paddingLeft) * 2 + 'px'
-                else if (position === 'top') element.style.top = parseFloat(style.top) - parseFloat(style.paddingTop) * 2 + 'px'
+                switch (position) {
+                    case 'right':
+                        left += 1
+                        break
+                    case 'left':
+                        left -= parseFloat(style.paddingLeft) * 2
+                        break
+                    case 'top':
+                        top -= parseFloat(style.paddingTop) * 2 + 1
+                        break
+                    case 'bottom':
+                        break
+                }
+                element.style.left = left + 'px'
+                element.style.top = top + 'px'
 
                 element.classList.toggle('p-tooltip-active', true)
             })
@@ -286,7 +312,7 @@ export function tooltipLayout(
             layout(actionOptions)
         },
         destroy() {
-            element.removeEventListener('mouseover', mouseEnter)
+            element.removeEventListener('mouseenter', mouseEnter)
             element.removeEventListener('mouseleave', mouseLeave)
         }
     }

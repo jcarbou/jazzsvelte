@@ -5,8 +5,9 @@
  * @module tooltipoptions
  *
  */
-import type { PassThroughOptions } from '@jazzsvelte/api'
+import type { CssObject, PassThroughOptions } from '@jazzsvelte/api'
 import type { TooltipPassThroughOptions } from './tooltip.types'
+import { SvelteComponent } from 'svelte'
 
 /**
  * Custom tooltip event
@@ -30,11 +31,6 @@ export interface TooltipEvent {
  */
 export interface TooltipOptions {
     /**
-     * DOM element instance where the overlay panel should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located.
-     * @defaultValue document.body
-     */
-    appendTo?: 'self' | HTMLElement | null | (() => HTMLElement)
-    /**
      * Defines which position on the target element to align the positioned tooltip.
      */
     at?: string
@@ -57,6 +53,17 @@ export interface TooltipOptions {
      * Style class of the tooltip.
      */
     class?: string
+
+    /**
+     * Specifies if pressing escape key should hide the tooltip.
+     * @defaultValue false
+     */
+    closeOnEscape?: boolean
+    /**
+     * Content to be displayed in tooltip.
+     * @defaultValue null
+     */
+    content?: typeof SvelteComponent | null
     /**
      * When present, it specifies that the tooltip should be hidden.
      * @defaultValue false
@@ -119,7 +126,7 @@ export interface TooltipOptions {
     /**
      * Style of the tooltip.
      */
-    style?: string
+    style?: string | CssObject | null
     /**
      * Delay to update the tooltip in milliseconds.
      * @defaultValue 0

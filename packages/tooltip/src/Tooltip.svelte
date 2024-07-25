@@ -6,6 +6,7 @@
     import { getContext } from 'svelte'
     import { fade } from 'svelte/transition'
     import { resolvePT, zIndex } from '@jazzsvelte/api'
+    import { escape, ESC_KEY_HANDLING_PRIORITIES } from '@jazzsvelte/escape_action'
     import { tooltipLayout } from './tooltip.actions'
     import { globalButtonPT as globalPt } from './tooltip.config'
 
@@ -14,8 +15,6 @@
     export let x: number | null = null
     export let y: number | null = null
     export let visible: boolean = false
-    export let id: string | null = null
-    export let target: string | string[] | HTMLElement | null = null
     export let content: string | null = null
     export let options: TooltipOptions | undefined = undefined
     export let pt: TooltipPassThroughOptions | null = null
@@ -24,7 +23,15 @@
     export let style: CssStyle = null
     export const displayName = 'Tooltip'
 
+    export function isVisible() {
+        return visible
+    }
+    export function hide() {
+        visible = false
+    }
+
     $: positionState = options?.position || 'right'
+    const { autoZIndex, baseZIndex, closeOnEscape } = options || {}
     let classNameState = ''
 
     $: ptContext = {
@@ -64,8 +71,9 @@
     <div
         {...rootAttributes}
         transition:fade={{ duration: 300 }}
+        use:escape={{ when: !!closeOnEscape, handler: hide, priority: [ESC_KEY_HANDLING_PRIORITIES.TOOLTIP, 0] }}
         use:tooltipLayout={{ x, y, targetElement, tooltipLayoutState, options }}
-        use:zIndex={{ key: 'tooltip', jazzSvelteContext }}
+        use:zIndex={{ key: 'tooltip', jazzSvelteContext, autoZIndex, baseZIndex }}
     >
         <div {...arrowAttributes}></div>
         <div {...textAttributes}>

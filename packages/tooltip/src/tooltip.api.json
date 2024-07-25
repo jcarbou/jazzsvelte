@@ -6,94 +6,13 @@
         "label": "Methods",
         "shortLabel": "Methods",
         "description": "Defines methods that can be accessed by the component's reference.",
-        "values": [
-            {
-                "name": "getElement",
-                "parameters": [],
-                "returnType": "HTMLElement",
-                "description": "Used to get container element."
-            },
-            {
-                "name": "getTarget",
-                "parameters": [],
-                "returnType": "null | HTMLElement",
-                "description": "Used to get target element."
-            },
-            {
-                "name": "hide",
-                "parameters": [
-                    {
-                        "name": "event",
-                        "type": "TooltipEvent",
-                        "description": "Browser event."
-                    }
-                ],
-                "returnType": "null",
-                "description": "Used to hide the tooltip."
-            },
-            {
-                "name": "loadTargetEvents",
-                "parameters": [
-                    {
-                        "name": "target",
-                        "type": "string | string[] | HTMLElement | RefObject<HTMLElement>",
-                        "description": "Target element or if undefined will use current target."
-                    }
-                ],
-                "returnType": "void",
-                "description": "Used to load target events."
-            },
-            {
-                "name": "show",
-                "parameters": [
-                    {
-                        "name": "event",
-                        "type": "TooltipEvent",
-                        "description": "Browser event."
-                    }
-                ],
-                "returnType": "null",
-                "description": "Used to show the tooltip."
-            },
-            {
-                "name": "unloadTargetEvents",
-                "parameters": [
-                    {
-                        "name": "target",
-                        "type": "string | string[] | HTMLElement | RefObject<HTMLElement>",
-                        "description": "Target element or if undefined will use current target."
-                    }
-                ],
-                "returnType": "void",
-                "description": "Used to unload target events."
-            },
-            {
-                "name": "updateTargetEvents",
-                "parameters": [
-                    {
-                        "name": "target",
-                        "type": "string | string[] | HTMLElement | RefObject<HTMLElement>",
-                        "description": "Target element or if undefined will use current target."
-                    }
-                ],
-                "returnType": "void",
-                "description": "Used to reload target events. In some cases, the target element can be hidden initially. Later, when this element becomes visible, it will be necessary to bind tooltip events to this element."
-            }
-        ]
+        "values": []
     },
     "props": {
-        "label": "TooltipProps",
-        "shortLabel": "Props",
-        "description": "Defines valid properties in Tooltip component. In addition to these, all properties of TooltipOptions can be used in this component.",
+        "label": "TooltipOptions",
+        "shortLabel": "options",
+        "description": "Defines valid properties of tooltipOptions attribute.",
         "values": [
-            {
-                "name": "appendTo",
-                "optional": true,
-                "readonly": false,
-                "type": "null | HTMLElement | \"self\" | Function",
-                "default": "document.body",
-                "description": "DOM element instance where the overlay panel should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located."
-            },
             {
                 "name": "at",
                 "optional": true,
@@ -135,14 +54,6 @@
                 "description": "CSS classes to add to root element."
             },
             {
-                "name": "className",
-                "optional": true,
-                "readonly": false,
-                "type": "string | null",
-                "default": "null",
-                "description": "Style class of the tooltip."
-            },
-            {
                 "name": "closeOnEscape",
                 "optional": true,
                 "readonly": false,
@@ -154,7 +65,7 @@
                 "name": "content",
                 "optional": true,
                 "readonly": false,
-                "type": "ReactNode",
+                "type": "typeof SvelteComponent | null",
                 "default": "null",
                 "description": "Content to be displayed in tooltip."
             },
@@ -189,14 +100,6 @@
                 "type": "string | null",
                 "default": "mouseleave",
                 "description": "Event to hide the tooltip if the event property is empty."
-            },
-            {
-                "name": "id",
-                "optional": true,
-                "readonly": false,
-                "type": "string | null",
-                "default": "null",
-                "description": "Unique identifier of the element."
             },
             {
                 "name": "mouseTrack",

@@ -543,7 +543,7 @@
         use:portal={popup ? 'body' : 'none'}
         use:windowResize
         use:clickOutside={{ getAdditionalElements: () => [targetEl] }}
-        use:zIndex={{ key: 'menu', jazzSvelteContext }}
+        use:zIndex={{ key: 'menu', jazzSvelteContext, autoZIndex, baseZIndex }}
         use:matchMedia={{ query: matchMediaQuery, matches: isMobileMode }}
     >
         <TieredMenuSub
