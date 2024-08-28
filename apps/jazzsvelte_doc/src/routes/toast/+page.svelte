@@ -1,5 +1,6 @@
 <script lang="ts">
     import { apiDataToDocs } from '$lib/doc/common/doc.utils'
+    import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import AccessibilityDoc from '$lib/doc/toast/AccessibilityDoc.svelte'
@@ -16,6 +17,7 @@
     import StyledDoc from '$lib/doc/toast/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/toast/theming/TailwindDoc.svelte'
     import { toastApiData, toastMessageApiData } from '@jazzsvelte/toast'
+    import { setContext } from 'svelte'
 
     const docs = [
         {
@@ -73,7 +75,7 @@
         {
             id: 'pt.toast.options',
             label: 'Toast PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         },
         {
             id: 'pt.demo',
@@ -101,6 +103,8 @@
             ]
         }
     ]
+
+    setContext('apiData', toastApiData)
 </script>
 
 <DocComponent

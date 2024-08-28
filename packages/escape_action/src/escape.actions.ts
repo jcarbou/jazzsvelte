@@ -17,12 +17,12 @@ export const ESC_KEY_HANDLING_PRIORITIES = {
     TOOLTIP: 1200
 }
 
-type EscapePriority = [keyof typeof ESC_KEY_HANDLING_PRIORITIES, number]
+type EscapePriority = [number, number]
 
 export type EscapeOptions = {
     when?: boolean
     priority: EscapePriority
-    handler: () => void
+    handler: (event: Event) => void
 }
 
 export type EscapeEvent = CustomEvent<{ event: Event }>
@@ -93,7 +93,7 @@ const globalEscKeyHandlingLogic = {
     /**
      * Add "Esc" key handler
      */
-    addListener(callback: () => void, [primaryPriority, secondaryPriority]: EscapePriority) {
+    addListener(callback: (event: Event) => void, [primaryPriority, secondaryPriority]: EscapePriority) {
         const escKeyListeners = this.escKeyListeners
 
         if (!escKeyListeners.has(primaryPriority)) {

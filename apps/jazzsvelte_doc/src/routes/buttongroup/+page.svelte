@@ -4,6 +4,7 @@
     import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import { buttonGroupApiData } from '@jazzsvelte/button_group'
+    import { setContext } from 'svelte'
 
     const docs = [
         {
@@ -20,6 +21,7 @@
             component: DocApiPtTable
         }
     ]
+    setContext('apiData', buttonGroupApiData)
 </script>
 
 <DocComponent

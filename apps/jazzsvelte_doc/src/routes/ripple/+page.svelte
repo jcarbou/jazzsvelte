@@ -10,6 +10,7 @@
     import { JAZZ_SVELTE } from '@jazzsvelte/api'
     import { apiDataToDocs, projectName } from '$lib/doc/common/doc.utils'
     import { rippleApiData } from '@jazzsvelte/ripple'
+    import { setContext } from 'svelte'
 
     const docs = [
         {
@@ -59,6 +60,8 @@
             ]
         }
     ]
+
+    setContext('apiData', rippleApiData)
 </script>
 
 <DocComponent

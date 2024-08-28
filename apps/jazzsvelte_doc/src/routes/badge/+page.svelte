@@ -11,9 +11,10 @@
     import StyledDoc from '$lib/doc/badge/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/badge/theming/TailwindDoc.svelte'
     import { apiDataToDocs, projectName } from '$lib/doc/common/doc.utils'
-    import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
+    import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import { badgeApiData } from '@jazzsvelte/badge'
+    import { setContext } from 'svelte'
 
     const docs = [
         {
@@ -63,7 +64,7 @@
         {
             id: 'pt.badge.options',
             label: 'Badge PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         },
         {
             id: 'pt.demo',
@@ -91,6 +92,8 @@
             ]
         }
     ]
+
+    setContext('apiData', badgeApiData)
 </script>
 
 <DocComponent

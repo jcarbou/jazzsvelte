@@ -3,7 +3,7 @@
     import type { TooltipOptions } from './tooltipOptions.types'
     import type { JazzSvelteContext, HTMLDivAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
 
-    import { getContext } from 'svelte'
+    import { getContext, tick } from 'svelte'
     import { fade } from 'svelte/transition'
     import { resolvePT, zIndex } from '@jazzsvelte/api'
     import { escape, ESC_KEY_HANDLING_PRIORITIES } from '@jazzsvelte/escape_action'
@@ -26,8 +26,25 @@
     export function isVisible() {
         return visible
     }
-    export function hide() {
+
+    export async function hide(event: Event) {
+        if (!visible) return
+        options?.onBeforeHide?.({ target: targetElement, originalEvent: event })
         visible = false
+        if (options?.onHide) {
+            await tick()
+            options.onHide({ target: targetElement, originalEvent: event })
+        }
+    }
+
+    export async function show(event: Event) {
+        if (visible) return
+        options?.onBeforeShow?.({ target: targetElement, originalEvent: event })
+        visible = true
+        if (options?.onShow) {
+            await tick()
+            options.onShow({ target: targetElement, originalEvent: event })
+        }
     }
 
     $: positionState = options?.position || 'right'
@@ -36,7 +53,12 @@
 
     $: ptContext = {
         props: $$props,
-        //TODO ? : context: { right, left, top, bottom },
+        context: {
+            right: positionState === 'right',
+            left: positionState === 'left',
+            top: positionState === 'top',
+            bottom: positionState === 'bottom'
+        },
         state: { visible, position: positionState, class: classNameState },
         ptOptions,
         unstyled
@@ -85,7 +107,7 @@
 
 <style>
     @layer primereact {
-        .p-tooltip {
+        :global(.p-tooltip) {
             position: absolute;
             padding: 0.25em 0.5rem;
             /* #3687: Tooltip prevent scrollbar flickering */

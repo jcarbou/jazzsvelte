@@ -1,6 +1,5 @@
 <script lang="ts">
     import { apiDataToDocs } from '$lib/doc/common/doc.utils'
-    import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
 
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
 
@@ -22,6 +21,8 @@
     import StyledDoc from '$lib/doc/inputText/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/inputText/theming/TailwindDoc.svelte'
     import { inputTextApiData } from '@jazzsvelte/input_text'
+    import { setContext } from 'svelte'
+    import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
 
     const docs = [
         {
@@ -107,7 +108,7 @@
         {
             id: 'pt.inputtext.options',
             label: 'InputText PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         },
         {
             id: 'pt.demo',
@@ -135,6 +136,8 @@
             ]
         }
     ]
+
+    setContext('apiData', inputTextApiData)
 </script>
 
 <DocComponent

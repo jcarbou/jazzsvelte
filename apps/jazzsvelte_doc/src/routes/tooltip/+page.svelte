@@ -1,6 +1,6 @@
 <script lang="ts">
     import { apiDataToDocs } from '$lib/doc/common/doc.utils'
-    import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
+    import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import AccessibilityDoc from '$lib/doc/tooltip/AccessibilityDoc.svelte'
     import AutohideDoc from '$lib/doc/tooltip/AutohideDoc.svelte'
@@ -18,6 +18,7 @@
     import StyledDoc from '$lib/doc/tooltip/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/tooltip/theming/TailwindDoc.svelte'
     import { tooltipApiData } from '@jazzsvelte/tooltip'
+    import { setContext } from 'svelte'
 
     const docs = [
         {
@@ -86,7 +87,7 @@
         {
             id: 'pt.tooltip.options',
             label: 'Tooltip PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         },
         {
             id: 'pt.demo',
@@ -114,6 +115,8 @@
             ]
         }
     ]
+
+    setContext('apiData', tooltipApiData)
 </script>
 
 <DocComponent

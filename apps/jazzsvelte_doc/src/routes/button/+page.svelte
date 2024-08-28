@@ -24,6 +24,7 @@
     import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import { buttonApiData } from '@jazzsvelte/button'
+    import { setContext } from 'svelte'
 
     const docs = [
         {
@@ -151,6 +152,8 @@
             ]
         }
     ]
+
+    setContext('apiData', buttonApiData)
 </script>
 
 <DocComponent

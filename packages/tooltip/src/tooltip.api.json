@@ -382,6 +382,7 @@
         ]
     },
     "state": {
+        "label": "TooltipState",
         "description": "Defines current inline state in Tooltip component.",
         "relatedProp": "",
         "callbacks": [],
@@ -401,11 +402,11 @@
                 "description": "Current position state as a string."
             },
             {
-                "name": "className",
+                "name": "class",
                 "optional": false,
                 "readonly": false,
                 "type": "string",
-                "description": "Current className state as a string."
+                "description": "Current class state as a string."
             }
         ]
     }

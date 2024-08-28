@@ -1,6 +1,6 @@
 <script lang="ts">
     import { apiDataToDocs } from '$lib/doc/common/doc.utils'
-    import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
+    import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import AccessibilityDoc from '$lib/doc/speedDial/AccessibilityDoc.svelte'
     import CircleDoc from '$lib/doc/speedDial/CircleDoc.svelte'
@@ -16,6 +16,7 @@
     import TailwindDoc from '$lib/doc/speedDial/theming/TailwindDoc.svelte'
     import TooltipDoc from '$lib/doc/speedDial/TooltipDoc.svelte'
     import { speedDialApiData } from '@jazzsvelte/speed_dial'
+    import { setContext } from 'svelte'
 
     const docs = [
         {
@@ -75,7 +76,7 @@
         {
             id: 'pt.speeddial.options',
             label: 'SpeedDial PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         },
         {
             id: 'pt.demo',
@@ -103,6 +104,8 @@
             ]
         }
     ]
+
+    setContext('apiData', speedDialApiData)
 </script>
 
 <DocComponent

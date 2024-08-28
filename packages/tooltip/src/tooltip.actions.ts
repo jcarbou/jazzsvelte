@@ -241,11 +241,11 @@ export function tooltipLayout(
                     y -= height / 2 - mouseTrackTop
                     break
                 case 'top':
-                    x -= width / 2 - mouseTrackLeft
+                    x -= width / 2 - mouseTrackLeft ?? 0
                     y -= height + mouseTrackTop
                     break
                 case 'bottom':
-                    x -= width / 2 - mouseTrackLeft
+                    x -= width / 2 - mouseTrackLeft ?? 0
                     y += mouseTrackTop
                     break
                 default:

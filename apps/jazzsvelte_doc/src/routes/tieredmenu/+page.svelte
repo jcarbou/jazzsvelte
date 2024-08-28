@@ -1,6 +1,6 @@
 <script lang="ts">
     import { apiDataToDocs } from '$lib/doc/common/doc.utils'
-    import DocApiTable from '$lib/doc/common/DocApiTable.svelte'
+    import DocApiPtTable from '$lib/doc/common/DocApiPtTable.svelte'
     import DocComponent from '$lib/doc/common/DocComponent.svelte'
     import AccessibilityDoc from '$lib/doc/tieredMenu/AccessibilityDoc.svelte'
     import BasicDoc from '$lib/doc/tieredMenu/BasicDoc.svelte'
@@ -13,6 +13,7 @@
     import StyledDoc from '$lib/doc/tieredMenu/theming/StyledDoc.svelte'
     import TailwindDoc from '$lib/doc/tieredMenu/theming/TailwindDoc.svelte'
     import { tieredMenuApiData } from '@jazzsvelte/tiered_menu'
+    import { setContext } from 'svelte'
 
     const docs = [
         {
@@ -60,7 +61,7 @@
         {
             id: 'pt.tieredmenu.options',
             label: 'TieredMenu PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         }
     ]
 
@@ -83,6 +84,8 @@
             ]
         }
     ]
+
+    setContext('apiData', tieredMenuApiData)
 </script>
 
 <DocComponent
