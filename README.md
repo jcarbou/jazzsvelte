@@ -9,13 +9,20 @@ I started this project because I was looking for a motivating project to develop
 ## Current state
 
 The [PrimeReact](https://primereact.org/) documentation website is migrated to `JazzSvelte` using [SvelteKit](https://kit.svelte.dev/). This website is used to evaluate migrated component (It's also usefull for development). The list of migrated component is :
-- Button
-- Tooltip
-- Toast
-- InputText
-- SpeedDial
-- Icons
-- Ripple
+- **Form**
+   - InputText [PrimeReact version](https://primereact.org/inputtext/)
+- **Button**
+   - Button [PrimeReact version](https://primereact.org/button/)
+   - SpeedDial [PrimeReact version](https://primereact.org/speeddial/)
+- **Overlay**
+   - Tooltip [PrimeReact version](https://primereact.org/tooltip/)
+- **Menu**
+    - TieredMenu  [PrimeReact version](https://primereact.org/tooltip/)
+- **Messages**
+   - Toast [PrimeReact version](https://primereact.org/toast/)
+- **Misc**
+   -  Icons
+   - Ripple [PrimeReact version](https://primereact.org/ripple/)
 
 A migrated component is a set of content:
 - The ts/svelte code of the component
@@ -24,11 +31,11 @@ A migrated component is a set of content:
 
 ## Download
 
-`Jazzsvelte` is not yet available in javascriot registry. To see the current state, or contribute, you can read the "installation" section
+`Jazzsvelte` is not yet available from javascriot registry. To see the current state, or contribute, you can read the "installation" section
 
 ## Instalation / Contribute
 
-`JazzSvelte` code is organised using [pnpm workspace](https://pnpm.io/workspaces)  (monorepo). So [pnpm](https://pnpm.io) is required (see the [installation page](https://pnpm.io/installation))
+`JazzSvelte` code is organised using [pnpm workspace](https://pnpm.io/workspaces)  (monorepo). So [pnpm](https://pnpm.io) is required to contribute (see the [installation page](https://pnpm.io/installation))
 
 To clone and install project sources and dependencies
 
@@ -45,7 +52,7 @@ cd apps/jazzsvelte_doc
 pnpm run dev
 ```` 
 
-To run tailwind doc website :
+To run tailwind doc website (Draft) :
 
 ```
 cd apps/jazzsvelte_tailwind
