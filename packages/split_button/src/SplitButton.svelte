@@ -4,28 +4,28 @@
     import type {
         JazzSvelteContext,
         HTMLDivAttributes,
-        HTMLSpanAttributes,
-        HTMLULAttributes,
-        HTMLLIAttributes,
-        HTMLAnchorAttributes,
         IconComponent,
         CssStyle,
-        ResolvedIconPT,
         PassThroughOptions,
-        CssObject
+        CssObject,
+        AppendTo,
+        OnEvent
     } from '@jazzsvelte/api'
     import type { TooltipOptions } from '@jazzsvelte/tooltip'
-    import type { ButtonProps, ButtonSeverity } from '@jazzsvelte/button'
+    import type { ButtonSeverity } from '@jazzsvelte/button'
+    import type { MenuItem } from '@jazzsvelte/api'
 
     import { Button } from '@jazzsvelte/button'
+    import { TieredMenu } from '@jazzsvelte/tiered_menu'
     import { getContext } from 'svelte'
     import { tooltip } from '@jazzsvelte/tooltip'
-    import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
-    import { IconBuilder } from '@jazzsvelte/icons'
+    import { mergeCssClasses, resolvePT } from '@jazzsvelte/api'
     import { defaultSplitButtonProps as DEFAULT, globalSplitButtonPT as globalPt } from './splitButton.config'
-    import { MenuItem } from '@jazzsvelte/api'
     import { uniqueId } from '@jazzsvelte/utils'
 
+    export let appendTo: AppendTo = DEFAULT.appendTo
+    export let autoZIndex: boolean = DEFAULT.autoZIndex
+    export let baseZIndex: number = DEFAULT.baseZIndex
     export let buttonClass: string | null = DEFAULT.buttonClass
     export let buttonProps: any = DEFAULT.buttonProps
     export let disabled: boolean = DEFAULT.disabled
@@ -36,7 +36,6 @@
     export let loadingIcon: string | IconComponent | null = DEFAULT.loadingIcon
     export let menuButtonClass: string | null = DEFAULT.menuButtonClass
     export let menuButtonProps: any = DEFAULT.menuButtonProps
-    export let menuIcon: string | IconComponent | null = DEFAULT.menuIcon
     export let menuClass: string | null = DEFAULT.menuClass
     export let menuStyle: string | CssObject | null = DEFAULT.menuStyle
     export let model: MenuItem[] = DEFAULT.model
@@ -47,7 +46,6 @@
     export let size: SplitButtonSize | null = DEFAULT.size
     export let text: boolean = DEFAULT.text
     export let tooltipOptions: TooltipOptions | null = DEFAULT.tooltipOptions
-    //export let transitionOptions: CSSTransitionProps = DEFAULT.transitionOptions
     export let unstyled: boolean = DEFAULT.unstyled
     export let visible: boolean = DEFAULT.visible
     export let pt: SplitButtonPassThroughOptions | null = null
@@ -59,8 +57,23 @@
     export { tooltipContent as tooltip }
     export let tabIndex: string | null = null // Dom attribute
 
-    export const displayName = 'SplitButton'
+    export let onClick: OnEvent = null
+    export let onMenuHide: OnEvent = null
+    export let onMenuShow: OnEvent = null
+    export let onMenuClick: OnEvent = null
 
+    export const displayName = 'SplitButton'
+    export const show = () => {
+        visible = true
+    }
+    export const hide = () => {
+        visible = true
+    }
+    export function getElement(): HTMLDivElement {
+        return rootEl
+    }
+
+    let rootEl: HTMLDivElement
     const menuId: string = uniqueId('splitButton_menuButton_')
 
     $: ptContext = {
@@ -100,43 +113,28 @@
         ptContext
     ) satisfies HTMLDivAttributes
 
-    // "button" element
-    $: buttonAttributes = resolvePT(
-        {
-            class: ['p-splitbutton-defaultbutton', buttonClass],
-            'data-pc-section': 'button'
-        },
-        pt?.button,
-        globalPt?.button,
-        ptContext
-    ) satisfies ButtonProps
+    $: defaultButtonClass = mergeCssClasses(['p-splitbutton-defaultbutton', buttonClass]) || null
+    $: menuButtonClass = mergeCssClasses(['p-splitbutton-menubutton', menuButtonClass]) || null
 
-    // "menuButton" element
-    $: menuButtonAttributes = resolvePT(
-        {
-            class: ['p-splitbutton-menubutton', menuButtonClass],
-            'data-pc-section': 'menuButton'
-        },
-        pt?.menuButton,
-        globalPt?.menuButton,
-        ptContext
-    ) satisfies ButtonProps
-
-    let overlayVisible: boolean = false
+    let menuVisible: boolean = false
     let menuCmp: TieredMenu
 
-    function hideMenu(event: Event): void {
-        overlayVisible = false
-        menuCmp.hide(event)
+    function _onMenuHide(event: Event): void {
+        menuVisible = false
+        onMenuHide && onMenuHide(event)
     }
 
-    function showMenu(event: Event): void {
-        overlayVisible = true
-        menuCmp.show(event)
+    function _onMenuShow(event: Event): void {
+        menuVisible = true
+        onMenuShow && onMenuShow(event)
+    }
+
+    function _onClick(event: Event): void {
+        onClick && onClick(event)
     }
 
     function onMenuButtonClick(event: Event): void {
-        overlayVisible ? hideMenu(event) : showMenu(event)
+        menuVisible ? menuCmp.hide(event) : menuCmp.show(event)
     }
 
     function onMenuButtonKeyDown(event: KeyboardEvent): void {
@@ -146,160 +144,76 @@
         }
     }
 
-    // "menu" element
-    $: menuAttributes = resolvePT(
-        {
-            class: ['p-menu', 'p-menu-overlay', 'p-component', menuClass],
-            'data-pc-section': 'menu'
-        },
-        pt?.menu,
-        globalPt?.menu,
-        ptContext
-    ) satisfies HTMLDivAttributes
-
-    // "menuList" element
-    $: menuListAttributes = resolvePT(
-        {
-            class: ['p-menu-list p-reset'],
-            'data-pc-section': 'menuList'
-        },
-        pt?.menuList,
-        globalPt?.menuList,
-        ptContext
-    ) satisfies HTMLULAttributes
-
-    // "separator" element
-    $: separatorAttributes = resolvePT(
-        {
-            class: ['p-menu-separator'],
-            'data-pc-section': 'separator'
-        },
-        pt?.separator,
-        globalPt?.separator,
-        ptContext
-    ) satisfies HTMLLIAttributes
-
-    // "menuLabel" element
-    $: menuLabelAttributes = resolvePT(
-        {
-            class: ['p-menuitem-text'],
-            'data-pc-section': 'menuLabel'
-        },
-        pt?.menuLabel,
-        globalPt?.menuLabel,
-        ptContext
-    ) satisfies HTMLSpanAttributes
-
-    // "anchor" element
-    $: anchorAttributes = resolvePT(
-        {
-            class: [
-                'p-menuitem-link',
-                {
-                    'p-disabled': disabled
-                }
-            ],
-            'data-pc-section': 'anchor'
-        },
-        pt?.anchor,
-        globalPt?.anchor,
-        ptContext
-    ) satisfies HTMLAnchorAttributes
-
-    // "menuItem" element
-    $: menuItemAttributes = resolvePT(
-        {
-            class: ['p-menuitem'],
-            'data-pc-section': 'menuItem'
-        },
-        pt?.menuItem,
-        globalPt?.menuItem,
-        ptContext
-    ) satisfies HTMLLIAttributes
-
-    // "transition" element
-    /* $: transitionAttributes = resolvePT(
-        {
-            class: ['p-connected-overlay'],
-            'data-pc-section': 'transition'
-        },
-        pt?.transition,
-        globalPt?.transition,
-        ptContext
-    ) satisfies HTMLSplitButtonPassThrAttributes*/
-
-    // "icon" element
-    $: resolvedIcon = resolveIconPT(
-        icon,
-        {
-            class: ['p-button-icon p-c']
-        },
-        pt?.icon,
-        globalPt?.icon,
-        ptContext
-    ) satisfies ResolvedIconPT
-
-    // "menuIcon" element
-    $: resolvedMenuIcon = resolveIconPT(
-        menuIcon,
-        {
-            class: ['p-menuitem-icon']
-        },
-        pt?.menuIcon,
-        globalPt?.menuIcon,
-        ptContext
-    ) satisfies ResolvedIconPT
-
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
 </script>
 
-<div {...rootAttributes} {...$$restProps} use:tooltip={{ tooltipContent, tooltipOptions, jazzSvelteContext }}>
-    <Button
-        {icon}
-        {loading}
-        {loadingIcon}
-        {severity}
-        {label}
-        aria-label={label}
-        {raised}
-        {disabled}
-        {tabIndex}
-        {size}
-        {outlined}
-        {text}
-        {unstyled}
-        pt={pt?.button}
-        {...buttonAttributes}
-        {...buttonProps}
-        on:click><slot name="button" /></Button
+{#if visible}
+    <div
+        bind:this={rootEl}
+        {...rootAttributes}
+        {...$$restProps}
+        use:tooltip={{ tooltipContent, tooltipOptions, jazzSvelteContext }}
     >
-    <Button
-        icon={dropdownIcon}
-        on:click={onMenuButtonClick}
-        {disabled}
-        aria-expanded={overlayVisible}
-        aria-haspopup="true"
-        aria-controls={menuId}
-        {...menuButtonProps}
-        {size}
-        {severity}
-        {outlined}
-        {text}
-        {raised}
-        pt={pt?.menuButton}
-        onKeyDown={onMenuButtonKeyDown}
-        {unstyled}
-        {...menuButtonAttributes}
-    />
-    <div {...menuAttributes}></div>
-    <ulist {...menuListAttributes}></ulist>
-    <li {...separatorAttributes}></li>
-    <span {...menuLabelAttributes}></span>
-    <anchor {...anchorAttributes}></anchor>
-    <li {...menuItemAttributes}></li>
-    <IconBuilder {resolvedIcon} />
-    <IconBuilder resolvedIcon={resolvedMenuIcon} />
-</div>
+        <Button
+            {icon}
+            {loading}
+            {loadingIcon}
+            {severity}
+            {label}
+            aria-label={label}
+            {raised}
+            {disabled}
+            {tabIndex}
+            {size}
+            {outlined}
+            {text}
+            {unstyled}
+            class={defaultButtonClass}
+            data-pc-section="button"
+            pt={pt?.button}
+            {...buttonProps}
+            on:click={_onClick}
+        >
+            <slot name="buttonLabel" slot="label" />
+        </Button>
+        <Button
+            icon={dropdownIcon}
+            on:click={onMenuButtonClick}
+            {disabled}
+            aria-expanded={menuVisible}
+            aria-haspopup="true"
+            aria-controls={menuId}
+            {...menuButtonProps}
+            {size}
+            {severity}
+            {outlined}
+            {text}
+            {raised}
+            {unstyled}
+            class={menuButtonClass}
+            data-pc-section="menuButton"
+            pt={pt?.menuButton}
+            onKeyDown={onMenuButtonKeyDown}
+        />
+        <TieredMenu
+            bind:this={menuCmp}
+            popup={true}
+            {unstyled}
+            {model}
+            {appendTo}
+            id={menuId}
+            style={menuStyle}
+            class={menuClass}
+            {autoZIndex}
+            {baseZIndex}
+            onClick={onMenuClick}
+            onShow={_onMenuShow}
+            onHide={_onMenuHide}
+            pt={pt?.menu}
+            data-pc-section="menu"
+        />
+    </div>
+{/if}
 
 <style>
     @layer primereact {
@@ -308,10 +222,10 @@
             position: relative;
         }
 
-        .p-splitbutton .p-splitbutton-defaultbutton,
-        .p-splitbutton.p-button-rounded > .p-splitbutton-defaultbutton.p-button,
-        .p-splitbutton.p-button-outlined > .p-splitbutton-defaultbutton.p-button,
-        .p-splitbutton.p-button-outlined > .p-splitbutton-defaultbutton.p-button-outlined.p-button:hover {
+        .p-splitbutton :global(.p-splitbutton-defaultbutton),
+        .p-splitbutton.p-button-rounded > :global(.p-splitbutton-defaultbutton.p-button),
+        .p-splitbutton.p-button-outlined > :global(.p-splitbutton-defaultbutton.p-button),
+        .p-splitbutton.p-button-outlined > :global(.p-splitbutton-defaultbutton.p-button-outlined.p-button:hover) {
             flex: 1 1 auto;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
@@ -319,8 +233,8 @@
         }
 
         .p-splitbutton-menubutton,
-        .p-splitbutton.p-button-rounded > .p-splitbutton-menubutton.p-button,
-        .p-splitbutton.p-button-outlined > .p-splitbutton-menubutton.p-button {
+        .p-splitbutton.p-button-rounded > :global(.p-splitbutton-menubutton.p-button),
+        .p-splitbutton.p-button-outlined > :global(.p-splitbutton-menubutton.p-button) {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -328,7 +242,7 @@
             border-bottom-left-radius: 0;
         }
 
-        .p-splitbutton .p-menu {
+        .p-splitbutton :global(.p-menu) {
             min-width: 100%;
         }
 

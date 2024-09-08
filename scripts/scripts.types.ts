@@ -59,8 +59,6 @@ export type CmpContext = {
     cmpname: string
     cmp_name: string
     cmpHomePath: string
-    cmpDocHomePath: string
-    cmpDocPagePath: string
     cmpSrcPath: string
     packagePath: string
     tsConfigPath: string
@@ -76,8 +74,11 @@ export type CmpContext = {
     prCmpApiDocPath: string
     prCmpDocPagePath: string
     prCmpDocPageDirPath: string
-    cmpDocPageSveltePath: string
-    cmpDocPageSvelteTsPath: string
+    cmpDocHomePath: string
+    cmpDocHomeMainPath: string
+    cmpDocRoutesPath: string
+    cmpDocRoutesPageSveltePath: string
+    cmpDocRoutesPageTsPath: string
 }
 
 export type ScriptOptions = { cmpName: string; test?: boolean; override?: boolean }

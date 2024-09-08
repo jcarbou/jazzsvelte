@@ -15,14 +15,16 @@ function fixImportCaseError(content: string): string {
 }
 
 function importCmpDocPatch(content: string, context: CmpContext): string {
-    const { cmpname, cmpName } = context
+    const { cmpname } = context
     const importCmpDocThemingRegExp = new RegExp(
         `import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmpname}\\/(\\w*)\\/.*`,
         'gm'
     )
     const importCmpDocRegExp = new RegExp(`import \\{\\s*(\\w*)\\s*\\}.*@\\/components\\/doc\\/${cmpname}.*`, 'gm')
-    content = content.replace(importCmpDocThemingRegExp, `    import $1 from '$lib/doc/${cmpName}/$2/$1.svelte'`)
-    return content.replace(importCmpDocRegExp, `    import $1 from '$lib/doc/${cmpName}/$1.svelte'`)
+    content = content.replace(importCmpDocThemingRegExp, `    import $1 from './$2/$1.svelte'`)
+    content = content.replace(importCmpDocRegExp, `    import $1 from './$1.svelte'`)
+    content = content.replaceAll('$lib/doc', `..`)
+    return content
 }
 
 function removeXXXDemo(content: string): string {
@@ -30,13 +32,38 @@ function removeXXXDemo(content: string): string {
     return content
 }
 
-export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
-    const { cmpDocPageSveltePath, cmpDocPagePath, cmpDocPageSvelteTsPath, prCmpDocPagePath, prCmpDocPageDirPath } = context
-    const { test, override } = options
-    let filePath = cmpDocPageSveltePath
+function patchDocComponent(content: string, context: CmpContext): string {
+    const { cmpName, cmp_name } = context
+    content = content.replace('componentDocs={docs}', '{docs}')
+    content = content.replace('title="React', 'title="{projectName}')
+    content = content.replace(/apiDocs=\{\[.*\]\}/g, `apiDocData={[${cmpName}ApiData]}`)
+    content = content.replace(
+        '<script lang="ts">',
+        `<script lang="ts">
+   import { projectName } from '../common/doc.utils'
+   import { ${cmpName}ApiData } from '@jazzsvelte/${cmp_name}'`
+    )
 
-    if (fileExist(cmpDocPageSveltePath) && !override) {
-        console.log(`File ${cmpDocPageSveltePath} already generated ! Used override option to force new generation`)
+    return content
+}
+
+export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
+    const {
+        CmpName,
+        cmpName,
+        cmpDocRoutesPageSveltePath,
+        cmpDocHomeMainPath,
+        cmpDocHomePath,
+        cmpDocRoutesPageTsPath,
+        cmpDocRoutesPath,
+        prCmpDocPagePath,
+        prCmpDocPageDirPath
+    } = context
+    const { test, override } = options
+    let filePath = cmpDocHomeMainPath
+
+    if (fileExist(cmpDocHomeMainPath) && !override) {
+        console.log(`File ${cmpDocHomeMainPath} already generated ! Used override option to force new generation`)
         return
     }
     if (test) {
@@ -51,10 +78,11 @@ export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
         regexpPatch,
         importCmpDocPatch,
         jsonStyleToString,
-        addScriptTsDeclaration
+        addScriptTsDeclaration,
+        patchDocComponent
     ])
     writeText(
-        cmpDocPageSvelteTsPath,
+        cmpDocRoutesPageTsPath,
         `import { dev } from '$app/environment';
 
     // we don't need any JS on this page, though we'll load
@@ -65,7 +93,19 @@ export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
     // it so that it gets served as a static asset in production
     export const prerender = true;`
     )
-    console.log(`"${cmpDocPageSvelteTsPath}" generated !`)
+    console.log(`"${cmpDocRoutesPageTsPath}" generated !`)
 
-    prettierFormat(cmpDocPagePath)
+    writeText(
+        cmpDocRoutesPageSveltePath,
+        `<script lang="ts">
+    import ${CmpName}Doc from '$lib/doc/${cmpName}/${CmpName}Doc.svelte'
+</script>
+
+<${CmpName}Doc />
+`
+    )
+    console.log(`"${cmpDocRoutesPageSveltePath}" generated !`)
+
+    prettierFormat(cmpDocRoutesPath)
+    prettierFormat(cmpDocHomePath)
 }

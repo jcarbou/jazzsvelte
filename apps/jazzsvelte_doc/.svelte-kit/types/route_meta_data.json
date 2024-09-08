@@ -23,6 +23,9 @@
 	"/speeddial": [
 		"src/routes/speeddial/+page.ts"
 	],
+	"/splitbutton": [
+		"src/routes/splitbutton/+page.ts"
+	],
 	"/tieredmenu": [
 		"src/routes/tieredmenu/+page.ts"
 	],

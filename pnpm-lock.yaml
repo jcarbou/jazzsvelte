@@ -146,63 +146,6 @@ importers:
 
   apps/jazzsvelte_doc:
     dependencies:
-      '@jazzsvelte/api':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/api
-      '@jazzsvelte/badge':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/badge
-      '@jazzsvelte/button':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/button
-      '@jazzsvelte/button_group':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/button_group
-      '@jazzsvelte/check_icon':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/_icons/check
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/dom
-      '@jazzsvelte/exclamationtriangle_icon':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/_icons/exclamationtriangle
-      '@jazzsvelte/icons':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/icons
-      '@jazzsvelte/infocircle_icon':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/_icons/infocircle
-      '@jazzsvelte/input_text':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/input_text
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/object
-      '@jazzsvelte/ripple':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/ripple
-      '@jazzsvelte/speed_dial':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/speed_dial
-      '@jazzsvelte/spinner_icon':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/_icons/spinner
-      '@jazzsvelte/tiered_menu':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/tiered_menu
-      '@jazzsvelte/timescircle_icon':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/_icons/timescircle
-      '@jazzsvelte/toast':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/toast
-      '@jazzsvelte/tooltip':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/tooltip
-      '@jazzsvelte/utils':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/utils
       chart.js:
         specifier: 4.4.1
         version: 4.4.1
@@ -246,6 +189,66 @@ importers:
       '@fontsource/fira-mono':
         specifier: ^4.5.10
         version: 4.5.10
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/api
+      '@jazzsvelte/badge':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/badge
+      '@jazzsvelte/button':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/button
+      '@jazzsvelte/button_group':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/button_group
+      '@jazzsvelte/check_icon':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/_icons/check
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/dom
+      '@jazzsvelte/exclamationtriangle_icon':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/_icons/exclamationtriangle
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/icons
+      '@jazzsvelte/infocircle_icon':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/_icons/infocircle
+      '@jazzsvelte/input_text':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/input_text
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/object
+      '@jazzsvelte/ripple':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/ripple
+      '@jazzsvelte/speed_dial':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/speed_dial
+      '@jazzsvelte/spinner_icon':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/_icons/spinner
+      '@jazzsvelte/split_button':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/split_button
+      '@jazzsvelte/tiered_menu':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/tiered_menu
+      '@jazzsvelte/timescircle_icon':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/_icons/timescircle
+      '@jazzsvelte/toast':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/toast
+      '@jazzsvelte/tooltip':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/tooltip
+      '@jazzsvelte/utils':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/utils
       '@neoconfetti/svelte':
         specifier: ^1.0.0
         version: 1.0.0
@@ -363,6 +366,28 @@ importers:
 
   apps/jazzsvelte_tailwind:
     dependencies:
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
+      path:
+        specifier: ^0.12.7
+        version: 0.12.7
+      primeicons:
+        specifier: ^6.0.1
+        version: 6.0.1
+      prism-svelte:
+        specifier: ^0.5.0
+        version: 0.5.0
+      prismjs:
+        specifier: ^1.29.0
+        version: 1.29.0
+      quill:
+        specifier: 1.3.7
+        version: 1.3.7
+    devDependencies:
+      '@fontsource/fira-mono':
+        specifier: ^4.5.10
+        version: 4.5.10
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../../packages/api
@@ -378,6 +403,9 @@ importers:
       '@jazzsvelte/check_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/check
+      '@jazzsvelte/doc':
+        specifier: workspace:^0.1.0
+        version: link:../jazzsvelte_doc
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
         version: link:../../packages/dom
@@ -417,28 +445,6 @@ importers:
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
         version: link:../../packages/utils
-      fs-extra:
-        specifier: ^11.2.0
-        version: 11.2.0
-      path:
-        specifier: ^0.12.7
-        version: 0.12.7
-      primeicons:
-        specifier: ^6.0.1
-        version: 6.0.1
-      prism-svelte:
-        specifier: ^0.5.0
-        version: 0.5.0
-      prismjs:
-        specifier: ^1.29.0
-        version: 1.29.0
-      quill:
-        specifier: 1.3.7
-        version: 1.3.7
-    devDependencies:
-      '@fontsource/fira-mono':
-        specifier: ^4.5.10
-        version: 4.5.10
       '@neoconfetti/svelte':
         specifier: ^1.0.0
         version: 1.0.0
@@ -828,34 +834,35 @@ importers:
 
   packages/badge:
     dependencies:
-      '@jazzsvelte/api':
-        specifier: workspace:^0.1.0
-        version: link:../api
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object
     devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
 
   packages/button:
     dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
       '@jazzsvelte/badge':
         specifier: workspace:^0.1.0
         version: link:../badge
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../dom
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../ripple
@@ -865,16 +872,15 @@ importers:
       '@jazzsvelte/stop_propagation_action':
         specifier: workspace:^0.1.0
         version: link:../stop_propagation_action
-      '@jazzsvelte/tooltip':
-        specifier: workspace:^0.1.0
-        version: link:../tooltip
-    devDependencies:
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
+      '@jazzsvelte/tooltip':
+        specifier: workspace:^0.1.0
+        version: link:../tooltip
 
   packages/button_group:
-    dependencies:
+    devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
@@ -908,28 +914,29 @@ importers:
 
   packages/icons:
     dependencies:
-      '@jazzsvelte/api':
-        specifier: workspace:*
-        version: link:../api
       '@jazzsvelte/object':
-        specifier: workspace:*
+        specifier: workspace:^0.1.0
         version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
 
   packages/input_text:
     dependencies:
-      '@jazzsvelte/api':
-        specifier: workspace:^0.1.0
-        version: link:../api
       '@jazzsvelte/key_filter_action':
         specifier: workspace:^0.1.0
         version: link:../key_filter_action
-      '@jazzsvelte/tooltip':
-        specifier: workspace:^0.1.0
-        version: link:../tooltip
     devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
+      '@jazzsvelte/tooltip':
+        specifier: workspace:^0.1.0
+        version: link:../tooltip
 
   packages/key_filter_action:
     dependencies:
@@ -955,74 +962,84 @@ importers:
 
   packages/ripple:
     dependencies:
-      '@jazzsvelte/api':
-        specifier: workspace:^0.1.0
-        version: link:../api
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
         version: link:../dom
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
 
   packages/speed_dial:
     dependencies:
+      '@jazzsvelte/click_outside_action':
+        specifier: workspace:^0.1.0
+        version: link:../click_outside_action
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+      '@jazzsvelte/utils':
+        specifier: workspace:^0.1.0
+        version: link:../utils
+    devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
-      '@jazzsvelte/click_outside_action':
-        specifier: workspace:^0.1.0
-        version: link:../click_outside_action
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
       '@jazzsvelte/minus_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/minus
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
       '@jazzsvelte/plus_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/plus
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../ripple
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
       '@jazzsvelte/tooltip':
         specifier: workspace:^0.1.0
         version: link:../tooltip
+
+  packages/split_button:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
         version: link:../utils
     devDependencies:
-      '@jazzsvelte/test':
-        specifier: workspace:^0.1.0
-        version: link:../test
-
-  packages/split_button:
-    dependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
+      '@jazzsvelte/chevrondown_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/chevrondown
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
-      '@jazzsvelte/object':
+      '@jazzsvelte/spinner_icon':
         specifier: workspace:^0.1.0
-        version: link:../object
-      '@jazzsvelte/tooltip':
-        specifier: workspace:^0.1.0
-        version: link:../tooltip
-      '@jazzsvelte/utils':
-        specifier: workspace:^0.1.0
-        version: link:../utils
-    devDependencies:
+        version: link:../_icons/spinner
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
+      '@jazzsvelte/tiered_menu':
+        specifier: workspace:^0.1.0
+        version: link:../tiered_menu
+      '@jazzsvelte/tooltip':
+        specifier: workspace:^0.1.0
+        version: link:../tooltip
 
   packages/stop_propagation_action:
     dependencies:
@@ -1034,28 +1051,19 @@ importers:
         version: link:../object
 
   packages/test:
-    dependencies:
+    devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
 
   packages/tiered_menu:
     dependencies:
-      '@jazzsvelte/angleright_icon':
-        specifier: workspace:^0.1.0
-        version: link:../_icons/angleright
-      '@jazzsvelte/api':
-        specifier: workspace:^0.1.0
-        version: link:../api
       '@jazzsvelte/click_outside_action':
         specifier: workspace:^0.1.0
         version: link:../click_outside_action
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
         version: link:../dom
-      '@jazzsvelte/icons':
-        specifier: workspace:^0.1.0
-        version: link:../icons
       '@jazzsvelte/match_media_action':
         specifier: workspace:^0.1.0
         version: link:../match_media_action
@@ -1065,9 +1073,6 @@ importers:
       '@jazzsvelte/portal_action':
         specifier: workspace:^0.1.0
         version: link:../portal_action
-      '@jazzsvelte/ripple':
-        specifier: workspace:^0.1.0
-        version: link:../ripple
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
         version: link:../utils
@@ -1075,12 +1080,24 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../window_resize_action
     devDependencies:
+      '@jazzsvelte/angleright_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/angleright
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/ripple':
+        specifier: workspace:^0.1.0
+        version: link:../ripple
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
 
   packages/toast:
-    dependencies:
+    devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
@@ -1108,15 +1125,16 @@ importers:
 
   packages/tooltip:
     dependencies:
-      '@jazzsvelte/api':
-        specifier: workspace:*
-        version: link:../api
       '@jazzsvelte/dom':
         specifier: workspace:*
         version: link:../dom
       '@jazzsvelte/escape_action':
         specifier: workspace:*
         version: link:../escape_action
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:*
+        version: link:../api
 
   packages/utils:
     dependencies:

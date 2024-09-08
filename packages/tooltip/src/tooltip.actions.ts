@@ -233,19 +233,19 @@ export function tooltipLayout(
             switch (position) {
                 case 'left':
                     x -= width + mouseTrackLeft
-                    y -= height / 2 - mouseTrackTop
+                    y -= height / 2 - (mouseTrackTop ?? 0)
                     break
                 case 'right':
                 case 'mouse':
                     x += mouseTrackLeft
-                    y -= height / 2 - mouseTrackTop
+                    y -= height / 2 - (mouseTrackTop ?? 0)
                     break
                 case 'top':
-                    x -= width / 2 - mouseTrackLeft ?? 0
-                    y -= height + mouseTrackTop
+                    x -= width / 2 - (mouseTrackLeft ?? 0)
+                    y -= height + (mouseTrackTop ?? 0)
                     break
                 case 'bottom':
-                    x -= width / 2 - mouseTrackLeft ?? 0
+                    x -= width / 2 - (mouseTrackLeft ?? 0)
                     y += mouseTrackTop
                     break
                 default:

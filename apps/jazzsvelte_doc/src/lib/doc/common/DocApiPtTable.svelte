@@ -11,8 +11,8 @@
     let rows: string[][] | undefined
 
     $: {
-        const apiDocs = getContext<ApiDocData>('apiData')
-        const ptOptions = apiDocs.ptOptions
+        const apiDocs = getContext<ApiDocData[]>('apiData')
+        const ptOptions = apiDocs[0].ptOptions
         rows = ptOptions?.values.map(({ name, description }, index) => [index + 1 + '', name + '', description + ''])
     }
 </script>

@@ -9,18 +9,18 @@
         "test:update": "vitest run -u"
     },
     "devDependencies": {
-        "@jazzsvelte/test": "workspace:^0.1.0"
-    },
-    "dependencies": {
         "@jazzsvelte/api": "workspace:^0.1.0",
         "@jazzsvelte/badge": "workspace:^0.1.0",
-        "@jazzsvelte/dom": "workspace:^0.1.0",
         "@jazzsvelte/icons": "workspace:^0.1.0",
-        "@jazzsvelte/object": "workspace:^0.1.0",
         "@jazzsvelte/ripple": "workspace:^0.1.0",
         "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
         "@jazzsvelte/stop_propagation_action": "workspace:^0.1.0",
-        "@jazzsvelte/tooltip": "workspace:^0.1.0"
+        "@jazzsvelte/tooltip": "workspace:^0.1.0",
+        "@jazzsvelte/test": "workspace:^0.1.0"
+    },
+    "dependencies": {
+        "@jazzsvelte/dom": "workspace:^0.1.0",
+        "@jazzsvelte/object": "workspace:^0.1.0"
     },
     "keywords": [],
     "author": "Jerome Carbou",

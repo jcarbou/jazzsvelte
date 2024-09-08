@@ -15,6 +15,16 @@
         "format:check": "prettier --check \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\""
     },
     "dependencies": {
+        "fs-extra": "^11.2.0",
+        "path": "^0.12.7",
+        "primeicons": "^6.0.1",
+        "prism-svelte": "^0.5.0",
+        "prismjs": "^1.29.0",
+        "quill": "1.3.7"
+    },
+    "devDependencies": {
+        "@fontsource/fira-mono": "^4.5.10",
+        "@jazzsvelte/doc": "workspace:^0.1.0",
         "@jazzsvelte/api": "workspace:^0.1.0",
         "@jazzsvelte/badge": "workspace:^0.1.0",
         "@jazzsvelte/button": "workspace:^0.1.0",
@@ -33,15 +43,6 @@
         "@jazzsvelte/toast": "workspace:^0.1.0",
         "@jazzsvelte/tooltip": "workspace:^0.1.0",
         "@jazzsvelte/utils": "workspace:^0.1.0",
-        "fs-extra": "^11.2.0",
-        "path": "^0.12.7",
-        "primeicons": "^6.0.1",
-        "prism-svelte": "^0.5.0",
-        "prismjs": "^1.29.0",
-        "quill": "1.3.7"
-    },
-    "devDependencies": {
-        "@fontsource/fira-mono": "^4.5.10",
         "@neoconfetti/svelte": "^1.0.0",
         "@rollup/plugin-alias": "^5.1.0",
         "@rollup/plugin-babel": "^6.0.4",

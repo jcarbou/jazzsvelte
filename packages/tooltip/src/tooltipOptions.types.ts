@@ -128,6 +128,11 @@ export interface TooltipOptions {
      */
     style?: string | CssObject | null
     /**
+     * When enabled, it removes component related styles in the core.
+     * @default  false
+     */
+    unstyled?: boolean
+    /**
      * Delay to update the tooltip in milliseconds.
      * @defaultValue 0
      */

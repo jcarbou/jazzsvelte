@@ -55,6 +55,7 @@
     export let breakpoint: string | null = DEFAULT.breakpoint
     let className: string | null = DEFAULT.class
     export { className as class }
+    export let id: string | null = null
     export let model: MenuItem[] = DEFAULT.model
     export let popup: boolean = DEFAULT.popup
     export let pt: TieredMenuPassThroughOptions | null = null
@@ -84,9 +85,12 @@
     export function show(event: Event): void {
         popup && !visible && _show(event)
     }
+    export function isVisible(): boolean {
+        return visible
+    }
 
     $: visible = !popup satisfies boolean
-    const id = uniqueId('tieredMenu_')
+    $: _id = (id || uniqueId('tieredMenu_')) satisfies string
 
     $: ptContext = {
         props: { ...DEFAULT, ...$$props },
@@ -153,7 +157,7 @@
     let containerEl: HTMLDivElement | null = null
     $: focusedItemId =
         $focusedItemInfo.index !== -1
-            ? `${id}${$focusedItemInfo.parentKey ? '_' + $focusedItemInfo.parentKey : ''}_${$focusedItemInfo.index}`
+            ? `${_id}${$focusedItemInfo.parentKey ? '_' + $focusedItemInfo.parentKey : ''}_${$focusedItemInfo.index}`
             : null
     let searchValue: string | null = null
     let searchTimeoutId: ReturnType<typeof setTimeout> | null = null
@@ -369,7 +373,7 @@
     }
 
     function scrollInView(index: number = -1) {
-        const elementId = index !== -1 ? `${id}_${index}` : focusedItemId
+        const elementId = index !== -1 ? `${_id}_${index}` : focusedItemId
         const element = findSingleEl(menu.getElement(), `li[id="${elementId}"]`)
 
         element?.scrollIntoView?.({ block: 'nearest', inline: 'start' })
@@ -511,7 +515,7 @@
     }
 
     setContext<TieredMenuTreeContext>('tieredMenuTree', {
-        menuId: id,
+        menuId: _id,
         popup,
         submenuIcon,
         unstyled,
@@ -532,6 +536,7 @@
 
 {#if processedItems && visible}
     <div
+        id={_id}
         {...rootAttributes}
         {...$$restProps}
         bind:this={containerEl}
@@ -547,7 +552,7 @@
         use:matchMedia={{ query: matchMediaQuery, matches: isMobileMode }}
     >
         <TieredMenuSub
-            id={id + '_list'}
+            id={_id + '_list'}
             bind:this={menu}
             menuProps={$$props}
             model={processedItems}

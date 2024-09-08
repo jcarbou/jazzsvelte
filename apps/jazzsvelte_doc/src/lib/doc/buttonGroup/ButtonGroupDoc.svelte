@@ -1,77 +1,33 @@
 <script lang="ts">
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-    import { Button } from '@jazzsvelte/button'
+    import BasicDoc from './BasicDoc.svelte'
+    import { projectName } from '../common/doc.utils'
+    import DocApiPtTable from '../common/DocApiPtTable.svelte'
+    import DocComponent from '../common/DocComponent.svelte'
+    import { buttonGroupApiData } from '@jazzsvelte/button_group'
+    import type { Doc } from '../common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
-    import { ButtonGroup } from '@jazzsvelte/button_group'
-    import { importJS, importTS } from '../common/doc.utils'
+    const docs = [
+        {
+            id: 'buttonset',
+            label: 'Button Group',
+            component: BasicDoc
+        }
+    ]
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
-<ButtonGroup>
-    <Button label="Save" icon="pi pi-check" />
-    <Button label="Delete" icon="pi pi-trash" />
-    <Button label="Cancel" icon="pi pi-times" />
-</ButtonGroup>
-
-<ButtonGroup rounded={true} iconPos="right" size="small">
-    <Button label="Save" icon="pi pi-check" />
-    <Button label="Delete" icon="pi pi-trash" />
-    <Button label="Cancel" icon="pi pi-times" />
-</ButtonGroup>
-        `,
-        javascript: `
- ${importJS(['Button', 'ButtonGroup'])}
-
-    <ButtonGroup>
-        <Button label="Save" icon="pi pi-check" />
-        <Button label="Delete" icon="pi pi-trash" />
-        <Button label="Cancel" icon="pi pi-times" />
-    </ButtonGroup>
-
-    <ButtonGroup rounded={true} iconPos="right" size="small">
-        <Button label="Save" icon="pi pi-check" />
-        <Button label="Delete" icon="pi pi-trash" />
-        <Button label="Cancel" icon="pi pi-times" />
-    </ButtonGroup>
-        `,
-        typescript: `
-        ${importTS(['Button', 'ButtonGroup'])}
-
-    <ButtonGroup>
-        <Button label="Save" icon="pi pi-check" />
-        <Button label="Delete" icon="pi pi-trash" />
-        <Button label="Cancel" icon="pi pi-times" />
-    </ButtonGroup>
-
-    <ButtonGroup rounded={true} iconPos="right" size="small">
-        <Button label="Save" icon="pi pi-check" />
-        <Button label="Delete" icon="pi pi-trash" />
-        <Button label="Cancel" icon="pi pi-times" />
-    </ButtonGroup>
-        `
-    }
+    const ptDocs = [
+        {
+            id: 'pt.button.options',
+            label: 'Button PT Options',
+            component: DocApiPtTable
+        }
+    ]
 </script>
 
-<DocSectionText {docSection}>
-    <p>
-        Multiple buttons are grouped when wrapped inside an element with <i>ButtonGroup</i> component.
-    </p>
-</DocSectionText>
-<div class="card flex flex-column gap-3 justify-content-center">
-    <ButtonGroup>
-        <Button label="Save" icon="pi pi-check" />
-        <Button label="Delete" icon="pi pi-trash" />
-        <Button label="Cancel" icon="pi pi-times" />
-    </ButtonGroup>
-
-    <ButtonGroup rounded={true} iconPos="right" size="small">
-        <Button label="Save" icon="pi pi-check" />
-        <Button label="Delete" icon="pi pi-trash" />
-        <Button label="Cancel" icon="pi pi-times" />
-    </ButtonGroup>
-</div>
-<DocSectionCode {code} />
+<DocComponent
+    title="{projectName} Button Group Component"
+    header="Button Group"
+    description="Multiple buttons are grouped when wrapped inside an element with ButtonGroup component."
+    apiDocData={[buttonGroupApiData]}
+    {docs}
+    {ptDocs}
+/>

@@ -1,10 +1,11 @@
 <script lang="ts">
     import { setContext } from 'svelte'
     import type { LinkTargets, ApiDocs, Doc } from './doc.types'
-    import { buildApiDocs } from './oldDocApiData'
+    import { apiDataToDocs } from '$lib/doc/common/doc.utils'
     import DocApiSection from './DocApiSection.svelte'
     import DocSectionNav from './DocSectionNav.svelte'
     import DocSections from './DocSections.svelte'
+    import type { ApiDocData } from '@jazzsvelte/api'
 
     export let className: string = ''
     export let title: string
@@ -12,17 +13,20 @@
     export let hideTabMenu: boolean = false
     export let header: string
     export let themingDocs: Doc[] = []
-    let oldApiDocNames: string[] | null = null
-    export { oldApiDocNames as oldApiDocs }
-    export let apiDocs: ApiDocs[] | null = null
+    export let apiDocData: ApiDocData[] | null = null
     export let apiExclude: { [key: string]: string } | null = null
     export let ptDescription: string | null = null
     export let ptDocs: Doc[] | null = null
-    export let componentDocs: Doc[] = []
+    export let docs: Doc[] = []
+    export let ptConfigDoc: Doc | null = null
 
+    let apiDocs: ApiDocs[] | null = null
+    let componentDocs: Doc[] = []
     let tab: number = 0
     let mainTitle = ''
     let _apiDocs: Doc[] | undefined
+
+    setContext('apiData', apiDocData)
 
     const activateTab = (i: number) => {
         tab = i
@@ -32,9 +36,10 @@
         if (header.startsWith('use')) mainTitle = 'HOOK'
         else if (header === 'PassThrough' || header === 'Configuration') mainTitle = 'OVERVIEW'
         else mainTitle = 'FEATURES'
-    }
 
-    $: {
+        componentDocs = ptConfigDoc ? [ptConfigDoc, ...docs] : docs
+
+        apiDocs = apiDocData?.map((data) => apiDataToDocs(data)) || null
         if (apiDocs) {
             _apiDocs = apiDocs.map((apiDoc) => apiDoc.doc)
             setContext<Doc[]>('apiDocs', _apiDocs)
@@ -42,11 +47,6 @@
                 'apiDocsLinkTargets',
                 apiDocs.reduce((targets, apiDoc) => ({ ...targets, ...apiDoc.linkTargets }), {})
             )
-        }
-        if (oldApiDocNames) {
-            _apiDocs = buildApiDocs(oldApiDocNames, apiExclude)
-            setContext('apiDocs', _apiDocs)
-            setContext<LinkTargets>('apiDocsLinkTargets', {})
         }
     }
 </script>

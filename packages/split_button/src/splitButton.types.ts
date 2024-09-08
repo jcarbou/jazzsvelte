@@ -5,15 +5,14 @@ import type {
     HTMLDivAttributes,
     HTMLSVGAttributes,
     HTMLSpanAttributes,
-    HTMLULAttributes,
-    HTMLLIAttributes,
-    HTMLAnchorAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
     PassThroughType,
-    MenuItem
+    MenuItem,
+    AppendTo
 } from '@jazzsvelte/api'
-import { ButtonProps, ButtonSeverity } from '@jazzsvelte/button'
+import { ButtonPassThroughOptions, ButtonProps, ButtonSeverity } from '@jazzsvelte/button'
+import { TieredMenuPassThroughOptions, TieredMenuPassThroughType, TieredMenuProps } from '@jazzsvelte/tiered_menu'
 
 /**
  * Defines types used by properties of the SplitButton component.
@@ -26,6 +25,24 @@ export type SplitButtonSize = 'small' | 'normal' | 'large'
  * @group baseProperties
  */
 export interface BaseSplitButtonProps {
+    /**
+     * DOM element instance where the overlay panel should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located.
+     * @default document.body
+     */
+    appendTo?: AppendTo
+
+    /**
+     * Whether to automatically manage layering.
+     * @default  true
+     */
+    autoZIndex?: boolean
+
+    /**
+     * Whether to automatically manage layering.
+     * @default  0
+     */
+    baseZIndex?: number
+
     /**
      * CSS classes to add to root element.
      * @default  null
@@ -91,12 +108,6 @@ export interface BaseSplitButtonProps {
      * @default  null
      */
     menuButtonProps?: ButtonProps | null
-
-    /**
-     * Name of the menu icon.
-     * @default  null
-     */
-    menuIcon?: string | IconComponent | null
 
     /**
      * ClassName class of the overlay menu.
@@ -233,50 +244,17 @@ export interface SplitButtonPassThroughOptions {
      */
     root?: SplitButtonPassThroughType<HTMLDivAttributes>
     /**
-     * Uses to pass attributes to the icon's DOM element.
+     * Uses to pass attributes to the Button component.
      */
-    icon?: SplitButtonPassThroughType<HTMLSpanAttributes> | SplitButtonPassThroughType<HTMLSVGAttributes>
+    button?: ButtonPassThroughOptions
     /**
      * Uses to pass attributes to the Button component.
      */
-    button?: SplitButtonPassThroughType<ButtonProps>
-    /**
-     * Uses to pass attributes to the Button component.
-     */
-    menuButton?: SplitButtonPassThroughType<ButtonProps>
+    menuButton?: ButtonPassThroughOptions
     /**
      * Uses to pass attributes to the menu's DOM element.
      */
-    menu?: SplitButtonPassThroughType<HTMLDivAttributes>
-    /**
-     * Uses to pass attributes to the menu list's DOM element.
-     */
-    menuList?: SplitButtonPassThroughType<HTMLULAttributes>
-    /**
-     * Uses to pass attributes to the separator's DOM element.
-     */
-    separator?: SplitButtonPassThroughType<HTMLLIAttributes>
-    /**
-     * Uses to pass attributes to the menu icon's DOM element.
-     */
-    menuIcon?: SplitButtonPassThroughType<HTMLSpanAttributes> | SplitButtonPassThroughType<HTMLSVGAttributes>
-    /**
-     * Uses to pass attributes to the menu label's DOM element.
-     */
-    menuLabel?: SplitButtonPassThroughType<HTMLSpanAttributes>
-    /**
-     * Uses to pass attributes to the anchor's DOM element.
-     */
-    anchor?: SplitButtonPassThroughType<HTMLAnchorAttributes>
-    /**
-     * Uses to pass attributes to the menu item's DOM element.
-     */
-    menuItem?: SplitButtonPassThroughType<HTMLLIAttributes>
-
-    /**
-     * Used to control React Transition API.
-     */
-    //transition?: SplitButtonPassThroughType<HTMLSplitButtonPassThrAttributes>
+    menu?: TieredMenuPassThroughOptions
 }
 
 /**

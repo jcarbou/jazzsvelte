@@ -12,7 +12,7 @@ const IMPORT2_DOC_COMMON_REG_EXP = /import\s*(\w*)\s*.*@\/components\/doc\/commo
 const IMPORT_CMP_REG_EXP = /import \{\s*(\w*)\s*\}.*@\/components\/lib\/(\w*)\/.*/gm
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const CMP_DOC_MIGRATE: [RegExp, any][] = [
+export const CMP_DOC_MIGRATE: [RegExp | string, any][] = [
     [
         IMPORT_DOC_COMMON_REG_EXP,
         `    import $1 from '$lib/doc/common/$1.svelte'
@@ -52,7 +52,10 @@ export const CMP_DOC_MIGRATE: [RegExp, any][] = [
     [/\s*<DocSectionText\s*\{...props\}\s*>/gm, '\n<DocSectionText docSection={docSection}>'],
     [/\s*<DocSectionText\s*id="(\w*)"\s*label="(\w*)"\s*>/gm, "\n<DocSectionText docSection={{id:'$1', label:'$2'}}>"],
     [/<Link\s*href="\/([\w\/#]*)"\s*>([\w\s]*)<\/Link>/gm, '<a href="/$1">$2</a>'],
-    [/(<DocSectionCode.*) import /gm, '$1 toImport ']
+    [/(<DocSectionCode.*) import /gm, '$1 toImport '],
+    ['router.push(', 'goto('],
+    ['toast.current.show', 'showToast'],
+    ['https://reactjs.org/', 'https://svelte.dev/']
 ]
 
 export function regexpPatch(content: string): string {

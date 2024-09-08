@@ -17,10 +17,6 @@
     export let visible: boolean = false
     export let content: string | null = null
     export let options: TooltipOptions | undefined = undefined
-    export let pt: TooltipPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let unstyled: boolean = false
-    export let style: CssStyle = null
     export const displayName = 'Tooltip'
 
     export function isVisible() {
@@ -47,7 +43,12 @@
         }
     }
 
+    $: pt = (options?.pt || null) satisfies TooltipPassThroughOptions | null
+    $: ptOptions = (options?.ptOptions || null) satisfies PassThroughOptions | null
     $: positionState = options?.position || 'right'
+    $: unstyled = options?.unstyled ?? false
+    $: style = (options?.style || null) satisfies CssStyle
+
     const { autoZIndex, baseZIndex, closeOnEscape } = options || {}
     let classNameState = ''
 

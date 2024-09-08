@@ -33,6 +33,30 @@
         "description": "Defines valid properties in SplitButton component. In addition to these, all properties of HTMLDivElement can be used in this component.",
         "values": [
             {
+                "name": "appendTo",
+                "optional": true,
+                "readonly": false,
+                "type": "null | HTMLElement | 'self' | 'body' | (() => HTMLElement | 'self' | 'body')",
+                "default": "body",
+                "description": "DOM element instance where the overlay panel should be mounted. Valid values are any DOM Element and 'self'. The self value is used to render a component where it is located."
+            },
+            {
+                "name": "autoZIndex",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "Whether to automatically manage layering."
+            },
+            {
+                "name": "baseZIndex",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "0",
+                "description": "Whether to automatically manage layering."
+            },
+            {
                 "name": "buttonClass",
                 "optional": true,
                 "readonly": false,
@@ -261,16 +285,22 @@
                 "description": "Callback to invoke when main button is clicked."
             },
             {
-                "name": "onHide",
+                "name": "onMenuClick",
                 "parameters": [],
                 "returnType": "void",
-                "description": "Callback to invoke when overlay panel becomes hidden."
+                "description": "Callback to invoke when overlay menu button is clicked."
             },
             {
-                "name": "onShow",
+                "name": "onMenuHide",
                 "parameters": [],
                 "returnType": "void",
-                "description": "Callback to invoke when overlay panel becomes visible."
+                "description": "Callback to invoke when overlay menu becomes hidden."
+            },
+            {
+                "name": "onMenuShow",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Callback to invoke when overlay menu becomes visible."
             }
         ]
     },
@@ -309,95 +339,25 @@
                 "description": "Uses to pass attributes to the root's DOM element."
             },
             {
-                "name": "icon",
-                "optional": true,
-                "readonly": false,
-                "type": "Icon",
-                "description": "Uses to pass attributes to the icon's DOM element."
-            },
-            {
                 "name": "button",
                 "optional": true,
                 "readonly": false,
-                "type": "ButtonPassThroughO",
+                "type": "ButtonPassThroughOptions",
                 "description": "Uses to pass attributes to the Button component."
             },
             {
                 "name": "menuButton",
                 "optional": true,
                 "readonly": false,
-                "type": "ButtonPassThroughO",
+                "type": "ButtonPassThroughOptions",
                 "description": "Uses to pass attributes to the Button component."
             },
             {
                 "name": "menu",
                 "optional": true,
                 "readonly": false,
-                "type": "Div",
+                "type": "TieredMenuPassThroughOptions",
                 "description": "Uses to pass attributes to the menu's DOM element."
-            },
-            {
-                "name": "menuList",
-                "optional": true,
-                "readonly": false,
-                "type": "UList",
-                "description": "Uses to pass attributes to the menu list's DOM element."
-            },
-            {
-                "name": "separator",
-                "optional": true,
-                "readonly": false,
-                "type": "LI",
-                "description": "Uses to pass attributes to the separator's DOM element."
-            },
-            {
-                "name": "menuIcon",
-                "optional": true,
-                "readonly": false,
-                "type": "Icon",
-                "description": "Uses to pass attributes to the menu icon's DOM element."
-            },
-            {
-                "name": "menuLabel",
-                "optional": true,
-                "readonly": false,
-                "type": "Span",
-                "description": "Uses to pass attributes to the menu label's DOM element."
-            },
-            {
-                "name": "anchor",
-                "optional": true,
-                "readonly": false,
-                "type": "Anchor",
-                "description": "Uses to pass attributes to the anchor's DOM element."
-            },
-            {
-                "name": "menuItem",
-                "optional": true,
-                "readonly": false,
-                "type": "LI",
-                "description": "Uses to pass attributes to the menu item's DOM element."
-            },
-            {
-                "name": "tooltip",
-                "optional": true,
-                "readonly": false,
-                "type": "TooltipPassThrough",
-                "description": "Uses to pass attributes tooltip's DOM element."
-            },
-            {
-                "name": "hooks",
-                "optional": true,
-                "readonly": false,
-                "type": "ComponentHooks",
-                "description": "Used to manage all lifecycle hooks"
-            },
-            {
-                "name": "transition",
-                "optional": true,
-                "readonly": false,
-                "type": "SplitButtonPassThr",
-                "description": "Used to control React Transition API."
             }
         ]
     },
@@ -415,6 +375,7 @@
         "values": [{ "name": "SplitButtonSize", "value": "'small' | 'normal' | 'large'" }]
     },
     "state": {
+        "label": "State",
         "description": "Defines current inline state in SplitButton component.",
         "relatedProp": "",
         "callbacks": [],

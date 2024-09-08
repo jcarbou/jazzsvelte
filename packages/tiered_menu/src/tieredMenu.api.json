@@ -36,6 +36,12 @@
                 "parameters": [],
                 "returnType": "void",
                 "description": "Used to show the popup."
+            },
+            {
+                "name": "isVisible",
+                "parameters": [],
+                "returnType": "boolean",
+                "description": "ture if the popup is visible."
             }
         ]
     },

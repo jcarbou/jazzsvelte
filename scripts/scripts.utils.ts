@@ -15,9 +15,10 @@ export function buildCmpContext(name: string): CmpContext {
         cmpHomePath = `./packages/${cmp_name}`,
         docHomePath = './apps/jazzsvelte_doc/src',
         cmpDocHomePath = `${docHomePath}/lib/doc/${cmpName}`,
-        cmpDocPagePath = `${docHomePath}/routes/${cmpname}`,
-        cmpDocPageSveltePath = `${cmpDocPagePath}/+page.svelte`,
-        cmpDocPageSvelteTsPath = `${cmpDocPagePath}/+page.ts`,
+        cmpDocHomeMainPath = `${cmpDocHomePath}/${CmpName}Doc.svelte`,
+        cmpDocRoutesPath = `${docHomePath}/routes/${cmpname}`,
+        cmpDocRoutesPageSveltePath = `${cmpDocRoutesPath}/+page.svelte`,
+        cmpDocRoutesPageTsPath = `${cmpDocRoutesPath}/+page.ts`,
         cmpSrcPath = `${cmpHomePath}/src`,
         packagePath = `${cmpHomePath}/package.json`,
         tsConfigPath = `${cmpHomePath}/tsconfig.json`,
@@ -42,7 +43,8 @@ export function buildCmpContext(name: string): CmpContext {
         cmp_name,
         cmpHomePath,
         cmpDocHomePath,
-        cmpDocPagePath,
+        cmpDocHomeMainPath,
+        cmpDocRoutesPath,
         cmpSrcPath,
         packagePath,
         svelteConfigPath,
@@ -58,8 +60,8 @@ export function buildCmpContext(name: string): CmpContext {
         prCmpDocPageDirPath,
         prCmpDocPagePath,
         prCmpApiDocPath,
-        cmpDocPageSveltePath,
-        cmpDocPageSvelteTsPath
+        cmpDocRoutesPageSveltePath,
+        cmpDocRoutesPageTsPath
     }
 }
 

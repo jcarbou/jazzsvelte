@@ -9,18 +9,18 @@
         "test:update": "vitest run -u"
     },
     "devDependencies": {
+        "@jazzsvelte/angleright_icon": "workspace:^0.1.0",
+        "@jazzsvelte/api": "workspace:^0.1.0",
+        "@jazzsvelte/icons": "workspace:^0.1.0",
+        "@jazzsvelte/ripple": "workspace:^0.1.0",
         "@jazzsvelte/test": "workspace:^0.1.0"
     },
     "dependencies": {
-        "@jazzsvelte/angleright_icon": "workspace:^0.1.0",
-        "@jazzsvelte/api": "workspace:^0.1.0",
         "@jazzsvelte/click_outside_action": "workspace:^0.1.0",
         "@jazzsvelte/dom": "workspace:^0.1.0",
         "@jazzsvelte/match_media_action": "workspace:^0.1.0",
         "@jazzsvelte/object": "workspace:^0.1.0",
         "@jazzsvelte/portal_action": "workspace:^0.1.0",
-        "@jazzsvelte/icons": "workspace:^0.1.0",
-        "@jazzsvelte/ripple": "workspace:^0.1.0",
         "@jazzsvelte/utils": "workspace:^0.1.0",
         "@jazzsvelte/window_resize_action": "workspace:^0.1.0"
     },

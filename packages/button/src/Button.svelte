@@ -88,7 +88,7 @@
                 'p-button p-component',
                 className,
                 {
-                    'p-button-icon-only': (!!icon || loading) && !label,
+                    'p-button-icon-only': (!!icon || loading) && !label && !$$slots.label,
                     'p-button-vertical': isIconPos(iconPos, buttonGroup, ['top', 'bottom']) && !!label,
                     'p-disabled': disabled || loading,
                     'p-button-loading': loading,
@@ -208,10 +208,12 @@
             {#if label}
                 <span {...labelAttributes}>{label}</span>
             {/if}
+            {#if $$slots.label}
+                <span {...labelAttributes}><slot name="label" /></span>
+            {/if}
             {#if badge}
                 <Badge value={badge} {...badgeAttributes}></Badge>
             {/if}
-            <slot name="badge" />
             <slot />
             {#if !disabled && $ripple}
                 <Ripple />
