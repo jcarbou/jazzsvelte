@@ -28,7 +28,7 @@
         {
             id: 'theming',
             label: 'Theming',
-            description: 'PrimeReact has two theming has modes; styled or unstyled.',
+            description: 'JazzSvelte has two theming has modes; styled or unstyled.',
             children: [
                 {
                     id: 'styled',
@@ -51,13 +51,16 @@
 </script>
 
 <svelte:head>
-    <title>Getting Started - PrimeReact</title>
-    <meta name="description" content="PrimeReact is a rich set of open source components for React." />
+    <title>Getting Started - JazzSvelte</title>
+    <meta name="description" content="JazzSvelte is a rich set of open source components for Svelte." />
 </svelte:head>
 
 <DocPage {docs}>
     <svelte:fragment slot="intro">
         <h1>Installation</h1>
-        <p>PrimeReact is a rich set of open source UI components for React.</p>
+        <p>JazzSvelte is a rich set of open source UI components for Svelte.</p>
+        <p class="text-red-600 font-bold">
+            Installation is not already available. JazzSveltezsvelte is an "under construction" project not already build
+        </p>
     </svelte:fragment>
 </DocPage>

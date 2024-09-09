@@ -8,17 +8,20 @@
     const code = {
         basic: `
 // with npm
-npm install primereact
+npm install -dev jazzsvelte
 
 // with yarn
-yarn add primereact
+yarn add jazzsvelte -D
+
+// with pnpm
+pnpm i jazzsvelte -D
         `
     }
 </script>
 
 <DocSectionText {docSection}>
     <p>
-        PrimeReact is available for download at <a href="https://www.npmjs.com/package/primereact">npm</a>.
+        JazzSvelte is available for download at <a href="https://www.npmjs.com/package/jazzsvelte">npm</a>.
     </p>
 </DocSectionText>
 <DocSectionCode {code} hideToggleCode hideStackBlitz />

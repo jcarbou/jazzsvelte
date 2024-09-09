@@ -14,6 +14,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
 - **Button**
    - Button [PrimeReact version](https://primereact.org/button/)
    - SpeedDial [PrimeReact version](https://primereact.org/speeddial/)
+   - SplitButton [PrimeReact version](https://primereact.org/splitbutton/)
 - **Overlay**
    - Tooltip [PrimeReact version](https://primereact.org/tooltip/)
 - **Menu**
@@ -21,7 +22,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
 - **Messages**
    - Toast [PrimeReact version](https://primereact.org/toast/)
 - **Misc**
-   -  Icons
+   - Icons
    - Ripple [PrimeReact version](https://primereact.org/ripple/)
 
 A migrated component is a set of content:
