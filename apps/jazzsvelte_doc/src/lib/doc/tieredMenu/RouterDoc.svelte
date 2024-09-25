@@ -1,15 +1,16 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importExt, importJS, importObject, importTS } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { MenuItem } from '@jazzsvelte/api'
 
     export let docSection: DocSection
 
-    const items = [
+    const items: MenuItem[] = [
         {
             label: 'Router',
             icon: 'pi pi-palette',
@@ -50,10 +51,10 @@
 <TieredMenu model={items} breakpoint="767px" />
         `,
         javascript: `
-${importJS('TieredMenu')}import { TieredMenu } from 'primereact/tieredmenu';
-import { useRouter } from 'next/router';
-
-    const router = useRouter();
+${importJS(
+    'TieredMenu',
+    importExt('goto', '$app/navigation'),
+    `
     const items = [
         {
             label: 'Router',
@@ -90,17 +91,18 @@ import { useRouter } from 'next/router';
                 }
             ]
         }
-    ];
-        <TieredMenu model={items} breakpoint="767px" />
-
+    ]`
+)}
+        
+<TieredMenu model={items} breakpoint="767px" />
         `,
         typescript: `
-${importTS('TieredMenu')}import { TieredMenu } from 'primereact/tieredmenu';
-import { MenuItem } from 'primereact/menuitem';
-import { useRouter } from 'next/router';
-
-    const router = useRouter();
-    const items: MenuItem[] = [
+${importTS(
+    'TieredMenu',
+    importObject('MenuItem', 'api'),
+    importExt('goto', '$app/navigation'),
+    `
+    const items: MenuItem = [
         {
             label: 'Router',
             icon: 'pi pi-palette',
@@ -136,9 +138,10 @@ import { useRouter } from 'next/router';
                 }
             ]
         }
-    ];
-        <TieredMenu model={items} breakpoint="767px" />
-
+    ]`
+)}
+        
+<TieredMenu model={items} breakpoint="767px" />
         `
     }
 </script>

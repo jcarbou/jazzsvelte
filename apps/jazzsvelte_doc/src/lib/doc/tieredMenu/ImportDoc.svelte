@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
 
@@ -9,7 +8,7 @@
 
     const code = {
         basic: `
-import { TieredMenu } from 'primereact/tieredmenu';
+ import { TieredMenu } from '@jazzsvelte/tiered_menu'
         `
     }
 </script>

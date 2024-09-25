@@ -99,8 +99,6 @@ export function resolveIconPT<M, PROPS, STATE, CTX>(
     if (!icon) {
         return {}
     }
-    elementAttributes.class.push('p-icon')
-
     const isSpan = typeof icon === 'string'
     if (isSpan) {
         elementAttributes.class.push(icon)

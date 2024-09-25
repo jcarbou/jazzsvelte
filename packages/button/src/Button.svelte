@@ -130,7 +130,7 @@
         icon,
         {
             class: [
-                'p-button-icon p-c',
+                'p-button-icon p-c p-icon',
                 {
                     [`p-button-icon-${getIconPos(iconPos, buttonGroup)}`]: !!label
                 }
@@ -149,6 +149,7 @@
                 'p-button-icon p-c',
                 'p-icon-spin',
                 'pi',
+                'p-icon',
                 {
                     [`p-button-icon-${getIconPos(iconPos, buttonGroup)}`]: !!label
                 }

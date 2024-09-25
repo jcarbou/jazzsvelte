@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
     import DocSimpleTable from '../common/DocSimpleTable.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
 

@@ -43,7 +43,12 @@ ${
         : ''
 }
 
+   export function getElement(): HTMLDivElement {
+        return rootEl
+   }
    export const displayName = '${CmpName}'
+
+   let rootEl: HTMLDivElement
 
    $: ptContext = {
         props: $$props,
@@ -122,6 +127,7 @@ ${withValue(
     'root',
     ({ type }) =>
         `<${type.toLocaleLowerCase()}
+   bind:this={rootEl}
    {...rootAttributes}
    {...$$restProps}
 ${tooltip ? '   use:tooltip={{ tooltipContent, tooltipOptions, jazzSvelteContext }}' : ''}

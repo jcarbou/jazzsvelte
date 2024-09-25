@@ -26,3 +26,5 @@ export type MenuItem = {
 export type AppendTo = null | HTMLElement | 'self' | 'body' | (() => HTMLElement | 'self' | 'body')
 
 export type OnEvent = null | ((event: Event) => void)
+
+export type OnImageError = null | ((event: UIEvent) => void)

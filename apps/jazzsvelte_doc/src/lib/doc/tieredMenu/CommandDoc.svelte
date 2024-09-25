@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importJS, importTS, importType } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
-    import { showToast, Toast } from '@jazzsvelte/toast'
+    import { showToast } from '@jazzsvelte/toast'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
 
@@ -69,14 +69,14 @@
 
     const code = {
         basic: `
-<Toast ref={toast} />
 <TieredMenu model={items} breakpoint="767px" />
         `,
         javascript: `
-${importJS('TieredMenu')}import { TieredMenu } from 'primereact/tieredmenu';
-import { Toast } from 'primereact/toast';
+${importJS(
+    'TieredMenu',
+    importType('showToast', 'toast'),
+    `
 
-    const toast = useRef(null);
     const items = [
         {
             label: 'File',
@@ -86,14 +86,14 @@ import { Toast } from 'primereact/toast';
                     label: 'New',
                     icon: 'pi pi-plus',
                     command: () => {
-                        toast.current.show({ severity: 'success', summary: 'Success', detail: 'File created', life: 3000 });
+                        showToast({ severity: 'success', summary: 'Success', detail: 'File created', life: 3000 });
                     }
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
                     command: () => {
-                        toast.current.show({ severity: 'error', summary: 'Error', detail: 'No printer connected', life: 3000 });
+                        showToast({ severity: 'error', summary: 'Error', detail: 'No printer connected', life: 3000 });
                     }
                 }
             ]
@@ -102,7 +102,7 @@ import { Toast } from 'primereact/toast';
             label: 'Search',
             icon: 'pi pi-search',
             command: () => {
-                toast.current.show({ severity: 'warn', summary: 'Search Results', detail: 'No results found', life: 3000 });
+                showToast({ severity: 'warn', summary: 'Search Results', detail: 'No results found', life: 3000 });
             }
         },
         {
@@ -116,32 +116,31 @@ import { Toast } from 'primereact/toast';
                     label: 'Import',
                     icon: 'pi pi-cloud-download',
                     command: () => {
-                        toast.current.show({ severity: 'info', summary: 'Downloads', detail: 'Downloaded from cloud', life: 3000 });
+                        showToast({ severity: 'info', summary: 'Downloads', detail: 'Downloaded from cloud', life: 3000 });
                     }
                 },
                 {
                     label: 'Export',
                     icon: 'pi pi-cloud-upload',
                     command: () => {
-                        toast.current.show({ severity: 'info', summary: 'Shared', detail: 'Exported to cloud', life: 3000 });
+                        showToast({ severity: 'info', summary: 'Shared', detail: 'Exported to cloud', life: 3000 });
                     }
                 }
             ]
         }
-    ];
+    ]`
+)}
 
-            <Toast ref={toast} />
-            <TieredMenu model={items} breakpoint="767px" />
-
-
+<TieredMenu model={items} breakpoint="767px" />
         `,
         typescript: `
-${importTS('TieredMenu')}import { TieredMenu } from 'primereact/tieredmenu';
-import { MenuItem } from 'primereact/menuitem';
-import { Toast } from 'primereact/toast';
+${importTS(
+    'TieredMenu',
+    importType('MenuItem', 'api'),
+    importType('showToast', 'toast'),
+    `
 
-    const toast = useRef<Toast>(null);
-    const items: MenuItem[] = [
+    const items = [
         {
             label: 'File',
             icon: 'pi pi-file',
@@ -150,14 +149,14 @@ import { Toast } from 'primereact/toast';
                     label: 'New',
                     icon: 'pi pi-plus',
                     command: () => {
-                        toast.current.show({ severity: 'success', summary: 'Success', detail: 'File created', life: 3000 });
+                        showToast({ severity: 'success', summary: 'Success', detail: 'File created', life: 3000 });
                     }
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
                     command: () => {
-                        toast.current.show({ severity: 'error', summary: 'Error', detail: 'No printer connected', life: 3000 });
+                        showToast({ severity: 'error', summary: 'Error', detail: 'No printer connected', life: 3000 });
                     }
                 }
             ]
@@ -166,7 +165,7 @@ import { Toast } from 'primereact/toast';
             label: 'Search',
             icon: 'pi pi-search',
             command: () => {
-                toast.current.show({ severity: 'warn', summary: 'Search Results', detail: 'No results found', life: 3000 });
+                showToast({ severity: 'warn', summary: 'Search Results', detail: 'No results found', life: 3000 });
             }
         },
         {
@@ -180,24 +179,22 @@ import { Toast } from 'primereact/toast';
                     label: 'Import',
                     icon: 'pi pi-cloud-download',
                     command: () => {
-                        toast.current.show({ severity: 'info', summary: 'Downloads', detail: 'Downloaded from cloud', life: 3000 });
+                        showToast({ severity: 'info', summary: 'Downloads', detail: 'Downloaded from cloud', life: 3000 });
                     }
                 },
                 {
                     label: 'Export',
                     icon: 'pi pi-cloud-upload',
                     command: () => {
-                        toast.current.show({ severity: 'info', summary: 'Shared', detail: 'Exported to cloud', life: 3000 });
+                        showToast({ severity: 'info', summary: 'Shared', detail: 'Exported to cloud', life: 3000 });
                     }
                 }
             ]
         }
-    ];
+    ]`
+)}
 
-            <Toast ref={toast} />
-            <TieredMenu model={items} breakpoint="767px" />
-
-
+<TieredMenu model={items} breakpoint="767px" />
         `
     }
 </script>

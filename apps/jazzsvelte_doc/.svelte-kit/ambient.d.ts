@@ -35,9 +35,7 @@ declare module '$env/static/private' {
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
 	export const DriverData: string;
-	export const EFC_16308: string;
-	export const FPS_BROWSER_APP_PROFILE_STRING: string;
-	export const FPS_BROWSER_USER_PROFILE_STRING: string;
+	export const EFC_12072: string;
 	export const GIT_ASKPASS: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
@@ -97,6 +95,8 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies_vitest: string;
 	export const npm_package_devDependencies__fontsource_fira_mono: string;
 	export const npm_package_devDependencies__jazzsvelte_api: string;
+	export const npm_package_devDependencies__jazzsvelte_avatar: string;
+	export const npm_package_devDependencies__jazzsvelte_avatar_group: string;
 	export const npm_package_devDependencies__jazzsvelte_badge: string;
 	export const npm_package_devDependencies__jazzsvelte_button: string;
 	export const npm_package_devDependencies__jazzsvelte_button_group: string;
@@ -107,6 +107,7 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__jazzsvelte_infocircle_icon: string;
 	export const npm_package_devDependencies__jazzsvelte_input_text: string;
 	export const npm_package_devDependencies__jazzsvelte_object: string;
+	export const npm_package_devDependencies__jazzsvelte_panel: string;
 	export const npm_package_devDependencies__jazzsvelte_ripple: string;
 	export const npm_package_devDependencies__jazzsvelte_speed_dial: string;
 	export const npm_package_devDependencies__jazzsvelte_spinner_icon: string;
@@ -226,9 +227,7 @@ declare module '$env/dynamic/private' {
 		COMPUTERNAME: string;
 		ComSpec: string;
 		DriverData: string;
-		EFC_16308: string;
-		FPS_BROWSER_APP_PROFILE_STRING: string;
-		FPS_BROWSER_USER_PROFILE_STRING: string;
+		EFC_12072: string;
 		GIT_ASKPASS: string;
 		HOME: string;
 		HOMEDRIVE: string;
@@ -288,6 +287,8 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies_vitest: string;
 		npm_package_devDependencies__fontsource_fira_mono: string;
 		npm_package_devDependencies__jazzsvelte_api: string;
+		npm_package_devDependencies__jazzsvelte_avatar: string;
+		npm_package_devDependencies__jazzsvelte_avatar_group: string;
 		npm_package_devDependencies__jazzsvelte_badge: string;
 		npm_package_devDependencies__jazzsvelte_button: string;
 		npm_package_devDependencies__jazzsvelte_button_group: string;
@@ -298,6 +299,7 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__jazzsvelte_infocircle_icon: string;
 		npm_package_devDependencies__jazzsvelte_input_text: string;
 		npm_package_devDependencies__jazzsvelte_object: string;
+		npm_package_devDependencies__jazzsvelte_panel: string;
 		npm_package_devDependencies__jazzsvelte_ripple: string;
 		npm_package_devDependencies__jazzsvelte_speed_dial: string;
 		npm_package_devDependencies__jazzsvelte_spinner_icon: string;

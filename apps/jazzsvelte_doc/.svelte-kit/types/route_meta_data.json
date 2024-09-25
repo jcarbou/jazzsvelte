@@ -2,6 +2,9 @@
 	"/": [
 		"src/routes/+page.ts"
 	],
+	"/avatar": [
+		"src/routes/avatar/+page.ts"
+	],
 	"/badge": [
 		"src/routes/badge/+page.ts"
 	],
@@ -11,11 +14,20 @@
 	"/button": [
 		"src/routes/button/+page.ts"
 	],
+	"/configuration": [
+		"src/routes/configuration/+page.ts"
+	],
 	"/inputtext": [
 		"src/routes/inputtext/+page.ts"
 	],
 	"/installation": [
 		"src/routes/installation/+page.ts"
+	],
+	"/panel": [
+		"src/routes/panel/+page.ts"
+	],
+	"/playground": [
+		"src/routes/playground/+page.ts"
 	],
 	"/ripple": [
 		"src/routes/ripple/+page.ts"
@@ -25,6 +37,9 @@
 	],
 	"/splitbutton": [
 		"src/routes/splitbutton/+page.ts"
+	],
+	"/theming": [
+		"src/routes/theming/+page.ts"
 	],
 	"/tieredmenu": [
 		"src/routes/tieredmenu/+page.ts"

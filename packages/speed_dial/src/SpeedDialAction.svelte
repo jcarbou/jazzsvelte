@@ -48,7 +48,7 @@
     $: resolvedActionIcon = resolveIconPT(
         item.icon || null,
         {
-            class: ['p-speeddial-action-icon']
+            class: ['p-speeddial-action-icon', 'p-icon']
         },
         pt?.actionIcon,
         globalPt?.actionIcon,

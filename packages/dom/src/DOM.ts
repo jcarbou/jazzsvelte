@@ -258,6 +258,45 @@ export function findCollisionPosition(
     }
 }
 
+/**
+ * Return typed value of element attribute (typed : null | string | number | boolean)
+ * @param element DOM element
+ * @param name name of the attribute
+ * @returns value
+ */
+export function getAttribute(element: HTMLElement, name: string): null | string | number | boolean {
+    if (element) {
+        const value = element.getAttribute(name)
+
+        if (value === null) return null
+
+        // isNaN accept string argument (Ex: isNaN("10") => false and isNaN("10a") => true)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (!isNaN(value as any)) {
+            return +value
+        }
+
+        if (value === 'true' || value === 'false') {
+            return value === 'true'
+        }
+
+        return value
+    }
+
+    return null
+}
+
+/**
+ * Test if the typed value of element attribute is equals the given typed value
+ * @param element DOM element
+ * @param name name of the attribute
+ * @param value typed value (null | string | number | boolean)
+ * @returns test result
+ */
+export function isAttributeEquals(element: HTMLElement, name: string, value: null | string | number | boolean) {
+    return element ? getAttribute(element, name) === value : false
+}
+
 type PositionX = 'left' | 'right' | 'center'
 type PositionY = 'top' | 'bottom' | 'center'
 

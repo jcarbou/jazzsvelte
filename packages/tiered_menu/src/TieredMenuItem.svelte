@@ -67,7 +67,7 @@
     $: resolvedIcon = resolveIconPT(
         icon || null,
         {
-            class: ['p-menuitem-icon'],
+            class: ['p-menuitem-icon', 'p-icon'],
             'data-pc-section': 'icon'
         },
         pt?.icon,
@@ -90,7 +90,7 @@
     $: resolvedSubmenuIcon = resolveIconPT(
         submenuIcon,
         {
-            class: ['p-submenu-icon'],
+            class: ['p-submenu-icon', 'p-icon'],
             'data-pc-section': 'submenu-icon'
         },
         pt?.submenuIcon,

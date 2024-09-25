@@ -1,0 +1,251 @@
+{
+    "description": "Avatar represents people using icons, labels and images.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in Avatar component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Defines the icon to display."
+            },
+            {
+                "name": "image",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Defines the image to display."
+            },
+            {
+                "name": "imageAlt",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "avatar",
+                "description": "It specifies an alternate text for an image, if the image cannot be displayed."
+            },
+            {
+                "name": "imageFallback",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "default",
+                "description": "Defines a fallback image or URL if the main image fails to load. If \"default\" will fallback to label then icon."
+            },
+            {
+                "name": "label",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Defines the text to display."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "AvatarPassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "AvatarPassThroughMethodOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "shape",
+                "optional": true,
+                "readonly": false,
+                "type": "AvatarShape",
+                "default": "square",
+                "description": "Shape of the element ('square' | 'circle')."
+            },
+            {
+                "name": "size",
+                "optional": true,
+                "readonly": false,
+                "type": "AvatarSize",
+                "default": "normal",
+                "description": "Size of the element ('normal' | 'large' | 'xlarge')."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ],
+        "label": "AvatarProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onClick",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent<HTMLElement, MouseEvent>",
+                        "description": "Browser event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke on click."
+            },
+            {
+                "name": "onImageError",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "SyntheticEvent<Element, Event>",
+                        "description": "Browser event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "This event is triggered if an error occurs while loading an image file."
+            }
+        ],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "avatar",
+    "label": "Avatar",
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "AvatarProps"
+            },
+            {
+                "name": "state",
+                "optional": false,
+                "readonly": false,
+                "type": "AvatarState"
+            }
+        ],
+        "label": "AvatarPassThroughMethodOptions",
+        "shortLabel": "AvatarPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "label",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the label's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "image",
+                "optional": true,
+                "readonly": false,
+                "type": "Image",
+                "description": "Uses to pass attributes to the image's DOM element."
+            }
+        ],
+        "label": "AvatarPassThroughOptions",
+        "shortLabel": "AvatarPtOptions"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": true,
+        "tooltip": false,
+        "svelteComponent": true
+    },
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the Avatar component.",
+        "values": [
+            { "name": "AvatarShape", "value": "'square' | 'circle'" },
+            { "name": "AvatarSize", "value": "'normal' | 'large' | 'xlarge'" }
+        ]
+    },
+    "state": {
+        "description": "Defines current inline state in Avatar component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "imageFailed",
+                "optional": false,
+                "readonly": false,
+                "type": "boolean",
+                "description": "Current imageFailed state as a boolean."
+            },
+            {
+                "name": "isNestedInAvatarGroup",
+                "optional": false,
+                "readonly": false,
+                "type": "boolean",
+                "description": "Current state that indicates whether the Avatar component is nested within an AvatarGroup component."
+            }
+        ],
+        "label": "AvatarState",
+        "shortLabel": "Context"
+    }
+}

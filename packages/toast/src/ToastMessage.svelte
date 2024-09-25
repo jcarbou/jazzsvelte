@@ -74,7 +74,7 @@
     // "icon" element
     $: resolvedIcon = resolveIconPT(
         _icon,
-        { class: ['p-toast-message-icon'] },
+        { class: ['p-toast-message-icon', 'p-icon'] },
         pt?.icon,
         globalPt?.icon,
         ptContext
@@ -94,7 +94,7 @@
     // "closeButton" element
     $: resolvedCloseIcon = resolveIconPT(
         closeIcon,
-        { class: ['p-toast-icon-close-icon'] },
+        { class: ['p-toast-icon-close-icon', 'p-icon'] },
         pt?.closeButtonIcon,
         globalPt?.closeButtonIcon,
         ptContext

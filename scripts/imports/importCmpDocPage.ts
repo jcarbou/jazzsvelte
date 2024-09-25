@@ -56,8 +56,7 @@ export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
         cmpDocHomePath,
         cmpDocRoutesPageTsPath,
         cmpDocRoutesPath,
-        prCmpDocPagePath,
-        prCmpDocPageDirPath
+        prCmpDocPagePath
     } = context
     const { test, override } = options
     let filePath = cmpDocHomeMainPath
@@ -70,7 +69,7 @@ export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
         filePath += '.test.' + filePath.split('.').slice(-1)
     }
 
-    mkDir(prCmpDocPageDirPath)
+    mkDir(cmpDocRoutesPath)
     copyFile(prCmpDocPagePath, filePath)
     withFileContent(filePath, context, [
         removeXXXDemo, // fake for prettier

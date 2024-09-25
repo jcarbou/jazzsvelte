@@ -133,6 +133,13 @@ export function findActiveDoc(docs: Doc[], y: number): Doc | null {
 
 export const projectName = 'JazzSvelte'
 
+export function importBrother(brotherId: string) {
+    return `import ${brotherId} from './${brotherId}'`
+}
+
+export function importExt(objectId: string, objectPath: string) {
+    return `import { ${objectId} } from '${objectPath}'`
+}
 export function importObject(objectId: string, projectId: string) {
     return `import { ${objectId} } from '@jazzsvelte/${projectId}'`
 }

@@ -9,7 +9,7 @@ const FIX_FILENAME_CASE_ERRROR: { [key: string]: string } = {}
 
 function addImport(content: string) {
     return (
-        `import { importJS, importTS} from '../common/doc.utils'
+        `import { importJS, importTS} from '$lib/doc/common/doc.utils'
 ` + content
     )
 }
@@ -135,7 +135,7 @@ function docTabelWrapper(content: string) {
     }
 
     if (migrated) {
-        newContent = "import DocSimpleTable from '../common/DocSimpleTable.svelte'\n" + newContent
+        newContent = "import DocSimpleTable from '$lib/doc/common/DocSimpleTable.svelte'\n" + newContent
     }
 
     return newContent

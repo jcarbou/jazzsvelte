@@ -66,6 +66,7 @@ export type HTMLLIAttributes = HTMLAttributes<HTMLLIElement>
 export type HTMLULAttributes = HTMLAttributes<HTMLUListElement>
 export type HTMLSpanAttributes = HTMLAttributes<HTMLSpanElement>
 export type HTMLSVGAttributes = HTMLAttributes<SVGSVGElement>
+export type HTMLImageAttributes = HTMLAttributes<HTMLImageElement>
 
 export type HTMLSpanOrSvgAttributes = HTMLSpanAttributes | HTMLSVGAttributes
 //export type HTMLSpanOrSvgAttributes = Common<HTMLSpanAttributes, HTMLSVGAttributes>
@@ -75,6 +76,7 @@ export type PassThroughHTMLButtonAttributes = PassThroughHTMLAttributes<HTMLButt
 export type PassThroughHTMLSpanAttributes = PassThroughHTMLAttributes<HTMLSpanAttributes>
 export type PassThroughHTMLDivAttributes = PassThroughHTMLAttributes<HTMLDivAttributes>
 export type PassThroughHTMLSvgAttributes = PassThroughHTMLAttributes<HTMLSVGAttributes>
+export type PassThroughHTMLImageAttributes = PassThroughHTMLAttributes<HTMLImageAttributes>
 
 export type IconAttributes = HTMLSVGAttributes & { label?: string | null; spin?: boolean }
 export type IconComponent = typeof SvelteComponent<IconAttributes, any, any>

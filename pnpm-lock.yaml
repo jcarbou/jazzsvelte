@@ -192,6 +192,12 @@ importers:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../../packages/api
+      '@jazzsvelte/avatar':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/avatar
+      '@jazzsvelte/avatar_group':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/avatar_group
       '@jazzsvelte/badge':
         specifier: workspace:^0.1.0
         version: link:../../packages/badge
@@ -222,6 +228,9 @@ importers:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../../packages/object
+      '@jazzsvelte/panel':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/panel
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../../packages/ripple
@@ -832,6 +841,41 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../utils
 
+  packages/avatar:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+
+  packages/avatar_group:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/avatar':
+        specifier: workspace:^0.1.0
+        version: link:../avatar
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+
   packages/badge:
     dependencies:
       '@jazzsvelte/object':
@@ -957,6 +1001,31 @@ importers:
         version: link:../object
 
   packages/object: {}
+
+  packages/panel:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/minus_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/minus
+      '@jazzsvelte/plus_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/plus
+      '@jazzsvelte/ripple':
+        specifier: workspace:^0.1.0
+        version: link:../ripple
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
 
   packages/portal_action: {}
 
@@ -3006,7 +3075,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
+    deprecated: Upgrade to fsevents v2 to mitigate potential security issues
 
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}

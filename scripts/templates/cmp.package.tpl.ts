@@ -14,13 +14,13 @@ export function render({ meta }: CmpApiDoc, { cmp_name }: CmpContext): string {
         "test:update": "vitest run -u"
     },
     "devDependencies": {
-        "@jazzsvelte/test": "workspace:^0.1.0"
-    },
-    "dependencies": {
         "@jazzsvelte/api": "workspace:^0.1.0",
-        "@jazzsvelte/object": "workspace:^0.1.0"${icon ? ',' : ''}
+        "@jazzsvelte/test": "workspace:^0.1.0"${icon ? ',' : ''} 
         ${icon ? `"@jazzsvelte/icons": "workspace:^0.1.0"` : ''}${tooltip ? ',' : ''}
         ${tooltip ? `"@jazzsvelte/tooltip": "workspace:^0.1.0"` : ''}
+    },
+    "dependencies": {        
+        "@jazzsvelte/object": "workspace:^0.1.0"       
     },
     "keywords": [],
     "author": "Jerome Carbou",

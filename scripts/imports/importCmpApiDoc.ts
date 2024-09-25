@@ -26,6 +26,7 @@ type NewApiDoc = {
     methods: DocEntity
     ptMethodOptions: DocEntity
     ptOptions: DocEntity
+    callbacks?: DocEntity
     meta: {
         RootType: string
         omitAttributes: string
@@ -189,6 +190,11 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
     })
 
     newCmpApiDoc.props.values?.sort((a, b) => a.name.localeCompare(b.name))
+
+    if (newCmpApiDoc.callbacks) {
+        newCmpApiDoc.callbacks.label = 'Callbacks'
+        newCmpApiDoc.callbacks.shortLabel = 'Callbacks'
+    }
 
     mkDir(cmpSrcPath)
     writeText(filePath, JSON.stringify(newCmpApiDoc, null, 2))

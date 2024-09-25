@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importBrother, importJS, importObject, importTS, importType } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
@@ -106,17 +106,32 @@
 <TieredMenu model={items} breakpoint="767px" />
         `,
         javascript: `
-${importJS('TieredMenu')}import { TieredMenu } from 'primereact/tieredmenu';
-import { Badge } from 'primereact/badge';
+ // MenuItemTemplate
 
-    const MenuItemTemplate = (item) => (
-        <a class="flex align-items-center p-menuitem-link">
-            <span class={item.icon} />
-            <span class="mx-2">{item.label}</span>
-            {item.badge && <Badge class="ml-auto" value={item.badge} />}
-            {item.shortcut && <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>}
-        </a>
+${importJS(
+    'Badge',
+    `
+    export let item
 
+    $: icon = item.icon as string`
+)}
+
+<a href="#" class="flex align-items-center p-menuitem-link">
+    <span class={icon} />
+    <span class="mx-2">{item.label}</span>
+    {#if item.badge}
+        <Badge class="ml-auto" value={item.badge} />
+    {/if}
+    {#if item.shortcut}
+        <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>
+    {/if}
+</a>
+
+// Main
+${importJS(
+    'Badge',
+    importBrother('MenuItemTemplate'),
+    `
     const items = [
         {
             label: 'File',
@@ -205,23 +220,39 @@ import { Badge } from 'primereact/badge';
                 }
             ]
         }
-    ]
-        <TieredMenu model={items} breakpoint="767px" />
-
+    ]`
+)}
+<TieredMenu model={items} breakpoint="767px" />
         `,
         typescript: `
-${importTS('TieredMenu')}import { TieredMenu } from 'primereact/tieredmenu';
-import { MenuItem } from 'primereact/menuitem';
-import { Badge } from 'primereact/badge';
+ // MenuItemTemplate
 
-    const MenuItemTemplate = (item) => (
-        <a class="flex align-items-center p-menuitem-link">
-            <span class={item.icon} />
-            <span class="mx-2">{item.label}</span>
-            {item.badge && <Badge class="ml-auto" value={item.badge} />}
-            {item.shortcut && <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>}
-        </a>
+${importJS(
+    'Badge',
+    importObject('MenuItem', 'api'),
+    `
+    export let item: MenuItem
 
+    $: icon = item.icon as string`
+)}
+
+<a href="#" class="flex align-items-center p-menuitem-link">
+    <span class={icon} />
+    <span class="mx-2">{item.label}</span>
+    {#if item.badge}
+        <Badge class="ml-auto" value={item.badge} />
+    {/if}
+    {#if item.shortcut}
+        <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>
+    {/if}
+</a>
+
+// Main
+${importTS(
+    'Badge',
+    importBrother('MenuItemTemplate'),
+    importType('MenuItem', 'api'),
+    `
     const items: MenuItem[] = [
         {
             label: 'File',
@@ -310,9 +341,9 @@ import { Badge } from 'primereact/badge';
                 }
             ]
         }
-    ]
-        <TieredMenu model={items} breakpoint="767px" />
-
+    ]`
+)}
+<TieredMenu model={items} breakpoint="767px" />
         `
     }
 </script>

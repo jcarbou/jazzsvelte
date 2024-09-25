@@ -33,6 +33,8 @@
     "devDependencies": {
         "@fontsource/fira-mono": "^4.5.10",
         "@jazzsvelte/api": "workspace:^0.1.0",
+        "@jazzsvelte/avatar": "workspace:^0.1.0",
+        "@jazzsvelte/avatar_group": "workspace:^0.1.0",
         "@jazzsvelte/badge": "workspace:^0.1.0",
         "@jazzsvelte/button": "workspace:^0.1.0",
         "@jazzsvelte/button_group": "workspace:^0.1.0",
@@ -43,6 +45,7 @@
         "@jazzsvelte/input_text": "workspace:^0.1.0",
         "@jazzsvelte/infocircle_icon": "workspace:^0.1.0",
         "@jazzsvelte/object": "workspace:^0.1.0",
+        "@jazzsvelte/panel": "workspace:^0.1.0",
         "@jazzsvelte/ripple": "workspace:^0.1.0",
         "@jazzsvelte/speed_dial": "workspace:^0.1.0",
         "@jazzsvelte/split_button": "workspace:^0.1.0",
