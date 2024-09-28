@@ -33,7 +33,7 @@ ${importJS('InputText')}
         <i class="pi pi-spin pi-spinner" />
         <InputText />
     </span>
-</div>  </div>
+</div>
 
         `,
         typescript: `

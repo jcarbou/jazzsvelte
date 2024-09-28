@@ -15,6 +15,8 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
    - Button [PrimeReact version](https://primereact.org/button/)
    - SpeedDial [PrimeReact version](https://primereact.org/speeddial/)
    - SplitButton [PrimeReact version](https://primereact.org/splitbutton/)
+- **Panel**
+   - Panel [PrimeReact version](https://primereact.org/panel/)
 - **Overlay**
    - Tooltip [PrimeReact version](https://primereact.org/tooltip/)
 - **Menu**
@@ -22,6 +24,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
 - **Messages**
    - Toast [PrimeReact version](https://primereact.org/toast/)
 - **Misc**
+   - Avatar [PrimeReact version](https://primereact.org/avatar/)
    - Icons
    - Ripple [PrimeReact version](https://primereact.org/ripple/)
 

@@ -20,7 +20,8 @@
 <Avatar label="U" style="background-color:#9c27b0;color:#ffffff;" shape="circle" />
 
 <Avatar label="U" size="xlarge" class="p-overlay-badge">
-<Badge value="4" />
+    <Badge value="4" />
+</Avatar>
         `,
         javascript: `
 ${importJS(['Avatar', 'Badge'])}
