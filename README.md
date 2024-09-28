@@ -30,12 +30,12 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
 
 A migrated component is a set of content:
 - The ts/svelte code of the component
-- The test files (Done using [Vitest](https://vitest.dev/))
 - The documentation migrated
+- The test files (Using [Vitest](https://vitest.dev/)) **partially done**
 
 ## Download
 
-`Jazzsvelte` is not yet available from javascriot registry. To see the current state, or contribute, you can read the "installation" section
+`Jazzsvelte` is not yet available from javascript registry. To see the current state, or contribute, you can read the "installation" section
 
 ## Instalation / Contribute
 
