@@ -1,0 +1,527 @@
+{
+    "description": "VirtualScroller is a performant approach to handle huge data efficiently.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElementRef",
+                "parameters": [],
+                "returnType": "Ref<HTMLDivElement>",
+                "description": "Returns the reference of virtualScroller's container."
+            },
+            {
+                "name": "getRenderedRange",
+                "parameters": [],
+                "returnType": "VirtualScrollerRenderedRange",
+                "description": "Returns the range of items added to the DOM."
+            },
+            {
+                "name": "scrollInView",
+                "parameters": [
+                    {
+                        "name": "index",
+                        "type": "number | number[]",
+                        "description": "Index of item according to orientation mode."
+                    },
+                    {
+                        "name": "to",
+                        "type": "\"to-start\" | \"to-end\"",
+                        "description": "Defines the location of the item in view, valid values are 'to-start' and 'to-end'."
+                    },
+                    {
+                        "name": "behavior",
+                        "type": "\"auto\" | \"smooth\"",
+                        "description": "Behavior of scroll, valid values are 'auto' and 'smooth'"
+                    }
+                ],
+                "returnType": "void",
+                "description": "It is used to move the specified index into the view. It is a method that will usually be needed when keyboard support is added to the virtualScroller component."
+            },
+            {
+                "name": "scrollTo",
+                "parameters": [
+                    {
+                        "name": "options",
+                        "type": "VirtualScrollerOptionsType",
+                        "description": "Custom virtual scroller options."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Scroll to move to a specific position."
+            },
+            {
+                "name": "scrollToIndex",
+                "parameters": [
+                    {
+                        "name": "index",
+                        "type": "number | number[]",
+                        "description": "Index of item according to orientation mode."
+                    },
+                    {
+                        "name": "behavior",
+                        "type": "\"auto\" | \"smooth\"",
+                        "description": "Behavior of scroll, valid values are 'auto' and 'smooth'"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Scroll to move to a specific item."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in VirtualScroller component.",
+        "values": [
+            {
+                "name": "appendOnly",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Used to append each loaded item to top without removing any items from the DOM. Using very large data may cause the browser to crash."
+            },
+            {
+                "name": "autoSize",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether to dynamically change the height or width of scrollable container."
+            },
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "className",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Style class of the component."
+            },
+            {
+                "name": "columns",
+                "optional": true,
+                "readonly": false,
+                "type": "any",
+                "default": "null",
+                "description": "Columns of the virtual scroller for vertical option."
+            },
+            {
+                "name": "contentTemplate",
+                "optional": true,
+                "readonly": false,
+                "type": "typeof SvelteComponent | null",
+                "default": "null",
+                "description": "The template of item's wrapper element."
+            },
+            {
+                "name": "delay",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "0",
+                "description": "Delay in scroll before new data is loaded."
+            },
+            {
+                "name": "disabled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "If disabled, the VirtualScroller feature is eliminated and the content is displayed directly."
+            },
+            {
+                "name": "id",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Unique identifier of the element."
+            },
+            {
+                "name": "inline",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, positions the content as inline."
+            },
+            {
+                "name": "items",
+                "optional": true,
+                "readonly": false,
+                "type": "null | any[] | any[][]",
+                "default": "null",
+                "description": "An array of objects to display."
+            },
+            {
+                "name": "itemSize",
+                "optional": true,
+                "readonly": false,
+                "type": "number | number[]",
+                "default": "null",
+                "description": "The height/width of item according to orientation."
+            },
+            {
+                "name": "itemTemplate",
+                "optional": true,
+                "readonly": false,
+                "type": "typeof SvelteComponent | null",
+                "default": "null",
+                "description": "The template of item."
+            },
+            {
+                "name": "lazy",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Defines if data is loaded and interacted with in lazy manner."
+            },
+            {
+                "name": "loaderDisabled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Used to implement a custom loader instead of using the loader feature in the VirtualScroller."
+            },
+            {
+                "name": "loaderIconTemplate",
+                "optional": true,
+                "readonly": false,
+                "type": "typeof SvelteComponent | null",
+                "default": "null",
+                "description": "The template of loader's icon.",
+                "deprecated": "Since v9.2.3, use "
+            },
+            {
+                "name": "loading",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether the data is loaded."
+            },
+            {
+                "name": "loadingIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "The icon to show while indicating data load is in progress."
+            },
+            {
+                "name": "loadingTemplate",
+                "optional": true,
+                "readonly": false,
+                "type": "typeof SvelteComponent | null",
+                "default": "null",
+                "description": "The template of loader."
+            },
+            {
+                "name": "numToleratedItems",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "null",
+                "description": "Determines how many additional elements to add to the DOM outside of the view. According to the scrolls made up and down, extra items are added in a certain algorithm in the form of multiples of this number. Default value is half the number of items shown in the view."
+            },
+            {
+                "name": "orientation",
+                "optional": true,
+                "readonly": false,
+                "type": "VirtualScrollerOrientation",
+                "default": "'vertical'",
+                "description": "The orientation of scrollbar, valid values are 'vertical', 'horizontal' and 'both'."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "VirtualScrollerPassThroughOptions",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "VirtualScrollerPassThroughMethodOptions",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "resizeDelay",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "10",
+                "description": "Delay after window's resize finishes."
+            },
+            {
+                "name": "scrollHeight",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Height of the scroll viewport."
+            },
+            {
+                "name": "scrollWidth",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Width of the scroll viewport."
+            },
+            {
+                "name": "showLoader",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether to show loader."
+            },
+            {
+                "name": "showSpacer",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "Used to implement a custom spacer instead of using the spacer feature in the VirtualScroller."
+            },
+            {
+                "name": "step",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "0",
+                "description": "Used to specify how many items to load in each load method in lazy mode."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Inline style of the component."
+            },
+            {
+                "name": "tabIndex",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "0",
+                "description": "Index of the element in tabbing order."
+            }
+        ],
+        "label": "VirtualScrollerProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onLazyLoad",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "VirtualScrollerLazyEvent",
+                        "description": "Custom lazy load event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke in lazy mode to load new data."
+            },
+            {
+                "name": "onScroll",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "UIEvent<HTMLElement, UIEvent>",
+                        "description": "Browser event"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when scroll position changes."
+            },
+            {
+                "name": "onScrollIndexChange",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "VirtualScrollerChangeEvent",
+                        "description": "Custom change event"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when scroll position and item's range in view changes."
+            }
+        ],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "virtualScroller",
+    "label": "VirtualScroller",
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "VirtualScrollerProps"
+            },
+            {
+                "name": "state",
+                "optional": false,
+                "readonly": false,
+                "type": "VirtualScrollerState"
+            }
+        ],
+        "label": "VirtualScrollerPassThroughMethodOptions",
+        "shortLabel": "VirtualScrollerPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "content",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the content's DOM element."
+            },
+            {
+                "name": "loader",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the loader's DOM element."
+            },
+            {
+                "name": "loadingIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the loading icon's DOM element."
+            },
+            {
+                "name": "spacer",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the spacer's DOM element."
+            }
+        ],
+        "label": "VirtualScrollerPassThroughOptions",
+        "shortLabel": "VirtualScrollerPtOptions"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": true,
+        "tooltip": false,
+        "svelteComponent": true
+    },
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the VirtualScroller component.",
+        "values": [{ "name": "VirtualScrollerOrientation", "value": "'both' | 'horizontal' | 'vertical'" }]
+    },
+    "state": {
+        "description": "Defines current inline state in VirtualScroller component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "first",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "First index of the new data range to be loaded as a number."
+            },
+            {
+                "name": "last",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Last index of the new data range to be loaded as a number."
+            },
+            {
+                "name": "page",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Index of the first item as a number."
+            },
+            {
+                "name": "numItemsInViewport",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Visible item count in the viewport as a number."
+            },
+            {
+                "name": "numToleratedItems",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Additional elements to add to the DOM outside of the view as a number."
+            },
+            {
+                "name": "loading",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Current loading state as a boolean."
+            },
+            {
+                "name": "loaderArr",
+                "optional": false,
+                "readonly": false,
+                "type": "any[]",
+                "description": "Loadable items array."
+            },
+            {
+                "name": "rows",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Number of rows to be rendered."
+            },
+            {
+                "name": "cols",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Number of columns to be rendered."
+            }
+        ],
+        "label": "VirtualScrollerState",
+        "shortLabel": "Context"
+    }
+}

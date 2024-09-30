@@ -1214,6 +1214,22 @@ importers:
         specifier: workspace:*
         version: link:../object
 
+  packages/virtual_scroller:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+
   packages/window_resize_action:
     dependencies:
       '@jazzsvelte/dom':
