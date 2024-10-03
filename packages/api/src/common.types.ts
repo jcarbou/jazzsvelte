@@ -28,3 +28,5 @@ export type AppendTo = null | HTMLElement | 'self' | 'body' | (() => HTMLElement
 export type OnEvent = null | ((event: Event) => void)
 
 export type OnImageError = null | ((event: UIEvent) => void)
+
+export type TimeoutId = ReturnType<typeof setTimeout>

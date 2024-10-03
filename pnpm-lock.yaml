@@ -1216,6 +1216,9 @@ importers:
 
   packages/virtual_scroller:
     dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object
@@ -1229,6 +1232,9 @@ importers:
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
+      svelte-previous:
+        specifier: 2.1.4
+        version: 2.1.4(svelte@4.2.11)
 
   packages/window_resize_action:
     dependencies:
@@ -5040,6 +5046,11 @@ packages:
         optional: true
       typescript:
         optional: true
+
+  svelte-previous@2.1.4:
+    resolution: {integrity: sha512-BdkHD9mA+jsOgqTnO+CM0QUZMnJ0w8CfOh0SLwa1SFzeCgs6uRiZDZYG+5kSPafkriKkuJg1aP1Fb6DQNXTf9g==}
+    peerDependencies:
+      svelte: ^3.49.0 || ^4
 
   svelte@4.2.11:
     resolution: {integrity: sha512-YIQk3J4X89wOLhjsqIW8tqY3JHPuBdtdOIkASP2PZeAMcSW9RsIjQzMesCrxOF3gdWYC0mKknlKF7OqmLM+Zqg==}
@@ -9840,6 +9851,10 @@ snapshots:
       postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.11.19)(typescript@5.1.6))
       sass: 1.71.0
       typescript: 5.1.6
+
+  svelte-previous@2.1.4(svelte@4.2.11):
+    dependencies:
+      svelte: 4.2.11
 
   svelte@4.2.11:
     dependencies:

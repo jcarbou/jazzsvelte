@@ -119,6 +119,14 @@ export function getHiddenElementOuterWidth(element: HTMLElement): number {
     return 0
 }
 
+export function isVisible(element: HTMLElement) {
+    // https://stackoverflow.com/a/59096915/502366 (in future use IntersectionObserver)
+    return (
+        element &&
+        (element.clientHeight !== 0 || element.getClientRects().length !== 0 || getComputedStyle(element).display !== 'none')
+    )
+}
+
 /**
  * Get element offset
  */

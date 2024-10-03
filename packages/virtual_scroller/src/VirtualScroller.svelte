@@ -8,7 +8,6 @@
     import type {
         JazzSvelteContext,
         HTMLDivAttributes,
-        HTMLSpanAttributes,
         IconComponent,
         CssStyle,
         ResolvedIconPT,
@@ -16,28 +15,30 @@
         TimeoutId,
         CssObject
     } from '@jazzsvelte/api'
-    import type { TooltipOptions } from '@jazzsvelte/tooltip'
-
-    import { getContext } from 'svelte'
-    false
+    import { afterUpdate, getContext, onMount } from 'svelte'
+    import { withPrevious } from 'svelte-previous'
     import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
     import { defaultVirtualScrollerProps as DEFAULT, globalVirtualScrollerPT as globalPt } from './virtualScroller.config'
+    import { getHeight, getWidth, isVisible } from '@jazzsvelte/dom'
 
     type InnerBothState = { rows: number; cols: number }
     type InnerState = InnerBothState | number
     type BothScrollPos = { top: number; left: number }
     type ScrollPos = BothScrollPos | number
+    type LazyLoadState = { first: InnerState; last: InnerState } | null
+    type Columns = any[]
+    type Items = any[] | any[][]
 
     export let appendOnly: boolean = DEFAULT.appendOnly
     export let autoSize: boolean = DEFAULT.autoSize
-    export let columns: any = DEFAULT.columns
+    export let columns: Columns | null = DEFAULT.columns
     export let contentTemplate: typeof SvelteComponent | null = DEFAULT.contentTemplate
     export let delay: number = DEFAULT.delay
     export let disabled: boolean = DEFAULT.disabled
     export let id: string | null = DEFAULT.id
     export let inline: boolean = DEFAULT.inline
-    export let items: null | any[] | any[][] = DEFAULT.items
+    export let items: Items | null = DEFAULT.items
     export let itemSize: number | number[] = DEFAULT.itemSize
     export let itemTemplate: typeof SvelteComponent | null = DEFAULT.itemTemplate
     export let lazy: boolean = DEFAULT.lazy
@@ -60,8 +61,11 @@
     export let style: CssStyle | null = DEFAULT.style
     let className: string | null = DEFAULT.class
     export { className as class }
+    export let onLazyLoad: ((state: LazyLoadState) => void) | null = null
+    export let onScrollIndexChange: ((state: LazyLoadState) => void) | null = null
+    export let onScroll: ((event: Event) => void) | null = null
 
-    export function getElement(): HTMLDivElement {
+    export function getElement(): HTMLDivElement | null {
         return rootEl
     }
     export const displayName = 'VirtualScroller'
@@ -133,22 +137,22 @@
         ptContext
     ) satisfies ResolvedIconPT
 
-    $: loadingState = loading || (false satisfies boolean)
     $: vertical = (orientation === 'vertical') satisfies boolean
     $: horizontal = (orientation === 'horizontal') satisfies boolean
     $: both = (orientation === 'both') satisfies boolean
-    $: firstState = (both ? { rows: 0, cols: 0 } : 0) satisfies InnerState
-    $: lastState = (both ? { rows: 0, cols: 0 } : 0) satisfies InnerState
-    $: numItemsInViewportState = (both ? { rows: 0, cols: 0 } : 0) satisfies InnerState
-    $: numToleratedItemsState = numToleratedItems satisfies number
+    let loadingState: boolean = false
+    let numToleratedItemsState: number = -1
     let pageState: number = 0
     let loaderArrState: undefined[] | undefined[][] = []
+    let firstState: InnerState = 0
+    let lastState: InnerState = 0
+    let numItemsInViewportState: InnerState = 0
 
     let rootEl: HTMLDivElement | null = null //const elementRef = React.useRef(null);
     let contentEl: HTMLDivElement | null = null
     let spacerEl: HTMLDivElement | null = null
     let stickyEl: HTMLDivElement | null = null
-    $: lastScrollPos = (both ? { top: 0, left: 0 } : 0) satisfies ScrollPos
+    let lastScrollPos: ScrollPos = 0
     let scrollTimeout: TimeoutId | null = null
     let resizeTimeout: TimeoutId | null = null
     let contentStyle: CssObject = {}
@@ -160,12 +164,28 @@
     let isItemRangeChanged: boolean = false
     let lazyLoadState: { first: InnerState; last: InnerState } | null = null
 
+    // Update lastScrollPos,firstState and lastState when both (orientation) change
+    $: if (both !== undefined) {
+        lastScrollPos = both ? { top: 0, left: 0 } : 0
+        firstState = both ? { rows: 0, cols: 0 } : 0
+        lastState = both ? { rows: 0, cols: 0 } : 0
+        numItemsInViewportState = both ? { rows: 0, cols: 0 } : 0
+    }
+    $: if (loading !== undefined) loadingState = loading
+
     function bothState(state: InnerState): InnerBothState {
         return state as InnerBothState
     }
 
     function simpleState(state: InnerState): number {
         return state as number
+    }
+    function bothPos(pos: ScrollPos): BothScrollPos {
+        return pos as BothScrollPos
+    }
+
+    function simplePos(pos: ScrollPos): number {
+        return pos as number
     }
 
     function bothSize(size: number | number[]): number[] {
@@ -354,32 +374,430 @@
             getLast(_first + _num + (_first < _numT ? 2 : 3) * _numT, _isCols)
         const last = both
             ? {
-                  rows: calculateLast(firstState.rows, numItemsInViewport.rows, numToleratedItems[0]),
-                  cols: calculateLast(firstState.cols, numItemsInViewport.cols, numToleratedItems[1], true)
+                  rows: calculateLast(bothState(firstState).rows, numItemsInViewport.rows, numToleratedItems[0]),
+                  cols: calculateLast(bothState(firstState).cols, numItemsInViewport.cols, numToleratedItems[1], true)
               }
-            : calculateLast(firstState, numItemsInViewport, numToleratedItems)
+            : calculateLast(simpleState(firstState), numItemsInViewport, numToleratedItems)
 
-        setNumItemsInViewportState(numItemsInViewport)
-        setNumToleratedItemsState(numToleratedItems)
-        setLastState(last)
+        numItemsInViewportState = numItemsInViewport
+        numToleratedItemsState = numToleratedItems
+        lastState = last
 
-        if (props.showLoader) {
-            setLoaderArrState(
-                both
-                    ? Array.from({ length: numItemsInViewport.rows }).map(() => Array.from({ length: numItemsInViewport.cols }))
-                    : Array.from({ length: numItemsInViewport })
+        if (showLoader) {
+            loaderArrState = both
+                ? Array.from({ length: numItemsInViewport.rows }).map(() => Array.from({ length: numItemsInViewport.cols }))
+                : Array.from({ length: numItemsInViewport })
+        }
+
+        if (lazy) {
+            Promise.resolve().then(() => {
+                lazyLoadState = {
+                    first: step ? (both ? { rows: 0, cols: bothState(firstState).cols } : 0) : firstState,
+                    last: Math.min(step ? step : last, (items || []).length)
+                }
+
+                onLazyLoad && onLazyLoad(lazyLoadState)
+            })
+        }
+    }
+
+    function calculateAutoSize(loading: boolean): void {
+        if (autoSize && !loading && defaultWidth !== null && defaultHeight != null) {
+            Promise.resolve().then(() => {
+                if (contentEl && rootEl) {
+                    contentEl.style.minHeight = contentEl.style.minWidth = 'auto'
+                    contentEl.style.position = 'relative'
+                    rootEl.style.contain = 'none'
+
+                    const [width, height] = [getWidth(rootEl), getHeight(rootEl)]
+
+                    ;(both || horizontal) &&
+                        (rootEl.style.width = (width < defaultWidth ? width : scrollWidth || defaultWidth) + 'px')
+                    ;(both || vertical) &&
+                        (rootEl.style.height = (height < defaultHeight ? height : scrollHeight || defaultHeight) + 'px')
+
+                    contentEl.style.minHeight = contentEl.style.minWidth = ''
+                    contentEl.style.position = ''
+                    rootEl.style.contain = ''
+                }
+            })
+        }
+    }
+
+    function getLast(last: number = 0, isCols: boolean) {
+        return items ? Math.min(isCols ? (columns || items[0])?.length || 0 : (items || []).length, last) : 0
+    }
+
+    const getContentPosition = () => {
+        if (contentEl) {
+            const style = getComputedStyle(contentEl)
+            const left = parseFloat(style.paddingLeft) + Math.max(parseFloat(style.left) || 0, 0)
+            const right = parseFloat(style.paddingRight) + Math.max(parseFloat(style.right) || 0, 0)
+            const top = parseFloat(style.paddingTop) + Math.max(parseFloat(style.top) || 0, 0)
+            const bottom = parseFloat(style.paddingBottom) + Math.max(parseFloat(style.bottom) || 0, 0)
+
+            return { left, right, top, bottom, x: left + right, y: top + bottom }
+        }
+
+        return { left: 0, right: 0, top: 0, bottom: 0, x: 0, y: 0 }
+    }
+
+    function setSize() {
+        if (rootEl) {
+            const parentElement = rootEl.parentElement
+            const width = scrollWidth || `${rootEl.offsetWidth || parentElement?.offsetWidth}px`
+            const height = scrollHeight || `${rootEl.offsetHeight || parentElement?.offsetHeight}px`
+            const setProp = (_name: 'width' | 'height', _value: string) => rootEl && (rootEl.style[_name] = _value)
+
+            if (both || horizontal) {
+                setProp('height', height)
+                setProp('width', width)
+            } else {
+                setProp('height', height)
+            }
+        }
+    }
+
+    function setSpacerSize() {
+        if (items) {
+            const contentPos = getContentPosition()
+            const setProp = (_name: 'width' | 'height', _value: Items, _size: number, _cpos = 0) =>
+                (spacerStyle = { ...spacerStyle, ...{ [`${_name}`]: (_value || []).length * _size + _cpos + 'px' } })
+
+            if (both) {
+                setProp('height', items, bothSize(itemSize)[0], contentPos.y)
+                setProp('width', columns || items[1], bothSize(itemSize)[1], contentPos.x)
+            } else {
+                horizontal
+                    ? setProp('width', columns || items, simpleSize(itemSize), contentPos.x)
+                    : setProp('height', items, simpleSize(itemSize), contentPos.y)
+            }
+        }
+    }
+
+    function setContentPosition(pos: LazyLoadState) {
+        if (contentEl && !appendOnly) {
+            const first = pos ? pos.first : firstState
+            const calculateTranslateVal = (_first: number, _size: number) => _first * _size
+
+            const setTransform = (_x = 0, _y = 0) => {
+                stickyEl && (stickyEl.style.top = `-${_y}px`)
+                contentStyle = { ...contentStyle, ...{ transform: `translate3d(${_x}px, ${_y}px, 0)` } }
+            }
+
+            if (both) {
+                setTransform(
+                    calculateTranslateVal(bothState(first).cols, bothSize(itemSize)[1]),
+                    calculateTranslateVal(bothState(first).rows, bothSize(itemSize)[0])
+                )
+            } else {
+                const translateVal = calculateTranslateVal(simpleState(first), simpleSize(itemSize))
+
+                horizontal ? setTransform(translateVal, 0) : setTransform(0, translateVal)
+            }
+        }
+    }
+
+    function onScrollPositionChange(event) {
+        const target = event.target
+        const contentPos = getContentPosition()
+        const calculateScrollPos = (_pos: number, _cpos: number) => (_pos ? (_pos > _cpos ? _pos - _cpos : _pos) : 0)
+        const calculateCurrentIndex = (_pos: number, _size: number) => Math.floor(_pos / (_size || _pos))
+
+        const calculateTriggerIndex = (
+            _currentIndex: number,
+            _first: number,
+            _last: number,
+            _num: number,
+            _numT: number,
+            _isScrollDownOrRight: boolean
+        ) => {
+            return _currentIndex <= _numT ? _numT : _isScrollDownOrRight ? _last - _num - _numT : _first + _numT - 1
+        }
+
+        const calculateFirst = (
+            _currentIndex: number,
+            _triggerIndex: number,
+            _first: number,
+            _last: number,
+            _num: number,
+            _numT: number,
+            _isScrollDownOrRight: boolean
+        ) => {
+            if (_currentIndex <= _numT) {
+                return 0
+            }
+
+            return Math.max(
+                0,
+                _isScrollDownOrRight
+                    ? _currentIndex < _triggerIndex
+                        ? _first
+                        : _currentIndex - _numT
+                    : _currentIndex > _triggerIndex
+                      ? _first
+                      : _currentIndex - 2 * _numT
             )
         }
 
-        if (props.lazy) {
-            Promise.resolve().then(() => {
-                lazyLoadState.current = {
-                    first: props.step ? (both ? { rows: 0, cols: firstState.cols } : 0) : firstState,
-                    last: Math.min(props.step ? props.step : last, (props.items || []).length)
+        const calculateLast = (
+            _currentIndex: number,
+            _first: number,
+            _last: number,
+            _num: number,
+            _numT: number,
+            _isCols: boolean
+        ) => {
+            let lastValue = _first + _num + 2 * _numT
+
+            if (_currentIndex >= _numT) {
+                lastValue = lastValue + (_numT + 1)
+            }
+
+            return getLast(lastValue, _isCols)
+        }
+
+        const scrollTop = calculateScrollPos(target.scrollTop, contentPos.top)
+        const scrollLeft = calculateScrollPos(target.scrollLeft, contentPos.left)
+
+        let newFirst = both ? { rows: 0, cols: 0 } : 0
+        let newLast = lastState
+        let isRangeChanged = false
+        let newScrollPos = lastScrollPos
+
+        if (both) {
+            const isScrollDown = bothPos(lastScrollPos).top <= scrollTop
+            const isScrollRight = bothPos(lastScrollPos).left <= scrollLeft
+
+            if (!appendOnly || (appendOnly && (isScrollDown || isScrollRight))) {
+                const currentIndex = {
+                    rows: calculateCurrentIndex(scrollTop, bothSize(itemSize)[0]),
+                    cols: calculateCurrentIndex(scrollLeft, bothSize(itemSize)[1])
+                }
+                const triggerIndex = {
+                    rows: calculateTriggerIndex(
+                        currentIndex.rows,
+                        bothState(firstState).rows,
+                        bothState(lastState).rows,
+                        bothState(numItemsInViewportState).rows,
+                        bothSize(numToleratedItemsState)[0],
+                        isScrollDown
+                    ),
+                    cols: calculateTriggerIndex(
+                        bothState(currentIndex).cols,
+                        bothState(firstState).cols,
+                        bothState(lastState).cols,
+                        bothState(numItemsInViewportState).cols,
+                        bothSize(numToleratedItemsState)[1],
+                        isScrollRight
+                    )
                 }
 
-                props.onLazyLoad && props.onLazyLoad(lazyLoadState.current)
-            })
+                newFirst = {
+                    rows: calculateFirst(
+                        bothState(currentIndex).rows,
+                        bothState(triggerIndex).rows,
+                        bothState(firstState).rows,
+                        bothState(lastState).rows,
+                        bothState(numItemsInViewportState).rows,
+                        bothSize(numToleratedItemsState)[0],
+                        isScrollDown
+                    ),
+                    cols: calculateFirst(
+                        bothState(currentIndex).cols,
+                        bothState(triggerIndex).cols,
+                        bothState(firstState).cols,
+                        bothState(lastState).cols,
+                        bothState(numItemsInViewportState).cols,
+                        bothSize(numToleratedItemsState)[1],
+                        isScrollRight
+                    )
+                }
+                newLast = {
+                    rows: calculateLast(
+                        bothState(currentIndex).rows,
+                        bothState(newFirst).rows,
+                        bothState(lastState).rows,
+                        bothState(numItemsInViewportState).rows,
+                        bothSize(numToleratedItemsState)[0],
+                        false
+                    ),
+                    cols: calculateLast(
+                        bothState(currentIndex).cols,
+                        bothState(newFirst).cols,
+                        bothState(lastState).cols,
+                        bothState(numItemsInViewportState).cols,
+                        bothSize(numToleratedItemsState)[1],
+                        true
+                    )
+                }
+
+                isRangeChanged =
+                    newFirst.rows !== bothState(firstState).rows ||
+                    newLast.rows !== bothState(lastState).rows ||
+                    newFirst.cols !== bothState(firstState).cols ||
+                    newLast.cols !== bothState(lastState).cols ||
+                    isItemRangeChanged
+                newScrollPos = { top: scrollTop, left: scrollLeft }
+            }
+        } else {
+            const scrollPos = horizontal ? scrollLeft : scrollTop
+            const isScrollDownOrRight = simplePos(lastScrollPos) <= scrollPos
+
+            if (!appendOnly || (appendOnly && isScrollDownOrRight)) {
+                const currentIndex = calculateCurrentIndex(scrollPos, simpleSize(itemSize))
+                const triggerIndex = calculateTriggerIndex(
+                    currentIndex,
+                    simpleState(firstState),
+                    simpleState(lastState),
+                    simpleState(numItemsInViewportState),
+                    simpleState(numToleratedItemsState),
+                    isScrollDownOrRight
+                )
+
+                newFirst = calculateFirst(
+                    currentIndex,
+                    triggerIndex,
+                    simpleState(firstState),
+                    simpleState(lastState),
+                    simpleState(numItemsInViewportState),
+                    simpleState(numToleratedItemsState),
+                    isScrollDownOrRight
+                )
+                newLast = calculateLast(
+                    currentIndex,
+                    newFirst,
+                    simpleState(lastState),
+                    simpleState(numItemsInViewportState),
+                    simpleState(numToleratedItemsState),
+                    false
+                )
+                isRangeChanged = newFirst !== firstState || newLast !== lastState || isItemRangeChanged
+                newScrollPos = scrollPos
+            }
+        }
+
+        return {
+            first: newFirst,
+            last: newLast,
+            isRangeChanged,
+            scrollPos: newScrollPos
+        }
+    }
+
+    function onScrollChange(event: Event) {
+        const { first, last, isRangeChanged, scrollPos } = onScrollPositionChange(event)
+
+        if (isRangeChanged) {
+            const newState = { first, last }
+
+            setContentPosition(newState)
+
+            firstState = first
+            lastState = last
+            lastScrollPos = scrollPos
+
+            onScrollIndexChange?.(newState)
+
+            if (lazy && isPageChanged(simpleState(first))) {
+                const newLazyLoadState = {
+                    first: step ? Math.min(getPageByFirst(simpleState(first)) * step, (items || []).length - step) : first,
+                    last: Math.min(
+                        step ? (getPageByFirst(simpleState(first)) + 1) * step : simpleState(last),
+                        (items || []).length
+                    )
+                }
+
+                const isLazyStateChanged =
+                    !lazyLoadState ||
+                    lazyLoadState.first !== newLazyLoadState.first ||
+                    lazyLoadState.last !== newLazyLoadState.last
+
+                isLazyStateChanged && onLazyLoad?.(newLazyLoadState)
+                lazyLoadState = newLazyLoadState
+            }
+        }
+    }
+
+    function _onScroll(event: Event) {
+        onScroll?.(event)
+
+        if (delay) {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout)
+            }
+
+            if (isPageChanged(simpleState(firstState))) {
+                if (!loadingState && showLoader) {
+                    const { isRangeChanged } = onScrollPositionChange(event)
+                    const changed = isRangeChanged || (step ? isPageChanged(simpleState(firstState)) : false)
+
+                    changed && (loadingState = true)
+                }
+
+                scrollTimeout = setTimeout(() => {
+                    onScrollChange(event)
+
+                    if (loadingState && showLoader && (!lazy || loading === undefined)) {
+                        loadingState = false
+                        pageState = getPageByFirst(simpleState(firstState))
+                    }
+                }, delay)
+            }
+        } else {
+            onScrollChange(event)
+        }
+    }
+
+    function onResize() {
+        if (resizeTimeout) {
+            clearTimeout(resizeTimeout)
+        }
+
+        resizeTimeout = setTimeout(() => {
+            if (rootEl) {
+                const [width, height] = [getWidth(rootEl), getHeight(rootEl)]
+                const [isDiffWidth, isDiffHeight] = [width !== defaultWidth, height !== defaultHeight]
+                const reinit = both ? isDiffWidth || isDiffHeight : horizontal ? isDiffWidth : vertical ? isDiffHeight : false
+
+                if (reinit) {
+                    numToleratedItemsState = numToleratedItems
+                    defaultWidth = width
+                    defaultHeight = height
+                    defaultContentWidth = getWidth(contentEl)
+                    defaultContentHeight = getHeight(contentEl)
+                }
+            }
+        }, resizeDelay)
+    }
+
+    function getOptions(renderedIndex: number) {
+        const count = (items || []).length
+        const index = both ? bothState(firstState).rows + renderedIndex : simpleState(firstState) + renderedIndex
+
+        return {
+            index,
+            count,
+            first: index === 0,
+            last: index === count - 1,
+            even: index % 2 === 0,
+            odd: index % 2 !== 0,
+            $$props
+        }
+    }
+
+    function loaderOptions(index: number, extOptions: any) {
+        const count = loaderArrState.length || 0
+
+        return {
+            index,
+            count,
+            first: index === 0,
+            last: index === count - 1,
+            even: index % 2 === 0,
+            odd: index % 2 !== 0,
+            $$props,
+            ...extOptions
         }
     }
 
@@ -400,6 +818,85 @@
 
         return []
     }
+
+    function viewInit() {
+        if (rootEl && isVisible(rootEl)) {
+            setContentElement(contentEl)
+            init()
+            bindWindowResizeListener()
+            bindOrientationChangeListener()
+
+            defaultWidth = getWidth(rootEl)
+            defaultHeight = getHeight(rootEl)
+            defaultContentWidth = getWidth(contentEl)
+            defaultContentHeight = getHeight(contentEl)
+        }
+    }
+
+    function init() {
+        if (!disabled) {
+            setSize()
+            calculateOptions()
+            setSpacerSize()
+        }
+    }
+
+    onMount(() => viewInit())
+
+    // TODO :  reactToChanges(itemSize, scrollHeight, scrollWidth )
+    $: if (itemSize !== undefined || scrollHeight !== undefined || scrollWidth !== undefined) {
+        init()
+    }
+
+    $: if (numToleratedItems !== numToleratedItemsState) {
+        numToleratedItems = numToleratedItemsState
+    }
+
+    $: if (numToleratedItems === numToleratedItemsState) {
+        init() // reinit after resizing
+    }
+
+    const [currentItems, previousItems] = withPrevious<Items | null>(null)
+    const [currentLoading, previousLoading] = withPrevious<boolean>(false)
+    $: $currentItems = items
+    $: $currentLoading = loading
+
+    afterUpdate(() => {
+        // Check if the previous/current rows array exists
+        const prevRowsExist = $previousItems !== undefined && $previousItems !== null
+        const currentRowsExist = items !== undefined && items !== null
+
+        // Get the length of the previous/current rows array, or 0 if it doesn't exist
+        const prevRowsLength = prevRowsExist ? $previousItems.length : 0
+        const currentRowsLength = currentRowsExist ? items?.length ?? 0 : 0
+
+        // Check if the length of the rows arrays has changed
+        let valuesChanged = prevRowsLength !== currentRowsLength
+
+        // If both is true, we also need to check the lengths of the first element (assuming it's a matrix)
+        if (both && !valuesChanged) {
+            // Get the length of the columns or 0
+            const prevColumnsLength = prevRowsExist && $previousItems.length > 0 ? $previousItems[0].length : 0
+            const currentColumnsLength = currentRowsExist && (items?.length ?? 0) > 0 ? items?.[0].length ?? 0 : 0
+
+            // Check if the length of the columns has changed
+            valuesChanged = prevColumnsLength !== currentColumnsLength
+        }
+
+        // If the previous items array doesn't exist or if any values have changed, call the init function
+        if (!prevRowsExist || valuesChanged) {
+            init()
+        }
+
+        let _loading = loadingState
+
+        if (lazy && $previousLoading !== loading && loading !== loadingState) {
+            loadingState = loading
+            _loading = loading
+        }
+
+        calculateAutoSize(_loading)
+    })
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
 </script>
