@@ -24,7 +24,6 @@
     import { defaultVirtualScrollerProps as DEFAULT, globalVirtualScrollerPT as globalPt } from './virtualScroller.config'
     import { getHeight, getWidth, isVisible, findSingleEl } from '@jazzsvelte/dom'
     import { windowEvents } from '@jazzsvelte/window_events_action'
-    import { deepEquals } from '@jazzsvelte/object'
 
     type BothScrollPos = { top: number; left: number }
     type ScrollPos = BothScrollPos | number
@@ -265,7 +264,6 @@
     }
 
     function scrollToIndex(index: number | number[], behavior: ScrollBehavior = 'auto'): void {
-        console.log('scrollToIndex')
         const { numToleratedItems } = calculateNumItems()
         const contentPos = getContentPosition()
         const scrollToItem = (left = 0, top = 0) => scrollTo({ left, top, behavior })
@@ -295,7 +293,6 @@
     }
 
     function scrollInView(index: number | number[], to: 'to-start' | 'to-end', behavior: ScrollBehavior = 'auto'): void {
-        console.log('scrollInView')
         if (!to) {
             scrollToIndex(index, behavior)
             return
@@ -434,7 +431,6 @@
 
     function calculateOptions() {
         const { numItemsInViewport, numToleratedItems } = calculateNumItems()
-        console.log('calculateOptions ' + firstState + ' ' + numItemsInViewport + ' ' + numToleratedItems)
         const calculateLast = (_first: number, _num: number, _numT: number, _isCols = false) =>
             getLast(_first + _num + (_first < _numT ? 2 : 3) * _numT, _isCols)
         const last = both
@@ -599,7 +595,6 @@
             _numT: number,
             _isScrollDownOrRight: boolean
         ) => {
-            console.log('Calculate First ' + _numT)
             if (_currentIndex <= _numT) {
                 return 0
             }
@@ -624,8 +619,6 @@
             _numT: number,
             _isCols: boolean
         ) => {
-            console.log('Calculate Last ' + _numT)
-
             let lastValue = _first + _num + 2 * _numT
 
             if (_currentIndex >= _numT) {
@@ -766,8 +759,6 @@
     function onScrollChange(event: Event) {
         const { first, last, isRangeChanged, scrollPos } = onScrollPositionChange(event)
 
-        console.log('first ' + first + ' last ' + last + ' isRangeChanged ' + isRangeChanged)
-
         if (isRangeChanged) {
             const newState = { first, last }
 
@@ -800,7 +791,6 @@
     }
 
     function _onScroll(event: Event) {
-        console.log('onScroll')
         onScroll?.(event)
 
         if (delay) {
@@ -813,37 +803,29 @@
                     const { isRangeChanged } = onScrollPositionChange(event)
                     const changed = isRangeChanged || (step ? isPageChanged(simpleState(firstState)) : false)
 
-                    console.log('====== _onScroll set loadingState to true = ' + changed)
                     changed && (loadingState = true)
                 }
 
-                console.log('Scroll Timeout call')
                 scrollTimeout = setTimeout(() => {
-                    console.log('Scroll Timeout exec')
                     onScrollChange(event)
 
                     if (loadingState && showLoader && (!lazy || loading === undefined)) {
-                        console.log('====== _onScroll set loadingState to false ')
                         loadingState = false
                         pageState = getPageByFirst(simpleState(firstState))
                     }
                 }, delay)
             }
         } else {
-            console.log('Scroll exec')
             onScrollChange(event)
         }
     }
 
     function onResize() {
-        console.log('Resize Timeout call')
-
         if (resizeTimeout) {
             clearTimeout(resizeTimeout)
         }
 
         resizeTimeout = setTimeout(() => {
-            console.log('Resize Timeout exec')
             if (rootEl) {
                 const [width, height] = [getWidth(rootEl), getHeight(rootEl)]
                 const [isDiffWidth, isDiffHeight] = [width !== defaultWidth, height !== defaultHeight]
@@ -892,8 +874,6 @@
 
     let loadedItems: any[] | any[][] = []
     $: {
-        console.log('loadedItems')
-
         if (!items || loadingState) {
             loadedItems = []
         } else if (both) {
@@ -903,13 +883,11 @@
                     columns ? item : item.slice(appendOnly ? 0 : bothState(firstState).cols, bothState(lastState).cols)
                 )
         } else if (!horizontal || !columns) {
-            console.log('loadedItems ' + simpleState(firstState) + ' ' + simpleState(lastState))
             loadedItems = items.slice(appendOnly ? 0 : simpleState(firstState), simpleState(lastState))
         }
     }
 
     function viewInit() {
-        console.log('viewInit')
         if (rootEl && isVisible(rootEl)) {
             setContentElement(contentEl)
             init()
@@ -922,7 +900,6 @@
     }
 
     function init() {
-        console.log('init')
         if (!disabled) {
             setSize()
             calculateOptions()
@@ -959,7 +936,6 @@
     }
 
     afterUpdate(() => {
-        console.log('afterUpdate')
         // Check if the previous/current rows array exists
         const prevRowsExist = !!previousItems
         const currentRowsExist = items !== undefined && items !== null
