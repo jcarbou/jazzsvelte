@@ -12,6 +12,7 @@
     import TailwindDoc from './theming/TailwindDoc.svelte'
     import DocApiTable from '../common/DocApiTable.svelte'
     import DocComponent from '../common/DocComponent.svelte'
+    import DocApiPtTable from '../common/DocApiPtTable.svelte'
 
     const docs = [
         {
@@ -55,12 +56,12 @@
         {
             id: 'pt.avatar.options',
             label: 'Avatar PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         },
         {
             id: 'pt.avatargroup.options',
             label: 'AvatarGroup PT Options',
-            component: DocApiTable
+            component: DocApiPtTable
         }
     ]
 

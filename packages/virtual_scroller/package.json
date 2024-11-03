@@ -10,9 +10,10 @@
     },
     "devDependencies": {
         "@jazzsvelte/api": "workspace:^0.1.0",
-        "@jazzsvelte/test": "workspace:^0.1.0",
         "@jazzsvelte/icons": "workspace:^0.1.0",
-        "svelte-previous": "2.1.4"
+        "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
+        "@jazzsvelte/test": "workspace:^0.1.0",
+        "@jazzsvelte/window_events_action": "workspace:^0.1.0"
     },
     "dependencies": {
         "@jazzsvelte/dom": "workspace:^0.1.0",

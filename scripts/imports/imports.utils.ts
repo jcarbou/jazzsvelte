@@ -1,4 +1,3 @@
-import fs from 'fs'
 import child_process from 'child_process'
 import util from 'util'
 
@@ -85,19 +84,23 @@ export function addScriptTsDeclaration(content: string): string {
 }
 
 export function styleToString(styleJsonString: string): string {
-    const style = JSON.parse(fixedJSON(styleJsonString))
-    return Object.keys(style).reduce(
-        (acc, key) =>
-            acc +
-            key
-                .split(/(?=[A-Z])/)
-                .join('-')
-                .toLowerCase() +
-            ':' +
-            style[key] +
-            ';',
-        ''
-    )
+    try {
+        const style = JSON.parse(fixedJSON(styleJsonString))
+        return Object.keys(style).reduce(
+            (acc, key) =>
+                acc +
+                key
+                    .split(/(?=[A-Z])/)
+                    .join('-')
+                    .toLowerCase() +
+                ':' +
+                style[key] +
+                ';',
+            ''
+        )
+    } catch (e) {
+        return styleJsonString
+    }
 }
 
 export function jsonStyleToString(content: string): string {

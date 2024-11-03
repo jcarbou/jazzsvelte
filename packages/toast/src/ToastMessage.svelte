@@ -6,7 +6,8 @@
         ResolvedIconPT,
         HTMLDivAttributes,
         PassThroughOptions,
-        HTMLSpanAttributes
+        HTMLSpanAttributes,
+        TimeoutId
     } from '@jazzsvelte/api'
 
     import type {
@@ -28,7 +29,7 @@
     import { closeToast } from './toast.store'
 
     export let id: string
-    export let timerId: ReturnType<typeof setTimeout> | null = null
+    export let timerId: TimeoutId = null
     export let status: ToastMessageStatus
 
     export { className as class }

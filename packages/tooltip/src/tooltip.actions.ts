@@ -4,6 +4,7 @@ import type { TooltipActionOptions, TooltipLayoutActionOptions, TooltipLayoutAct
 import { getOuterWidth, getOuterHeight, findCollisionPosition, flipfitCollision, setSingleEventListener } from '@jazzsvelte/dom'
 import Tooltip from './Tooltip.svelte'
 import { tick } from 'svelte'
+import { TimeoutId } from '@jazzsvelte/api'
 
 /**
  * Action on element that declare the tooltip
@@ -43,8 +44,8 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
     const eventOption = options.event || 'hover'
     const listenFocus = eventOption === 'focus' || eventOption === 'both'
     const listenMouse = eventOption === 'hover' || eventOption === 'both'
-    let showTimeout: ReturnType<typeof setTimeout> | null = null
-    let hideTimeout: ReturnType<typeof setTimeout> | null = null
+    let showTimeout: TimeoutId = null
+    let hideTimeout: TimeoutId = null
 
     function show({ x, y }: { x?: number; y?: number }) {
         // showDelay implementation

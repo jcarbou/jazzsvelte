@@ -19,7 +19,8 @@ export const nodes = [
 	() => import('./nodes/15'),
 	() => import('./nodes/16'),
 	() => import('./nodes/17'),
-	() => import('./nodes/18')
+	() => import('./nodes/18'),
+	() => import('./nodes/19')
 ];
 
 export const server_loads = [];
@@ -41,7 +42,8 @@ export const dictionary = {
 		"/theming": [15],
 		"/tieredmenu": [16],
 		"/toast": [17],
-		"/tooltip": [18]
+		"/tooltip": [18],
+		"/virtualscroller": [19]
 	};
 
 export const hooks = {

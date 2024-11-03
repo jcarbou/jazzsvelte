@@ -17,13 +17,14 @@
         PassThroughOptions,
         MenuItem,
         AppendTo,
-        OnEvent
+        OnEvent,
+        TimeoutId
     } from '@jazzsvelte/api'
 
     import { portal } from '@jazzsvelte/portal_action'
     import { getContext, setContext, tick } from 'svelte'
     import { derived } from 'svelte/store'
-    import { mergeCssStsyles, resolvePT, zIndex } from '@jazzsvelte/api'
+    import { mergeCssStyles, resolvePT, zIndex } from '@jazzsvelte/api'
     import { defaultTieredMenuProps as DEFAULT, globalTieredMenuPT as globalPt } from './tieredMenu.config'
     import { fade } from 'svelte/transition'
     import TieredMenuSub from './TieredMenuSub.svelte'
@@ -46,7 +47,7 @@
     } from './tieredMenu.utils'
     import { matchMedia } from '@jazzsvelte/match_media_action'
     import { clickOutside } from '@jazzsvelte/click_outside_action'
-    import { windowResize } from '@jazzsvelte/window_resize_action'
+    import { windowEvents } from '@jazzsvelte/window_events_action'
     import { isPrintableCharacter } from '@jazzsvelte/object'
 
     export let appendTo: AppendTo = DEFAULT.appendTo
@@ -126,7 +127,7 @@
                     'p-ripple-disabled': $ripple === false
                 }
             ],
-            style: mergeCssStsyles([style, popupStyle]),
+            style: mergeCssStyles([style, popupStyle]),
             'data-pc-name': 'tieredMenu',
             'data-pc-section': 'root'
         },
@@ -160,7 +161,7 @@
             ? `${_id}${$focusedItemInfo.parentKey ? '_' + $focusedItemInfo.parentKey : ''}_${$focusedItemInfo.index}`
             : null
     let searchValue: string | null = null
-    let searchTimeoutId: ReturnType<typeof setTimeout> | null = null
+    let searchTimeoutId: TimeoutId = null
 
     function onItemChange(event: ProcessedItemEvent) {
         const { processedItem, isFocus } = event
@@ -544,9 +545,8 @@
         role="none"
         on:click={onRootClick}
         on:clickoutside={onClickOutside}
-        on:windowresize={(ev) => !$isMobileMode && _hide(ev, true)}
         use:portal={popup ? 'body' : 'none'}
-        use:windowResize
+        use:windowEvents={{ resize: (ev) => !$isMobileMode && _hide(ev, true) }}
         use:clickOutside={{ getAdditionalElements: () => [targetEl] }}
         use:zIndex={{ key: 'menu', jazzSvelteContext, autoZIndex, baseZIndex }}
         use:matchMedia={{ query: matchMediaQuery, matches: isMobileMode }}

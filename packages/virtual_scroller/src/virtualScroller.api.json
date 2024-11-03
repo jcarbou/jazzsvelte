@@ -393,7 +393,7 @@
             }
         ],
         "label": "VirtualScrollerPassThroughMethodOptions",
-        "shortLabel": "VirtualScrollerPtMethodOptions"
+        "shortLabel": "PtMethodOptions"
     },
     "ptOptions": {
         "description": "Custom passthrough(pt) options.",
@@ -437,7 +437,7 @@
             }
         ],
         "label": "VirtualScrollerPassThroughOptions",
-        "shortLabel": "VirtualScrollerPtOptions"
+        "shortLabel": "PtOptions"
     },
     "meta": {
         "RootType": "Div",
@@ -461,14 +461,14 @@
                 "name": "first",
                 "optional": false,
                 "readonly": false,
-                "type": "number",
+                "type": "number | { rows: number; cols: number }",
                 "description": "First index of the new data range to be loaded as a number."
             },
             {
                 "name": "last",
                 "optional": false,
                 "readonly": false,
-                "type": "number",
+                "type": "number | { rows: number; cols: number }",
                 "description": "Last index of the new data range to be loaded as a number."
             },
             {
@@ -482,43 +482,29 @@
                 "name": "numItemsInViewport",
                 "optional": false,
                 "readonly": false,
-                "type": "number",
+                "type": "number | { rows: number; cols: number }",
                 "description": "Visible item count in the viewport as a number."
             },
             {
                 "name": "numToleratedItems",
                 "optional": false,
                 "readonly": false,
-                "type": "number",
+                "type": "number | number[]",
                 "description": "Additional elements to add to the DOM outside of the view as a number."
             },
             {
                 "name": "loading",
                 "optional": false,
                 "readonly": false,
-                "type": "number",
+                "type": "boolean",
                 "description": "Current loading state as a boolean."
             },
             {
                 "name": "loaderArr",
                 "optional": false,
                 "readonly": false,
-                "type": "any[]",
+                "type": "undefined[] | (undefined[] | undefined)[]",
                 "description": "Loadable items array."
-            },
-            {
-                "name": "rows",
-                "optional": false,
-                "readonly": false,
-                "type": "number",
-                "description": "Number of rows to be rendered."
-            },
-            {
-                "name": "cols",
-                "optional": false,
-                "readonly": false,
-                "type": "number",
-                "description": "Number of columns to be rendered."
             }
         ],
         "label": "VirtualScrollerState",

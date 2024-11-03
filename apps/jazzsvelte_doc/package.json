@@ -55,6 +55,7 @@
         "@jazzsvelte/toast": "workspace:^0.1.0",
         "@jazzsvelte/tooltip": "workspace:^0.1.0",
         "@jazzsvelte/utils": "workspace:^0.1.0",
+        "@jazzsvelte/virtual_scroller": "workspace:^0.1.0",
         "@neoconfetti/svelte": "^1.0.0",
         "@rollup/plugin-alias": "^5.1.0",
         "@rollup/plugin-babel": "^6.0.4",

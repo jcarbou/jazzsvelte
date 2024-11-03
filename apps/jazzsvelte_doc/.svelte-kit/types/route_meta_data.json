@@ -49,5 +49,8 @@
 	],
 	"/tooltip": [
 		"src/routes/tooltip/+page.ts"
+	],
+	"/virtualscroller": [
+		"src/routes/virtualscroller/+page.ts"
 	]
 }

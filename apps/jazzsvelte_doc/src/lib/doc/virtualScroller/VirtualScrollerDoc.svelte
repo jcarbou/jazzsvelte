@@ -1,16 +1,18 @@
 <script lang="ts">
     import { projectName } from '../common/doc.utils'
-    import { panelApiData } from '@jazzsvelte/panel'
+    import { virtualScrollerApiData } from '@jazzsvelte/virtual_scroller'
     import DocApiTable from '../common/DocApiTable.svelte'
     import DocComponent from '../common/DocComponent.svelte'
     import AccessibilityDoc from './AccessibilityDoc.svelte'
     import BasicDoc from './BasicDoc.svelte'
+    import DelayDoc from './DelayDoc.svelte'
+    import GridDoc from './GridDoc.svelte'
+    import HorizontalDoc from './HorizontalDoc.svelte'
     import ImportDoc from './ImportDoc.svelte'
+    import LazyDoc from './LazyDoc.svelte'
+    import LoadingDoc from './LoadingDoc.svelte'
     import Wireframe from './pt/Wireframe.svelte'
-    import TemplateDoc from './TemplateDoc.svelte'
     import StyledDoc from './theming/StyledDoc.svelte'
-    import TailwindDoc from './theming/TailwindDoc.svelte'
-    import ToggleableDoc from './ToggleableDoc.svelte'
     import DocApiPtTable from '../common/DocApiPtTable.svelte'
 
     const docs = [
@@ -25,23 +27,36 @@
             component: BasicDoc
         },
         {
-            id: 'toggleable',
-            label: 'Toggleable',
-            component: ToggleableDoc
+            id: 'horizontal',
+            label: 'Horizontal',
+            component: HorizontalDoc
         },
         {
-            id: 'template',
-            label: 'Template',
-            component: TemplateDoc
+            id: 'grid',
+            label: 'Grid',
+            component: GridDoc
         },
-
+        {
+            id: 'delay',
+            label: 'Delay',
+            component: DelayDoc
+        },
+        {
+            id: 'loading',
+            label: 'Loading',
+            component: LoadingDoc
+        },
+        {
+            id: 'lazy',
+            label: 'Lazy',
+            component: LazyDoc
+        },
         {
             id: 'accessibility',
             label: 'Accessibility',
             component: AccessibilityDoc
         }
     ]
-
     const ptDocs = [
         {
             id: 'pt.wireframe',
@@ -49,8 +64,8 @@
             component: Wireframe
         },
         {
-            id: 'pt.panel.options',
-            label: 'Panel PT Options',
+            id: 'pt.virtualscroller.options',
+            label: 'VirtualScroller PT Options',
             component: DocApiPtTable
         }
     ]
@@ -60,29 +75,16 @@
             id: 'styled',
             label: 'Styled',
             component: StyledDoc
-        },
-        {
-            id: 'unstyled',
-            label: 'Unstyled',
-            description: 'Theming is implemented with the pass through properties in unstyled mode.',
-            children: [
-                {
-                    id: 'tailwind',
-                    label: 'Tailwind',
-                    component: TailwindDoc
-                }
-            ]
         }
     ]
 </script>
 
 <DocComponent
-    title="{projectName} Panel Component"
-    header="Panel"
-    description="Panel is a container component with an optional content toggle feature."
+    title="{projectName} Virtual Scroller Component"
+    header="VirtualScroller"
+    description="VirtualScroller is a performant approach to render large amounts of data efficiently."
     {docs}
-    apiDocData={[panelApiData]}
+    apiDocData={[virtualScrollerApiData]}
     {ptDocs}
-    ptDescription={''}
     {themingDocs}
 />

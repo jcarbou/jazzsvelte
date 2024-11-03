@@ -35,7 +35,9 @@ declare module '$env/static/private' {
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
 	export const DriverData: string;
-	export const EFC_38248: string;
+	export const EFC_8064: string;
+	export const FPS_BROWSER_APP_PROFILE_STRING: string;
+	export const FPS_BROWSER_USER_PROFILE_STRING: string;
 	export const GIT_ASKPASS: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
@@ -117,6 +119,7 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__jazzsvelte_toast: string;
 	export const npm_package_devDependencies__jazzsvelte_tooltip: string;
 	export const npm_package_devDependencies__jazzsvelte_utils: string;
+	export const npm_package_devDependencies__jazzsvelte_virtual_scroller: string;
 	export const npm_package_devDependencies__neoconfetti_svelte: string;
 	export const npm_package_devDependencies__rollup_plugin_alias: string;
 	export const npm_package_devDependencies__rollup_plugin_babel: string;
@@ -227,7 +230,9 @@ declare module '$env/dynamic/private' {
 		COMPUTERNAME: string;
 		ComSpec: string;
 		DriverData: string;
-		EFC_38248: string;
+		EFC_8064: string;
+		FPS_BROWSER_APP_PROFILE_STRING: string;
+		FPS_BROWSER_USER_PROFILE_STRING: string;
 		GIT_ASKPASS: string;
 		HOME: string;
 		HOMEDRIVE: string;
@@ -309,6 +314,7 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__jazzsvelte_toast: string;
 		npm_package_devDependencies__jazzsvelte_tooltip: string;
 		npm_package_devDependencies__jazzsvelte_utils: string;
+		npm_package_devDependencies__jazzsvelte_virtual_scroller: string;
 		npm_package_devDependencies__neoconfetti_svelte: string;
 		npm_package_devDependencies__rollup_plugin_alias: string;
 		npm_package_devDependencies__rollup_plugin_babel: string;

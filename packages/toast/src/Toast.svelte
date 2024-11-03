@@ -3,7 +3,7 @@
     import type { ToastPassThroughMethodOptions, ToastPassThroughOptions, ToastPosition } from './toast.types'
 
     import { getContext } from 'svelte'
-    import { mergeCssStsyles, resolvePT, zIndex } from '@jazzsvelte/api'
+    import { mergeCssStyles, resolvePT, zIndex } from '@jazzsvelte/api'
     import ToastMessage from './ToastMessage.svelte'
     import { toastMessages } from './toast.store'
     import { fade, fly } from 'svelte/transition'
@@ -45,7 +45,7 @@
                     'p-ripple-disabled': $ripple === false
                 }
             ],
-            style: mergeCssStsyles([
+            style: mergeCssStyles([
                 style,
                 {
                     position: 'fixed',

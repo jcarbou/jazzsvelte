@@ -258,6 +258,9 @@ importers:
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
         version: link:../../packages/utils
+      '@jazzsvelte/virtual_scroller':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/virtual_scroller
       '@neoconfetti/svelte':
         specifier: ^1.0.0
         version: 1.0.0
@@ -1145,9 +1148,9 @@ importers:
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
         version: link:../utils
-      '@jazzsvelte/window_resize_action':
+      '@jazzsvelte/window_events_action':
         specifier: workspace:^0.1.0
-        version: link:../window_resize_action
+        version: link:../window_events_action
     devDependencies:
       '@jazzsvelte/angleright_icon':
         specifier: workspace:^0.1.0
@@ -1229,14 +1232,20 @@ importers:
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
+      '@jazzsvelte/spinner_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/spinner
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
+      '@jazzsvelte/window_events_action':
+        specifier: workspace:^0.1.0
+        version: link:../window_events_action
       svelte-previous:
         specifier: 2.1.4
         version: 2.1.4(svelte@4.2.11)
 
-  packages/window_resize_action:
+  packages/window_events_action:
     dependencies:
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0

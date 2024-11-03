@@ -11,7 +11,7 @@ import type {
 } from './pt.types'
 import { JAZZ_SVELTE } from './JazzSvelte'
 import { mergeCssClasses } from './cssClasses'
-import { mergeCssStsyles } from './cssStyles'
+import { mergeCssStyles } from './cssStyles'
 
 type Options<T, M> = PassThroughType<T, M> | undefined
 
@@ -68,7 +68,7 @@ export function resolvePT<ELT extends Element, M, PROPS, STATE, CTX>(
     const globalPtAttributes = ptToAttributes(globalOptions, ptContext)
     const elementPtAttributes = ptToAttributes(elementOptions, ptContext)
     const classes = mergeCssClasses([...(unstyled ? [] : elementClasses), elementPtAttributes.class, globalPtAttributes.class])
-    const styles = mergeCssStsyles([...elementStyle, globalPtAttributes.style, elementPtAttributes.style])
+    const styles = mergeCssStyles([...elementStyle, globalPtAttributes.style, elementPtAttributes.style])
     const attributes: Omit<PtAttr<ELT>, 'style'> & { style?: string } = {
         ...elementAttributes,
         ...globalPtAttributes,

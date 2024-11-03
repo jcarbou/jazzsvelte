@@ -7,5 +7,5 @@
 
 <DocSectionText {docSection} />
 <div>
-    <img class="w-full" src="https://primefaces.org/cdn/primereact/images/pt/button.jpg" alt="button" />
+    <img class="w-full" src="https://primefaces.org/cdn/primereact/images/pt/virtualscroller.jpg" alt="virtualscroller" />
 </div>

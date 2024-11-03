@@ -235,7 +235,7 @@ export function addStyles(element: any, styles: { [key: string]: string } = {}):
  * @param selector
  * @returns
  */
-export function findSingleEl(el: HTMLElement, selector: string): HTMLElement | null {
+export function findSingleEl(el: HTMLElement | null | undefined, selector: string): HTMLElement | null {
     return el ? el.querySelector(selector) : null
 }
 
