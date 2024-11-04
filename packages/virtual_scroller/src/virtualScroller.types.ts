@@ -149,7 +149,7 @@ export interface BaseVirtualScrollerProps {
     /**
      * Callback to invoke in lazy mode to load new data.
      */
-    onLazyLoad: LazyLoadCallback | null
+    onLazyLoad?: LazyLoadCallback | null
 
     /**
      * The orientation of scrollbar, valid values are 'vertical', 'horizontal' and 'both'.

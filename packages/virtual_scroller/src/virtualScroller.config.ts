@@ -17,11 +17,13 @@ export function virtualScrollerPT(options: VirtualScrollerPassThroughOptions) {
 /**
  * Default virtualScroller  props
  */
-export const defaultVirtualScrollerProps: Omit<Required<BaseVirtualScrollerProps>, 'pt' | 'ptOptions' | 'itemSize'> = {
+export const defaultVirtualScrollerProps: Omit<
+    Required<BaseVirtualScrollerProps>,
+    'pt' | 'ptOptions' | 'itemSize' | 'onLazyLoad'
+> = {
     appendOnly: false,
     autoSize: false,
     class: null,
-    className: null,
     columns: null,
     contentTemplate: null,
     delay: 0,
