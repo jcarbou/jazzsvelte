@@ -5,8 +5,12 @@
     import DocApiTableTextOrLink from './DocApiTableTextOrLink.svelte'
     import type { ApiDocParameter, ApiDocValue } from '@jazzsvelte/api'
 
-    export let value: ApiDocParameter[]
-    export let deprecated: string | undefined = undefined
+    interface Props {
+        value: ApiDocParameter[]
+        deprecated?: string | undefined
+    }
+
+    let { value, deprecated = undefined }: Props = $props()
 
     const { id } = getContext<ApiTableInfo>('apiTabelInfo')
     const linkTargets = getContext<LinkTargets>('apiDocsLinkTargets')

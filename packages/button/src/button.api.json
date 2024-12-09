@@ -91,7 +91,7 @@
                 "name": "label",
                 "optional": true,
                 "readonly": false,
-                "type": "string | null",
+                "type": "string | Snipet | null",
                 "default": "null",
                 "description": "Text of the button."
             },
@@ -148,7 +148,7 @@
                 "name": "ptOptions",
                 "optional": true,
                 "readonly": false,
-                "type": "ButtonPassThroughMethodOptions",
+                "type": "PassThroughOptions",
                 "default": "null",
                 "description": "Used to configure passthrough(pt) options of the component."
             },
@@ -240,7 +240,7 @@
         "description": "Add event listener to the component.",
         "values": [
             {
-                "name": "on:click",
+                "name": "onclick",
                 "parameters": [
                     {
                         "name": "event",
@@ -252,7 +252,7 @@
                 "description": "Click event listener"
             },
             {
-                "name": "on:mousedown",
+                "name": "onmousedown",
                 "parameters": [
                     {
                         "name": "event",
@@ -264,7 +264,7 @@
                 "description": "Mouse Down event listener"
             },
             {
-                "name": "on:mouseup",
+                "name": "onmouseup",
                 "parameters": [
                     {
                         "name": "event",
@@ -276,7 +276,7 @@
                 "description": "Mouse Up event listener"
             },
             {
-                "name": "on:mouseover",
+                "name": "onmouseover",
                 "parameters": [
                     {
                         "name": "event",
@@ -288,7 +288,7 @@
                 "description": "Mouse Over event listener"
             },
             {
-                "name": "on:mousemove",
+                "name": "onmousemove",
                 "parameters": [
                     {
                         "name": "event",
@@ -300,7 +300,7 @@
                 "description": "Mouse Move event listener"
             },
             {
-                "name": "on:mouseout",
+                "name": "onmouseout",
                 "parameters": [
                     {
                         "name": "event",
@@ -312,7 +312,7 @@
                 "description": "Mouse Out event listener"
             },
             {
-                "name": "on:mouseout",
+                "name": "onmouseout",
                 "parameters": [
                     {
                         "name": "event",
@@ -324,7 +324,7 @@
                 "description": "Mouse Out event listener"
             },
             {
-                "name": "on:focus",
+                "name": "onfocus",
                 "parameters": [
                     {
                         "name": "event",
@@ -336,7 +336,7 @@
                 "description": "Focus event listener"
             },
             {
-                "name": "on:blur",
+                "name": "onblur",
                 "parameters": [
                     {
                         "name": "event",
@@ -348,7 +348,7 @@
                 "description": "Blur event listener"
             },
             {
-                "name": "on:keydown",
+                "name": "onkeydown",
                 "parameters": [
                     {
                         "name": "event",
@@ -360,7 +360,7 @@
                 "description": "Key Down event listener"
             },
             {
-                "name": "on:keyup",
+                "name": "onkeyup",
                 "parameters": [
                     {
                         "name": "event",
@@ -372,7 +372,7 @@
                 "description": "Key Up event listener"
             },
             {
-                "name": "on:touchstart",
+                "name": "ontouchstart",
                 "parameters": [
                     {
                         "name": "event",
@@ -384,7 +384,7 @@
                 "description": "Touch Start event listener"
             },
             {
-                "name": "on:touchend",
+                "name": "ontouchend",
                 "parameters": [
                     {
                         "name": "event",
@@ -396,7 +396,7 @@
                 "description": "Touch End event listener"
             },
             {
-                "name": "on:touchcancel",
+                "name": "ontouchcancel",
                 "parameters": [
                     {
                         "name": "event",
@@ -408,7 +408,7 @@
                 "description": "Touch Cancel event listener"
             },
             {
-                "name": "on:touchmove",
+                "name": "ontouchmove",
                 "parameters": [
                     {
                         "name": "event",

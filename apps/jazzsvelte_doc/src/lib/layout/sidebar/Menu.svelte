@@ -3,9 +3,13 @@
     import type { MenuData, MenuItemData, SubMenuData } from './Sidebar.types'
     import MenuItem from './MenuItem.svelte'
 
-    export let data: MenuData
+    interface Props {
+        data: MenuData
+    }
 
-    let expanded: boolean = false
+    let { data }: Props = $props()
+
+    let expanded: boolean = $state(false)
 
     const toSubMenuData = (subMenuOrItemData: MenuItemData | SubMenuData) => subMenuOrItemData as SubMenuData
     const toMenuItemData = (subMenuOrItemData: MenuItemData | SubMenuData) => subMenuOrItemData as MenuItemData
@@ -13,7 +17,7 @@
 
 <li class="layout-menu">
     {#if data.children}
-        <button class="layout-menu-content px-link" on:click={() => (expanded = !expanded)}>
+        <button class="layout-menu-content px-link" onclick={() => (expanded = !expanded)}>
             <span class="menu-icon">
                 <i class={data.icon}></i>
             </span>

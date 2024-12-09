@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { JazzSvelteContext, CssStyle, HTMLDivAttributes, PassThroughOptions } from '@jazzsvelte/api'
-    import type { ToastPassThroughMethodOptions, ToastPassThroughOptions, ToastPosition } from './toast.types'
+    import type { JazzSvelteContext, HTMLDivAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { ToastPassThroughMethodOptions, ToastProps } from './toast.types'
 
     import { getContext } from 'svelte'
     import { mergeCssStyles, resolvePT, zIndex } from '@jazzsvelte/api'
@@ -9,75 +9,82 @@
     import { fade, fly } from 'svelte/transition'
     import { defaultToastProps as DEFAULT, globalToastPT as globalPt } from './toast.config'
 
-    let className: string | null = DEFAULT.class
-    export { className as class }
-    export let id: string = DEFAULT.id
-    export let position: ToastPosition | null = DEFAULT.position
-    export let pt: Omit<ToastPassThroughOptions, 'message'> | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let style: CssStyle = DEFAULT.style
-    export let unstyled: boolean = DEFAULT.unstyled
+    let _props = $props()
+    let {
+        class: className = DEFAULT.class,
+        id = DEFAULT.id,
+        position = DEFAULT.position,
+        pt = null,
+        ptOptions = null,
+        style = DEFAULT.style,
+        unstyled = DEFAULT.unstyled,
+        ..._restProps
+    }: ToastProps = _props
 
     export const displayName = 'Toast'
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
     const { inputStyle, ripple } = jazzSvelteContext
 
-    $: ptContext = {
-        props: { ...DEFAULT, ...$$props },
-        ptOptions,
-        unstyled
-    } satisfies ToastPassThroughMethodOptions & {
+    let ptContext: ToastPassThroughMethodOptions & {
         ptOptions: PassThroughOptions | null
         unstyled: boolean
-    }
+    } = $derived({
+        props: { ...DEFAULT, ..._props },
+        ptOptions,
+        unstyled
+    })
 
     // "roor" elements
-    $: rootAttributes = resolvePT(
-        {
-            class: [
-                className,
-                'p-toast',
-                'p-component',
-                'p-toast-' + position,
-                {
-                    'p-input-filled': $inputStyle === 'filled',
-                    'p-ripple-disabled': $ripple === false
-                }
-            ],
-            style: mergeCssStyles([
-                style,
-                {
-                    position: 'fixed',
-                    top:
-                        position === 'top-right' || position === 'top-left' || position === 'top-center'
-                            ? '20px'
-                            : position === 'center'
-                              ? '50%'
-                              : null,
-                    right: position === 'top-right' || position === 'bottom-right' ? '20px' : null,
-                    bottom:
-                        position === 'bottom-left' || position === 'bottom-right' || position === 'bottom-center' ? '20px' : null,
-                    left:
-                        position === 'top-left' || position === 'bottom-left'
-                            ? '20px'
-                            : position === 'center' || position === 'top-center' || position === 'bottom-center'
-                              ? '50%'
-                              : null
-                }
-            ])
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let rootAttributes: HTMLDivAttributes = $derived(
+        resolvePT(
+            {
+                class: [
+                    className,
+                    'p-toast',
+                    'p-component',
+                    'p-toast-' + position,
+                    {
+                        'p-input-filled': $inputStyle === 'filled',
+                        'p-ripple-disabled': $ripple === false
+                    }
+                ],
+                style: mergeCssStyles([
+                    style,
+                    {
+                        position: 'fixed',
+                        top:
+                            position === 'top-right' || position === 'top-left' || position === 'top-center'
+                                ? '20px'
+                                : position === 'center'
+                                  ? '50%'
+                                  : null,
+                        right: position === 'top-right' || position === 'bottom-right' ? '20px' : null,
+                        bottom:
+                            position === 'bottom-left' || position === 'bottom-right' || position === 'bottom-center'
+                                ? '20px'
+                                : null,
+                        left:
+                            position === 'top-left' || position === 'bottom-left'
+                                ? '20px'
+                                : position === 'center' || position === 'top-center' || position === 'bottom-center'
+                                  ? '50%'
+                                  : null
+                    }
+                ])
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 </script>
 
-<div {...rootAttributes} use:zIndex={{ key: 'toast', jazzSvelteContext }}>
+<div {...rootAttributes} {..._restProps} use:zIndex={{ key: 'toast', jazzSvelteContext }}>
     {#each $toastMessages.filter((m) => m.toastId === id) as toastMessage (toastMessage.id)}
         <div in:fly={{ y: 100, duration: 650 }} out:fade={{ duration: 300 }}>
             {#if toastMessage.customMessage}
-                <svelte:component this={toastMessage.customMessage} {...toastMessage} {...toastMessage.customProps} />
+                <toastMessage.customMessage {...toastMessage} {...toastMessage.customProps} />
             {:else}
                 <ToastMessage {...toastMessage} />
             {/if}

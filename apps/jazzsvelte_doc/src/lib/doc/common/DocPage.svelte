@@ -3,13 +3,18 @@
     import DocSections from './DocSections.svelte'
     import type { Doc } from './doc.types'
 
-    export let docs: Doc[]
+    interface Props {
+        docs: Doc[]
+        intro?: import('svelte').Snippet
+    }
+
+    let { docs, intro }: Props = $props()
 </script>
 
 <div class="doc">
     <div class="doc-main">
         <div class="doc-intro">
-            <slot name="intro" />
+            {@render intro?.()}
         </div>
         <DocSections {docs} />
     </div>

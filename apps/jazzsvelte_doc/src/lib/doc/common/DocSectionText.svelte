@@ -3,19 +3,24 @@
     import type { DocSection } from './doc.types'
     import { onLinkClickScrollToAnchor } from './doc.utils'
 
-    export let docSection: DocSection
+    interface Props {
+        docSection: DocSection
+        children?: import('svelte').Snippet
+    }
+
+    let { docSection, children }: Props = $props()
 
     const { pathname } = $page.url
 
-    $: hx = 'h' + (docSection.level || 2)
+    let hx = $derived('h' + (docSection.level || 2))
 </script>
 
 <svelte:element this={hx} class="doc-section-label">
     {docSection.label}
-    <a id={docSection.id} on:click={onLinkClickScrollToAnchor} href={`${pathname}#${docSection.id}`} target="_self">#</a>
+    <a id={docSection.id} onclick={onLinkClickScrollToAnchor} href={`${pathname}#${docSection.id}`} target="_self">#</a>
 </svelte:element>
 <div class="doc-section-description">
-    <slot />
+    {@render children?.()}
 </div>
 
 <style lang="scss">

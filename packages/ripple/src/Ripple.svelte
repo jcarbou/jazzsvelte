@@ -6,41 +6,55 @@
     import { ripple } from './ripple.action'
     import { defaultRippleProps as DEFAULT, globalRipplePT as globalPt } from './ripple.config'
 
-    let className: string | null = DEFAULT.class
-    export let pt: RipplePassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export { className as class }
-    export let style: CssStyle | null = DEFAULT.style
-    export let unstyled: boolean = DEFAULT.unstyled
-
     export const displayName = 'Ripple'
     export function getElement(): HTMLSpanElement {
         return rootEl
     }
+
+    interface Props {
+        pt?: RipplePassThroughOptions | null
+        ptOptions?: PassThroughOptions | null
+        class?: string | null
+        style?: CssStyle | null
+        unstyled?: boolean
+    }
+
+    let props = $props()
+    let {
+        pt = null,
+        ptOptions = null,
+        style = DEFAULT.style,
+        class: className = DEFAULT.class,
+        unstyled = DEFAULT.unstyled
+    }: Props = props
+
+    // svelte-ignore non_reactive_update
     let rootEl: HTMLSpanElement
 
     const { ripple: hasRipple } = JAZZ_SVELTE
 
-    $: ptContext = {
-        props: { ...DEFAULT, ...$$props },
-        ptOptions,
-        unstyled
-    } satisfies RipplePassThroughMethodOptions & {
+    let ptContext: RipplePassThroughMethodOptions & {
         ptOptions: PassThroughOptions | null
         unstyled: boolean
-    }
+    } = $derived({
+        props: { ...DEFAULT, ...props },
+        ptOptions,
+        unstyled
+    })
 
-    $: rootAttributes = resolvePT(
-        {
-            class: ['p-ink', className],
-            style,
-            role: 'presentation',
-            'aria-hidden': 'true'
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLSpanAttributes
+    let rootAttributes: HTMLSpanAttributes = $derived(
+        resolvePT(
+            {
+                class: ['p-ink', className],
+                style,
+                role: 'presentation',
+                'aria-hidden': 'true'
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 </script>
 
 {#if $hasRipple}

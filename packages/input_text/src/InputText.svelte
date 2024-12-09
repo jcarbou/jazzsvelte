@@ -98,7 +98,7 @@
         on:keydown
         on:keyup
         on:input
-        on:validatedinput={onValidatedInput}
+        onvalidatedinput={onValidatedInput}
         on:beforeinput
         use:tooltip={{ showOnDisabled, tooltipContent, tooltipOptions, jazzSvelteContext }}
         use:keyFilter={{ keyFilterType, validateOnly }}

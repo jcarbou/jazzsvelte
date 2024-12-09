@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { Doc } from '../common/doc.types'
     import DocPage from '../common/DocPage.svelte'
     import AppendToDoc from './AppendToDoc.svelte'
     //import CSSTransitionDoc from './CSSTransitionDoc.svelte'
@@ -16,7 +17,7 @@
     // import StyleContainer from './StyleContainer.svelte'
     import ZIndexDoc from './ZIndexDoc.svelte'
 
-    const docs = [
+    const docs: Doc[] = [
         {
             id: 'appendto',
             label: 'AppendTo',
@@ -106,9 +107,9 @@
     <meta name="description" content="JazzSvelte is a rich set of open source components for Svelte." />
 </svelte:head>
 
-<DocPage {docs}>
-    <svelte:fragment slot="intro">
-        <h1>Configuration - JazzSvelte</h1>
-        <p>Global configuration options of the components.</p>
-    </svelte:fragment>
-</DocPage>
+{#snippet intro()}
+    <h1>Configuration - JazzSvelte</h1>
+    <p>Global configuration options of the components.</p>
+{/snippet}
+
+<DocPage {intro} {docs} />

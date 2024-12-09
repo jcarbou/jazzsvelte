@@ -1,7 +1,16 @@
 {
-    "main": "./index.cjs.js",
-    "module": "./index.esm.js",
-    "unpkg": "./index.min.js",
-    "types": "./index.d.ts",
-    "sideEffects": false
+    "name": "@jazzsvelte/window_minimize",
+    "version": "0.1.0",
+    "description": "WindowMinimizeIcon",
+    "main": "/index.ts",
+    "sideEffects": false,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@jazzsvelte/icons": "workspace:*"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
 }

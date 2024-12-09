@@ -3,13 +3,17 @@
     import type { LinkEntry } from './doc.types'
     import { scrollToAnchor } from './doc.utils'
 
-    export let link: LinkEntry
+    interface Props {
+        link: LinkEntry
+    }
+
+    let { link }: Props = $props()
     const { pathname } = $page.url
 </script>
 
 {#if link.linkTarget}
     {link.index !== 0 ? ' | ' : ''}
-    <a href={pathname + `#${link.linkTarget}`} target="_self" on:click={() => scrollToAnchor(link.linkTarget, 'smooth')}>
+    <a href={pathname + `#${link.linkTarget}`} target="_self" onclick={() => scrollToAnchor(link.linkTarget, 'smooth')}>
         {link.label}
     </a>
 {:else}

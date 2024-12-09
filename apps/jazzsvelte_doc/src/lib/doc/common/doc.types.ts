@@ -1,4 +1,4 @@
-import type { ComponentType } from 'svelte'
+import type { Component } from 'svelte'
 import type { Writable } from 'svelte/store'
 
 export type DocApiData = {
@@ -17,7 +17,7 @@ export type Doc = {
     label: string
     children?: Doc[]
     description?: string
-    component?: ComponentType
+    component?: Component<ComponentDocProps>
     docApiData?: DocApiData
 }
 
@@ -77,3 +77,7 @@ export type DataItem = {
     description?: string
     deprecated?: string
 } & { [key: string]: string | boolean | DataSubItem[] }
+
+export interface ComponentDocProps {
+    docSection: DocSection
+}

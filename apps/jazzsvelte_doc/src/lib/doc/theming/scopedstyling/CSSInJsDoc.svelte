@@ -3,10 +3,10 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Panel } from '@jazzsvelte/panel'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps, DocSection } from '$lib/doc/common/doc.types'
     import { importJS } from '$lib/doc/common/doc.utils'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
     const code = {
         basic: `

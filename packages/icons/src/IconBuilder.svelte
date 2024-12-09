@@ -1,12 +1,17 @@
 <script lang="ts">
     import type { ResolvedIconPT } from '@jazzsvelte/api'
 
-    export let resolvedIcon: ResolvedIconPT | null = null
-    export let spin: boolean = false
+    interface Props {
+        resolvedIcon?: ResolvedIconPT | null;
+        spin?: boolean;
+    }
+
+    let { resolvedIcon = null, spin = false }: Props = $props();
 </script>
 
 {#if resolvedIcon?.spanAttributes}
     <span data-pc-section="icon" {...resolvedIcon.spanAttributes}></span>
 {:else if resolvedIcon?.svgAttributes && resolvedIcon?.iconComponent}
-    <svelte:component this={resolvedIcon?.iconComponent} {spin} {...resolvedIcon?.svgAttributes} />
+    {@const SvelteComponent = resolvedIcon?.iconComponent}
+    <SvelteComponent {spin} {...resolvedIcon?.svgAttributes} />
 {/if}

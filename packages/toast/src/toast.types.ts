@@ -72,12 +72,12 @@ export interface BaseToastProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ToastPassThroughOptions}
      */
-    pt?: ToastPassThroughOptions
+    pt?: ToastPassThroughOptions | null
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions
+    ptOptions?: PassThroughOptions | null
     /**
      * CSS classes to add to root element
      */

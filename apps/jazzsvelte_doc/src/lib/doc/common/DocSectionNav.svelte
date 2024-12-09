@@ -1,31 +1,31 @@
 <script lang="ts">
-    import { setContext } from 'svelte'
     import { page } from '$app/stores'
-    import type { Doc, SectionNavContext } from './doc.types'
+    import type { Doc } from './doc.types'
     import DocSectionNavItem from './DocSectionNavItem.svelte'
-    import { writable } from 'svelte/store'
     import { findActiveDoc } from './doc.utils'
+    import { activeNavDoc } from './activeNavDoc.svelte'
 
-    export let docs: Doc[]
-
-    let scrollY: number = 0
-    let innerHeight: number = 0
-    const activeId = writable<string>('')
-
-    $: {
-        const { hash } = $page.url
-        const hashId = hash?.substring(1)
-        $activeId = hashId ?? docs[0].id
-        setContext<SectionNavContext>('docSectionNav', { activeId })
+    interface Props {
+        docs: Doc[]
     }
 
-    $: {
-        const y = scrollY
-        let activeDoc = findActiveDoc(docs, y)
+    const { hash } = $page.url
+    const hashId = hash?.substring(1)
+
+    let { docs }: Props = $props()
+    let scrollY: number = $state(0)
+    let innerHeight: number = $state(0)
+
+    $effect(() => {
+        activeNavDoc.id = hashId ?? docs[0].id
+    })
+
+    $effect(() => {
+        let activeDoc = findActiveDoc(docs, scrollY)
         if (activeDoc) {
-            $activeId = activeDoc.id
+            activeNavDoc.id = activeDoc.id
         }
-    }
+    })
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />

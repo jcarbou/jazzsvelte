@@ -5,7 +5,7 @@ export type ClickOutsideOptions = {
 }
 
 interface Attributes {
-    'on:clickoutside': (e: ClickOutsideEvent) => void
+    onclickoutside: (e: ClickOutsideEvent) => void
 }
 
 export type ClickOutsideEvent = CustomEvent<{ event: Event }>

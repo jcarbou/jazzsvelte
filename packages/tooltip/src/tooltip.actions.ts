@@ -1,3 +1,4 @@
+import { mount, unmount } from 'svelte'
 import type { ActionReturn } from 'svelte/action'
 import type { TooltipActionOptions, TooltipLayoutActionOptions, TooltipLayoutActionState } from './tooltip.types'
 
@@ -69,7 +70,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
     function _show({ x, y }: { x?: number; y?: number }) {
         if (tooltipComponent) {
             if ((x === undefined || y === undefined || !mouseTracked) && tooltipComponent.isVisible()) return
-            tooltipComponent.$set({ visible: true, x, y })
+            tooltipComponent.move({ x: x ?? null, y: y ?? null })
             return
         }
         const tooltipAnchorEl = document.getElementById('__JAZZ_SVELTE_TOOLTIP_ANCHOR__')
@@ -77,13 +78,12 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
         const contextMap = new Map()
         contextMap.set('JAZZ_SVELTE', jazzSvelteContext)
 
-        tooltipComponent = new Tooltip({
+        tooltipComponent = mount(Tooltip, {
             props: {
                 targetElement: element,
                 tooltipLayoutState,
                 content: tooltipContent,
                 options,
-                visible: true,
                 x,
                 y
             },
@@ -116,9 +116,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
         if (!autoHide && (mouseOverTarget || mouseOverTooltip)) return
         if (!tooltipComponent) return // The showDelay can generate this use case
         if (listenFocus && targetFocus) return
-        tooltipComponent.$set({
-            visible: false
-        })
+        tooltipComponent.hide()
     }
 
     function mouseEnter(event: MouseEvent) {
@@ -145,8 +143,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
 
     function mouseMove(event: MouseEvent) {
         if (!tooltipComponent || !actionOptions.tooltipOptions?.mouseTrack) return
-        tooltipComponent.$set({
-            visible: true,
+        tooltipComponent.move({
             x: event.pageX,
             y: event.pageY
         })
@@ -154,9 +151,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
 
     async function updateTooltipContent(actionOptions: TooltipActionOptions) {
         if (!tooltipComponent) return
-        tooltipComponent.$set({
-            content: actionOptions?.tooltipContent
-        })
+        tooltipComponent.updateContent(actionOptions?.tooltipContent ?? null)
         await tick()
         tooltipLayoutState.onContentChange()
     }
@@ -169,7 +164,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
 
     return {
         destroy() {
-            tooltipComponent?.$destroy()
+            unmount(tooltipComponent)
             listenMouse && element.removeEventListener('mouseenter', mouseEnter)
             listenMouse && element.removeEventListener('mouseleave', mouseLeave)
             listenMouse && element.removeEventListener('mousemove', mouseMove)

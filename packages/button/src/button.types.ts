@@ -6,8 +6,10 @@ import type {
     HTMLSpanAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
+    PassThroughOptions,
     PassThroughType
 } from '@jazzsvelte/api'
+import { Snippet } from 'svelte'
 
 /**
  * Defines types used by properties of the Button component.
@@ -16,6 +18,9 @@ import type {
 export type ButtonIconPos = 'top' | 'bottom' | 'left' | 'right'
 export type ButtonSeverity = 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help' | 'contrast'
 export type ButtonSize = 'small' | 'normal' | 'large'
+
+export type ButtonLabelSnippet = Snippet<[HTMLSpanAttributes]>
+export type ButtonBadgeSnippet = Snippet<[HTMLSpanAttributes]>
 
 /**
  * Defines valid properties in Button component.
@@ -26,7 +31,7 @@ export interface BaseButtonProps {
      * Value of the badge.
      * @default  null
      */
-    badge?: string | null
+    badge?: string | ButtonBadgeSnippet | null
 
     /**
      * CSS classes to add to root element.
@@ -56,7 +61,7 @@ export interface BaseButtonProps {
      * Text of the button.
      * @default  null
      */
-    label?: string | null
+    label?: string | ButtonLabelSnippet | null
 
     /**
      * Add a link style to the button.
@@ -92,13 +97,13 @@ export interface BaseButtonProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: ButtonPassThroughOptions
+    pt?: ButtonPassThroughOptions | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
      * @default  null
      */
-    ptOptions?: ButtonPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
 
     /**
      * Add a shadow to indicate elevation.

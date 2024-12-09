@@ -1,8 +1,8 @@
 <script lang="ts">
     import DocSectionText from '../common/DocSectionText.svelte'
-    import type { DocSection } from '../common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 </script>
 
 <DocSectionText {docSection}>

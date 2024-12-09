@@ -1,15 +1,23 @@
 <script lang="ts">
-    export let keyStyle: 'button' | 'text' = 'button'
+    import type { Snippet } from 'svelte'
+
+    interface Props {
+        keyStyle?: 'button' | 'text'
+        theadContent: Snippet
+        tBodyContent: Snippet
+    }
+
+    let { keyStyle = 'button', theadContent, tBodyContent }: Props = $props()
 </script>
 
 <div class="doc-tablewrapper">
     <table class="doc-table">
         <thead>
-            <slot name="thead" />
+            {@render theadContent()}
         </thead>
 
         <tbody class="doc-table-body">
-            <slot name="tbody" />
+            {@render tBodyContent()}
         </tbody>
     </table>
 </div>

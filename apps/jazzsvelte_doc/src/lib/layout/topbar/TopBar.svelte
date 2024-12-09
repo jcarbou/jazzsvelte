@@ -7,10 +7,10 @@
 
     const { darkMode } = JAZZ_SVELTE
 
-    let scrolled = false
+    let scrolled = $state(false)
 </script>
 
-<svelte:window on:scroll={() => (scrolled = window.scrollY > 0)} />
+<svelte:window onscroll={() => (scrolled = window.scrollY > 0)} />
 
 <div class="layout-topbar" class:layout-topbar-sticky={scrolled} class:layout-news-active={$news}>
     <div class="layout-topbar-inner">
@@ -26,20 +26,20 @@
                 TODO : Doc search
             </li>
             <li>
-                <TopBarLinkButton icon="github" href="https://github.com/jcarbou/jazzsvelte" />
+                <TopBarLinkButton icon="github" ariaLabel="github" href="https://github.com/jcarbou/jazzsvelte" />
             </li>
             <li>
-                <TopBarLinkButton icon="discord" href="https://discord.gg" />
+                <TopBarLinkButton icon="discord" ariaLabel="discord" href="https://discord.gg" />
             </li>
             <li>
-                <TopBarLinkButton icon="comments" href="https://github.com/jcarbou/jazzsvelte/discussions" />
+                <TopBarLinkButton icon="comments" ariaLabel="comments" href="https://github.com/jcarbou/jazzsvelte/discussions" />
             </li>
             <li>
-                <TopBarButton icon={$darkMode ? 'sun' : 'moon'} on:click={() => darkMode.toggle()} />
+                <TopBarButton icon={$darkMode ? 'sun' : 'moon'} ariaLabel="darkMode" onclick={() => darkMode.toggle()} />
             </li>
             {#if $configButton}
                 <li>
-                    <TopBarButton icon="palette" on:click={() => config.show()} />
+                    <TopBarButton icon="palette" ariaLabel="config" onclick={() => config.show()} />
                 </li>
             {/if}
 
@@ -48,7 +48,7 @@
             </li>
             {#if sideBarButton}
                 <li class="menu-button">
-                    <TopBarButton icon="bars" on:click={() => sideBar.show()} />
+                    <TopBarButton icon="bars" ariaLabel="sideBar" onclick={() => sideBar.show()} />
                 </li>
             {/if}
         </ul>

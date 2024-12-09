@@ -1,6 +1,10 @@
 <script lang="ts">
-    export let value: string
-    export let deprecated: string | undefined = undefined
+    interface Props {
+        value: string
+        deprecated?: string | undefined
+    }
+
+    let { value, deprecated = undefined }: Props = $props()
 </script>
 
 <span class="doc-option-description">{value}</span>

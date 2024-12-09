@@ -6,39 +6,41 @@
     import DocApiTableBody from './DocApiTableBody.svelte'
     import DocTableWrapper from './DocTableWrapper.svelte'
 
-    export let apiData: DocApiData
-
-    let docSection: DocSection
-
-    $: {
-        if (apiData?.data?.length) {
-            docSection = { id: apiData.id, label: apiData.label }
-
-            setContext<ApiTableInfo>('apiTabelInfo', apiData)
-        }
+    interface Props {
+        apiData: DocApiData
     }
+
+    let { apiData }: Props = $props()
+    let docSection: DocSection = $derived({ id: apiData.id, label: apiData.label })
+
+    setContext<ApiTableInfo>('apiTabelInfo', apiData)
 </script>
+
+{#snippet theadContent()}
+    <tr>
+        {#if apiData.isPT}
+            {#each apiData.headers as header, index (index)}
+                <th>{header}</th>
+            {/each}
+        {:else}
+            {#each apiData.headers as header, index (index)}
+                {#if header !== 'readonly' && header !== 'optional' && header !== 'deprecated'}
+                    <th>{header}</th>
+                {/if}
+            {/each}
+        {/if}
+    </tr>
+{/snippet}
+
+{#snippet tBodyContent()}
+    <DocApiTableBody />
+{/snippet}
 
 {#if isNotEmpty(apiData?.data)}
     <DocSectionText {docSection}>
         <p>{apiData.description}</p>
     </DocSectionText>
-    <DocTableWrapper>
-        <tr slot="thead">
-            {#if apiData.isPT}
-                {#each apiData.headers as header, index (index)}
-                    <th>{header}</th>
-                {/each}
-            {:else}
-                {#each apiData.headers as header, index (index)}
-                    {#if header !== 'readonly' && header !== 'optional' && header !== 'deprecated'}
-                        <th>{header}</th>
-                    {/if}
-                {/each}
-            {/if}
-        </tr>
-        <DocApiTableBody slot="tbody" />
-    </DocTableWrapper>
+    <DocTableWrapper {theadContent} {tBodyContent} />
 {/if}
 
 <style lang="scss">

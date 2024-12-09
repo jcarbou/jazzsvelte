@@ -4,12 +4,15 @@
     import 'prismjs/themes/prism-dark.css'
     import { slide } from 'svelte/transition'
 
-    export let lang: string = 'svelte'
-    export let style: string | null = null
-    export let code: string | null = null
+    interface Props {
+        lang?: string
+        style?: string | null
+        code?: string | null
+    }
 
-    $: htmlCode = Prism.highlight(code || '', Prism.languages[lang], lang)
-    $: languageClass = `language-${lang || 'svelte'}`
+    let { lang = 'svelte', style = null, code = null }: Props = $props()
+    let htmlCode = $derived(Prism.highlight(code || '', Prism.languages[lang], lang))
+    let languageClass = $derived(`language-${lang || 'svelte'}`)
 </script>
 
 <div transition:slide>

@@ -26,7 +26,7 @@
                     {$announcement.linkText}
                 </a>
             </div>
-            <button class="layout-news-close" on:click={hideNews}>
+            <button class="layout-news-close" onclick={hideNews}>
                 <span class="pi pi-times"></span>
             </button>
         </div>

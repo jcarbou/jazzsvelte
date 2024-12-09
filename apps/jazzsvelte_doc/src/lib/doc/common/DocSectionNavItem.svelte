@@ -1,19 +1,23 @@
 <script lang="ts">
-    import { getContext } from 'svelte'
+    import DocSectionNavItem from './DocSectionNavItem.svelte'
     import { page } from '$app/stores'
-    import type { Doc, SectionNavContext } from './doc.types'
+    import type { Doc } from './doc.types'
     import { onLinkClickScrollToAnchor } from './doc.utils'
+    import { activeNavDoc } from './activeNavDoc.svelte'
 
-    export let doc: Doc
-    export let level: number = 0
+    interface Props {
+        doc: Doc
+        level?: number
+    }
+
+    let { doc, level = 0 }: Props = $props()
 
     const { pathname } = $page.url
-    const activeId = getContext<SectionNavContext>('docSectionNav')?.activeId
 </script>
 
-<li class="navbar-item" class:active-navbar-item={$activeId === doc.id} class:main={level === 0}>
+<li class="navbar-item" class:active-navbar-item={activeNavDoc.id === doc.id} class:main={level === 0}>
     <div class="navbar-item-content">
-        <a href={`${pathname}#${doc.id}`} class="px-link" on:click={onLinkClickScrollToAnchor} title={doc.label}>
+        <a href={`${pathname}#${doc.id}`} class="px-link" onclick={onLinkClickScrollToAnchor} title={doc.label}>
             {doc.label}
         </a>
     </div>
@@ -21,7 +25,7 @@
     {#if doc.children}
         <ul>
             {#each doc.children as subDoc, i (subDoc.id)}
-                <svelte:self doc={subDoc} level={level + 1} />
+                <DocSectionNavItem doc={subDoc} level={level + 1} />
             {/each}
         </ul>
     {/if}

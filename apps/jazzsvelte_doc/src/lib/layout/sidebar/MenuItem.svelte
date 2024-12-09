@@ -1,7 +1,11 @@
 <script lang="ts">
     import type { MenuItemData } from './Sidebar.types'
 
-    export let data: MenuItemData
+    interface Props {
+        data: MenuItemData
+    }
+
+    let { data }: Props = $props()
 </script>
 
 <li class="layout-sidebar-menuItem">

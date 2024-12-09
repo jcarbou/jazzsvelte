@@ -1,11 +1,10 @@
 <script lang="ts">
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
     import DocTableWrapper from '../common/DocTableWrapper.svelte'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
     const code = {
         basic: `
@@ -34,11 +33,13 @@
 
     <h3>Keyboard Support</h3>
     <DocTableWrapper keyStyle="button">
-        <tr slot="thead">
-            <th>Key</th>
-            <th>Function</th>
-        </tr>
-        <svelte:fragment slot="tbody">
+        {#snippet theadContent()}
+            <tr>
+                <th>Key</th>
+                <th>Function</th>
+            </tr>
+        {/snippet}
+        {#snippet tBodyContent()}
             <tr>
                 <td>
                     <i>tab</i>
@@ -57,6 +58,6 @@
                 </td>
                 <td>Activates the button.</td>
             </tr>
-        </svelte:fragment>
+        {/snippet}
     </DocTableWrapper>
 </DocSectionText>

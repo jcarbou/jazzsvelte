@@ -1,24 +1,18 @@
 <script lang="ts">
+    import { preventDefault } from 'svelte/legacy'
+
     import type {
         HTMLButtonAttributes,
         IconComponent,
-        CssStyle,
         ResolvedIconPT,
         HTMLDivAttributes,
         PassThroughOptions,
-        HTMLSpanAttributes,
-        TimeoutId
+        HTMLSpanAttributes
     } from '@jazzsvelte/api'
 
-    import type {
-        ToastMessageStatus,
-        ToastSeverity,
-        ToastMessagePassThroughOptions,
-        ToastMessagePassThroughMethodOptions
-    } from './toastMessage.types'
+    import type { ToastMessagePassThroughMethodOptions, ToastMessageProps } from './toastMessage.types'
 
     import { defaultToastMessageProps as DEFAULT, globalToastMessagePT as globalPt } from './toastMessage.config'
-    import { SvelteComponent, type ComponentType } from 'svelte'
     import { resolveIconPT, resolvePT, localeOption } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
     import { ripple } from '@jazzsvelte/ripple'
@@ -28,133 +22,130 @@
     import { CheckIcon } from '@jazzsvelte/check_icon'
     import { closeToast } from './toast.store'
 
-    export let id: string
-    export let timerId: TimeoutId = null
-    export let status: ToastMessageStatus
+    let _props = $props()
 
-    export { className as class }
-    let className: string | null = DEFAULT.class
-    export let ariaCloseLabel: string | null = DEFAULT.ariaCloseLabel || null
-    export let closable: boolean = DEFAULT.closable
-    export let closeIcon: string | IconComponent | null = DEFAULT.closeIcon
-    export let contentClass: string | null = DEFAULT.contentClass
-    export let contentStyle: CssStyle | null = DEFAULT.contentStyle
-    export let customContent: typeof SvelteComponent | null = DEFAULT.customContent
-    export let customProps: Record<string, any> | null = DEFAULT.customProps
-    export let detail: string | null = DEFAULT.detail
-    export let icon: string | IconComponent | null = DEFAULT.icon
-    export let onClose: ((status: ToastMessageStatus) => void) | null = DEFAULT.onClose
-    export let onClick: ((status: ToastMessageStatus) => void) | null = DEFAULT.onClick
-    export let pt: Omit<ToastMessagePassThroughOptions, 'message'> | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let severity: ToastSeverity | null = DEFAULT.severity
-    export let sticky: boolean = DEFAULT.sticky
-    export let style: CssStyle = DEFAULT.style
-    export let summary: string | null = DEFAULT.summary
-    export let unstyled: boolean = DEFAULT.unstyled
+    let {
+        timerId = null,
+        status,
+        class: className = DEFAULT.class,
+        ariaCloseLabel = DEFAULT.ariaCloseLabel || null,
+        closable = DEFAULT.closable,
+        closeIcon = DEFAULT.closeIcon,
+        contentClass = DEFAULT.contentClass,
+        contentStyle = DEFAULT.contentStyle,
+        customContent = DEFAULT.customContent,
+        customProps = DEFAULT.customProps,
+        detail = DEFAULT.detail,
+        icon = DEFAULT.icon,
+        onClose = DEFAULT.onClose,
+        onClick = DEFAULT.onClick,
+        pt = null,
+        ptOptions = null,
+        severity = DEFAULT.severity,
+        sticky = DEFAULT.sticky,
+        style = DEFAULT.style,
+        summary = DEFAULT.summary,
+        unstyled = DEFAULT.unstyled
+    }: ToastMessageProps = _props
 
     export const displayName = 'ToastMessage'
 
-    const icons: { [key: string]: ComponentType } = {
+    const icons: { [key: string]: IconComponent } = {
         info: InfoCircleIcon,
         warn: ExclamationTriangleIcon,
         error: TimesCircleIcon,
         success: CheckIcon
     }
 
-    $: _icon = icon || (severity && icons[severity]) || (null satisfies string | IconComponent | null)
+    let _icon: string | IconComponent | null = $derived(icon || (severity && icons[severity]) || null)
 
-    $: ptContext = {
-        props: $$props,
-        ptOptions,
-        unstyled
-    } satisfies ToastMessagePassThroughMethodOptions & {
+    let ptContext: ToastMessagePassThroughMethodOptions & {
         ptOptions: PassThroughOptions | null
         unstyled: boolean
-    }
+    } = $derived({
+        props: _props,
+        ptOptions,
+        unstyled
+    })
+
     // "icon" element
-    $: resolvedIcon = resolveIconPT(
-        _icon,
-        { class: ['p-toast-message-icon', 'p-icon'] },
-        pt?.icon,
-        globalPt?.icon,
-        ptContext
-    ) satisfies ResolvedIconPT
+    let resolvedIcon: ResolvedIconPT = $derived(
+        resolveIconPT(_icon, { class: ['p-toast-message-icon', 'p-icon'] }, pt?.icon, globalPt?.icon, ptContext)
+    )
 
     // "close button" element
-    $: closeButtonAttributes = resolvePT(
-        {
-            class: ['p-toast-icon-close', 'p-link'],
-            'aria-label': ariaCloseLabel || localeOption('close')
-        },
-        pt?.closeButton,
-        globalPt?.closeButton,
-        ptContext
-    ) satisfies HTMLButtonAttributes
+    let closeButtonAttributes: HTMLButtonAttributes = $derived(
+        resolvePT(
+            {
+                class: ['p-toast-icon-close', 'p-link'],
+                'aria-label': ariaCloseLabel || localeOption('close')
+            },
+            pt?.closeButton,
+            globalPt?.closeButton,
+            ptContext
+        )
+    )
 
     // "closeButton" element
-    $: resolvedCloseIcon = resolveIconPT(
-        closeIcon,
-        { class: ['p-toast-icon-close-icon', 'p-icon'] },
-        pt?.closeButtonIcon,
-        globalPt?.closeButtonIcon,
-        ptContext
-    ) satisfies ResolvedIconPT
+    let resolvedCloseIcon: ResolvedIconPT = $derived(
+        resolveIconPT(
+            closeIcon,
+            { class: ['p-toast-icon-close-icon', 'p-icon'] },
+            pt?.closeButtonIcon,
+            globalPt?.closeButtonIcon,
+            ptContext
+        )
+    )
 
     // "content" element
-    $: contentAttributes = resolvePT(
-        {
-            class: ['p-toast-message-content', contentClass],
-            style: contentStyle
-        },
-        pt?.content,
-        globalPt?.content,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let contentAttributes: HTMLDivAttributes = $derived(
+        resolvePT(
+            {
+                class: ['p-toast-message-content', contentClass],
+                style: contentStyle
+            },
+            pt?.content,
+            globalPt?.content,
+            ptContext
+        )
+    )
 
     // "message" element
-    $: messageAttributes = resolvePT(
-        {
-            class: [
-                className,
-                'p-toast-message',
-                {
-                    [`p-toast-message-${severity}`]: !!severity
-                }
-            ],
-            style,
-            role: 'alert',
-            'aria-live': 'assertive',
-            'aria-atomic': 'true'
-        },
-        pt?.root,
-        globalPt?.message,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let messageAttributes: HTMLDivAttributes = $derived(
+        resolvePT(
+            {
+                class: [
+                    className,
+                    'p-toast-message',
+                    {
+                        [`p-toast-message-${severity}`]: !!severity
+                    }
+                ],
+                style,
+                role: 'alert',
+                'aria-live': 'assertive',
+                'aria-atomic': 'true'
+            },
+            pt?.root,
+            globalPt?.message,
+            ptContext
+        )
+    )
 
     // "text" element
-    $: textAttributes = resolvePT(
-        { class: ['p-toast-message-text'] },
-        pt?.text,
-        globalPt?.text,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let textAttributes: HTMLDivAttributes = $derived(
+        resolvePT({ class: ['p-toast-message-text'] }, pt?.text, globalPt?.text, ptContext)
+    )
 
     // "summary" element
-    $: summaryAttributes = resolvePT(
-        { class: ['p-toast-summary'] },
-        pt?.summary,
-        globalPt?.summary,
-        ptContext
-    ) satisfies HTMLSpanAttributes
+    let summaryAttributes: HTMLSpanAttributes = $derived(
+        resolvePT({ class: ['p-toast-summary'] }, pt?.summary, globalPt?.summary, ptContext)
+    )
 
     // "summary" element
-    $: detailAttributes = resolvePT(
-        { class: ['p-toast-detail'] },
-        pt?.detail,
-        globalPt?.detail,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let detailAttributes: HTMLDivAttributes = $derived(
+        resolvePT({ class: ['p-toast-detail'] }, pt?.detail, globalPt?.detail, ptContext)
+    )
 
     function _onMouseEnter(event: MouseEvent) {
         // do not continue if the user has canceled the event
@@ -168,17 +159,19 @@
         onClick?.(status)
     }
 
-    $: _onClose = () => {
+    let _onClose = (event: Event) => {
+        event.preventDefault()
         closeToast(status)
         onClose?.(status)
     }
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div on:mouseenter={_onMouseEnter} on:click={_onClick} {...messageAttributes}>
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div onmouseenter={_onMouseEnter} onclick={_onClick} {...messageAttributes}>
     <div {...contentAttributes}>
         {#if customContent}
-            <svelte:component this={customContent} {...$$props} {...customProps} />
+            {@const SvelteComponent_1 = customContent}
+            <SvelteComponent_1 {..._props} {...customProps} />
         {:else}
             {#if _icon}
                 <IconBuilder {resolvedIcon} />
@@ -192,7 +185,7 @@
         {/if}
         {#if closable}
             <div>
-                <button type="button" {...closeButtonAttributes} on:click|preventDefault={_onClose} use:ripple>
+                <button type="button" {...closeButtonAttributes} onclick={preventDefault(_onClose)} use:ripple>
                     <IconBuilder resolvedIcon={resolvedCloseIcon} />
                 </button>
             </div>

@@ -4,7 +4,11 @@
     import type { Doc } from './doc.types'
     import { toDocSection } from './doc.utils'
 
-    export let docs: Doc[]
+    interface Props {
+        docs: Doc[]
+    }
+
+    let { docs }: Props = $props()
 </script>
 
 {#each docs as doc, i (`${doc.label}_${i}`)}
@@ -12,7 +16,7 @@
         {#if doc.children}
             <DocSectionsItem {doc} />
         {:else if doc.component}
-            <svelte:component this={doc.component} docSection={toDocSection(doc)} />
+            <doc.component docSection={toDocSection(doc)} />
         {:else if doc.docApiData}
             <DocApiTable apiData={doc.docApiData} />
         {/if}

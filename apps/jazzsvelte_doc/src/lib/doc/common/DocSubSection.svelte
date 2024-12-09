@@ -1,8 +1,13 @@
 <script lang="ts">
     import { page } from '$app/stores'
 
-    export let label: string = ''
-    export let id: string
+    interface Props {
+        label?: string
+        id: string
+        children?: import('svelte').Snippet
+    }
+
+    let { label = '', id, children }: Props = $props()
 
     const { pathname } = $page.url
 </script>
@@ -11,10 +16,10 @@
     <h3 class="doc-section-label">
         {label}
         <a href={pathname + '#' + id} target="_self">
-            <a {id}>#</a>
+            <span {id}>#</span>
         </a>
     </h3>
-    <slot />
+    {@render children?.()}
 </div>
 
 <style lang="scss">

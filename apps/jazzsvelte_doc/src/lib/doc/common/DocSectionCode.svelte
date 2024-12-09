@@ -4,13 +4,25 @@
     import { Button } from '@jazzsvelte/button'
     import CodeHighlight from './CodeHighlight.svelte'
 
-    export let embedded: boolean = false
-    export let hideToggleCode: boolean = false
-    export let codeMode: CodeMode = 'basic'
-    export let codeLang: CodeLang = 'javascript'
-    export let code: Code
-    export let hideStackBlitz: boolean = false
-    export let toImport: boolean = false
+    interface Props {
+        embedded?: boolean
+        hideToggleCode?: boolean
+        codeMode?: CodeMode
+        codeLang?: CodeLang
+        code: Code
+        hideStackBlitz?: boolean
+        toImport?: boolean
+    }
+
+    let {
+        embedded = false,
+        hideToggleCode = false,
+        codeMode = $bindable('basic'),
+        codeLang = $bindable('javascript'),
+        code,
+        hideStackBlitz = false,
+        toImport = false
+    }: Props = $props()
 
     const toggleCodeMode = (mode: CodeMode) => {
         if (codeMode === 'data') {

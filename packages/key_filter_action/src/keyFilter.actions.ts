@@ -9,7 +9,7 @@ export type KeyFilterOptions = {
 }
 
 interface Attributes {
-    'on:validatedinput': (e: ValidatedInputEvent) => void
+    onvalidatedinput: (e: ValidatedInputEvent) => void
 }
 
 const DEFAULT_MASKS = {

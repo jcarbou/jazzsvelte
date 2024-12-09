@@ -1,10 +1,10 @@
 <script lang="ts">
     import DocSectionCode from '../common/DocSectionCode.svelte'
     import DocSectionText from '../common/DocSectionText.svelte'
-    import type { DocSection } from '../common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
     import { importJS } from '../common/doc.utils'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
     const code = {
         basic: `${importJS(

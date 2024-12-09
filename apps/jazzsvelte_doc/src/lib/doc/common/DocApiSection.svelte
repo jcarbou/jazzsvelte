@@ -4,8 +4,12 @@
     import type { Doc } from './doc.types'
     import { projectName } from './doc.utils'
 
-    export let docs: Doc[]
-    export let header: any
+    interface Props {
+        docs: Doc[]
+        header: any
+    }
+
+    let { docs, header }: Props = $props()
 </script>
 
 <div class="doc-main">

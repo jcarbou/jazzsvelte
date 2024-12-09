@@ -2,12 +2,11 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { Badge } from '@jazzsvelte/badge'
     import { importJS, importTS } from '../common/doc.utils'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props();
 
     const code = {
         basic: `
@@ -47,7 +46,9 @@ ${importTS('Button')}
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button type="button" label="Emails" badge="8" />
     <Button type="button" label="Messages" icon="pi pi-users" outlined>
-        <Badge slot="badge" value="2" severity="danger" size="medium" />
+        {#snippet badge()}
+            <Badge value="2" severity="danger" size="medium" />
+        {/snippet}
     </Button>
 </div>
 <DocSectionCode {code} />

@@ -1,6 +1,11 @@
 <script lang="ts">
-    import type { TooltipLayoutActionState, TooltipPassThroughMethodOptions, TooltipPassThroughOptions } from './tooltip.types'
-    import type { TooltipOptions } from './tooltipOptions.types'
+    import type {
+        TooltipLayoutActionState,
+        TooltipOptions,
+        TooltipPassThroughMethodOptions,
+        TooltipPassThroughOptions,
+        TooltipPosition
+    } from './tooltip.types'
     import type { JazzSvelteContext, HTMLDivAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
 
     import { getContext, tick } from 'svelte'
@@ -10,24 +15,34 @@
     import { tooltipLayout } from './tooltip.actions'
     import { globalButtonPT as globalPt } from './tooltip.config'
 
-    export let targetElement: HTMLElement
-    export let tooltipLayoutState: TooltipLayoutActionState
-    export let x: number | null = null
-    export let y: number | null = null
-    export let visible: boolean = false
-    export let content: string | null = null
-    export let options: TooltipOptions | undefined = undefined
+    interface Props {
+        targetElement: HTMLElement
+        tooltipLayoutState: TooltipLayoutActionState
+        content?: string | null
+        options?: TooltipOptions | undefined
+        children?: import('svelte').Snippet
+    }
+
+    let _props = $props()
+    let {
+        targetElement, // force prettier align
+        tooltipLayoutState,
+        content = null,
+        options = undefined,
+        children
+    }: Props = _props
+
     export const displayName = 'Tooltip'
 
     export function isVisible() {
         return visible
     }
 
-    export async function hide(event: Event) {
+    export async function hide(event?: Event) {
         if (!visible) return
-        options?.onBeforeHide?.({ target: targetElement, originalEvent: event })
+        event && options?.onBeforeHide?.({ target: targetElement, originalEvent: event })
         visible = false
-        if (options?.onHide) {
+        if (event && options?.onHide) {
             await tick()
             options.onHide({ target: targetElement, originalEvent: event })
         }
@@ -43,49 +58,64 @@
         }
     }
 
-    $: pt = (options?.pt || null) satisfies TooltipPassThroughOptions | null
-    $: ptOptions = (options?.ptOptions || null) satisfies PassThroughOptions | null
-    $: positionState = options?.position || 'right'
-    $: unstyled = options?.unstyled ?? false
-    $: style = (options?.style || null) satisfies CssStyle
+    export function move({ x: newX, y: newY }: { x: number | null; y: number | null }) {
+        x = newX
+        y = newY
+    }
+
+    export function updateContent(newContent: string | null) {
+        _content = newContent
+    }
+
+    let visible: boolean = $state(true)
+    let x: number | null = $state(null)
+    let y: number | null = $state(null)
+
+    let pt: TooltipPassThroughOptions | null = $derived(options?.pt || null)
+    let ptOptions: PassThroughOptions | null = $derived(options?.ptOptions || null)
+    let _position: TooltipPosition = $derived(options?.position || 'right')
+    let unstyled: boolean = $derived(options?.unstyled ?? false)
+    let style: CssStyle = $derived(options?.style || null)
+    let _content: string | null = $derived(content)
 
     const { autoZIndex, baseZIndex, closeOnEscape } = options || {}
     let classNameState = ''
 
-    $: ptContext = {
-        props: $$props,
-        context: {
-            right: positionState === 'right',
-            left: positionState === 'left',
-            top: positionState === 'top',
-            bottom: positionState === 'bottom'
-        },
-        state: { visible, position: positionState, class: classNameState },
-        ptOptions,
-        unstyled
-    } satisfies TooltipPassThroughMethodOptions & {
+    let ptContext: TooltipPassThroughMethodOptions & {
         ptOptions: PassThroughOptions | null
         unstyled: boolean
-    }
+    } = $derived({
+        props: _props,
+        context: {
+            right: _position === 'right',
+            left: _position === 'left',
+            top: _position === 'top',
+            bottom: _position === 'bottom'
+        },
+        state: { visible, position: _position, class: classNameState },
+        ptOptions,
+        unstyled
+    })
 
     // "root" element
-    $: rootAttributes = resolvePT(
-        { class: ['p-tooltip p-component', options?.class, classNameState], style },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let rootAttributes: HTMLDivAttributes = $derived(
+        resolvePT(
+            { class: ['p-tooltip p-component', options?.class, classNameState], style },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 
     // "arrow" element
-    $: arrowAttributes = resolvePT(
-        { class: ['p-tooltip-arrow'] },
-        pt?.arrow,
-        globalPt?.arrow,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let arrowAttributes: HTMLDivAttributes = $derived(
+        resolvePT({ class: ['p-tooltip-arrow'] }, pt?.arrow, globalPt?.arrow, ptContext)
+    )
 
     // "text" element
-    $: textAttributes = resolvePT({ class: ['p-tooltip-text'] }, pt?.text, globalPt?.text, ptContext) satisfies HTMLDivAttributes
+    let textAttributes: HTMLDivAttributes = $derived(
+        resolvePT({ class: ['p-tooltip-text'] }, pt?.text, globalPt?.text, ptContext)
+    )
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
 </script>
@@ -100,8 +130,8 @@
     >
         <div {...arrowAttributes}></div>
         <div {...textAttributes}>
-            {@html content || ''}
-            <slot />
+            {@html _content || ''}
+            {@render children?.()}
         </div>
     </div>
 {/if}

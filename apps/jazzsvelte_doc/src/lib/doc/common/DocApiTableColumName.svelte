@@ -1,11 +1,16 @@
+<!-- @migration-task Error while migrating Svelte code: `<a>` cannot be a child of `<a>`. The browser will 'repair' the HTML (by moving, removing, or inserting elements) which breaks Svelte's assumptions about the structure of your components. -->
 <script lang="ts">
     import { page } from '$app/stores'
     import { getContext } from 'svelte'
     import type { ApiTableInfo } from './doc.types'
     import { scrollToAnchor } from './doc.utils'
 
-    export let value: string
-    export let deprecated: string | undefined = undefined
+    interface Props {
+        value: string
+        deprecated?: string | undefined
+    }
+
+    let { value, deprecated = undefined }: Props = $props()
 
     const { id } = getContext<ApiTableInfo>('apiTabelInfo')
     const { pathname } = $page.url
@@ -20,8 +25,14 @@
 >
     {value}
     <a href={pathname + `#${id + '.' + value}`} target="_self">
-        <a on:click={() => scrollToAnchor(id + '.' + val)} class="doc-option-link" role="button">
+        <span
+            onclick={() => scrollToAnchor(id + '.' + val)}
+            aria-label="scroll"
+            class="doc-option-link"
+            tabindex="-1"
+            role="button"
+        >
             <i class="pi pi-link"></i>
-        </a>
+        </span>
     </a>
 </span>

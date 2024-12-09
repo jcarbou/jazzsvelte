@@ -16,7 +16,8 @@
         "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
         "@jazzsvelte/stop_propagation_action": "workspace:^0.1.0",
         "@jazzsvelte/tooltip": "workspace:^0.1.0",
-        "@jazzsvelte/test": "workspace:^0.1.0"
+        "@jazzsvelte/test": "workspace:^0.1.0",
+        "@jazzsvelte/utils": "workspace:^0.1.0"
     },
     "dependencies": {
         "@jazzsvelte/dom": "workspace:^0.1.0",

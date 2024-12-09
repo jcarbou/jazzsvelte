@@ -1,4 +1,4 @@
-import { ComponentType } from 'svelte'
+import { Component } from 'svelte'
 import { CssObject, IconComponent } from './pt.types'
 
 export type MenuItem = {
@@ -16,7 +16,7 @@ export type MenuItem = {
     separator?: boolean
     style?: CssObject | string
     target?: string
-    template?: ComponentType | null
+    template?: Component | null
     url?: string
     visible?: boolean
     badge?: string | number

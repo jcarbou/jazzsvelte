@@ -6,7 +6,8 @@ import type {
     PassThroughHTMLAttributes,
     HTMLDivAttributes,
     HTMLSpanAttributes,
-    HTMLButtonAttributes
+    HTMLButtonAttributes,
+    TimeoutId
 } from '@jazzsvelte/api'
 import type { SvelteComponent } from 'svelte'
 
@@ -83,7 +84,7 @@ export interface BaseToastMessageProps {
     /**
      * Internal property : auto close timeout identifier
      */
-    timerId?: ReturnType<typeof setTimeout>
+    timerId?: TimeoutId
     /**
      * Aria label for close button
      */
@@ -142,12 +143,12 @@ export interface BaseToastMessageProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ToastPassThroughOptions}
      */
-    pt?: ToastMessagePassThroughOptions
+    pt?: Omit<ToastMessagePassThroughOptions, 'message'> | null
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions
+    ptOptions?: PassThroughOptions | null
     /**
      * Severity level of the message.
      * @defaultValue info

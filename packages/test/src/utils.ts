@@ -1,9 +1,9 @@
 import { render } from '@testing-library/svelte'
 import { expect, test } from 'vitest'
 import JazzSvelteTestContext from './JazzSvelteTestContext.svelte'
-import { ComponentProps, ComponentType, SvelteComponent } from 'svelte'
+import { ComponentProps, Component as _Component, SvelteComponent } from 'svelte'
 
-export function snapshot<CMP extends SvelteComponent>(label: string, Component: ComponentType<CMP>, props: ComponentProps<CMP>) {
+export function snapshot<CMP extends SvelteComponent>(label: string, Component: _Component<CMP>, props: ComponentProps<CMP>) {
     containerTest(label, Component, props, (container) => {
         expect(container).toMatchSnapshot()
     })
@@ -11,7 +11,7 @@ export function snapshot<CMP extends SvelteComponent>(label: string, Component: 
 
 export function containerTest<CMP extends SvelteComponent>(
     label: string,
-    Component: ComponentType<CMP>,
+    Component: _Component<CMP>,
     props: ComponentProps<CMP>,
     callback: (
         container: Element | null,

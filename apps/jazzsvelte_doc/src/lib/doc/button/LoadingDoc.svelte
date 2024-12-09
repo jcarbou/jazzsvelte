@@ -2,12 +2,12 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { importJS, importTS } from '../common/doc.utils'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
-    let loading = false
+    let loading = $state(false)
 
     const load = () => {
         loading = true
@@ -65,6 +65,6 @@ ${importTS(
     </p>
 </DocSectionText>
 <div class="card flex flex-wrap justify-content-center gap-3">
-    <Button label="Submit" iconPos="right" icon="pi pi-check" {loading} on:click={load} />
+    <Button label="Submit" iconPos="right" icon="pi pi-check" {loading} onclick={load} />
 </div>
 <DocSectionCode {code} />

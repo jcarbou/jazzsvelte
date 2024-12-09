@@ -4,17 +4,17 @@
     import { createLinkEntry } from './doc.utils'
     import DocApiTableTextOrLink from './DocApiTableTextOrLink.svelte'
 
-    export let value: string
-    export let deprecated: string | undefined = undefined
+    interface Props {
+        value: string
+        deprecated?: string | undefined
+    }
+
+    let { value, deprecated = undefined }: Props = $props()
 
     const { id } = getContext<ApiTableInfo>('apiTabelInfo')
     const linkTargets = getContext<LinkTargets>('apiDocsLinkTargets')
 
-    let links: LinkEntry[] = []
-
-    $: {
-        links = value.split('|').map((sValue, index) => createLinkEntry(id, sValue, index, linkTargets))
-    }
+    let links: LinkEntry[] = $derived(value.split('|').map((sValue, index) => createLinkEntry(id, sValue, index, linkTargets)))
 </script>
 
 <span class="doc-option-type">

@@ -1,20 +1,20 @@
 <script lang="ts">
     import { getContext } from 'svelte'
-    import type { Doc, DocSection } from './doc.types'
-    //import { buildPtApiRows } from './oldDocApiData'
+    import type { DocSection } from './doc.types'
     import DocSimpleTable from './DocSimpleTable.svelte'
     import DocSectionText from './DocSectionText.svelte'
     import type { ApiDocData } from '@jazzsvelte/api'
 
-    export let docSection: DocSection
-
-    let rows: string[][] | undefined
-
-    $: {
-        const apiDocs = getContext<ApiDocData[]>('apiData')
-        const ptOptions = apiDocs[0].ptOptions
-        rows = ptOptions?.values.map(({ name, description }, index) => [index + 1 + '', name + '', description + ''])
+    interface Props {
+        docSection: DocSection
     }
+
+    let { docSection }: Props = $props()
+    let rows: string[][] | undefined = $state()
+
+    const apiDocs = getContext<ApiDocData[]>('apiData')
+    const ptOptions = apiDocs[0].ptOptions
+    rows = ptOptions?.values.map(({ name, description }, index) => [index + 1 + '', name + '', description + ''])
 </script>
 
 {#if rows}

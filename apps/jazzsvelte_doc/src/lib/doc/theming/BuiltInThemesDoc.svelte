@@ -1,10 +1,9 @@
 <script lang="ts">
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
-
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props();
 
     const code = {
         basic: `
@@ -57,7 +56,7 @@ primereact/resources/themes/arya-purple/theme.css
         PrimeReact ships with various free themes to choose from. The list below states all the available themes in the npm
         distribution with import paths. For a live preview, use the configurator{' '}
         <span class="border-round inline-flex border-1 w-2rem h-2rem p-0 align-items-center justify-content-center bg-primary">
-            <span class="pi pi-cog" />
+            <span class="pi pi-cog"></span>
         </span>{' '}
         at the topbar to switch themes.
     </p>

@@ -1,11 +1,16 @@
 <script lang="ts">
+    import { Snippet } from 'svelte'
     import { tooltip } from './tooltip.actions'
     import type { TooltipActionOptions } from './tooltip.types'
 
-    export let showOnDisabled: boolean = false
-    export let useTooltip: TooltipActionOptions
+    interface Props {
+        showOnDisabled?: boolean
+        useTooltip: TooltipActionOptions // Disabled elements do not trigger user interactions due to standard behavior.
+        children?: Snippet
+    }
 
-    // Disabled elements do not trigger user interactions due to standard behavior.
+    let { showOnDisabled = false, useTooltip, children }: Props = $props()
+
     // A common workaround for such cases is wrapping the disabled element with another
     // element that has a tooltip attached. This component implements this workaround
     // for component with tooltip (<slot> : the component)
@@ -13,8 +18,8 @@
 
 {#if showOnDisabled}
     <span use:tooltip={useTooltip}>
-        <slot />
+        {@render children?.()}
     </span>
 {:else}
-    <slot />
+    {@render children?.()}
 {/if}

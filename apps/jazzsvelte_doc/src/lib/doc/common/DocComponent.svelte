@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy'
+
     import { setContext } from 'svelte'
     import type { LinkTargets, ApiDocs, Doc } from './doc.types'
     import { apiDataToDocs } from '$lib/doc/common/doc.utils'
@@ -7,24 +9,44 @@
     import DocSections from './DocSections.svelte'
     import type { ApiDocData } from '@jazzsvelte/api'
 
-    export let className: string = ''
-    export let title: string
-    export let description: string
-    export let hideTabMenu: boolean = false
-    export let header: string
-    export let themingDocs: Doc[] = []
-    export let apiDocData: ApiDocData[] | null = null
-    export let apiExclude: { [key: string]: string } | null = null
-    export let ptDescription: string | null = null
-    export let ptDocs: Doc[] | null = null
-    export let docs: Doc[] = []
-    export let ptConfigDoc: Doc | null = null
+    interface Props {
+        className?: string
+        title: string
+        description: string
+        hideTabMenu?: boolean
+        header: string
+        themingDocs?: Doc[]
+        apiDocData?: ApiDocData[] | null
+        apiExclude?: { [key: string]: string } | null
+        ptDescription?: string | null
+        ptDocs?: Doc[] | null
+        docs?: Doc[]
+        ptConfigDoc?: Doc | null
+    }
 
-    let apiDocs: ApiDocs[] | null = null
-    let componentDocs: Doc[] = []
-    let tab: number = 0
-    let mainTitle = ''
-    let _apiDocs: Doc[] | undefined
+    let {
+        className = '',
+        title,
+        description,
+        hideTabMenu = false,
+        header,
+        themingDocs = [],
+        apiDocData = null,
+        apiExclude = null,
+        ptDescription = null,
+        ptDocs = null,
+        docs = [],
+        ptConfigDoc = null
+    }: Props = $props()
+
+    let mainTitle = $derived(
+        header.startsWith('use') ? 'HOOK' : header === 'PassThrough' || header === 'Configuration' ? 'OVERVIEW' : 'FEATURES'
+    )
+    let componentDocs: Doc[] = $derived(ptConfigDoc ? [ptConfigDoc, ...docs] : docs)
+    let apiDocs: ApiDocs[] | null = $derived(apiDocData?.map((data) => apiDataToDocs(data)) || null)
+    let _apiDocs: Doc[] | null = $derived(apiDocs ? apiDocs.map((apiDoc) => apiDoc.doc) : null)
+
+    let tab: number = $state(0)
 
     setContext('apiData', apiDocData)
 
@@ -32,23 +54,15 @@
         tab = i
     }
 
-    $: {
-        if (header.startsWith('use')) mainTitle = 'HOOK'
-        else if (header === 'PassThrough' || header === 'Configuration') mainTitle = 'OVERVIEW'
-        else mainTitle = 'FEATURES'
-
-        componentDocs = ptConfigDoc ? [ptConfigDoc, ...docs] : docs
-
-        apiDocs = apiDocData?.map((data) => apiDataToDocs(data)) || null
-        if (apiDocs) {
-            _apiDocs = apiDocs.map((apiDoc) => apiDoc.doc)
+    $effect(() => {
+        if (_apiDocs && apiDocs) {
             setContext<Doc[]>('apiDocs', _apiDocs)
             setContext<LinkTargets>(
                 'apiDocsLinkTargets',
                 apiDocs.reduce((targets, apiDoc) => ({ ...targets, ...apiDoc.linkTargets }), {})
             )
         }
-    }
+    })
 </script>
 
 <svelte:head>
@@ -60,21 +74,21 @@
     {#if !hideTabMenu}
         <ul class="doc-tabmenu">
             <li class:doc-tabmenu-active={tab === 0}>
-                <button type="button" on:click={() => activateTab(0)}>
+                <button type="button" onclick={() => activateTab(0)}>
                     {mainTitle}
                 </button>
             </li>
             <li class:doc-tabmenu-active={tab === 1}>
-                <button type="button" on:click={() => activateTab(1)}> API </button>
+                <button type="button" onclick={() => activateTab(1)}> API </button>
             </li>
             {#if themingDocs}
                 <li class:doc-tabmenu-active={tab === 2}>
-                    <button type="button" on:click={() => activateTab(2)}> THEMING </button>
+                    <button type="button" onclick={() => activateTab(2)}> THEMING </button>
                 </li>
             {/if}
             {#if ptDocs}
                 <li class:doc-tabmenu-active={tab === 3}>
-                    <button type="button" on:click={() => activateTab(3)}> PASS THROUGH </button>
+                    <button type="button" onclick={() => activateTab(3)}> PASS THROUGH </button>
                 </li>
             {/if}
         </ul>

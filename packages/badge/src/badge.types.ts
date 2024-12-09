@@ -57,12 +57,12 @@ export interface BaseBadgeProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @type {BadgePassThroughOptions}
      */
-    pt?: BadgePassThroughOptions
+    pt?: BadgePassThroughOptions | null
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: PassThroughOptions
+    ptOptions?: PassThroughOptions | null
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

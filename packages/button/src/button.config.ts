@@ -17,7 +17,7 @@ export function buttonPT(options: ButtonPassThroughOptions) {
 /**
  * Default buttons  props
  */
-export const defaultButtonProps: Omit<Required<BaseButtonProps>, 'pt' | 'ptOptions'> = {
+export const defaultButtonProps: Omit<Required<BaseButtonProps>, 'pt' | 'ptOptions' | 'label'> = {
     badge: null,
     disabled: false,
     icon: null,
@@ -29,9 +29,8 @@ export const defaultButtonProps: Omit<Required<BaseButtonProps>, 'pt' | 'ptOptio
     severity: null,
     iconPos: null,
     size: null,
-    label: null,
     loading: false,
-    loadingIcon: SpinnerIcon,
+    loadingIcon: null, // SpinnerIcon,
     plain: false,
     tooltip: null,
     tooltipOptions: null,

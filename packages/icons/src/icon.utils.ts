@@ -1,35 +1,8 @@
 import { mergeCssClasses } from '@jazzsvelte/api'
 import { isEmpty } from '@jazzsvelte/object'
+import { SvgProps } from './icon.types'
 
-/**
- * Default icon atrributes
- */
-/*export const DEFAULT_PROPS: IconAttributes = {
-    class: null,
-    label: undefined,
-    spin: false
-}
-
-export function getProps(props: IconAttributes | null): IconAttributes {
-    if (!props) return DEFAULT_PROPS
-    return getMergedProps(props, DEFAULT_PROPS)
-}
-
-export function getOtherProps(props: IconAttributes | null): IconAttributes {
-    if (!props) return {}
-    return getDiffProps(props, DEFAULT_PROPS)
-}*/
-
-export function getSvgProps(
-    label: string | null,
-    spin: boolean,
-    cmpClasses: string | null
-): {
-    class: string
-    role?: string
-    'aria-label'?: string
-    'aria-hidden': boolean
-} {
+export function getSvgProps(label: string | null, spin: boolean, cmpClasses: string | null): SvgProps {
     const isLabelEmpty = isEmpty(label)
     return {
         class:

@@ -5,9 +5,9 @@
 /// <reference types="@sveltejs/kit" />
 
 /**
- * Environment variables [loaded by Vite](https://vitejs.dev/guide/env-and-mode.html#env-files) from `.env` files and `process.env`. Like [`$env/dynamic/private`](https://kit.svelte.dev/docs/modules#$env-dynamic-private), this module cannot be imported into client-side code. This module only includes variables that _do not_ begin with [`config.kit.env.publicPrefix`](https://kit.svelte.dev/docs/configuration#env) _and do_ start with [`config.kit.env.privatePrefix`](https://kit.svelte.dev/docs/configuration#env) (if configured).
+ * Environment variables [loaded by Vite](https://vitejs.dev/guide/env-and-mode.html#env-files) from `.env` files and `process.env`. Like [`$env/dynamic/private`](https://svelte.dev/docs/kit/$env-dynamic-private), this module cannot be imported into client-side code. This module only includes variables that _do not_ begin with [`config.kit.env.publicPrefix`](https://svelte.dev/docs/kit/configuration#env) _and do_ start with [`config.kit.env.privatePrefix`](https://svelte.dev/docs/kit/configuration#env) (if configured).
  * 
- * _Unlike_ [`$env/dynamic/private`](https://kit.svelte.dev/docs/modules#$env-dynamic-private), the values exported from this module are statically injected into your bundle at build time, enabling optimisations like dead code elimination.
+ * _Unlike_ [`$env/dynamic/private`](https://svelte.dev/docs/kit/$env-dynamic-private), the values exported from this module are statically injected into your bundle at build time, enabling optimisations like dead code elimination.
  * 
  * ```ts
  * import { API_KEY } from '$env/static/private';
@@ -35,9 +35,7 @@ declare module '$env/static/private' {
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
 	export const DriverData: string;
-	export const EFC_8064: string;
-	export const FPS_BROWSER_APP_PROFILE_STRING: string;
-	export const FPS_BROWSER_USER_PROFILE_STRING: string;
+	export const EFC_2228: string;
 	export const GIT_ASKPASS: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
@@ -74,7 +72,6 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies_autoprefixer: string;
 	export const npm_package_devDependencies_eslint: string;
 	export const npm_package_devDependencies_eslint_config_prettier: string;
-	export const npm_package_devDependencies_eslint_plugin_svelte: string;
 	export const npm_package_devDependencies_gulp: string;
 	export const npm_package_devDependencies_gulp_concat: string;
 	export const npm_package_devDependencies_gulp_flatten: string;
@@ -83,18 +80,13 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies_gulp_uglifycss: string;
 	export const npm_package_devDependencies_postcss: string;
 	export const npm_package_devDependencies_prettier: string;
-	export const npm_package_devDependencies_prettier_plugin_svelte: string;
 	export const npm_package_devDependencies_rollup: string;
 	export const npm_package_devDependencies_rollup_plugin_postcss: string;
 	export const npm_package_devDependencies_rollup_plugin_terser: string;
 	export const npm_package_devDependencies_sass: string;
-	export const npm_package_devDependencies_svelte: string;
-	export const npm_package_devDependencies_svelte_check: string;
 	export const npm_package_devDependencies_tslib: string;
 	export const npm_package_devDependencies_typedoc: string;
 	export const npm_package_devDependencies_typescript: string;
-	export const npm_package_devDependencies_vite: string;
-	export const npm_package_devDependencies_vitest: string;
 	export const npm_package_devDependencies__fontsource_fira_mono: string;
 	export const npm_package_devDependencies__jazzsvelte_api: string;
 	export const npm_package_devDependencies__jazzsvelte_avatar: string;
@@ -103,6 +95,7 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__jazzsvelte_button: string;
 	export const npm_package_devDependencies__jazzsvelte_button_group: string;
 	export const npm_package_devDependencies__jazzsvelte_check_icon: string;
+	export const npm_package_devDependencies__jazzsvelte_click_outside_action: string;
 	export const npm_package_devDependencies__jazzsvelte_dom: string;
 	export const npm_package_devDependencies__jazzsvelte_exclamationtriangle_icon: string;
 	export const npm_package_devDependencies__jazzsvelte_icons: string;
@@ -127,9 +120,6 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__rollup_plugin_node_resolve: string;
 	export const npm_package_devDependencies__rollup_plugin_replace: string;
 	export const npm_package_devDependencies__stackblitz_sdk: string;
-	export const npm_package_devDependencies__sveltejs_adapter_auto: string;
-	export const npm_package_devDependencies__sveltejs_kit: string;
-	export const npm_package_devDependencies__sveltejs_vite_plugin_svelte: string;
 	export const npm_package_devDependencies__typescript_eslint_eslint_plugin: string;
 	export const npm_package_devDependencies__typescript_eslint_parser: string;
 	export const npm_package_devDependencies__types_eslint: string;
@@ -193,7 +183,7 @@ declare module '$env/static/private' {
 }
 
 /**
- * Similar to [`$env/static/private`](https://kit.svelte.dev/docs/modules#$env-static-private), except that it only includes environment variables that begin with [`config.kit.env.publicPrefix`](https://kit.svelte.dev/docs/configuration#env) (which defaults to `PUBLIC_`), and can therefore safely be exposed to client-side code.
+ * Similar to [`$env/static/private`](https://svelte.dev/docs/kit/$env-static-private), except that it only includes environment variables that begin with [`config.kit.env.publicPrefix`](https://svelte.dev/docs/kit/configuration#env) (which defaults to `PUBLIC_`), and can therefore safely be exposed to client-side code.
  * 
  * Values are replaced statically at build time.
  * 
@@ -206,7 +196,7 @@ declare module '$env/static/public' {
 }
 
 /**
- * This module provides access to runtime environment variables, as defined by the platform you're running on. For example if you're using [`adapter-node`](https://github.com/sveltejs/kit/tree/main/packages/adapter-node) (or running [`vite preview`](https://kit.svelte.dev/docs/cli)), this is equivalent to `process.env`. This module only includes variables that _do not_ begin with [`config.kit.env.publicPrefix`](https://kit.svelte.dev/docs/configuration#env) _and do_ start with [`config.kit.env.privatePrefix`](https://kit.svelte.dev/docs/configuration#env) (if configured).
+ * This module provides access to runtime environment variables, as defined by the platform you're running on. For example if you're using [`adapter-node`](https://github.com/sveltejs/kit/tree/main/packages/adapter-node) (or running [`vite preview`](https://svelte.dev/docs/kit/cli)), this is equivalent to `process.env`. This module only includes variables that _do not_ begin with [`config.kit.env.publicPrefix`](https://svelte.dev/docs/kit/configuration#env) _and do_ start with [`config.kit.env.privatePrefix`](https://svelte.dev/docs/kit/configuration#env) (if configured).
  * 
  * This module cannot be imported into client-side code.
  * 
@@ -230,9 +220,7 @@ declare module '$env/dynamic/private' {
 		COMPUTERNAME: string;
 		ComSpec: string;
 		DriverData: string;
-		EFC_8064: string;
-		FPS_BROWSER_APP_PROFILE_STRING: string;
-		FPS_BROWSER_USER_PROFILE_STRING: string;
+		EFC_2228: string;
 		GIT_ASKPASS: string;
 		HOME: string;
 		HOMEDRIVE: string;
@@ -269,7 +257,6 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies_autoprefixer: string;
 		npm_package_devDependencies_eslint: string;
 		npm_package_devDependencies_eslint_config_prettier: string;
-		npm_package_devDependencies_eslint_plugin_svelte: string;
 		npm_package_devDependencies_gulp: string;
 		npm_package_devDependencies_gulp_concat: string;
 		npm_package_devDependencies_gulp_flatten: string;
@@ -278,18 +265,13 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies_gulp_uglifycss: string;
 		npm_package_devDependencies_postcss: string;
 		npm_package_devDependencies_prettier: string;
-		npm_package_devDependencies_prettier_plugin_svelte: string;
 		npm_package_devDependencies_rollup: string;
 		npm_package_devDependencies_rollup_plugin_postcss: string;
 		npm_package_devDependencies_rollup_plugin_terser: string;
 		npm_package_devDependencies_sass: string;
-		npm_package_devDependencies_svelte: string;
-		npm_package_devDependencies_svelte_check: string;
 		npm_package_devDependencies_tslib: string;
 		npm_package_devDependencies_typedoc: string;
 		npm_package_devDependencies_typescript: string;
-		npm_package_devDependencies_vite: string;
-		npm_package_devDependencies_vitest: string;
 		npm_package_devDependencies__fontsource_fira_mono: string;
 		npm_package_devDependencies__jazzsvelte_api: string;
 		npm_package_devDependencies__jazzsvelte_avatar: string;
@@ -298,6 +280,7 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__jazzsvelte_button: string;
 		npm_package_devDependencies__jazzsvelte_button_group: string;
 		npm_package_devDependencies__jazzsvelte_check_icon: string;
+		npm_package_devDependencies__jazzsvelte_click_outside_action: string;
 		npm_package_devDependencies__jazzsvelte_dom: string;
 		npm_package_devDependencies__jazzsvelte_exclamationtriangle_icon: string;
 		npm_package_devDependencies__jazzsvelte_icons: string;
@@ -322,9 +305,6 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__rollup_plugin_node_resolve: string;
 		npm_package_devDependencies__rollup_plugin_replace: string;
 		npm_package_devDependencies__stackblitz_sdk: string;
-		npm_package_devDependencies__sveltejs_adapter_auto: string;
-		npm_package_devDependencies__sveltejs_kit: string;
-		npm_package_devDependencies__sveltejs_vite_plugin_svelte: string;
 		npm_package_devDependencies__typescript_eslint_eslint_plugin: string;
 		npm_package_devDependencies__typescript_eslint_parser: string;
 		npm_package_devDependencies__types_eslint: string;
@@ -391,7 +371,7 @@ declare module '$env/dynamic/private' {
 }
 
 /**
- * Similar to [`$env/dynamic/private`](https://kit.svelte.dev/docs/modules#$env-dynamic-private), but only includes variables that begin with [`config.kit.env.publicPrefix`](https://kit.svelte.dev/docs/configuration#env) (which defaults to `PUBLIC_`), and can therefore safely be exposed to client-side code.
+ * Similar to [`$env/dynamic/private`](https://svelte.dev/docs/kit/$env-dynamic-private), but only includes variables that begin with [`config.kit.env.publicPrefix`](https://svelte.dev/docs/kit/configuration#env) (which defaults to `PUBLIC_`), and can therefore safely be exposed to client-side code.
  * 
  * Note that public dynamic environment variables must all be sent from the server to the client, causing larger network requests — when possible, use `$env/static/public` instead.
  * 

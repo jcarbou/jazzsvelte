@@ -1,14 +1,11 @@
 <script lang="ts">
-    import { getSvgProps } from '../icon.utils'
+    import { getSvgProps } from '@jazzsvelte/icons'
+    import type { SvgProps, IconProps } from '@jazzsvelte/icons'
 
     export const displayName = 'WindowMinimizeIcon'
 
-    export let label: string | null = null
-    export let spin: boolean = false
-    let className: string | null = null
-    export { className as class }
-
-    $: svgProps = getSvgProps(label, spin, className)
+    let { label = null, spin = false, class: className = null, ...restProps}: Props = $props()
+    let svgProps: SvgProps = $derived(getSvgProps(label, spin, className))
 </script>
 
 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" {...svgProps} {...$$restProps}>
@@ -19,3 +16,5 @@
         fill="currentColor"
     />
 </svg>
+
+    
