@@ -4,6 +4,6 @@ export function stringValueOrNull(value: string | unknown): string | null {
     return typeof value === 'string' ? value : null
 }
 
-export function snippetValueOrNull(value: Snippet | string): Snippet | null {
-    return typeof value === 'function' ? value : null
+export function snippetValueOrNull<T extends unknown[]>(value: Snippet<T> | string | null | undefined): Snippet<T> | null {
+    return value === null || value === undefined || typeof value !== 'function' ? null : value
 }

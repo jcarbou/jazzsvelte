@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Snippet } from 'svelte'
+    import type { Snippet } from 'svelte'
     import { tooltip } from './tooltip.actions'
     import type { TooltipActionOptions } from './tooltip.types'
 

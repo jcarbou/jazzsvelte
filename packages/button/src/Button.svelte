@@ -21,8 +21,6 @@
     import { stopProgagation } from '@jazzsvelte/stop_propagation_action'
     import { stringValueOrNull, snippetValueOrNull } from '@jazzsvelte/utils'
 
-    let _props: ButtonProps = $props()
-
     let {
         children,
         badge = DEFAULT.badge,
@@ -49,7 +47,33 @@
         unstyled = DEFAULT.unstyled,
         visible = DEFAULT.visible,
         ..._restProps
-    }: ButtonProps = _props
+    }: ButtonProps = $props()
+
+    let _props: ButtonProps = $derived({
+        badge,
+        class: className,
+        disabled,
+        icon,
+        iconPos,
+        label,
+        link,
+        loading,
+        loadingIcon,
+        outlined,
+        plain,
+        pt,
+        ptOptions,
+        raised,
+        rounded,
+        severity,
+        size,
+        style,
+        text,
+        tooltip: tooltipContent,
+        tooltipOptions,
+        unstyled,
+        visible
+    })
 
     export const displayName = 'Button'
     export const focus = (scrollTo?: boolean) => {
@@ -68,7 +92,7 @@
     const buttonGroup = getContext<ButtonGroupContext>('buttonGroup')
 
     let _severity = $derived(severity ?? buttonGroup?.severity)
-    let _label = $derived(label ?? _props['aria-label'])
+    let _label = $derived(label ?? _restProps['aria-label'])
     let _hasLabel: boolean = $derived(!!_label)
     let _labelSnippet: ButtonLabelSnippet | null = $derived(snippetValueOrNull(_label))
     let _labelString: string | null = $derived(stringValueOrNull(_label))
@@ -79,7 +103,7 @@
         ptOptions: PassThroughOptions | null
         unstyled: boolean
     } = $derived({
-        props: { ...DEFAULT, ..._props },
+        props: { ...DEFAULT, ..._props, ..._restProps },
         context: { disabled },
         ptOptions,
         unstyled

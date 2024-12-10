@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { SvelteComponent } from 'svelte'
+import type { Component, SvelteComponent } from 'svelte'
 import type { HTMLAttributes, HTMLButtonAttributes as SvelteHTMLButtonAttributes } from 'svelte/elements'
 
 export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: any }
@@ -78,5 +78,5 @@ export type PassThroughHTMLDivAttributes = PassThroughHTMLAttributes<HTMLDivAttr
 export type PassThroughHTMLSvgAttributes = PassThroughHTMLAttributes<HTMLSVGAttributes>
 export type PassThroughHTMLImageAttributes = PassThroughHTMLAttributes<HTMLImageAttributes>
 
-export type IconAttributes = HTMLSVGAttributes & { label?: string | null; spin?: boolean }
-export type IconComponent = typeof SvelteComponent<IconAttributes, any, any>
+export type IconAttributes = HTMLSVGAttributes & { label?: string | null; spin?: boolean; class?: string | null }
+export type IconComponent = Component<IconAttributes>

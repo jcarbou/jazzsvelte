@@ -30,7 +30,7 @@ export const defaultButtonProps: Omit<Required<BaseButtonProps>, 'pt' | 'ptOptio
     iconPos: null,
     size: null,
     loading: false,
-    loadingIcon: null, // SpinnerIcon,
+    loadingIcon: SpinnerIcon,
     plain: false,
     tooltip: null,
     tooltipOptions: null,

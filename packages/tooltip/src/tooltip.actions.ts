@@ -164,7 +164,7 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
 
     return {
         destroy() {
-            unmount(tooltipComponent)
+            tooltipComponent && unmount(tooltipComponent)
             listenMouse && element.removeEventListener('mouseenter', mouseEnter)
             listenMouse && element.removeEventListener('mouseleave', mouseLeave)
             listenMouse && element.removeEventListener('mousemove', mouseMove)

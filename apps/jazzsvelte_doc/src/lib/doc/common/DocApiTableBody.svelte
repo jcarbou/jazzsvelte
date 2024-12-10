@@ -47,7 +47,7 @@
 
 <style lang="scss">
     :global(.doc-option-name),
-    td > i:not(.pi) {
+    :global(td > i:not(.pi)) {
         font-family:
             ui-monospace,
             SFMono-Regular,

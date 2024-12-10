@@ -13,7 +13,7 @@
         loading = true
         setTimeout(() => {
             loading = false
-        }, 2000)
+        }, 3000)
     }
 
     const code = {
