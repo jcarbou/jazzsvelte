@@ -1,31 +1,37 @@
 <script lang="ts">
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import DocTableWrapper from '$lib/doc/common/DocTableWrapper.svelte'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    interface Props {
+        docSection: DocSection;
+    }
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props();;
 </script>
 
 <DocSectionText docSection={{ id: 'style', label: 'Style' }}>
     <DocTableWrapper>
-        <tr slot="thead">
-            <th>Name</th>
-            <th>Element</th>
-        </tr>
-        <svelte:fragment slot="tbody">
-            <tr>
-                <td>p-ripple</td>
-                <td>Host element.</td>
+        {#snippet theadContent()}
+                <tr >
+                <th>Name</th>
+                <th>Element</th>
             </tr>
-            <tr>
-                <td>p-ink</td>
-                <td>Ripple element.</td>
-            </tr>
-            <tr>
-                <td>p-ink-active</td>
-                <td>Ripple element during animating.</td>
-            </tr>
-        </svelte:fragment>
+            {/snippet}
+        {#snippet tBodyContent()}            
+                <tr>
+                    <td>p-ripple</td>
+                    <td>Host element.</td>
+                </tr>
+                <tr>
+                    <td>p-ink</td>
+                    <td>Ripple element.</td>
+                </tr>
+                <tr>
+                    <td>p-ink-active</td>
+                    <td>Ripple element during animating.</td>
+                </tr>
+            
+            {/snippet}
     </DocTableWrapper>
 </DocSectionText>

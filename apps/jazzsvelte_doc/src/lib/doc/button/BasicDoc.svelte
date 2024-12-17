@@ -6,26 +6,23 @@
     import { importJS, importTS } from '../common/doc.utils'
     import { showToast } from '@jazzsvelte/toast'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 
+    const codeButton = `
+<Button label="Submit" onclick={() => showToast({ summary: 'Clicked', detail: 'Basic button click' })}></Button>
+`
     const code = {
-        basic: `
-        <Button label="Submit" on:click={() => showToast({ summary: 'Clicked', detail: 'Basic button click' })}></Button>
-        `,
+        basic: codeButton,
         javascript: `
 ${importJS('Button', `import { showToast } from '@jazzsvelte/toast'`)}
 
-<div class="card flex justify-content-center">
-    <Button label="Submit" on:click={() => showToast({ summary: 'Clicked', detail: 'Basic button click' })}></Button>
-</div>
-        `,
+${codeButton}
+`,
         typescript: `
 ${importTS(`Button`, `import { showToast } from '@jazzsvelte/toast'`)}
 
-<div class="card flex justify-content-center">
-    <Button label="Submit" on:click={() => showToast({ summary: 'Clicked', detail: 'Basic button click' })}></Button>
-</div>
-        `
+${codeButton}
+`
     }
 </script>
 

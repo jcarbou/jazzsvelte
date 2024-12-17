@@ -10,7 +10,6 @@
     import { JAZZ_SVELTE } from '@jazzsvelte/api'
     import { projectName } from '../common/doc.utils'
     import { rippleApiData } from '@jazzsvelte/ripple'
-    import type { Doc } from '../common/doc.types'
 
     const docs = [
         {

@@ -34,7 +34,7 @@
         contentClass = DEFAULT.contentClass,
         contentStyle = DEFAULT.contentStyle,
         customContent = DEFAULT.customContent,
-        customProps = DEFAULT.customProps,
+        customMessage = DEFAULT.customMessage,
         detail = DEFAULT.detail,
         icon = DEFAULT.icon,
         onClose = DEFAULT.onClose,
@@ -166,32 +166,35 @@
     }
 </script>
 
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<div onmouseenter={_onMouseEnter} onclick={_onClick} {...messageAttributes}>
-    <div {...contentAttributes}>
-        {#if customContent}
-            {@const SvelteComponent_1 = customContent}
-            <SvelteComponent_1 {..._props} {...customProps} />
-        {:else}
-            {#if _icon}
-                <IconBuilder {resolvedIcon} />
-            {/if}
-            <div {...textAttributes}>
-                <span {...summaryAttributes}>{summary}</span>
-                {#if detail}
-                    <div {...detailAttributes}>{detail}</div>
+{#if customMessage}
+    {@render customMessage(_props)}
+{:else}
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div onmouseenter={_onMouseEnter} onclick={_onClick} {...messageAttributes}>
+        <div {...contentAttributes}>
+            {#if customContent}
+                {@render customContent(_props)}
+            {:else}
+                {#if _icon}
+                    <IconBuilder {resolvedIcon} />
                 {/if}
-            </div>
-        {/if}
-        {#if closable}
-            <div>
-                <button type="button" {...closeButtonAttributes} onclick={preventDefault(_onClose)} use:ripple>
-                    <IconBuilder resolvedIcon={resolvedCloseIcon} />
-                </button>
-            </div>
-        {/if}
+                <div {...textAttributes}>
+                    <span {...summaryAttributes}>{summary}</span>
+                    {#if detail}
+                        <div {...detailAttributes}>{detail}</div>
+                    {/if}
+                </div>
+            {/if}
+            {#if closable}
+                <div>
+                    <button type="button" {...closeButtonAttributes} onclick={preventDefault(_onClose)} use:ripple>
+                        <IconBuilder resolvedIcon={resolvedCloseIcon} />
+                    </button>
+                </div>
+            {/if}
+        </div>
     </div>
-</div>
+{/if}
 
 <style>
     @layer primereact {

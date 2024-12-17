@@ -4,16 +4,22 @@
 
     import type { DocSection } from '$lib/doc/common/doc.types'
 
-    export let docSection: DocSection
+    interface Props {
+        docSection: DocSection
+    }
+
+    let { docSection }: Props = $props()
 </script>
 
 <DocSectionText docSection={{ id: 'style', label: 'Style' }}>
     <DocTableWrapper>
-        <tr slot="thead">
-            <th>Name</th>
-            <th>Element</th>
-        </tr>
-        <svelte:fragment slot="tbody">
+        {#snippet theadContent()}
+            <tr>
+                <th>Name</th>
+                <th>Element</th>
+            </tr>
+        {/snippet}
+        {#snippet tBodyContent()}
             <tr>
                 <td>p-ripple</td>
                 <td>Host element.</td>
@@ -26,6 +32,6 @@
                 <td>p-ink-active</td>
                 <td>Ripple element during animating.</td>
             </tr>
-        </svelte:fragment>
+        {/snippet}
     </DocTableWrapper>
 </DocSectionText>

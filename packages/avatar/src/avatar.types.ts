@@ -8,8 +8,10 @@ import type {
     PassThroughHTMLAttributes,
     PassThroughType,
     OnEvent,
-    OnImageError
+    PassThroughOptions,
+    ResolvedIconPT
 } from '@jazzsvelte/api'
+import { Snippet } from 'svelte'
 
 /**
  * Types used by properties of the Avatar component.
@@ -28,6 +30,20 @@ export interface BaseAvatarProps {
      * @default  null
      */
     class?: string | null
+
+    /**
+     * Avatar content.
+     * @default  null
+     */
+    content?: Snippet<
+        [
+            {
+                imageAttributes: HTMLImageAttributes
+                labelAttributes: HTMLSpanAttributes
+                resolvedIcon: ResolvedIconPT
+            }
+        ]
+    > | null
 
     /**
      * Defines the icon to display.
@@ -62,24 +78,24 @@ export interface BaseAvatarProps {
     /**
      * Callback to invoke on click.
      */
-    onClick?: OnEvent
+    onclick?: HTMLDivAttributes['onclick']
 
     /**
      * This event is triggered if an error occurs while loading an image file.
      */
-    onImageError?: OnImageError
+    onImageError?: OnEvent
 
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: AvatarPassThroughOptions
+    pt?: AvatarPassThroughOptions | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
      * @default  null
      */
-    ptOptions?: AvatarPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
 
     /**
      * Shape of the element ('square' | 'circle').

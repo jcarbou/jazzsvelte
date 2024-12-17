@@ -6,8 +6,6 @@
     import { isEmpty, isNotEmpty } from '@jazzsvelte/object'
     import { defaultBadgeProps as DEFAULT, globalBadgePT as globalPt } from './badge.config'
 
-    let _props = $props()
-
     let {
         class: className = DEFAULT.class,
         pt = null,
@@ -18,7 +16,18 @@
         unstyled = DEFAULT.unstyled,
         value = DEFAULT.value,
         ..._restProps
-    }: BadgeProps = _props
+    }: BadgeProps = $props()
+
+    let _props: BadgeProps = $derived({
+        className,
+        pt,
+        ptOptions,
+        severity,
+        size,
+        style,
+        unstyled,
+        value
+    })
 
     export const displayName = 'Badge'
 

@@ -2,13 +2,12 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
+    const codeBasic = `
 <i class="pi pi-bell p-overlay-badge" style="font-size:2rem;">
     <Badge value="2"></Badge>
 </i>
@@ -18,45 +17,18 @@
 <i class="pi pi-envelope p-overlay-badge" style="font-size:2rem;">
     <Badge severity="danger"></Badge>
 </i>
-            `,
+`
+
+    const code = {
+        basic: codeBasic,
         javascript: `
-import React from 'react';
-import { Badge } from 'primereact/badge';
-
-
-        <div class="card flex flex-wrap justify-content-center gap-4">
-            <i class="pi pi-bell p-overlay-badge" style="font-size:2rem;">
-                <Badge value="2"></Badge>
-            </i>
-            <i class="pi pi-calendar p-overlay-badge" style="font-size:2rem;">
-                <Badge value="5+" severity="danger"></Badge>
-            </i>
-            <i class="pi pi-envelope p-overlay-badge" style="font-size:2rem;">
-                <Badge severity="danger"></Badge>
-            </i>
-        </div>
-
-
-        `,
+${importJS('Badge')}
+${codeBasic}
+`,
         typescript: `
-import React from 'react';
-import { Badge } from 'primereact/badge';
-
-
-        <div class="card flex flex-wrap justify-content-center gap-4">
-            <i class="pi pi-bell p-overlay-badge" style="font-size:2rem;">
-                <Badge value="2"></Badge>
-            </i>
-            <i class="pi pi-calendar p-overlay-badge" style="font-size:2rem;">
-                <Badge value="5+" severity="danger"></Badge>
-            </i>
-            <i class="pi pi-envelope p-overlay-badge" style="font-size:2rem;">
-                <Badge severity="danger"></Badge>
-            </i>
-        </div>
-
-
-        `
+${importTS('Badge')}
+${codeBasic}
+`
     }
 </script>
 

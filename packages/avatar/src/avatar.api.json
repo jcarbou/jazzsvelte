@@ -25,6 +25,14 @@
                 "description": "CSS classes to add to root element."
             },
             {
+                "name": "content",
+                "optional": true,
+                "readonly": false,
+                "type": "Snippet<[{imageAttributes: HTMLImageAttributes, labelAttributes: HTMLSpanAttributes, resolvedIcon: ResolvedIconPT}]> | null",
+                "default": "null",
+                "description": "Avatar custom content."
+            },
+            {
                 "name": "icon",
                 "optional": true,
                 "readonly": false,

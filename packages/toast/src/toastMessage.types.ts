@@ -9,10 +9,11 @@ import type {
     HTMLButtonAttributes,
     TimeoutId
 } from '@jazzsvelte/api'
-import type { SvelteComponent } from 'svelte'
+import type { Snippet } from 'svelte'
 
 export type ToastSeverity = 'success' | 'info' | 'warn' | 'error'
 export type ToastMessageStatus = { id: string; isClosed: boolean }
+export type ToastSnippet = Snippet<[Omit<ToastMessageProps, 'customContent' | 'customMessage'>]>
 
 export declare type ToastMessagePassThroughType<T> = PassThroughType<
     PassThroughHTMLAttributes<T>,
@@ -111,18 +112,13 @@ export interface BaseToastMessageProps {
      */
     closeIcon?: string | IconComponent | null
     /**
-     * Custom content of the message. If enabled, the given component receives all props and <i>customProps</i> and replace summary and details section.
+     * Custom content of the message. If enabled, the given snippet receives all props and <i>customProps</i> and replace summary and details section.
      */
-    customContent?: typeof SvelteComponent | null
+    customContent?: ToastSnippet | null
     /**
-     * Custom message. If enabled, a customMessage is instanciate instead of a ToastMessage.
+     * Custom message.
      */
-    customMessage?: typeof SvelteComponent | null
-    /**
-     * Additional Props for "content"  or "customMessage" SvelteComponent
-     */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    customProps?: Record<string, any> | null
+    customMessage?: ToastSnippet | null
     /**
      * Detail content of the message.
      */

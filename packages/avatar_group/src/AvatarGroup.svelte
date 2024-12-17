@@ -1,15 +1,26 @@
 <script lang="ts">
-    import type { AvatarGroupPassThroughMethodOptions, AvatarGroupPassThroughOptions } from './avatarGroup.types'
-    import type { HTMLDivAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
+    import type { AvatarGroupPassThroughMethodOptions, AvatarGroupProps } from './avatarGroup.types'
+    import type { HTMLDivAttributes, PassThroughOptions } from '@jazzsvelte/api'
     import { resolvePT } from '@jazzsvelte/api'
     import { defaultAvatarGroupProps as DEFAULT, globalAvatarGroupPT as globalPt } from './avatarGroup.config'
 
-    export let unstyled: boolean = DEFAULT.unstyled
-    export let pt: AvatarGroupPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let style: CssStyle | null = DEFAULT.style
-    let className: string | null = DEFAULT.class
-    export { className as class }
+    let {
+        unstyled = DEFAULT.unstyled,
+        pt = null,
+        ptOptions = null,
+        style = DEFAULT.style,
+        class: className = DEFAULT.class,
+        children,
+        ..._restProps
+    }: AvatarGroupProps = $props()
+
+    let _props: AvatarGroupProps = $derived({
+        unstyled,
+        pt,
+        ptOptions,
+        style,
+        className
+    })
 
     export function getElement(): HTMLDivElement {
         return rootEl
@@ -18,31 +29,33 @@
 
     let rootEl: HTMLDivElement
 
-    $: ptContext = {
-        props: $$props,
-        ptOptions,
-        unstyled
-    } satisfies AvatarGroupPassThroughMethodOptions & {
+    let ptContext: AvatarGroupPassThroughMethodOptions & {
         ptOptions: PassThroughOptions | null
         unstyled: boolean
-    }
+    } = $derived({
+        props: _props,
+        ptOptions,
+        unstyled
+    })
 
     // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            class: ['p-avatar-group', 'p-component', className, {}],
-            style,
-            'data-pc-name': 'avatarGroup',
-            'data-pc-section': 'root'
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let rootAttributes: HTMLDivAttributes = $derived(
+        resolvePT(
+            {
+                class: ['p-avatar-group', 'p-component', className, {}],
+                style,
+                'data-pc-name': 'avatarGroup',
+                'data-pc-section': 'root'
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 </script>
 
-<div bind:this={rootEl} {...rootAttributes} {...$$restProps}>
-    <slot />
+<div bind:this={rootEl} {...rootAttributes} {..._restProps}>
+    {@render children?.()}
 </div>
 
 <style>

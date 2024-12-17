@@ -2,9 +2,9 @@
     import Menu from './Menu.svelte'
     import type { SidebarData } from './Sidebar.types'
     import { sideBar } from '$lib/layout/layoutStore'
-    import jsonData from './sidebar.json'
+    import { MENU_DATA } from './menu.utils'
 
-    const data: SidebarData = jsonData.data
+    const data: SidebarData = MENU_DATA
 </script>
 
 <aside class="layout-sidebar" class:sidebar-active={$sideBar}>

@@ -83,11 +83,7 @@
 <div {...rootAttributes} {..._restProps} use:zIndex={{ key: 'toast', jazzSvelteContext }}>
     {#each $toastMessages.filter((m) => m.toastId === id) as toastMessage (toastMessage.id)}
         <div in:fly={{ y: 100, duration: 650 }} out:fade={{ duration: 300 }}>
-            {#if toastMessage.customMessage}
-                <toastMessage.customMessage {...toastMessage} {...toastMessage.customProps} />
-            {:else}
-                <ToastMessage {...toastMessage} />
-            {/if}
+            <ToastMessage {...toastMessage} />
         </div>
     {/each}
 </div>

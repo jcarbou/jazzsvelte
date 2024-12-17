@@ -3,64 +3,30 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { showToast } from '@jazzsvelte/toast'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
-    const showInfo = () => {
+    function showInfo() {
         showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
     }
 
+    const codeFn = `
+function showInfo() {
+        showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
+    }
+`
+    const codeButton = `
+<Button onclick={showInfo} label="Show" />
+`
+
+    const codeBasic = `
+${importJS(['Button'], importObject('showToast', 'toast'), codeFn)}
+${codeButton}
+`
     const code = {
-        basic: `
-// Main page
-<Toast />
-
-// Eveywhere
-showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
-   `,
-        javascript: `
-// Main page
-${importJS('Toast')}
-
-...
-<Toast />
-
-// Everywhere
-${importJS(
-    ['Button'],
-    importObject('showToast', 'toast'),
-    `
-   const showInfo  = () => {
-      showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
-   }
-`
-)}
-
-<Button on:click={showInfo} label="Show" />
-        `,
-        typescript: `
-// Main page
-${importJS('Toast')}
-
-...
-<Toast />
-
-// Everywhere
-${importJS(
-    ['Button'],
-    importObject('showToast', 'toast'),
-    `
-   const showInfo  = () => {
-      showToast({ severity: 'info', summary: 'Info', detail: 'Message Content' })
-   }
-`
-)}
-
-<Button on:click={showInfo} label="Show" />
-`
+        basic: codeBasic
     }
 </script>
 
@@ -73,6 +39,6 @@ ${importJS(
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <Button on:click={showInfo} label="Show" />
+    <Button onclick={showInfo} label="Show" />
 </div>
 <DocSectionCode {code} />

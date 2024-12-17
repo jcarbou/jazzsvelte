@@ -2,99 +2,49 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Ripple } from '@jazzsvelte/ripple'
-
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { importJS, importTS } from '../common/doc.utils'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
+    const codeBasic = `
+<div class="card flex justify-content-center align-items-center gap-2">
+    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
+        Green
+        <Ripple
+            pt={{
+                root: { style: { background: 'rgba(75, 175, 80, 0.3)' } }
+            }}
+        />
+    </div>
+    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
+        Orange
+        <Ripple
+            pt={{
+                root: { style: { background: 'rgba(255, 193, 6, 0.3)' } }
+            }}
+        />
+    </div>
+    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
+        Purple
+        <Ripple
+            pt={{
+                root: { style: { background: 'rgba(156, 39, 176, 0.3)' } }
+            }}
+        />
+    </div>
+</div>
+`
 
     const code = {
-        basic: `
-<div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-    Green
-    <Ripple
-        pt={{
-            root: { style: { background: 'rgba(75, 175, 80, 0.3)' } }
-        }}
-    />
-</div>
-<div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-    Orange
-    <Ripple
-        pt={{
-            root: { style: { background: 'rgba(255, 193, 6, 0.3)' } }
-        }}
-    />
-</div>
-<div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-    Purple
-    <Ripple
-        pt={{
-            root: { style: { background: 'rgba(156, 39, 176, 0.3)' } }
-        }}
-    />
-</div>
-        `,
+        basic: codeBasic,
         javascript: `
 ${importJS('Ripple')}
-
-<div class="card flex justify-content-center align-items-center gap-2">
-    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-        Green
-        <Ripple
-            pt={{
-                root: { style: { background: 'rgba(75, 175, 80, 0.3)' } }
-            }}
-        />
-    </div>
-    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-        Orange
-        <Ripple
-            pt={{
-                root: { style: { background: 'rgba(255, 193, 6, 0.3)' } }
-            }}
-        />
-    </div>
-    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-        Purple
-        <Ripple
-            pt={{
-                root: { style: { background: 'rgba(156, 39, 176, 0.3)' } }
-            }}
-        />
-    </div>
-</div>
-        `,
+${codeBasic}
+`,
         typescript: `
 ${importTS('Ripple')}
-
-<div class="card flex justify-content-center align-items-center gap-2">
-    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-        Green
-        <Ripple
-            pt={{
-                root: { style: { background: 'rgba(75, 175, 80, 0.3)' } }
-            }}
-        />
-    </div>
-    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-        Orange
-        <Ripple
-            pt={{
-                root: { style: { background: 'rgba(255, 193, 6, 0.3)' } }
-            }}
-        />
-    </div>
-    <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
-        Purple
-        <Ripple
-            pt={{
-                root: { style: { background: 'rgba(156, 39, 176, 0.3)' } }
-            }}
-        />
-    </div>
-</div>
-        `
+${codeBasic}
+`
     }
 </script>
 

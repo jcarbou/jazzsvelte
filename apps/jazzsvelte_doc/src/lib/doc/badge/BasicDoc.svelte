@@ -2,37 +2,25 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
-
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
+    let { docSection }: ComponentDocProps = $props();
+    
+    const codeBasic = `
 <Badge value="2"></Badge>
-        `,
+`
+    
+const code = {
+        basic: codeBasic,
         javascript: `
-import React from 'react';
-import { Badge } from 'primereact/badge';
-
-
-        <div class="card flex justify-content-center">
-            <Badge value="2"></Badge>
-        </div>
-
-
-        `,
+${importJS('Badge')}
+${codeBasic}
+`,
         typescript: `
-import React from 'react';
-import { Badge } from 'primereact/badge';
-
-
-        <div class="card flex justify-content-center">
-            <Badge value="2"></Badge>
-        </div>
-
-
-        `
+${importTS('Badge')}
+${codeBasic}
+`
     }
 </script>
 

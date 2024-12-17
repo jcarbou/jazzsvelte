@@ -1,28 +1,20 @@
 <script lang="ts">
     import type { Code, CodeLang, CodeMode } from './doc.types'
-
     import { Button } from '@jazzsvelte/button'
     import CodeHighlight from './CodeHighlight.svelte'
 
     interface Props {
         embedded?: boolean
         hideToggleCode?: boolean
-        codeMode?: CodeMode
-        codeLang?: CodeLang
         code: Code
         hideStackBlitz?: boolean
         toImport?: boolean
     }
 
-    let {
-        embedded = false,
-        hideToggleCode = false,
-        codeMode = $bindable('basic'),
-        codeLang = $bindable('javascript'),
-        code,
-        hideStackBlitz = false,
-        toImport = false
-    }: Props = $props()
+    let { embedded = false, hideToggleCode = false, code, hideStackBlitz = false, toImport = false }: Props = $props()
+
+    let codeMode: string = $state('basic')
+    let codeLang: 'basic' | 'javascript' | 'typescript' = $state('javascript')
 
     const toggleCodeMode = (mode: CodeMode) => {
         if (codeMode === 'data') {
@@ -57,14 +49,14 @@
                 <Button
                     class="py-0 px-2 border-round h-2rem shadow-none {codeLang === 'javascript' ? 'code-active' : ''}"
                     label="JS"
-                    on:click={() => (codeLang = 'javascript')}
+                    onclick={() => (codeLang = 'javascript')}
                     tooltip="JavaScript Code"
                     tooltipOptions={{ position: 'bottom', class: 'doc-section-code-tooltip' }}
                 ></Button>
                 <Button
                     class="py-0 px-2 border-round h-2rem shadow-none {codeLang === 'typescript' ? 'code-active' : ''}"
                     label="TS"
-                    on:click={() => (codeLang = 'typescript')}
+                    onclick={() => (codeLang = 'typescript')}
                     tooltip="TypeScript Code"
                     tooltipOptions={{ position: 'bottom', class: 'doc-section-code-tooltip' }}
                 ></Button>
@@ -72,7 +64,7 @@
             {#if !hideToggleCode}
                 <Button
                     type="button"
-                    on:click={() => toggleCodeMode('javascript')}
+                    onclick={() => toggleCodeMode('javascript')}
                     class="h-2rem w-2rem p-0 inline-flex align-items-center justify-content-center shadow-none"
                     tooltip="Toggle Full Code"
                     tooltipOptions={{ position: 'bottom', class: 'doc-section-code-tooltip' }}
@@ -83,7 +75,7 @@
             {#if hideToggleCode && code.data}
                 <Button
                     type="button"
-                    on:click={() => (codeMode = 'data')}
+                    onclick={() => (codeMode = 'data')}
                     class="h-2rem w-2rem p-0 inline-flex align-items-center justify-content-center shadow-none"
                     tooltip="View Data"
                     tooltipOptions={{ position: 'bottom', class: 'doc-section-code-tooltip' }}
@@ -97,7 +89,7 @@
                     class="h-2rem w-2rem p-0 inline-flex align-items-center justify-content-center shadow-none"
                     tooltip="Edit in StackBlitz"
                     tooltipOptions={{ position: 'bottom', class: 'doc-section-code-tooltip' }}
-                    on:click={() => codeEditor.openStackBlitz(codeLang)}
+                    onclick={() => codeEditor.openStackBlitz(codeLang)}
                 >
                     <svg role="img" viewBox="0 0 13 19" width={13} height={18} fill={'currentColor'} style="display: block;">
                         <path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z" />
@@ -106,7 +98,7 @@
             {/if}
             <Button
                 type="button"
-                on:click={copyCode}
+                onclick={copyCode}
                 class="h-2rem w-2rem p-0 inline-flex align-items-center justify-content-center shadow-none"
                 tooltip="Copy Code"
                 tooltipOptions={{ position: 'bottom', class: 'doc-section-code-tooltip' }}

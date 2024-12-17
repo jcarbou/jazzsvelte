@@ -4,7 +4,6 @@
     import DocApiPtTable from '../common/DocApiPtTable.svelte'
     import DocComponent from '../common/DocComponent.svelte'
     import { buttonGroupApiData } from '@jazzsvelte/button_group'
-    import type { Doc } from '../common/doc.types'
 
     const docs = [
         {

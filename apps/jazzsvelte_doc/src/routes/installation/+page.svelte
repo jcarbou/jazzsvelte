@@ -56,11 +56,11 @@
 </svelte:head>
 
 <DocPage {docs}>
-    <svelte:fragment slot="intro">
+    {#snippet intro()}
         <h1>Installation</h1>
         <p>JazzSvelte is a rich set of open source UI components for Svelte.</p>
         <p class="text-red-600 font-bold">
             Installation is not already available. JazzSveltezsvelte is an "under construction" project not already build
         </p>
-    </svelte:fragment>
+    {/snippet}
 </DocPage>

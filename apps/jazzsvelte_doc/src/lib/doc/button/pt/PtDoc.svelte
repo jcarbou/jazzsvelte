@@ -3,51 +3,26 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '$lib/doc/common/doc.utils'
 
     let { docSection }: ComponentDocProps = $props()
 
-    const code = {
-        basic: `
+    const codeBasic = `
 <Button label="Submit" icon="pi pi-check"
     pt={{
         root: { class: 'bg-blue-500 border-blue-500' }
     }}
-/>
-        `,
+/>`
+    const code = {
+        basic: codeBasic,
         javascript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
-
-
-        <div class="card flex flex-wrap gap-3 justify-content-center">
-            <Button
-                label="Submit"
-                icon="pi pi-check"
-                pt={{
-                    root: { class: 'bg-blue-500 border-blue-500' }
-                }}
-            />
-        </div>
-    )
-
-        `,
+${importJS('Button')}
+${codeBasic}
+`,
         typescript: `
-import React from 'react'; 
-import { Button } from 'primereact/button';
-
-
-        <div class="card flex flex-wrap gap-3 justify-content-center">
-            <Button
-                label="Submit"
-                icon="pi pi-check"
-                pt={{
-                    root: { class: 'bg-blue-500 border-blue-500' }
-                }}
-            />
-        </div>
-    )
-
-        `
+${importTS('Button')}
+${codeBasic}
+`
     }
 </script>
 

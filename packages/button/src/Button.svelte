@@ -92,10 +92,10 @@
     const buttonGroup = getContext<ButtonGroupContext>('buttonGroup')
 
     let _severity = $derived(severity ?? buttonGroup?.severity)
-    let _label = $derived(label ?? _restProps['aria-label'])
-    let _hasLabel: boolean = $derived(!!_label)
-    let _labelSnippet: ButtonLabelSnippet | null = $derived(snippetValueOrNull(_label))
-    let _labelString: string | null = $derived(stringValueOrNull(_label))
+    //let _label = $derived(label ?? _restProps['aria-label'])
+    let _hasLabel: boolean = $derived(!!label)
+    let _labelSnippet: ButtonLabelSnippet | null = $derived(snippetValueOrNull(label))
+    let _labelString: string | null = $derived(stringValueOrNull(label))
     let _badgeSnippet: ButtonBadgeSnippet | null = $derived(snippetValueOrNull(badge))
     let _badgeString: string | null = $derived(stringValueOrNull(badge))
 
@@ -136,7 +136,7 @@
                 style,
                 'data-pc-name': 'button',
                 'data-pc-section': 'root',
-                'aria-label': _labelString ? _labelString + (badge ? ' ' + badge : '') : ''
+                'aria-label': _restProps['aria-label'] ?? (_labelString ? _labelString + (badge ? ' ' + badge : '') : '')
             },
             pt?.root,
             globalPt?.root,

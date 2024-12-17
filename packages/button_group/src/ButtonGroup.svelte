@@ -1,58 +1,79 @@
 <script lang="ts">
-    import type { ButtonGroupPassThroughMethodOptions, ButtonGroupPassThroughOptions } from './buttonGroup.types'
-    import type { ButtonGroupContext, ButtonIconPos, ButtonSeverity, ButtonSize } from '@jazzsvelte/button'
-    import type { HTMLSpanAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
+    import type { ButtonGroupPassThroughMethodOptions, ButtonGroupProps } from './buttonGroup.types'
+    import type { ButtonGroupContext } from '@jazzsvelte/button'
+    import type { HTMLSpanAttributes, PassThroughOptions } from '@jazzsvelte/api'
 
     import { setContext } from 'svelte'
     import { resolvePT } from '@jazzsvelte/api'
     import { defaultButtonGroupProps as DEFAULT, globalButtonGroupPT as globalPt } from './buttonGroup.config'
 
-    let className: string | null = DEFAULT.class
-    export { className as class }
-    export let disabled: boolean = DEFAULT.disabled
-    export let iconPos: ButtonIconPos | null = DEFAULT.iconPos
-    export let outlined: boolean = DEFAULT.outlined
-    export let pt: ButtonGroupPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let rounded: boolean = DEFAULT.rounded
-    export let severity: ButtonSeverity | null = DEFAULT.severity
-    export let size: ButtonSize | null = DEFAULT.size
-    export let style: CssStyle = DEFAULT.style
-    export let unstyled: boolean = DEFAULT.unstyled
-    export let visible: boolean = DEFAULT.visible
+    let {
+        class: className = DEFAULT.class,
+        disabled = DEFAULT.disabled,
+        iconPos = DEFAULT.iconPos,
+        outlined = DEFAULT.outlined,
+        pt = null,
+        ptOptions = null,
+        rounded = DEFAULT.rounded,
+        severity = DEFAULT.severity,
+        size = DEFAULT.size,
+        style = DEFAULT.style,
+        unstyled = DEFAULT.unstyled,
+        visible = DEFAULT.visible,
+        children,
+        ..._restProps
+    }: ButtonGroupProps = $props()
+
+    let _props: ButtonGroupProps = $derived({
+        className,
+        disabled,
+        iconPos,
+        outlined,
+        pt,
+        ptOptions,
+        rounded,
+        severity,
+        size,
+        style,
+        unstyled,
+        visible
+    })
 
     export const displayName = 'ButtonGroup'
 
     export function getElement(): HTMLSpanElement {
         return rootEl
     }
+    // svelte-ignore non_reactive_update
     let rootEl: HTMLSpanElement
 
-    $: ptContext = {
-        props: { ...DEFAULT, ...$$props },
+    let ptContext: ButtonGroupPassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    } = $derived({
+        props: { ...DEFAULT, ..._props },
         context: { disabled },
         ptOptions,
         unstyled
-    } satisfies ButtonGroupPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    })
 
     // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            class: ['p-button-group p-component', className],
-            style,
-            role: 'group',
-            'data-pc-name': 'buttongroup',
-            'data-pc-section': 'root'
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLSpanAttributes
+    let rootAttributes: HTMLSpanAttributes = $derived(
+        resolvePT(
+            {
+                class: ['p-button-group p-component', className],
+                style,
+                role: 'group',
+                'data-pc-name': 'buttongroup',
+                'data-pc-section': 'root'
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 
-    $: {
+    $effect(() => {
         setContext<ButtonGroupContext>('buttonGroup', {
             disabled,
             rounded,
@@ -61,12 +82,12 @@
             iconPos: iconPos || undefined,
             severity: severity || undefined
         })
-    }
+    })
 </script>
 
 {#if visible}
-    <span bind:this={rootEl} {...rootAttributes} {...$$restProps}>
-        <slot />
+    <span bind:this={rootEl} {...rootAttributes} {..._restProps}>
+        {@render children?.()}
     </span>
 {/if}
 

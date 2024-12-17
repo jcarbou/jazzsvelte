@@ -1,4 +1,10 @@
-import type { CssObject, HTMLDivAttributes, PassThroughHTMLAttributes, PassThroughType } from '@jazzsvelte/api'
+import type {
+    CssObject,
+    HTMLDivAttributes,
+    PassThroughHTMLAttributes,
+    PassThroughOptions,
+    PassThroughType
+} from '@jazzsvelte/api'
 
 /**
  * Custom passthrough(pt) option method.
@@ -22,13 +28,13 @@ export interface BaseAvatarGroupProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: AvatarGroupPassThroughOptions
+    pt?: AvatarGroupPassThroughOptions | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
      * @default  null
      */
-    ptOptions?: AvatarGroupPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
 
     /**
      * Style to add to root element.

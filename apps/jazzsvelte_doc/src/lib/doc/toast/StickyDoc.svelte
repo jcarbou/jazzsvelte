@@ -3,13 +3,12 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
     import type { ToastMessageStatus } from '@jazzsvelte/toast'
     import { closeToast, showToast } from '@jazzsvelte/toast'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props();
 
     let toastMessage: ToastMessageStatus | null = null
 
@@ -54,8 +53,8 @@ ${importJS(
 `
 )}
 
-<Button on:click={showMessage} label="Sticky" />
-<Button on:click={closeMessage} label="Clear" severity="secondary" />         
+<Button onclick={showMessage} label="Sticky" />
+<Button onclick={closeMessage} label="Clear" severity="secondary" />         
         `,
         typescript: `
 ${importTS(
@@ -77,8 +76,8 @@ ${importTS(
 `
 )}
 
-<Button on:click={showMessage} label="Sticky" />
-<Button on:click={closeMessage} label="Clear" severity="secondary" />
+<Button onclick={showMessage} label="Sticky" />
+<Button onclick={closeMessage} label="Clear" severity="secondary" />
          `
     }
 </script>
@@ -91,8 +90,8 @@ ${importTS(
 </DocSectionText>
 <div class="card flex justify-content-center">
     <div class="flex flex-wrap gap-2">
-        <Button on:click={showMessage} label="Sticky" />
-        <Button on:click={closeMessage} label="Clear" severity="secondary" />
+        <Button onclick={showMessage} label="Sticky" />
+        <Button onclick={closeMessage} label="Clear" severity="secondary" />
     </div>
 </div>
 <DocSectionCode {code} />

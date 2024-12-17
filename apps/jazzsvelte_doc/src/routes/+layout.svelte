@@ -8,7 +8,11 @@
     import '../app.css'
     import '../core.css'
     import './layout.css'
-    import HeadlessToast from '$lib/doc/toast/HeadlessToastMessage.svelte'
+    interface Props {
+        children?: import('svelte').Snippet
+    }
+
+    let { children }: Props = $props()
 
     const { darkMode } = JAZZ_SVELTE
 </script>
@@ -56,7 +60,7 @@
         <div class="layout-content" class:layout-news-active={$news}>
             <Sidebar />
             <div class="layout-content-slot">
-                <slot />
+                {@render children?.()}
             </div>
         </div>
     </div>

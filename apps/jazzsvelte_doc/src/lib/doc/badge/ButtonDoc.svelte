@@ -3,54 +3,30 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
     import { Button } from '@jazzsvelte/button'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
+    const codeBasic = `
 <Button type="button" label="Emails">
     <Badge value="8"></Badge>
 </Button>
 <Button type="button" label="Messages" icon="pi pi-users" severity="secondary">
     <Badge value="8" severity="danger"></Badge>
 </Button>
-            `,
+`
+
+const code = {
+        basic: codeBasic,
         javascript: `
-import React from 'react';
-import { Button } from 'primereact/button';
-import { Badge } from 'primereact/badge';
-
-
-        <div class="card flex flex-wrap justify-content-center gap-2">
-            <Button type="button" label="Emails">
-                <Badge value="8"></Badge>
-            </Button>
-            <Button type="button" label="Messages" icon="pi pi-users" severity="secondary">
-                <Badge value="8" severity="danger"></Badge>
-            </Button>
-        </div>
-
-
-        `,
+${importJS('Button', 'Badge')}
+${codeBasic}
+`,
         typescript: `
-import React from 'react';
-import { Button } from 'primereact/button';
-import { Badge } from 'primereact/badge';
-
-
-        <div class="card flex flex-wrap justify-content-center gap-2">
-            <Button type="button" label="Emails">
-                <Badge value="8"></Badge>
-            </Button>
-            <Button type="button" label="Messages" icon="pi pi-users" severity="secondary">
-                <Badge value="8" severity="danger"></Badge>
-            </Button>
-        </div>
-
-
-        `
+${importTS('Button', 'Badge')}
+${codeBasic}
+`
     }
 </script>
 

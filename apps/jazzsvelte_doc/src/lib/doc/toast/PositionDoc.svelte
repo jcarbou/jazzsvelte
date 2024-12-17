@@ -13,8 +13,7 @@
         showToast({ toastId, severity, summary, detail: summary, life: 3000 })
     }
 
-    const code = {
-        basic: `
+    const codeToastList = `
 // Main page : Declare all required Toast
 <Toast />
 <Toast id="topLeft" position="top-left" />
@@ -24,6 +23,21 @@
 <Toast id="bottomLeft" position="bottom-left" />
 <Toast id="bottomCenter" position="bottom-center" />
 <Toast id="bottomRight" position="bottom-right" />
+`
+
+    const codeButtons = `
+<Button label="Top Left" class="p-button-success" onclick={() => showMessage('topLeft', 'Top Left', 'success')} />
+<Button label="Top Center" onclick={() => showMessage('topCenter','Top Center',  'info')} />
+<Button label="Top Right" class="p-button-warning" onclick={() => showMessage('topRight', 'Top Right', 'warn')} />
+<Button label="Center" class="p-button-danger" onclick={() => showMessage('center', 'Center', 'error')} />
+<Button label="Bottom Left" class="p-button-success" onclick={() => showMessage('bottomLeft', 'Bottom Left',  'success')} />
+<Button label="Bottom Center" onclick={() => showMessage('bottomCenter', 'Bottom Center',  'info')} />
+<Button label="Bottom Right" class="p-button-warning" onclick={() => showMessage('bottomRight','Bottom Right',  'warn')} />
+`
+
+    const code = {
+        basic: `
+${codeToastList}
 
 // Everywhere
 function showMessage(toastId: string, summary: string, severity: ToastSeverity) {
@@ -35,14 +49,7 @@ function showMessage(toastId: string, summary: string, severity: ToastSeverity) 
 ${importJS('Toast')}
 
 ...
-<Toast />
-<Toast id="topLeft" position="top-left" />
-<Toast id="topCenter" position="top-center" />
-<Toast id="topRight" position="top-right" />
-<Toast id="center" position="center" />
-<Toast id="bottomLeft" position="bottom-left" />
-<Toast id="bottomCenter" position="bottom-center" />
-<Toast id="bottomRight" position="bottom-right" />
+${codeToastList}
 
 // Everywhere
 ${importJS(
@@ -55,27 +62,14 @@ ${importJS(
 `
 )}
 
-<Button label="Top Left" class="p-button-success" on:click={() => showMessage('topLeft', 'Top Left', 'success')} />
-<Button label="Top Center" on:click={() => showMessage('topCenter','Top Center',  'info')} />
-<Button label="Top Right" class="p-button-warning" on:click={() => showMessage('topRight', 'Top Right', 'warn')} />
-<Button label="Center" class="p-button-danger" on:click={() => showMessage('center', 'Center', 'error')} />
-<Button label="Bottom Left" class="p-button-success" on:click={() => showMessage('bottomLeft', 'Bottom Left',  'success')} />
-<Button label="Bottom Center" on:click={() => showMessage('bottomCenter', 'Bottom Center',  'info')} />
-<Button label="Bottom Right" class="p-button-warning" on:click={() => showMessage('bottomRight','Bottom Right',  'warn')} />
-        `,
+${codeButtons}
+`,
         typescript: `
 // Main page
 ${importTS('Toast')}
 
 ...
-<Toast />
-<Toast id="topLeft" position="top-left" />
-<Toast id="topCenter" position="top-center" />
-<Toast id="topRight" position="top-right" />
-<Toast id="center" position="center" />
-<Toast id="bottomLeft" position="bottom-left" />
-<Toast id="bottomCenter" position="bottom-center" />
-<Toast id="bottomRight" position="bottom-right" />
+${codeToastList}
 
 // Everywhere
 ${importTS(
@@ -89,14 +83,8 @@ ${importTS(
 `
 )}
 
-<Button label="Top Left" class="p-button-success" on:click={() => showMessage('topLeft', 'Top Left', 'success')} />
-<Button label="Top Center" on:click={() => showMessage('topCenter','Top Center',  'info')} />
-<Button label="Top Right" class="p-button-warning" on:click={() => showMessage('topRight', 'Top Right', 'warn')} />
-<Button label="Center" class="p-button-danger" on:click={() => showMessage('center', 'Center', 'error')} />
-<Button label="Bottom Left" class="p-button-success" on:click={() => showMessage('bottomLeft', 'Bottom Left',  'success')} />
-<Button label="Bottom Center" on:click={() => showMessage('bottomCenter', 'Bottom Center',  'info')} />
-<Button label="Bottom Right" class="p-button-warning" on:click={() => showMessage('bottomRight','Bottom Right',  'warn')} />
-        `
+${codeButtons}
+`
     }
 </script>
 
@@ -107,20 +95,20 @@ ${importTS(
 </DocSectionText>
 <div class="card flex justify-content-center">
     <div class="flex flex-wrap gap-2">
-        <Button label="Top Left" class="p-button-success" on:click={() => showMessage('topLeft', 'Top Left', 'success')} />
-        <Button label="Top Center" on:click={() => showMessage('topCenter', 'Top Center', 'info')} />
-        <Button label="Top Right" class="p-button-warning" on:click={() => showMessage('topRight', 'Top Right', 'warn')} />
-        <Button label="Center" class="p-button-danger" on:click={() => showMessage('center', 'Center', 'error')} />
+        <Button label="Top Left" class="p-button-success" onclick={() => showMessage('topLeft', 'Top Left', 'success')} />
+        <Button label="Top Center" onclick={() => showMessage('topCenter', 'Top Center', 'info')} />
+        <Button label="Top Right" class="p-button-warning" onclick={() => showMessage('topRight', 'Top Right', 'warn')} />
+        <Button label="Center" class="p-button-danger" onclick={() => showMessage('center', 'Center', 'error')} />
         <Button
             label="Bottom Left"
             class="p-button-success"
-            on:click={() => showMessage('bottomLeft', 'Bottom Left', 'success')}
+            onclick={() => showMessage('bottomLeft', 'Bottom Left', 'success')}
         />
-        <Button label="Bottom Center" on:click={() => showMessage('bottomCenter', 'Bottom Center', 'info')} />
+        <Button label="Bottom Center" onclick={() => showMessage('bottomCenter', 'Bottom Center', 'info')} />
         <Button
             label="Bottom Right"
             class="p-button-warning"
-            on:click={() => showMessage('bottomRight', 'Bottom Right', 'warn')}
+            onclick={() => showMessage('bottomRight', 'Bottom Right', 'warn')}
         />
     </div>
 </div>

@@ -301,7 +301,11 @@ export function getAttribute(element: HTMLElement, name: string): null | string 
  * @param value typed value (null | string | number | boolean)
  * @returns test result
  */
-export function isAttributeEquals(element: HTMLElement, name: string, value: null | string | number | boolean) {
+export function isAttributeEquals(
+    element: HTMLElement | null | undefined,
+    name: string,
+    value: null | string | number | boolean
+) {
     return element ? getAttribute(element, name) === value : false
 }
 

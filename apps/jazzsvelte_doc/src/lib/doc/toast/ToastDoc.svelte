@@ -15,7 +15,6 @@
     import StyledDoc from './theming/StyledDoc.svelte'
     import TailwindDoc from './theming/TailwindDoc.svelte'
     import { toastApiData, toastMessageApiData } from '@jazzsvelte/toast'
-    import type { Doc } from '../common/doc.types'
 
     const docs = [
         {

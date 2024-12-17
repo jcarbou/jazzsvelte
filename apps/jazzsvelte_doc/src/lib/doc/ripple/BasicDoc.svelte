@@ -2,39 +2,32 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Ripple } from '@jazzsvelte/ripple'
-
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { importJS, importTS } from '../common/doc.utils'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
+
+    const codeBasic = `
+<div class="card flex justify-content-center align-items-center">
+    <div
+        class="bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold p-ripple"
+    >
+        Click Me
+        <Ripple />
+    </div>
+</div>
+`
 
     const code = {
-        basic: `
-<div class="bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold p-ripple">
-    Click Me
-    <Ripple />
-</div>
-        `,
+        basic: codeBasic,
         javascript: `
 ${importJS('Ripple')}
-
-<div class="card flex justify-content-center align-items-center">
-    <div class="bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold p-ripple">
-        Click Me
-        <Ripple />
-    </div>
-</div>
-        `,
+${codeBasic}
+`,
         typescript: `
 ${importTS('Ripple')}
-
-<div class="card flex justify-content-center align-items-center">
-    <div class="bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold p-ripple">
-        Click Me
-        <Ripple />
-    </div>
-</div>
-        `
+${codeBasic}
+`
     }
 </script>
 

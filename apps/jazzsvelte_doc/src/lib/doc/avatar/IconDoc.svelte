@@ -4,10 +4,35 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Avatar } from '@jazzsvelte/avatar'
     import { Badge } from '@jazzsvelte/badge'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props();
 
-    export let docSection: DocSection
+    const codeCommon = `
+<div class="card">
+    <div class="flex flex-wrap gap-5">
+        <div class="flex-auto">
+            <h5>Icon</h5>
+            <Avatar icon="pi pi-user" class="mr-2" size="xlarge" />
+            <Avatar icon="pi pi-user" class="mr-2" size="large" style="background-color:#2196F3;color:#ffffff;" />
+            <Avatar icon="pi pi-user" style="background-color:#9c27b0;color:#ffffff;" />
+        </div>
+
+        <div class="flex-auto">
+            <h5>Circle</h5>
+            <Avatar icon="pi pi-user" class="mr-2" size="xlarge" shape="circle" />
+            <Avatar icon="pi pi-user" class="mr-2" size="large" style="background-color:#2196F3;color:#ffffff;" shape="circle" />
+            <Avatar icon="pi pi-user" style="background-color:#9c27b0;color:#ffffff;" shape="circle" />
+        </div>
+
+        <div class="flex-auto">
+            <h5>Badge</h5>
+            <Avatar class="p-overlay-badge" icon="pi pi-user" size="xlarge">
+                <Badge value="4" />
+            </Avatar>
+        </div>
+    </div>
+</div>`
 
     const code = {
         basic: `
@@ -26,59 +51,13 @@
         javascript: `
 ${importJS(['Avatar', 'Badge'])}
 
-<div class="card">
-    <div class="flex flex-wrap gap-5">
-        <div class="flex-auto">
-            <h5>Icon</h5>
-            <Avatar icon="pi pi-user" class="mr-2" size="xlarge" />
-            <Avatar icon="pi pi-user" class="mr-2" size="large" style="background-color:#2196F3;color:#ffffff;" />
-            <Avatar icon="pi pi-user" style="background-color:#9c27b0;color:#ffffff;" />
-        </div>
-
-        <div class="flex-auto">
-            <h5>Circle</h5>
-            <Avatar icon="pi pi-user" class="mr-2" size="xlarge" shape="circle" />
-            <Avatar icon="pi pi-user" class="mr-2" size="large" style="background-color:#2196F3;color:#ffffff;" shape="circle" />
-            <Avatar icon="pi pi-user" style="background-color:#9c27b0;color:#ffffff;" shape="circle" />
-        </div>
-
-        <div class="flex-auto">
-            <h5>Badge</h5>
-            <Avatar class="p-overlay-badge" icon="pi pi-user" size="xlarge">
-                <Badge value="4" />
-            </Avatar>
-        </div>
-    </div>
-</div>
-        `,
+${codeCommon}
+`,
         typescript: `
 ${importTS(['Avatar', 'Badge'])}
 
-<div class="card">
-    <div class="flex flex-wrap gap-5">
-        <div class="flex-auto">
-            <h5>Icon</h5>
-            <Avatar icon="pi pi-user" class="mr-2" size="xlarge" />
-            <Avatar icon="pi pi-user" class="mr-2" size="large" style="background-color:#2196F3;color:#ffffff;" />
-            <Avatar icon="pi pi-user" style="background-color:#9c27b0;color:#ffffff;" />
-        </div>
-
-        <div class="flex-auto">
-            <h5>Circle</h5>
-            <Avatar icon="pi pi-user" class="mr-2" size="xlarge" shape="circle" />
-            <Avatar icon="pi pi-user" class="mr-2" size="large" style="background-color:#2196F3;color:#ffffff;" shape="circle" />
-            <Avatar icon="pi pi-user" style="background-color:#9c27b0;color:#ffffff;" shape="circle" />
-        </div>
-
-        <div class="flex-auto">
-            <h5>Badge</h5>
-            <Avatar class="p-overlay-badge" icon="pi pi-user" size="xlarge">
-                <Badge value="4" />
-            </Avatar>
-        </div>
-    </div>
-</div>
-        `
+${codeCommon}
+`
     }
 </script>
 

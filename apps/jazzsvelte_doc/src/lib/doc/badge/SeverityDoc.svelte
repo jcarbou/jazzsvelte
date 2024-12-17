@@ -2,49 +2,28 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { importJS, importTS } from '../common/doc.utils'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props();
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
+    const codeBasic = `
 <Badge value="2"></Badge>
 <Badge value="8" severity="success"></Badge>
 <Badge value="4" severity="info"></Badge>
 <Badge value="12" severity="warning"></Badge>
 <Badge value="3" severity="danger"></Badge>
-        `,
+`
+const code = {
+        basic: codeBasic,
         javascript: `
-import React from 'react';
-import { Badge } from 'primereact/badge';
-
-
-        <div class="card flex flex-wrap justify-content-center gap-2">
-            <Badge value="2"></Badge>
-            <Badge value="8" severity="success"></Badge>
-            <Badge value="4" severity="info"></Badge >
-            <Badge value="12" severity="warning"></Badge>
-            <Badge value="3" severity="danger"></Badge>
-        </div>
-
-
-        `,
+${importJS('Badge')}
+${codeBasic}
+`,
         typescript: `
-import React from 'react';
-import { Badge } from 'primereact/badge';
-
-
-        <div class="card flex flex-wrap justify-content-center gap-2">
-            <Badge value="2"></Badge>
-            <Badge value="8" severity="success"></Badge>
-            <Badge value="4" severity="info"></Badge >
-            <Badge value="12" severity="warning"></Badge>
-            <Badge value="3" severity="danger"></Badge>
-        </div>
-
-
-        `
+${importTS('Badge')}
+${codeBasic}
+`
     }
 </script>
 

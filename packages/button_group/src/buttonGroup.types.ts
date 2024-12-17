@@ -1,4 +1,10 @@
-import type { CssStyle, HTMLSpanAttributes, PassThroughHTMLAttributes, PassThroughType } from '@jazzsvelte/api'
+import type {
+    CssStyle,
+    HTMLSpanAttributes,
+    PassThroughHTMLAttributes,
+    PassThroughOptions,
+    PassThroughType
+} from '@jazzsvelte/api'
 import { ButtonIconPos, ButtonSeverity, ButtonSize } from '@jazzsvelte/button'
 import type { HTMLAttributes } from 'svelte/elements'
 
@@ -57,12 +63,12 @@ export interface BaseButtonGroupProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @type {ButtonGroupPassThroughOptions}
      */
-    pt?: ButtonGroupPassThroughOptions
+    pt?: ButtonGroupPassThroughOptions | null
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: ButtonGroupPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
@@ -74,7 +80,7 @@ export interface BaseButtonGroupProps {
  * Defines valid properties in Button Group component. In addition to these, all properties of HTMLSpanElement can be used in this component.
  * @group Properties
  */
-export interface ButtonGroupProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'disabled' | 'style'>, BaseButtonGroupProps {}
+export interface ButtonGroupProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'disabled' | 'style'>, BaseButtonGroupProps {}
 
 export declare type ButtonGroupPassThroughType<T> = PassThroughType<
     PassThroughHTMLAttributes<T>,

@@ -10,7 +10,6 @@
     import Wireframe from './pt/Wireframe.svelte'
     import StyledDoc from './theming/StyledDoc.svelte'
     import TailwindDoc from './theming/TailwindDoc.svelte'
-    import DocApiTable from '../common/DocApiTable.svelte'
     import DocComponent from '../common/DocComponent.svelte'
     import DocApiPtTable from '../common/DocApiPtTable.svelte'
 

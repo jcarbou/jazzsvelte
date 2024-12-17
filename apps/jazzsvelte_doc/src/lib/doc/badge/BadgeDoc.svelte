@@ -14,7 +14,6 @@
     import DocApiPtTable from '../common/DocApiPtTable.svelte'
     import DocComponent from '../common/DocComponent.svelte'
     import { badgeApiData } from '@jazzsvelte/badge'
-    import type { Doc } from '../common/doc.types'
 
     const docs = [
         {

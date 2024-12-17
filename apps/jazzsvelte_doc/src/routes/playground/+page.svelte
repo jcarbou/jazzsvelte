@@ -3,8 +3,8 @@
 </script>
 
 <DocPage docs={[]}>
-    <svelte:fragment slot="intro">
+    {#snippet intro()}
         <h1>Playground</h1>
         <p>TODO</p>
-    </svelte:fragment>
+    {/snippet}
 </DocPage>

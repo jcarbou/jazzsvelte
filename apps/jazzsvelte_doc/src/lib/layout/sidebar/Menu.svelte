@@ -1,6 +1,6 @@
 <script lang="ts">
     import { slide } from 'svelte/transition'
-    import type { MenuData, MenuItemData, SubMenuData } from './Sidebar.types'
+    import type { MenuData } from './Sidebar.types'
     import MenuItem from './MenuItem.svelte'
 
     interface Props {
@@ -10,9 +10,6 @@
     let { data }: Props = $props()
 
     let expanded: boolean = $state(false)
-
-    const toSubMenuData = (subMenuOrItemData: MenuItemData | SubMenuData) => subMenuOrItemData as SubMenuData
-    const toMenuItemData = (subMenuOrItemData: MenuItemData | SubMenuData) => subMenuOrItemData as MenuItemData
 </script>
 
 <li class="layout-menu">
@@ -28,15 +25,13 @@
             <div class="layout-menu-dropdown overflow-y-hidden" in:slide out:slide>
                 <ol>
                     {#each data.children as subMenuOrItemData, index ('subMenuOrItemData_' + index)}
-                        {@const subMenuData = toSubMenuData(subMenuOrItemData)}
-                        {@const menuItemData = toMenuItemData(subMenuOrItemData)}
-                        {#if subMenuData.children}
-                            <span class="layout-menu-subMenu">{subMenuData?.name}</span>
-                            {#each subMenuData.children as itemData, index ('itemData_' + index)}
+                        {#if subMenuOrItemData.__TYPE === 'subMenu'}
+                            <span class="layout-menu-subMenu">{subMenuOrItemData?.name}</span>
+                            {#each subMenuOrItemData.children as itemData, index ('itemData_' + index)}
                                 <MenuItem data={itemData} />
                             {/each}
                         {:else}
-                            <MenuItem data={menuItemData} />
+                            <MenuItem data={subMenuOrItemData} />
                         {/if}
                     {/each}
                 </ol>

@@ -3,24 +3,25 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { showToast } from '@jazzsvelte/toast'
     import type { ToastSeverity } from '@jazzsvelte/toast'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
     function showMessage(severity: ToastSeverity) {
         showToast({ severity, summary: severity[0].toUpperCase() + severity.substring(1), detail: 'Message Content', life: 3000 })
     }
 
+    const codeButtons = `
+<Button label="Success" class="p-button-success" onclick={showSuccess} />
+<Button label="Info" class="p-button-info" onclick={showInfo} />
+<Button label="Warn" class="p-button-warning" onclick={showWarn} />
+<Button label="Error" class="p-button-danger" onclick={showError} />
+`
+
     const code = {
-        basic: `
-<Button label="Success" class="p-button-success" on:click={showSuccess} />
-<Button label="Info" class="p-button-info" on:click={showInfo} />
-<Button label="Warn" class="p-button-warning" on:click={showWarn} />
-<Button label="Error" class="p-button-danger" on:click={showError} />
-        `,
+        basic: codeButtons,
         javascript: `
 ${importJS(
     ['Button'],
@@ -31,11 +32,8 @@ ${importJS(
     }
 `
 )}
-<Button label="Success" class="p-button-success" on:click={showSuccess} />
-<Button label="Info" class="p-button-info" on:click={showInfo} />
-<Button label="Warn" class="p-button-warning" on:click={showWarn} />
-<Button label="Error" class="p-button-danger" on:click={showError} />
-        `,
+${codeButtons}
+`,
         typescript: `
 ${importTS(
     ['Button'],
@@ -47,11 +45,8 @@ ${importTS(
     }
 `
 )}
-<Button label="Success" class="p-button-success" on:click={showSuccess} />
-<Button label="Info" class="p-button-info" on:click={showInfo} />
-<Button label="Warn" class="p-button-warning" on:click={showWarn} />
-<Button label="Error" class="p-button-danger" on:click={showError} />
-        `
+${codeButtons}
+`
     }
 </script>
 
@@ -62,10 +57,10 @@ ${importTS(
 </DocSectionText>
 <div class="card flex justify-content-center">
     <div class="flex flex-wrap gap-2">
-        <Button label="Success" class="p-button-success" on:click={() => showMessage('success')} />
-        <Button label="Info" class="p-button-info" on:click={() => showMessage('info')} />
-        <Button label="Warn" class="p-button-warning" on:click={() => showMessage('warn')} />
-        <Button label="Error" class="p-button-danger" on:click={() => showMessage('error')} />
+        <Button label="Success" class="p-button-success" onclick={() => showMessage('success')} />
+        <Button label="Info" class="p-button-info" onclick={() => showMessage('info')} />
+        <Button label="Warn" class="p-button-warning" onclick={() => showMessage('warn')} />
+        <Button label="Error" class="p-button-danger" onclick={() => showMessage('error')} />
     </div>
 </div>
 <DocSectionCode {code} />
