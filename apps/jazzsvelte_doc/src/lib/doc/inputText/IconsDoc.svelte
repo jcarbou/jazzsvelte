@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { InputText } from '@jazzsvelte/input_text'
     import type { DocSection } from '$lib/doc/common/doc.types'
 
     export let docSection: DocSection
 
-    const code = {
-        basic: `
+    const code = simpleCode(
+        ['InputText'],
+        `
 <span class="p-input-icon-left">
     <i class="pi pi-search" />
     <InputText placeholder="Search" />
@@ -19,39 +19,8 @@
     <i class="pi pi-spin pi-spinner" />
     <InputText />
 </span>
-        `,
-        javascript: `
-${importJS('InputText')}
-
-<div class="card flex flex-wrap justify-content-center gap-3">
-    <span class="p-input-icon-left">
-        <i class="pi pi-search" />
-        <InputText placeholder="Search" />
-    </span>
-
-    <span class="p-input-icon-right">
-        <i class="pi pi-spin pi-spinner" />
-        <InputText />
-    </span>
-</div>
-
-        `,
-        typescript: `
-${importTS('InputText')}
-
-<div class="card flex flex-wrap justify-content-center gap-3">
-    <span class="p-input-icon-left">
-        <i class="pi pi-search" />
-        <InputText placeholder="Search" />
-    </span>
-
-    <span class="p-input-icon-right">
-        <i class="pi pi-spin pi-spinner" />
-        <InputText />
-    </span>
-</div>
-        `
-    }
+`
+    )
 </script>
 
 <DocSectionText {docSection}>

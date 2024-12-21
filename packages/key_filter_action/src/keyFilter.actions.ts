@@ -9,7 +9,7 @@ export type KeyFilterOptions = {
 }
 
 interface Attributes {
-    onvalidatedinput: (e: ValidatedInputEvent) => void
+    onvalidatedinput: ((e: ValidatedInputEvent) => void) | null
 }
 
 const DEFAULT_MASKS = {
@@ -40,8 +40,6 @@ export function keyFilter(inputElement: HTMLInputElement, options: KeyFilterOpti
         // non android devices use keydown
         if (validateOnly || IS_ANDROID) return
         if (event.ctrlKey || event.altKey) return
-
-        console.log('===========> keydown ' + event.key)
 
         validateKey(event, event.key)
     }

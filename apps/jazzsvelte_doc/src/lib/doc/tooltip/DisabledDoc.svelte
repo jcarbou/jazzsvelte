@@ -1,32 +1,17 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
-<Button type="button" label="Save" icon="pi pi-check" disabled tooltip="Disabled" tooltipOptions={{ showOnDisabled: true }} />
-        `,
-        javascript: `
-${importJS(['Button'])}
-
-<div class="card flex flex-wrap justify-content-center gap-2">
-    <Button type="button" label="Save" icon="pi pi-check" disabled tooltip="Disabled" tooltipOptions={{ showOnDisabled: true }} />
-</div>
-        `,
-        typescript: `
-${importTS(['Button'])}
-
-<div class="card flex flex-wrap justify-content-center gap-2">
-    <Button type="button" label="Save" icon="pi pi-check" disabled tooltip="Disabled" tooltipOptions={{ showOnDisabled: true }} />
-</div>
+    const code = simpleCode(
+        ['InputText'],
         `
-    }
+<Button type="button" label="Save" icon="pi pi-check" disabled tooltip="Disabled" tooltipOptions={{ showOnDisabled: true }} />`
+    )
 </script>
 
 <DocSectionText {docSection}>

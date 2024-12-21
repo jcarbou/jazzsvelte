@@ -1,33 +1,49 @@
 <script lang="ts">
-    import type { JazzSvelteContext, HTMLInputAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
-    import type { TooltipOptions } from '@jazzsvelte/tooltip'
-    import type { InputTextEvent, InputTextPassThroughMethodOptions, InputTextPassThroughOptions } from './inputText.types'
-    import type { KeyFilterRegExp, ValidatedInputEvent } from '@jazzsvelte/key_filter_action'
+    import type { JazzSvelteContext, HTMLInputAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { InputTextPassThroughMethodOptions, InputTextProps } from './inputText.types'
 
     import { resolvePT } from '@jazzsvelte/api'
-    import { createEventDispatcher, getContext } from 'svelte'
+    import { getContext } from 'svelte'
     import { tooltip, TooltipTargetDisabled } from '@jazzsvelte/tooltip'
     import { keyFilter } from '@jazzsvelte/key_filter_action'
     import { defaultInputTextProps as DEFAULT, globalInputTextPT as globalPt } from './inputText.config'
-    import { focusEl } from '../../dom/src'
+    import { focusEl } from '@jazzsvelte/dom'
 
-    let className: string | null = null
-    export { className as class }
-    export let disabled: boolean = DEFAULT.disabled
-    let keyFilterType: KeyFilterRegExp | null = DEFAULT.keyFilter
-    export { keyFilterType as keyFilter }
-    export let invalid: boolean = DEFAULT.invalid
-    export let pt: InputTextPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let style: CssStyle = null
-    export let size: number | null = DEFAULT.size
-    let tooltipContent: string | null = DEFAULT.tooltip
-    export { tooltipContent as tooltip }
-    export let tooltipOptions: TooltipOptions | null = DEFAULT.tooltipOptions
-    export let unstyled: boolean = false
-    export let validateOnly: boolean = DEFAULT.validateOnly
-    export let value: string = DEFAULT.value
-    export let variant: string | null = DEFAULT.variant
+    let {
+        class: className = null,
+        disabled = DEFAULT.disabled,
+        keyFilter: keyFilterType = DEFAULT.keyFilter,
+        invalid = DEFAULT.invalid,
+        onvalidatedinput = null,
+        pt = null,
+        ptOptions = null,
+        style = null,
+        size = DEFAULT.size,
+        tooltip: tooltipContent = DEFAULT.tooltip,
+        tooltipOptions = DEFAULT.tooltipOptions,
+        unstyled = false,
+        validateOnly = DEFAULT.validateOnly,
+        value = $bindable(DEFAULT.value),
+        variant = DEFAULT.variant,
+        ..._restProps
+    }: InputTextProps = $props()
+
+    let _props: InputTextProps = $derived({
+        class: className,
+        disabled,
+        keyFilter: keyFilterType,
+        invalid,
+        pt,
+        ptOptions,
+        style,
+        size,
+        tooltip: tooltipContent,
+        tooltipOptions,
+        unstyled,
+        validateOnly,
+        value,
+        variant
+    })
 
     export const displayName = 'InptText'
     export const focus = (scrollTo?: boolean) => {
@@ -45,61 +61,52 @@
     const jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
     const { inputStyle } = jazzSvelteContext
 
-    $: ptContext = {
-        props: { ...DEFAULT, ...$$props },
+    let ptContext: InputTextPassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    } = $derived({
+        props: { ...DEFAULT, ..._props },
         context: { disabled },
         ptOptions,
         unstyled
-    } satisfies InputTextPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    })
 
     // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            class: [
-                'p-inputtext p-component',
-                className,
-                {
-                    'p-disabled': disabled,
-                    'p-filled': !!value,
-                    'p-invalid': invalid,
-                    'p-variant-filled': variant ? variant === 'filled' : $inputStyle === 'filled'
-                }
-            ],
-            style,
-            'data-pc-name': 'inputtext',
-            'data-pc-section': 'root'
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLInputAttributes
+    let rootAttributes: HTMLInputAttributes = $derived(
+        resolvePT(
+            {
+                class: [
+                    'p-inputtext p-component',
+                    className,
+                    {
+                        'p-disabled': disabled,
+                        'p-filled': !!value,
+                        'p-invalid': invalid,
+                        'p-variant-filled': variant ? variant === 'filled' : $inputStyle === 'filled'
+                    }
+                ],
+                style,
+                'data-pc-name': 'inputtext',
+                'data-pc-section': 'root'
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 
-    $: showOnDisabled = !!tooltipOptions?.showOnDisabled satisfies boolean
-
-    // Forward validatedinput event
-    const dispatchValidatedInput = createEventDispatcher<InputTextEvent>()
-    const onValidatedInput = (e: ValidatedInputEvent) => dispatchValidatedInput('validatedinput', e)
+    let showOnDisabled = $derived(!!tooltipOptions?.showOnDisabled satisfies boolean)
 </script>
 
 <TooltipTargetDisabled {showOnDisabled} useTooltip={{ tooltipContent, tooltipOptions, jazzSvelteContext }}>
     <input
         {disabled}
         {...rootAttributes}
-        {...$$restProps}
+        {..._restProps}
         size={size || undefined}
         bind:value
         bind:this={rootEl}
-        on:focus
-        on:blur
-        on:paste
-        on:keydown
-        on:keyup
-        on:input
-        onvalidatedinput={onValidatedInput}
-        on:beforeinput
+        {onvalidatedinput}
         use:tooltip={{ showOnDisabled, tooltipContent, tooltipOptions, jazzSvelteContext }}
         use:keyFilter={{ keyFilterType, validateOnly }}
     />

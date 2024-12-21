@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importJS, importTS, simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { InputText } from '@jazzsvelte/input_text'
@@ -7,26 +7,12 @@
 
     export let docSection: DocSection
 
-    const code = {
-        basic: `
-<InputText disabled placeholder="Disabled" />
-        `,
-        javascript: `
-${importJS('InputText')}
-
-<div class="card flex justify-content-center">
-    <InputText disabled placeholder="Disabled" />
-</div>
-
-        `,
-        typescript: `
-${importTS('InputText')}
-
-<div class="card flex justify-content-center">
-    <InputText disabled placeholder="Disabled" />
-</div>
+    const code = simpleCode(
+        ['InputText'],
         `
-    }
+<InputText disabled placeholder="Disabled" />
+`
+    )
 </script>
 
 <DocSectionText {docSection}>

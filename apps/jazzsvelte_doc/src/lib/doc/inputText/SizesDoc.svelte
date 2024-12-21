@@ -1,37 +1,20 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { InputText } from '@jazzsvelte/input_text'
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
-    const code = {
-        basic: `
+    const code = simpleCode(
+        ['InputText'],
+        `
 <InputText type="text" class="p-inputtext-sm" placeholder="Small" />
 <InputText type="text" placeholder="Normal" />
 <InputText type="text" class="p-inputtext-lg" placeholder="Large" />
-        `,
-        javascript: `
-${importJS('InputText')}
-
-<div class="card flex flex-column align-items-center gap-3">
-    <InputText type="text" class="p-inputtext-sm" placeholder="Small" />
-    <InputText type="text" placeholder="Normal" />
-    <InputText type="text" class="p-inputtext-lg" placeholder="Large" />
-</div>
-        `,
-        typescript: `
-${importTS('InputText')}
-
-<div class="card flex flex-column align-items-center gap-3">
-    <InputText type="text" class="p-inputtext-sm" placeholder="Small" />
-    <InputText type="text" placeholder="Normal" />
-    <InputText type="text" class="p-inputtext-lg" placeholder="Large" />
-</div>
         `
-    }
+    )
 </script>
 
 <DocSectionText {docSection}>

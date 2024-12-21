@@ -4,7 +4,7 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 
     const code = {
         basic: `
@@ -44,9 +44,9 @@ ${importJS(['Avatar', 'AvatarGroup', 'Badge'])}
     <div class="flex flex-wrap gap-5">
         <div class="flex-auto">
             <h5 class="text-gray-700 dark:text-white/80">Image</h5>
-            <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" class="mr-2" size="xlarge" shape="circle" />
-            <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/asiyajavayant.png" class="mr-2" size="large" shape="circle" />
-            <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/onyamalimba.png" shape="circle" />
+            <Avatar image="./images/avatar/amyelsner.png" class="mr-2" size="xlarge" shape="circle" />
+            <Avatar image="./images/avatar/asiyajavayant.png" class="mr-2" size="large" shape="circle" />
+            <Avatar image="./images/avatar/onyamalimba.png" shape="circle" />
         </div>
 
         <div class="flex-auto">
@@ -65,11 +65,11 @@ ${importJS(['Avatar', 'AvatarGroup', 'Badge'])}
 
 <div class="card flex justify-content-center">
     <AvatarGroup>
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/asiyajavayant.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/onyamalimba.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/ionibowcher.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/xuxuefeng.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/amyelsner.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/asiyajavayant.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/onyamalimba.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/ionibowcher.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/xuxuefeng.png" size="large" shape="circle" />
         <Avatar label="+2" shape="circle" size="large" style="background-color:#9c27b0;color:#ffffff;" />
     </AvatarGroup>
 </div>

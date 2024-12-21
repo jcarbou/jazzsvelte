@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { TieredMenuPassThroughMethodOptions, TieredMenuTreeContext } from './tieredMenu.types'
-    import type { HTMLLIAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { PassThroughOptions, HTMLLiAttributes } from '@jazzsvelte/api'
 
     import { resolvePT } from '@jazzsvelte/api'
     import { getContext } from 'svelte'
@@ -34,7 +34,7 @@
         pt?.separator,
         globalPt?.separator,
         ptContext
-    ) satisfies HTMLLIAttributes
+    ) satisfies HTMLLiAttributes
 </script>
 
 <li {...separatorAttributes} />

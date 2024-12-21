@@ -3,29 +3,25 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { InputText } from '@jazzsvelte/input_text'
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    export let docSection: DocSection
-    let value: string = ''
+    let { docSection }: ComponentDocProps = $props()
+    let value: string = $state('')
+
+    const codeBasic = `
+<InputText bind:value={value} />
+`
 
     const code = {
-        basic: `
-<InputText bind:value={value} />
-        `,
+        basic: codeBasic + '\n',
         javascript: `
-${importJS('InputText', "let value = ''")}
-
-<div class="card flex justify-content-center">
-    <InputText bind:value={value} />
-</div>
-        `,
+${importJS('InputText', " let value = $state('')")}
+${codeBasic}
+`,
         typescript: `
-${importTS('InputText', "let value : string = ''")}
-
-<div class="card flex justify-content-center">
-    <InputText bind:value={value} />
-</div>
-        `
+${importTS('InputText', " let value = $state<string>('')")}
+${codeBasic}
+`
     }
 </script>
 

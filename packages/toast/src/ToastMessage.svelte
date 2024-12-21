@@ -1,13 +1,11 @@
 <script lang="ts">
-    import { preventDefault } from 'svelte/legacy'
-
     import type {
-        HTMLButtonAttributes,
         IconComponent,
         ResolvedIconPT,
         HTMLDivAttributes,
         PassThroughOptions,
-        HTMLSpanAttributes
+        HTMLSpanAttributes,
+        HTMLButtonAttributes
     } from '@jazzsvelte/api'
 
     import type { ToastMessagePassThroughMethodOptions, ToastMessageProps } from './toastMessage.types'
@@ -159,7 +157,7 @@
         onClick?.(status)
     }
 
-    let _onClose = (event: Event) => {
+    function _onClose(event: Event) {
         event.preventDefault()
         closeToast(status)
         onClose?.(status)
@@ -187,7 +185,7 @@
             {/if}
             {#if closable}
                 <div>
-                    <button type="button" {...closeButtonAttributes} onclick={preventDefault(_onClose)} use:ripple>
+                    <button type="button" {...closeButtonAttributes} onclick={_onClose} use:ripple>
                         <IconBuilder resolvedIcon={resolvedCloseIcon} />
                     </button>
                 </div>

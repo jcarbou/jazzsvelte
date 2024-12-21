@@ -3,15 +3,12 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { InputText } from '@jazzsvelte/input_text'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
+    const codeBasic = `
 <InputText
-    type="text"
     tooltip="Enter your username"
     tooltipOptions={{
         pt: {
@@ -20,49 +17,24 @@
             }
         }
     }}
-/>
-        `,
+/>`
+
+    const code = {
+        basic: codeBasic,
         javascript: `
 ${importJS(['InputText'])}
-
-<div class="card flex flex-wrap align-items-center justify-content-center gap-2">
-    <InputText
-        type="text"
-        tooltip="Enter your username"
-        tooltipOptions={{
-            pt: {
-                text: {
-                    class: 'bg-orange-500'
-                }
-            }
-        }}
-    />
-</div>
-        `,
+${codeBasic}
+`,
         typescript: `
 ${importTS(['InputText'])}
-
-<div class="card flex flex-wrap align-items-center justify-content-center gap-2">
-    <InputText
-        type="text"
-        tooltip="Enter your username"
-        tooltipOptions={{
-            pt: {
-                text: {
-                    class: 'bg-orange-500'
-                }
-            }
-        }}
-    />
-</div>
-        `
+${codeBasic}
+`
     }
 </script>
 
 <DocSectionText {docSection} />
 <div class="card flex flex-wrap align-items-center justify-content-center gap-2">
     <InputText
-        type="text"
         tooltip="Enter your username"
         tooltipOptions={{
             pt: {

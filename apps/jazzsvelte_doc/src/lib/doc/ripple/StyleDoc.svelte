@@ -8,7 +8,7 @@
         docSection: DocSection
     }
 
-    let { docSection }: Props = $props()
+    let {}: Props = $props()
 </script>
 
 <DocSectionText docSection={{ id: 'style', label: 'Style' }}>

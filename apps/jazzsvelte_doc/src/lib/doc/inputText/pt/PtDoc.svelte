@@ -3,44 +3,28 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { InputText } from '@jazzsvelte/input_text'
-    import type { DocSection } from '$lib/doc/common/doc.types'
-    export let docSection: DocSection
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    let value: string = ''
+    let value: string = $state('')
 
-    const code = {
-        basic: `
+    const codeBasic = `
 <InputText
     bind:value={value}
     pt={{
         root: { class: 'border-primary-400' }
     }}
 />
-        `,
+`
+    const code = {
+        basic: codeBasic,
         javascript: `
-${importJS('InputText', "let value = ''")}
-    
-<div class="card flex justify-content-center">
-    <InputText
-        bind:value={value}
-        pt={{
-            root: { class: 'border-primary-400' }
-        }}
-    />
-</div>
+${importJS('InputText', "let value = $state('')")}
+${codeBasic}
         `,
         typescript: `
-${importTS('InputText', "let value : string = ''")}
-
-<div class="card flex justify-content-center">
-    <InputText
-        bind:value={value}
-        pt={{
-            root: { class: 'border-primary-400' }
-        }}
-    />
-</div>
-        `
+${importTS('InputText', "let value = $state<string>('')")}
+${codeBasic} `
     }
 </script>
 

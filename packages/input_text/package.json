@@ -14,6 +14,7 @@
         "@jazzsvelte/test": "workspace:^0.1.0"
     },
     "dependencies": {
+        "@jazzsvelte/dom": "workspace:^0.1.0",
         "@jazzsvelte/key_filter_action": "workspace:^0.1.0"
     },
     "keywords": [],

@@ -3,16 +3,17 @@ import type {
     CssObject,
     MenuItem,
     HTMLDivAttributes,
-    HTMLLIAttributes,
-    HTMLAnchorAttributes,
     HTMLSVGAttributes,
     HTMLSpanAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
     PassThroughType,
-    HTMLULAttributes
+    HTMLLiAttributes,
+    HTMLUlAttributes,
+    HTMLAnchorAttributes
 } from '@jazzsvelte/api'
 import type { TooltipGetter, TooltipOptions } from '@jazzsvelte/tooltip'
+
 import { ButtonPassThroughOptions } from '@jazzsvelte/button'
 
 /**
@@ -215,11 +216,11 @@ export interface SpeedDialPassThroughOptions {
     /**
      * Uses to pass attributes to the menu's DOM element.
      */
-    menu?: SpeedDialPassThroughType<HTMLULAttributes>
+    menu?: SpeedDialPassThroughType<HTMLUlAttributes>
     /**
      * Uses to pass attributes to the menu item's DOM element.
      */
-    menuitem?: SpeedDialPassThroughType<HTMLLIAttributes>
+    menuitem?: SpeedDialPassThroughType<HTMLLiAttributes>
     /**
      * Uses to pass attributes to the action's DOM element.
      */

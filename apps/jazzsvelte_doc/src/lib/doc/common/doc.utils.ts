@@ -178,3 +178,23 @@ export function scriptTS(code: string) {
    ${code}
 </script>`
 }
+
+/**
+ * Create code object with the same code value for "basic" "JS" and "TS"
+ * @param cmpOrCmpList
+ * @param code
+ * @returns
+ */
+export function simpleCode(cmpOrCmpList: string | string[], code: string) {
+    return {
+        basic: code,
+        javascript: `
+${importJS(cmpOrCmpList)}
+${code}
+`,
+        typescript: `
+${importTS(cmpOrCmpList)}
+${code}
+`
+    }
+}

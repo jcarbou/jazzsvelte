@@ -6,14 +6,14 @@
     import { AvatarGroup } from '@jazzsvelte/avatar_group'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 
     const codeItems = `<AvatarGroup>
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/asiyajavayant.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/onyamalimba.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/ionibowcher.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/xuxuefeng.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/amyelsner.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/asiyajavayant.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/onyamalimba.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/ionibowcher.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/xuxuefeng.png" size="large" shape="circle" />
         <Avatar label="+2" shape="circle" size="large"/>
     </AvatarGroup>`
 
@@ -39,11 +39,11 @@ ${codeItems}
 </DocSectionText>
 <div class="card flex justify-content-center">
     <AvatarGroup>
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/asiyajavayant.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/onyamalimba.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/ionibowcher.png" size="large" shape="circle" />
-        <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/xuxuefeng.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/amyelsner.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/asiyajavayant.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/onyamalimba.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/ionibowcher.png" size="large" shape="circle" />
+        <Avatar image="./images/avatar/xuxuefeng.png" size="large" shape="circle" />
         <Avatar label="+2" shape="circle" size="large" />
     </AvatarGroup>
 </div>

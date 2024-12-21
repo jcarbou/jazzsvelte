@@ -3,7 +3,7 @@
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import DocSimpleTable from '../common/DocSimpleTable.svelte'
 
-    let { docSection }: ComponentDocProps = $props()
+    let {}: ComponentDocProps = $props()
 </script>
 
 <DocSectionText docSection={{ id: 'style', label: 'Style' }}>

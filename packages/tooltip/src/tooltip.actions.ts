@@ -70,13 +70,21 @@ export function tooltip(element: HTMLElement, actionOptions: TooltipActionOption
     function _show({ x, y }: { x?: number; y?: number }) {
         if (tooltipComponent) {
             if ((x === undefined || y === undefined || !mouseTracked) && tooltipComponent.isVisible()) return
-            tooltipComponent.move({ x: x ?? null, y: y ?? null })
+            if (mouseTracked) {
+                tooltipComponent.move({ x: x ?? null, y: y ?? null })
+            }
+            if (!tooltipComponent.isVisible()) {
+                tooltipComponent.show()
+            }
+
             return
         }
         const tooltipAnchorEl = document.getElementById('__JAZZ_SVELTE_TOOLTIP_ANCHOR__')
         if (!tooltipAnchorEl || !tooltipAnchorEl.parentElement) return
         const contextMap = new Map()
-        contextMap.set('JAZZ_SVELTE', jazzSvelteContext)
+        if (jazzSvelteContext) {
+            contextMap.set('JAZZ_SVELTE', jazzSvelteContext)
+        }
 
         tooltipComponent = mount(Tooltip, {
             props: {

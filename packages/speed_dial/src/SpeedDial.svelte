@@ -9,10 +9,10 @@
 
     import type {
         HTMLDivAttributes,
+        HTMLUlAttributes,
         IconComponent,
         CssStyle,
         PassThroughOptions,
-        HTMLULAttributes,
         MenuItem,
         CssObject
     } from '@jazzsvelte/api'
@@ -244,7 +244,7 @@
         pt?.menu,
         globalPt?.menu,
         ptContext
-    ) satisfies HTMLULAttributes
+    ) satisfies HTMLUlAttributes
 
     function onMenuFocus(): void {
         focused = true

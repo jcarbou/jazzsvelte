@@ -16,7 +16,7 @@ export function inputTextPT(options: InputTextPassThroughOptions) {
 /**
  * Default InputTexts  props
  */
-export const defaultInputTextProps: Omit<Required<BaseInputTextProps>, 'pt' | 'ptOptions'> = {
+export const defaultInputTextProps: Omit<Required<BaseInputTextProps>, 'pt' | 'ptOptions' | 'onvalidatedinput'> = {
     disabled: false,
     invalid: false,
     keyFilter: null,

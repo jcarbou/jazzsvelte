@@ -955,6 +955,9 @@ importers:
 
   packages/input_text:
     dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
       '@jazzsvelte/key_filter_action':
         specifier: workspace:^0.1.0
         version: link:../key_filter_action

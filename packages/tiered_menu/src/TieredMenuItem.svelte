@@ -4,7 +4,7 @@
     import type {
         JazzSvelteContext,
         HTMLDivAttributes,
-        HTMLLIAttributes,
+        HTMLLiAttributes,
         HTMLAnchorAttributes,
         HTMLSpanAttributes,
         ResolvedIconPT,
@@ -153,7 +153,7 @@
         pt?.menuitem,
         globalPt?.menuitem,
         ptContext
-    ) satisfies HTMLLIAttributes
+    ) satisfies HTMLLiAttributes
 
     function _onItemClick(event: MouseEvent, processedItem: ProcessedItem): void {
         const item = processedItem.item

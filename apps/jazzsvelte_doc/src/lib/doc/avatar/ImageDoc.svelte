@@ -6,21 +6,21 @@
     import { Badge } from '@jazzsvelte/badge'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 
     const codeCommon = `
 <div class="card">
     <div class="flex flex-wrap gap-5">
         <div class="flex-auto">
             <h5>Image</h5>
-            <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" class="mr-2" size="xlarge" shape="circle" />
-            <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/asiyajavayant.png" class="mr-2" size="large" shape="circle" />
-            <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/onyamalimba.png" shape="circle" />
+            <Avatar image="./images/avatar/amyelsner.png" class="mr-2" size="xlarge" shape="circle" />
+            <Avatar image="./images/avatar/asiyajavayant.png" class="mr-2" size="large" shape="circle" />
+            <Avatar image="./images/avatar/onyamalimba.png" shape="circle" />
         </div>
 
         <div class="flex-auto">
             <h5>Badge</h5>
-            <Avatar class="p-overlay-badge" image="https://primefaces.org/cdn/primereact/images/organization/walter.jpg" size="xlarge">
+            <Avatar class="p-overlay-badge" image="./images/organization/walter.jpg" size="xlarge">
                 <Badge value="4" severity="danger" />
             </Avatar>
         </div>
@@ -66,28 +66,14 @@ ${codeCommon}
     <div class="flex flex-wrap gap-5">
         <div class="flex-auto">
             <h5>Image</h5>
-            <Avatar
-                image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png"
-                class="mr-2"
-                size="xlarge"
-                shape="circle"
-            />
-            <Avatar
-                image="https://primefaces.org/cdn/primereact/images/avatar/asiyajavayant.png"
-                class="mr-2"
-                size="large"
-                shape="circle"
-            />
-            <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/onyamalimba.png" shape="circle" />
+            <Avatar image="./images/avatar/amyelsner.png" class="mr-2" size="xlarge" shape="circle" />
+            <Avatar image="./images/avatar/asiyajavayant.png" class="mr-2" size="large" shape="circle" />
+            <Avatar image="./images/avatar/onyamalimba.png" shape="circle" />
         </div>
 
         <div class="flex-auto">
             <h5>Badge</h5>
-            <Avatar
-                class="p-overlay-badge"
-                image="https://primefaces.org/cdn/primereact/images/organization/walter.jpg"
-                size="xlarge"
-            >
+            <Avatar class="p-overlay-badge" image="./images/organization/walter.jpg" size="xlarge">
                 <Badge value="4" severity="danger" />
             </Avatar>
         </div>

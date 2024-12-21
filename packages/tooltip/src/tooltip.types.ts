@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte'
+import type { Snippet } from 'svelte'
 import type {
     JazzSvelteContext,
     HTMLDivAttributes,
@@ -14,11 +14,13 @@ export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'mouse'
 
 export type TooltipGetter<ITEM> = ((item: ITEM) => string | undefined | null) | keyof ITEM | null
 
+export type TooltipContentSnippet = Snippet<[HTMLDivAttributes]>
+
 export type TooltipActionOptions = {
-    tooltipContent?: string | null
+    tooltipContent?: TooltipContentSnippet | string | null
     tooltipOptions?: TooltipOptions | null
     showOnDisabled?: boolean
-    jazzSvelteContext: JazzSvelteContext
+    jazzSvelteContext?: JazzSvelteContext
 }
 
 export type TooltipLayoutActionOptions = {
@@ -188,7 +190,7 @@ export interface TooltipOptions {
      * Content to be displayed in tooltip.
      * @defaultValue null
      */
-    content?: typeof SvelteComponent | null
+    content?: TooltipContentSnippet | string | null
     /**
      * When present, it specifies that the tooltip should be hidden.
      * @defaultValue false

@@ -1,4 +1,4 @@
-import type { TooltipOptions } from '@jazzsvelte/tooltip'
+import type { TooltipContentSnippet, TooltipOptions } from '@jazzsvelte/tooltip'
 import type {
     CssObject,
     HTMLButtonAttributes,
@@ -145,7 +145,7 @@ export interface BaseButtonProps {
      * Content of the tooltip.
      * @default  null
      */
-    tooltip?: string | null
+    tooltip?: TooltipContentSnippet | string | null
 
     /**
      * Configuration of the tooltip, refer to the tooltip documentation for more information.

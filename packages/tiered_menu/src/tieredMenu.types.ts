@@ -1,7 +1,7 @@
 import type {
     HTMLDivAttributes,
-    HTMLULAttributes,
-    HTMLLIAttributes,
+    HTMLUlAttributes,
+    HTMLLiAttributes,
     HTMLAnchorAttributes,
     HTMLSVGAttributes,
     HTMLSpanAttributes,
@@ -199,15 +199,15 @@ export interface TieredMenuPassThroughOptions {
     /**
      * Uses to pass attributes to the menu's DOM element.
      */
-    menu?: TieredMenuPassThroughType<HTMLULAttributes>
+    menu?: TieredMenuPassThroughType<HTMLUlAttributes>
     /**
      * Uses to pass attributes to the submenu's DOM element.
      */
-    submenu?: TieredMenuPassThroughType<HTMLULAttributes>
+    submenu?: TieredMenuPassThroughType<HTMLUlAttributes>
     /**
      * Uses to pass attributes to the list item's DOM element.
      */
-    menuitem?: TieredMenuPassThroughType<HTMLLIAttributes>
+    menuitem?: TieredMenuPassThroughType<HTMLLiAttributes>
     /**
      * Uses to pass attributes to the action's DOM element.
      */
@@ -227,7 +227,7 @@ export interface TieredMenuPassThroughOptions {
     /**
      * Uses to pass attributes to the separator's DOM element.
      */
-    separator?: TieredMenuPassThroughType<HTMLLIAttributes>
+    separator?: TieredMenuPassThroughType<HTMLLiAttributes>
     /**
      * Uses to pass attributes to the content's DOM element.
      */

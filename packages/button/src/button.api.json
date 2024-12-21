@@ -204,7 +204,7 @@
                 "name": "tooltip",
                 "optional": true,
                 "readonly": false,
-                "type": "string | null",
+                "type": "TooltipContentSnippet | string | null",
                 "default": "null",
                 "description": "Content of the tooltip."
             },

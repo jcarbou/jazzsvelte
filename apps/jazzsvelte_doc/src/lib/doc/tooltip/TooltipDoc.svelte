@@ -17,7 +17,6 @@
     import StyledDoc from './theming/StyledDoc.svelte'
     import TailwindDoc from './theming/TailwindDoc.svelte'
     import { tooltipApiData } from '@jazzsvelte/tooltip'
-    import type { Doc } from '../common/doc.types'
 
     const docs = [
         {

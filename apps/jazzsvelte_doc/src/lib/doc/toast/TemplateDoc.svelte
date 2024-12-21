@@ -29,7 +29,7 @@
     const codeSnippet = `
     <div class="flex flex-column align-items-start" style="flex:1;">
         <div class="flex align-items-center gap-2">
-            <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" shape="circle" />
+            <Avatar image="./images/avatar/amyelsner.png" shape="circle" />
             <span class="font-bold text-900">Amy Elsner</span>
         </div>
         <div class="font-medium text-lg my-3 text-900">{summary}</div>
@@ -126,7 +126,7 @@ ${codeButton}
     {#snippet customContent({ summary }: ToastMessageProps)}
         <div class="flex flex-column align-items-start" style="flex:1;">
             <div class="flex align-items-center gap-2">
-                <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" shape="circle" />
+                <Avatar image="./images/avatar/amyelsner.png" shape="circle" />
                 <span class="font-bold text-900">Amy Elsner</span>
             </div>
             <div class="font-medium text-lg my-3 text-900">{summary}</div>

@@ -1,8 +1,9 @@
 <script lang="ts">
     import type { TieredMenuPassThroughMethodOptions, TieredMenuProps, TieredMenuTreeContext } from './tieredMenu.types'
     import type { ProcessedItem } from './tieredMenu.types'
+    import type { HTMLUlAttributes, PassThroughOptions } from '@jazzsvelte/api'
 
-    import { resolvePT, type HTMLULAttributes, type PassThroughOptions } from '@jazzsvelte/api'
+    import { resolvePT } from '@jazzsvelte/api'
     import { getContext, onMount } from 'svelte'
     import { globalTieredMenuPT as globalPt } from './tieredMenu.config'
     import {
@@ -97,7 +98,7 @@
         pt?.menu,
         globalPt?.menu,
         ptContext
-    ) satisfies HTMLULAttributes
+    ) satisfies HTMLUlAttributes
 
     let menuEl: HTMLUListElement
 </script>

@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { Component, SvelteComponent } from 'svelte'
-import type { HTMLAttributes, HTMLButtonAttributes as SvelteHTMLButtonAttributes } from 'svelte/elements'
+import type { Component } from 'svelte'
+import type {
+    HTMLAttributes,
+    HTMLButtonAttributes as SvelteHTMLButtonAttributes,
+    HTMLAnchorAttributes as SvelteHTMLAnchorAttributes,
+    HTMLInputAttributes as SvelteHTMLInputAttributes,
+    HTMLLiAttributes as SvelteHTMLLiAttributes
+} from 'svelte/elements'
 
 export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: any }
 
@@ -58,12 +64,12 @@ export interface PassThroughOptions {
 /*export type HTMLButtonAttributes = HTMLAttributes<HTMLButtonElement>
 
 */
-export type HTMLAnchorAttributes = HTMLAttributes<HTMLAnchorElement>
+export type HTMLAnchorAttributes = SvelteHTMLAnchorAttributes
 export type HTMLButtonAttributes = SvelteHTMLButtonAttributes
 export type HTMLDivAttributes = HTMLAttributes<HTMLDivElement>
-export type HTMLInputAttributes = HTMLAttributes<HTMLInputElement>
-export type HTMLLIAttributes = HTMLAttributes<HTMLLIElement>
-export type HTMLULAttributes = HTMLAttributes<HTMLUListElement>
+export type HTMLInputAttributes = SvelteHTMLInputAttributes
+export type HTMLLiAttributes = SvelteHTMLLiAttributes
+export type HTMLUlAttributes = HTMLAttributes<HTMLUListElement>
 export type HTMLSpanAttributes = HTMLAttributes<HTMLSpanElement>
 export type HTMLSVGAttributes = HTMLAttributes<SVGSVGElement>
 export type HTMLImageAttributes = HTMLAttributes<HTMLImageElement>

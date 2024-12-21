@@ -1,44 +1,26 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importJS, importTS, simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const customContent = `
+    const code = simpleCode(
+        ['Button'],
+        `
+{#snippet customContent()}
     <img
         alt="logo"
         src="https://primefaces.org/cdn/primereact/images/logo.png"
         data-pr-tooltip="PrimeReact-Logo"
         height="80px"
-    />`
-
-    const code = {
-        basic: `
-${importJS(['Button'], '', `const customContent= '${customContent}'`)}
-
-<div class="card flex justify-content-center">
-    <Button class="custom-tooltip-btn" type="button" label="Save" icon="pi pi-check" tooltip={customContent} />
-</div>       
-   `,
-        javascript: `
-${importJS(['Button'], '', `const customContent= '${customContent}'`)}
-
-<div class="card flex justify-content-center">
-    <Button class="custom-tooltip-btn" type="button" label="Save" icon="pi pi-check" tooltip={customContent} />
-</div>
-        `,
-        typescript: `
-${importTS(['Button'], '', `const customContent: string = '${customContent}'`)}
-
-<div class="card flex justify-content-center">
-    <Button class="custom-tooltip-btn" type="button" label="Save" icon="pi pi-check" tooltip={customContent} />
-</div>
-        `
-    }
+    />
+{/snippet}
+<Button class="custom-tooltip-btn" type="button" label="Save" icon="pi pi-check" tooltip={customContent} />
+`
+    )
 </script>
 
 <DocSectionText {docSection}>
@@ -47,6 +29,14 @@ ${importTS(['Button'], '', `const customContent: string = '${customContent}'`)}
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
+    {#snippet customContent()}
+        <img
+            alt="logo"
+            src="https://primefaces.org/cdn/primereact/images/logo.png"
+            data-pr-tooltip="PrimeReact-Logo"
+            height="80px"
+        />
+    {/snippet}
     <Button class="custom-tooltip-btn" type="button" label="Save" icon="pi pi-check" tooltip={customContent} />
 </div>
 <DocSectionCode {code} />

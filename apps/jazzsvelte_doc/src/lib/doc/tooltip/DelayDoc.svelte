@@ -1,32 +1,18 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
-<Button tooltip="Confirm to proceed" tooltipOptions={{ showDelay: 1000, hideDelay: 300 }} label="Save" />
-        `,
-        javascript: `
-${importJS(['Button'])}
-
-<div class="card flex justify-content-center">
-    <Button tooltip="Confirm to proceed" tooltipOptions={{ showDelay: 1000, hideDelay: 300 }} label="Save" />
-</div>
-        `,
-        typescript: `
-${importTS(['Button'])}
-
-<div class="card flex justify-content-center">
-    <Button tooltip="Confirm to proceed" tooltipOptions={{ showDelay: 1000, hideDelay: 300 }} label="Save" />
-</div>
+    const code = simpleCode(
+        ['InputText'],
         `
-    }
+<Button tooltip="Confirm to proceed" tooltipOptions={{ showDelay: 1000, hideDelay: 300 }} label="Save" />
+`
+    )
 </script>
 
 <DocSectionText {docSection}>

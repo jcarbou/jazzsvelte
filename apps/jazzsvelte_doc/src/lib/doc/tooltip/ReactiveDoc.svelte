@@ -3,34 +3,32 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props();
 
-    export let docSection: DocSection
-
+    const codeBasic  = `
+<Button type="button" label="Click Me !" icon="pi pi-check" tooltip={clickCount + ' Clicks'} onclick={() => clickCount++} />
+` 
     const code = {
-        basic: `
-<Button type="button" label="Click Me !" icon="pi pi-check" tooltip={clickCount + ' Clicks'} on:click={() => clickCount++} />
-        `,
+        basic: codeBasic,
         javascript: `
-${importJS(['Button'], 'let clickCount = 0')}
-
-<Button type="button" label="Click Me !" icon="pi pi-check" tooltip={clickCount + ' Clicks'} on:click={() => clickCount++} />
-        `,
+${importJS(['Button'], 'let clickCount = $state(0)')}
+${codeBasic}
+`,
         typescript: `
-${importTS(['Button'], 'let clickCount = 0')}
-
-<Button type="button" label="Click Me !" icon="pi pi-check" tooltip={clickCount + ' Clicks'} on:click={() => clickCount++} />
-        `
+${importTS(['Button'], 'let clickCount = $state<number>(0)')}
+${codeBasic}
+`
     }
 
-    let clickCount = 0
+    let clickCount = $state(0)
 </script>
 
 <DocSectionText {docSection}>
     <p>Tooltip content is reactive to reflect changes related to the target component.</p>
 </DocSectionText>
 <div class="card flex flex-wrap align-items-center justify-content-center gap-5">
-    <Button type="button" label="Click Me !" icon="pi pi-check" tooltip={clickCount + ' Clicks'} on:click={() => clickCount++} />
+    <Button type="button" label="Click Me !" icon="pi pi-check" tooltip={clickCount + ' Clicks'} onclick={() => clickCount++} />
 </div>
 <DocSectionCode {code} />

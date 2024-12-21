@@ -1,12 +1,6 @@
 <script lang="ts">
     import type { ButtonBadgeSnippet, ButtonLabelSnippet, ButtonPassThroughMethodOptions, ButtonProps } from './button.types'
-    import type {
-        JazzSvelteContext,
-        HTMLSpanAttributes,
-        HTMLButtonAttributes,
-        ResolvedIconPT,
-        PassThroughOptions
-    } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, HTMLSpanAttributes, ResolvedIconPT, PassThroughOptions } from '@jazzsvelte/api'
     import type { ButtonGroupContext } from './buttonGroup.types'
 
     import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
@@ -20,6 +14,7 @@
     import { focusEl } from '@jazzsvelte/dom'
     import { stopProgagation } from '@jazzsvelte/stop_propagation_action'
     import { stringValueOrNull, snippetValueOrNull } from '@jazzsvelte/utils'
+    import { HTMLButtonAttributes } from '@jazzsvelte/api'
 
     let {
         children,

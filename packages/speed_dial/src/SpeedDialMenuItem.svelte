@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { CssStyle, HTMLLIAttributes, MenuItem, PassThroughOptions } from '@jazzsvelte/api'
+    import type { CssStyle, MenuItem, PassThroughOptions, HTMLLiAttributes } from '@jazzsvelte/api'
     import type { SpeedDialPassThroughMethodOptions, SpeedDialPassThroughOptions } from './speedDial.types'
     import { resolvePT } from '@jazzsvelte/api'
     import { globalSpeedDialPT as globalPt } from './speedDial.config'
@@ -29,7 +29,7 @@
         pt?.menuitem,
         globalPt?.menuitem,
         ptContext
-    ) satisfies HTMLLIAttributes
+    ) satisfies HTMLLiAttributes
 </script>
 
 <li {...menuitemAttributes}>

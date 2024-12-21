@@ -1,32 +1,18 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
-<Button type="button" label="Save" icon="pi pi-check" tooltip="Save" tooltipOptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }} />
-        `,
-        javascript: `
-${importJS(['Button'])}
-
-<div class="card flex flex-wrap align-items-center justify-content-center gap-5">
-    <Button type="button" label="Save" icon="pi pi-check" tooltip="Save" tooltipOptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }} />
-</div>
-        `,
-        typescript: `
-${importJS(['Button'])}
-
-<div class="card flex flex-wrap align-items-center justify-content-center gap-5">
-    <Button type="button" label="Save" icon="pi pi-check" tooltip="Save" tooltipOptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }} />
-</div>
+    const code = simpleCode(
+        ['InputText'],
         `
-    }
+<Button type="button" label="Save" icon="pi pi-check" tooltip="Save" tooltipOptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }} />
+`
+    )
 </script>
 
 <DocSectionText {docSection}>

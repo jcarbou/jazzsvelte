@@ -1,5 +1,6 @@
 <script lang="ts">
     import type {
+        TooltipContentSnippet,
         TooltipLayoutActionState,
         TooltipOptions,
         TooltipPassThroughMethodOptions,
@@ -8,17 +9,18 @@
     } from './tooltip.types'
     import type { JazzSvelteContext, HTMLDivAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
 
-    import { getContext, tick } from 'svelte'
+    import { getContext, type Snippet, tick } from 'svelte'
     import { fade } from 'svelte/transition'
     import { resolvePT, zIndex } from '@jazzsvelte/api'
     import { escape, ESC_KEY_HANDLING_PRIORITIES } from '@jazzsvelte/escape_action'
     import { tooltipLayout } from './tooltip.actions'
     import { globalButtonPT as globalPt } from './tooltip.config'
+    import { snippetValueOrNull, stringValueOrNull } from '../../utils/src'
 
     interface Props {
         targetElement: HTMLElement
         tooltipLayoutState: TooltipLayoutActionState
-        content?: string | null
+        content?: string | Snippet | null
         options?: TooltipOptions | undefined
         children?: import('svelte').Snippet
     }
@@ -48,11 +50,11 @@
         }
     }
 
-    export async function show(event: Event) {
+    export async function show(event?: Event) {
         if (visible) return
-        options?.onBeforeShow?.({ target: targetElement, originalEvent: event })
+        event && options?.onBeforeShow?.({ target: targetElement, originalEvent: event })
         visible = true
-        if (options?.onShow) {
+        if (event && options?.onShow) {
             await tick()
             options.onShow({ target: targetElement, originalEvent: event })
         }
@@ -63,8 +65,9 @@
         y = newY
     }
 
-    export function updateContent(newContent: string | null) {
-        _content = newContent
+    export function updateContent(newContent: TooltipContentSnippet | string | null) {
+        _contentSnippet = snippetValueOrNull(newContent)
+        _contentString = stringValueOrNull(newContent)
     }
 
     let visible: boolean = $state(true)
@@ -76,7 +79,9 @@
     let _position: TooltipPosition = $derived(options?.position || 'right')
     let unstyled: boolean = $derived(options?.unstyled ?? false)
     let style: CssStyle = $derived(options?.style || null)
-    let _content: string | null = $derived(content)
+
+    let _contentSnippet: TooltipContentSnippet | null = $derived(snippetValueOrNull(content))
+    let _contentString: string | null = $derived(stringValueOrNull(content))
 
     const { autoZIndex, baseZIndex, closeOnEscape } = options || {}
     let classNameState = ''
@@ -130,7 +135,11 @@
     >
         <div {...arrowAttributes}></div>
         <div {...textAttributes}>
-            {@html _content || ''}
+            {#if _contentString}
+                {_contentString}
+            {:else if _contentSnippet}
+                {@render _contentSnippet(textAttributes)}
+            {/if}
             {@render children?.()}
         </div>
     </div>

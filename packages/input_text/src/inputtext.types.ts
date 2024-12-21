@@ -1,4 +1,10 @@
-import type { CssStyle, HTMLInputAttributes, PassThroughHTMLAttributes, PassThroughType } from '@jazzsvelte/api'
+import type {
+    CssStyle,
+    PassThroughHTMLAttributes,
+    PassThroughOptions,
+    PassThroughType,
+    HTMLInputAttributes
+} from '@jazzsvelte/api'
 import type { KeyFilterRegExp, ValidatedInputEvent } from '@jazzsvelte/key_filter_action'
 import type { TooltipOptions } from '@jazzsvelte/tooltip'
 
@@ -53,17 +59,17 @@ export interface BaseInputTextProps {
      * @param {React.FormEvent<HTMLInputElement>} event - Browser event
      * @param {boolean} validatePattern - Whether to validate the value
      */
-    //onInput?(event: React.FormEvent<HTMLInputElement>, validatePattern: boolean): void
+    onvalidatedinput?: ((event: ValidatedInputEvent) => void) | null
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @type {InputTextPassThroughOptions}
      */
-    pt?: InputTextPassThroughOptions
+    pt?: InputTextPassThroughOptions | null
     /**
      * Used to configure passthrough(pt) options of the component.
      * @type {PassThroughOptions}
      */
-    ptOptions?: InputTextPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
     /**
      * CSS classes to add to root element
      */
@@ -88,7 +94,9 @@ export interface BaseInputTextProps {
  * Defines valid properties in InputText component. In addition to these, all properties of HTMLInputElement can be used in this component.
  * @group Properties
  */
-export interface InputTextProps extends Omit<HTMLInputAttributes, 'onInput' | 'value' | 'size' | 'style'>, BaseInputTextProps {}
+export interface InputTextProps
+    extends Omit<HTMLInputAttributes, 'oninput' | 'disabled' | 'value' | 'size' | 'style'>,
+        BaseInputTextProps {}
 
 export declare type InputTextPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, InputTextPassThroughMethodOptions>
 

@@ -34,7 +34,7 @@
         const class = `${options.class} justify-content-space-between`;
             <div class={class}>
                 <div class="flex align-items-center gap-2">
-                    <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" size="large" shape="circle" />
+                    <Avatar image="./images/avatar/amyelsner.png" size="large" shape="circle" />
                     <span class="font-bold">Amy Elsner</span>
                 </div>
                 <div>
@@ -95,7 +95,7 @@ ${importJS(['Panel', 'Avatar', 'Button', 'Menu'])}
         const class = \`\${options.class} justify-content-space-between\`;
             <div class={class}>
                 <div class="flex align-items-center gap-2">
-                    <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" size="large" shape="circle" />
+                    <Avatar image="./images/avatar/amyelsner.png" size="large" shape="circle" />
                     <span class="font-bold">Amy Elsner</span>
                 </div>
                 <div>
@@ -154,7 +154,7 @@ ${importTS(['Panel', 'Avatar', 'Button', 'Menu'])}
         const class = \`\${options.class} justify-content-space-between\`;
             <div class={class}>
                 <div class="flex align-items-center gap-2">
-                    <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" size="large" shape="circle" />
+                    <Avatar image="./images/avatar/amyelsner.png" size="large" shape="circle" />
                     <span class="font-bold">Amy Elsner</span>
                 </div>
                 <div>
@@ -207,7 +207,7 @@ ${importTS(['Panel', 'Avatar', 'Button', 'Menu'])}
             class={headerAttributes.class + ' justify-content-space-between'}
         >
             <div class="flex align-items-center gap-2">
-                <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" size="large" shape="circle" />
+                <Avatar image="./images/avatar/amyelsner.png" size="large" shape="circle" />
                 <span class="font-bold">Amy Elsner</span>
             </div>
             <div>

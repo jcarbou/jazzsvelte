@@ -1,46 +1,22 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { importJS, importTS, simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-
     import { InputText } from '@jazzsvelte/input_text'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
+    const code = simpleCode(
+        ['InputText'],
+        `
 <div class="flex flex-column gap-2">
     <label for="username">Username</label>
     <InputText id="username" aria-describedby="username-help" />
     <small id="username-help">Enter your username to reset your password.</small>
 </div>
-        `,
-        javascript: `
-${importJS('InputText')}
-
-<div class="card flex justify-content-center">
-    <div class="flex flex-column gap-2">
-        <label for="username">Username</label>
-        <InputText id="username" aria-describedby="username-help" />
-        <small id="username-help">Enter your username to reset your password.</small>
-    </div>
-</div>
-        `,
-        typescript: `
-${importTS('InputText')}
-
-<div class="card flex justify-content-center">
-    <div class="flex flex-column gap-2">
-        <label for="username">Username</label>
-        <InputText id="username" aria-describedby="username-help" />
-        <small id="username-help">Enter your username to reset your password.</small>
-    </div>
-</div>
-        `
-    }
+`
+    )
 </script>
 
 <DocSectionText {docSection}>

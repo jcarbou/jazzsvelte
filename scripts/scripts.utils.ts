@@ -22,19 +22,19 @@ export function buildCmpContext(name: string): CmpContext {
         cmpSrcPath = `${cmpHomePath}/src`,
         packagePath = `${cmpHomePath}/package.json`,
         tsConfigPath = `${cmpHomePath}/tsconfig.json`,
-        svelteConfigPath = `${cmpHomePath}/svelte.config.js`,
+        svelteConfigPath = `${cmpHomePath}/svelte.config.ts`,
         cmpPath = `${cmpSrcPath}/${CmpName}.svelte`,
         apiPath = `${cmpSrcPath}/${cmpName}.api.json`,
         typesPath = `${cmpSrcPath}/${cmpName}.types.ts`,
         configPath = `${cmpSrcPath}/${cmpName}.config.ts`,
-        testPath = `${cmpSrcPath}/${cmpName}.spec.js`,
+        testPath = `${cmpSrcPath}/${cmpName}.spec.ts`,
         indexPath = `${cmpSrcPath}/index.ts`,
         sveltePath = `${cmpSrcPath}/${CmpName}.svelte`,
         prPath = '../primereact',
         prApiDocPath = `${prPath}/components/doc/common/apidoc/index.json`,
         prCmpApiDocPath = `${prPath}/components/doc/${cmpName}`,
         prCmpDocPageDirPath = `${prPath}/pages/${cmpname}`,
-        prCmpDocPagePath = `${prCmpDocPageDirPath}/index.js`
+        prCmpDocPagePath = `${prCmpDocPageDirPath}/index.ts`
 
     return {
         CmpName,

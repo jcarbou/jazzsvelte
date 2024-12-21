@@ -1,35 +1,17 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { InputText } from '@jazzsvelte/input_text'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const code = {
-        basic: `
+    const code = simpleCode(['InputText'], `
 <InputText type="text" placeholder="autoHide: false" tooltip="Enter your username" tooltipOptions={{ autoHide: false }} />
 <InputText type="text" placeholder="autoHide: true" tooltip="Enter your username" />
-        `,
-        javascript: `
-${importJS(['InputText'])}
-
-<div class="card flex flex-wrap align-items-center justify-content-center gap-2">
-    <InputText type="text" placeholder="autoHide: false" tooltip="Enter your username" tooltipOptions={{ autoHide: false }} />
-    <InputText type="text" placeholder="autoHide: true" tooltip="Enter your username" />
-</div>
-        `,
-        typescript: `
-${importTS(['InputText'])}
-
-<div class="card flex flex-wrap align-items-center justify-content-center gap-2">
-    <InputText type="text" placeholder="autoHide: false" tooltip="Enter your username" tooltipOptions={{ autoHide: false }} />
-    <InputText type="text" placeholder="autoHide: true" tooltip="Enter your username" />
-</div>
-        `
-    }
+`)
+    
 </script>
 
 <DocSectionText {docSection}>

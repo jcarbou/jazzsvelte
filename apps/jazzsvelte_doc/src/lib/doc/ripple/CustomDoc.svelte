@@ -3,10 +3,13 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Ripple } from '@jazzsvelte/ripple'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
 
     let { docSection }: ComponentDocProps = $props()
-    const codeBasic = `
+
+    const code = simpleCode(
+        ['Ripple'],
+        `
 <div class="card flex justify-content-center align-items-center gap-2">
     <div class="p-ripple p-5 border-round border-radius-10 shadow-2">
         Green
@@ -34,18 +37,7 @@
     </div>
 </div>
 `
-
-    const code = {
-        basic: codeBasic,
-        javascript: `
-${importJS('Ripple')}
-${codeBasic}
-`,
-        typescript: `
-${importTS('Ripple')}
-${codeBasic}
-`
-    }
+    )
 </script>
 
 <DocSectionText {docSection}>

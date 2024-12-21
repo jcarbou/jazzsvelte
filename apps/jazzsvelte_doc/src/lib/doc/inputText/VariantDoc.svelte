@@ -1,31 +1,18 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { InputText } from '@jazzsvelte/input_text'
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
-    const code = {
-        basic: `
-<InputText variant="filled" />
-        `,
-        javascript: `
-${importJS('InputText')}
-
-<div class="card flex justify-content-center">
-    <InputText variant="filled" />
-</div>
-        `,
-        typescript: `
-${importTS('InputText')}
-
-<div class="card flex justify-content-center">
-    <InputText variant="filled" />
-</div>
+    const code = simpleCode(
+        ['InputText'],
         `
-    }
+<InputText variant="filled" />
+        `
+    )
 </script>
 
 <DocSectionText {docSection}>
