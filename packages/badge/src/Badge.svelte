@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { HTMLSpanAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { PassThroughOptions } from '@jazzsvelte/api'
     import type { BadgePassThroughMethodOptions, BadgeProps } from './badge.types'
 
-    import { resolvePT } from '@jazzsvelte/api'
+    import { resolveSpanPt } from '@jazzsvelte/api'
     import { isEmpty, isNotEmpty } from '@jazzsvelte/object'
     import { defaultBadgeProps as DEFAULT, globalBadgePT as globalPt } from './badge.config'
 
@@ -46,8 +46,8 @@
     })
 
     // "root element"
-    let rootAttributes: HTMLSpanAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveSpanPt(
             {
                 class: [
                     'p-badge p-component',

@@ -1,17 +1,9 @@
 <script lang="ts">
-    import type {
-        IconComponent,
-        ResolvedIconPT,
-        HTMLDivAttributes,
-        PassThroughOptions,
-        HTMLSpanAttributes,
-        HTMLButtonAttributes
-    } from '@jazzsvelte/api'
-
+    import type { IconComponent, PassThroughOptions } from '@jazzsvelte/api'
     import type { ToastMessagePassThroughMethodOptions, ToastMessageProps } from './toastMessage.types'
 
     import { defaultToastMessageProps as DEFAULT, globalToastMessagePT as globalPt } from './toastMessage.config'
-    import { resolveIconPT, resolvePT, localeOption } from '@jazzsvelte/api'
+    import { resolveIconPT, localeOption, resolveButtonPt, resolveDivPt, resolveSpanPt } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
     import { ripple } from '@jazzsvelte/ripple'
     import { InfoCircleIcon } from '@jazzsvelte/infocircle_icon'
@@ -67,13 +59,13 @@
     })
 
     // "icon" element
-    let resolvedIcon: ResolvedIconPT = $derived(
+    let resolvedIcon = $derived(
         resolveIconPT(_icon, { class: ['p-toast-message-icon', 'p-icon'] }, pt?.icon, globalPt?.icon, ptContext)
     )
 
     // "close button" element
-    let closeButtonAttributes: HTMLButtonAttributes = $derived(
-        resolvePT(
+    let closeButtonAttributes = $derived(
+        resolveButtonPt(
             {
                 class: ['p-toast-icon-close', 'p-link'],
                 'aria-label': ariaCloseLabel || localeOption('close')
@@ -85,7 +77,7 @@
     )
 
     // "closeButton" element
-    let resolvedCloseIcon: ResolvedIconPT = $derived(
+    let resolvedCloseIcon = $derived(
         resolveIconPT(
             closeIcon,
             { class: ['p-toast-icon-close-icon', 'p-icon'] },
@@ -96,8 +88,8 @@
     )
 
     // "content" element
-    let contentAttributes: HTMLDivAttributes = $derived(
-        resolvePT(
+    let contentAttributes = $derived(
+        resolveDivPt(
             {
                 class: ['p-toast-message-content', contentClass],
                 style: contentStyle
@@ -109,8 +101,8 @@
     )
 
     // "message" element
-    let messageAttributes: HTMLDivAttributes = $derived(
-        resolvePT(
+    let messageAttributes = $derived(
+        resolveDivPt(
             {
                 class: [
                     className,
@@ -131,19 +123,13 @@
     )
 
     // "text" element
-    let textAttributes: HTMLDivAttributes = $derived(
-        resolvePT({ class: ['p-toast-message-text'] }, pt?.text, globalPt?.text, ptContext)
-    )
+    let textAttributes = $derived(resolveDivPt({ class: ['p-toast-message-text'] }, pt?.text, globalPt?.text, ptContext))
 
     // "summary" element
-    let summaryAttributes: HTMLSpanAttributes = $derived(
-        resolvePT({ class: ['p-toast-summary'] }, pt?.summary, globalPt?.summary, ptContext)
-    )
+    let summaryAttributes = $derived(resolveSpanPt({ class: ['p-toast-summary'] }, pt?.summary, globalPt?.summary, ptContext))
 
     // "summary" element
-    let detailAttributes: HTMLDivAttributes = $derived(
-        resolvePT({ class: ['p-toast-detail'] }, pt?.detail, globalPt?.detail, ptContext)
-    )
+    let detailAttributes = $derived(resolveDivPt({ class: ['p-toast-detail'] }, pt?.detail, globalPt?.detail, ptContext))
 
     function _onMouseEnter(event: MouseEvent) {
         // do not continue if the user has canceled the event

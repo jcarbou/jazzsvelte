@@ -4,11 +4,13 @@
     import { Badge } from '@jazzsvelte/badge'
     import { Button } from '@jazzsvelte/button'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
 
     let { docSection }: ComponentDocProps = $props()
 
-    const codeBasic = `
+    const code = simpleCode(
+        ['Badge', 'Button'],
+        `
 <Button type="button" label="Emails">
     <Badge value="8"></Badge>
 </Button>
@@ -16,18 +18,7 @@
     <Badge value="8" severity="danger"></Badge>
 </Button>
 `
-
-const code = {
-        basic: codeBasic,
-        javascript: `
-${importJS('Button', 'Badge')}
-${codeBasic}
-`,
-        typescript: `
-${importTS('Button', 'Badge')}
-${codeBasic}
-`
-    }
+    )
 </script>
 
 <DocSectionText {docSection}>

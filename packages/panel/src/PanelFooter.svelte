@@ -1,15 +1,18 @@
 <script lang="ts">
-    import type { HTMLDivAttributes } from '@jazzsvelte/api'
+    import type { PanelFooterProps } from './panel.types'
 
-    export let footerAttributes: HTMLDivAttributes
-    export let footer: string
+    import { snippetValueOrNull, stringValueOrNull } from '@jazzsvelte/utils'
+
+    let { footerAttributes, footer }: PanelFooterProps = $props()
+
+    let _footerSnippet = $derived(snippetValueOrNull(footer))
+    let _footerString = $derived(stringValueOrNull(footer))
 </script>
 
 <div {...footerAttributes}>
-    {#if $$slots.footer_content}
-        <slot name="footer_content" {footer} />
+    {#if _footerSnippet}
+        {@render _footerSnippet()}
     {:else}
-        {footer}
+        {_footerString}
     {/if}
 </div>
-s

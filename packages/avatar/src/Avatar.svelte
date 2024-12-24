@@ -1,15 +1,9 @@
 <script lang="ts">
     import type { AvatarPassThroughMethodOptions, AvatarProps } from './avatar.types'
+    import type { PassThroughOptions } from '@jazzsvelte/api'
 
-    import type {
-        HTMLDivAttributes,
-        HTMLSpanAttributes,
-        HTMLImageAttributes,
-        ResolvedIconPT,
-        PassThroughOptions
-    } from '@jazzsvelte/api'
     import { isAttributeEquals } from '@jazzsvelte/dom'
-    import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
+    import { resolveDivPt, resolveIconPT, resolveImagePt, resolveSpanPt } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
     import { defaultAvatarProps as DEFAULT, globalAvatarPT as globalPt } from './avatar.config'
 
@@ -93,8 +87,8 @@
     }
 
     // "root element"
-    let rootAttributes: HTMLDivAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveDivPt(
             {
                 class: [
                     'p-avatar',
@@ -119,8 +113,8 @@
     )
 
     // "label" element
-    let labelAttributes: HTMLSpanAttributes = $derived(
-        resolvePT(
+    let labelAttributes = $derived(
+        resolveSpanPt(
             {
                 class: ['p-avatar-text'],
                 'data-pc-section': 'label'
@@ -132,8 +126,8 @@
     )
 
     // "image" element
-    let imageAttributes: HTMLImageAttributes = $derived(
-        resolvePT(
+    let imageAttributes = $derived(
+        resolveImagePt(
             {
                 class: [],
                 'data-pc-section': 'image'
@@ -145,7 +139,7 @@
     )
 
     // "icon" element
-    let resolvedIcon: ResolvedIconPT = $derived(
+    let resolvedIcon = $derived(
         resolveIconPT(
             icon,
             {

@@ -1,10 +1,10 @@
 <script lang="ts">
     import type { ButtonGroupPassThroughMethodOptions, ButtonGroupProps } from './buttonGroup.types'
     import type { ButtonGroupContext } from '@jazzsvelte/button'
-    import type { HTMLSpanAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { PassThroughOptions } from '@jazzsvelte/api'
 
     import { setContext } from 'svelte'
-    import { resolvePT } from '@jazzsvelte/api'
+    import { resolveSpanPt } from '@jazzsvelte/api'
     import { defaultButtonGroupProps as DEFAULT, globalButtonGroupPT as globalPt } from './buttonGroup.config'
 
     let {
@@ -58,8 +58,8 @@
     })
 
     // "root element"
-    let rootAttributes: HTMLSpanAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveSpanPt(
             {
                 class: ['p-button-group p-component', className],
                 style,

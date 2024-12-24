@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte'
+import type { Snippet } from 'svelte'
 import type {
     CssObject,
     HTMLDivAttributes,
@@ -7,7 +7,9 @@ import type {
     HTMLSVGAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
-    PassThroughType
+    PassThroughType,
+    ResolvedIconPT,
+    PassThroughOptions
 } from '@jazzsvelte/api'
 
 export interface PanelContext {
@@ -16,7 +18,7 @@ export interface PanelContext {
 }
 
 /**
- * undefined
+ * Base Panel Props
  * @group baseProperties
  */
 export interface BasePanelProps {
@@ -48,19 +50,31 @@ export interface BasePanelProps {
      * Custom header of the panel.
      * @default  null
      */
-    header?: string | null
+    footer?: PanelFooterContentSnippet | string | null
+
+    /**
+     * Footer template of the panel to customize more.
+     * @default  null
+     */
+    footerTemplate?: PanelFooterTemplateSnippet | null
 
     /**
      * Custom header of the panel.
      * @default  null
      */
-    footer?: string | null
+    header?: PanelHeaderContentSnippet | string | null
+
+    /**
+     * Header template of the panel to customize more.
+     * @default  null
+     */
+    headerTemplate?: PanelHeaderTemplateSnippet | null
 
     /**
      * Custom icons template for the header.
      * @default  null
      */
-    icons?: typeof SvelteComponent | null
+    icons?: PanelHeaderIconsSnippet | null
 
     /**
      * Callback to invoke when an active tab is collapsed by clicking on the header.
@@ -88,13 +102,13 @@ export interface BasePanelProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: PanelPassThroughOptions
+    pt?: PanelPassThroughOptions | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
      * @default  null
      */
-    ptOptions?: PanelPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
 
     /**
      * Style to add to root element.
@@ -134,6 +148,69 @@ export interface PanelPassThroughMethodOptions {
     props: PanelProps
     state: PanelState
 }
+
+/**
+ * Panel header props
+ */
+export interface PanelHeaderProps {
+    headerAttributes: HTMLDivAttributes
+    titleAttributes: HTMLSpanAttributes
+    iconsAttributes: HTMLDivAttributes
+    togglerAttributes: HTMLButtonAttributes
+    resolvedTogglerIcon: ResolvedIconPT
+    toggle: (event?: Event) => void
+    toggleable: boolean
+    collapsed: boolean
+    header?: PanelHeaderContentSnippet | string | null
+    icons?: PanelHeaderIconsSnippet | null
+}
+
+/**
+ * Panel header snippet to customize header content
+ */
+export type PanelHeaderContentSnippet = Snippet<
+    [
+        {
+            toggle: PanelHeaderProps['toggle']
+            collapsed: PanelHeaderProps['collapsed']
+        }
+    ]
+>
+
+/**
+ * Panel header snippet to customize header icons
+ */
+export type PanelHeaderIconsSnippet = Snippet<
+    [
+        {
+            toggle: PanelHeaderProps['toggle']
+            collapsed: PanelHeaderProps['collapsed']
+        }
+    ]
+>
+
+/**
+ * Panel header snippet to customize header
+ */
+export type PanelHeaderTemplateSnippet = Snippet<[PanelHeaderProps]>
+
+/**
+ * Panel footer props
+ */
+export interface PanelFooterProps {
+    footerAttributes: HTMLDivAttributes
+    footer: PanelFooterContentSnippet | string | null
+}
+
+/**
+ * Panel footer snippet to customize footer content
+ */
+export type PanelFooterContentSnippet = Snippet<[]>
+
+/**
+ * Panel footer snippet to customize footer
+ */
+export type PanelFooterTemplateSnippet = Snippet<[PanelFooterProps]>
 
 /**
  * Custom passthrough(pt) options.

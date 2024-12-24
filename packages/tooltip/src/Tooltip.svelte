@@ -7,11 +7,11 @@
         TooltipPassThroughOptions,
         TooltipPosition
     } from './tooltip.types'
-    import type { JazzSvelteContext, HTMLDivAttributes, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
 
     import { getContext, type Snippet, tick } from 'svelte'
     import { fade } from 'svelte/transition'
-    import { resolvePT, zIndex } from '@jazzsvelte/api'
+    import { resolveDivPt, zIndex } from '@jazzsvelte/api'
     import { escape, ESC_KEY_HANDLING_PRIORITIES } from '@jazzsvelte/escape_action'
     import { tooltipLayout } from './tooltip.actions'
     import { globalButtonPT as globalPt } from './tooltip.config'
@@ -103,8 +103,8 @@
     })
 
     // "root" element
-    let rootAttributes: HTMLDivAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveDivPt(
             { class: ['p-tooltip p-component', options?.class, classNameState], style },
             pt?.root,
             globalPt?.root,
@@ -113,14 +113,10 @@
     )
 
     // "arrow" element
-    let arrowAttributes: HTMLDivAttributes = $derived(
-        resolvePT({ class: ['p-tooltip-arrow'] }, pt?.arrow, globalPt?.arrow, ptContext)
-    )
+    let arrowAttributes = $derived(resolveDivPt({ class: ['p-tooltip-arrow'] }, pt?.arrow, globalPt?.arrow, ptContext))
 
     // "text" element
-    let textAttributes: HTMLDivAttributes = $derived(
-        resolvePT({ class: ['p-tooltip-text'] }, pt?.text, globalPt?.text, ptContext)
-    )
+    let textAttributes = $derived(resolveDivPt({ class: ['p-tooltip-text'] }, pt?.text, globalPt?.text, ptContext))
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
 </script>

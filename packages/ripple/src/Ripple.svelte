@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { CssStyle, HTMLSpanAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { CssStyle, PassThroughOptions } from '@jazzsvelte/api'
     import type { RipplePassThroughMethodOptions, RipplePassThroughOptions } from './ripple.types'
 
-    import { JAZZ_SVELTE, resolvePT } from '@jazzsvelte/api'
+    import { JAZZ_SVELTE, resolveSpanPt } from '@jazzsvelte/api'
     import { ripple } from './ripple.action'
     import { defaultRippleProps as DEFAULT, globalRipplePT as globalPt } from './ripple.config'
 
@@ -42,8 +42,8 @@
         unstyled
     })
 
-    let rootAttributes: HTMLSpanAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveSpanPt(
             {
                 class: ['p-ink', className],
                 style,

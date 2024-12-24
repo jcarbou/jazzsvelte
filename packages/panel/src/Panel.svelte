@@ -1,42 +1,52 @@
 <script lang="ts">
-    import type { PanelPassThroughMethodOptions, PanelPassThroughOptions } from './panel.types'
+    import type { PanelPassThroughMethodOptions, PanelProps } from './panel.types'
+    import type { ResolvedIconPT, PassThroughOptions } from '@jazzsvelte/api'
 
-    import type {
-        HTMLDivAttributes,
-        HTMLSpanAttributes,
-        HTMLButtonAttributes,
-        IconComponent,
-        CssStyle,
-        ResolvedIconPT,
-        PassThroughOptions
-    } from '@jazzsvelte/api'
-
-    import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
+    import { resolveButtonPt, resolveDivPt, resolveIconPT, resolveSpanPt } from '@jazzsvelte/api'
     import { defaultPanelProps as DEFAULT, globalPanelPT as globalPt } from './panel.config'
     import { uniqueId } from '../../utils/src'
     import PanelHeader from './PanelHeader.svelte'
     import PanelFooter from './PanelFooter.svelte'
     import { slide } from 'svelte/transition'
 
-    export let collapsed: boolean = DEFAULT.collapsed
-    export let collapseIcon: string | IconComponent | null = DEFAULT.collapseIcon
-    export let expandIcon: string | IconComponent | null = DEFAULT.expandIcon
-    export let footer: string | null = DEFAULT.footer
-    //export let footerTemplate: typeof SvelteComponent | null = DEFAULT.footerTemplate
-    export let header: string | null = DEFAULT.header
-    //export let headerTemplate: typeof SvelteComponent | null = DEFAULT.headerTemplate
-    //export let icons: typeof SvelteComponent | null = DEFAULT.icons
-    export let onCollapse: ((event: Event) => void) | null = DEFAULT.onCollapse
-    export let onExpand: ((event: Event) => void) | null = DEFAULT.onExpand
-    export let onToggle: ((event: { originalEvent: Event; value: boolean }) => void) | null = DEFAULT.onToggle
-    export let toggleable: boolean = DEFAULT.toggleable
-    // export let togglerIcon: string | IconComponent | null = DEFAULT.togglerIcon
-    export let unstyled: boolean = DEFAULT.unstyled
-    export let pt: PanelPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let style: CssStyle | null = DEFAULT.style
-    let className: string | null = DEFAULT.class
-    export { className as class }
+    let {
+        class: className = DEFAULT.class,
+        collapsed = $bindable(DEFAULT.collapsed),
+        collapseIcon = DEFAULT.collapseIcon,
+        expandIcon = DEFAULT.expandIcon,
+        footer = DEFAULT.footer,
+        footerTemplate = null,
+        header = DEFAULT.header,
+        headerTemplate = null,
+        icons = null,
+        onCollapse = DEFAULT.onCollapse,
+        onExpand = DEFAULT.onExpand,
+        onToggle = DEFAULT.onToggle,
+        toggleable = DEFAULT.toggleable,
+        unstyled = DEFAULT.unstyled,
+        pt = null,
+        ptOptions = null,
+        style = DEFAULT.style,
+        children,
+        ..._restProps
+    }: PanelProps = $props()
+
+    let _props: PanelProps = $derived({
+        class: className,
+        collapsed,
+        collapseIcon,
+        expandIcon,
+        footer,
+        header,
+        onCollapse,
+        onExpand,
+        onToggle,
+        toggleable,
+        unstyled,
+        pt,
+        ptOptions,
+        style
+    })
 
     export const displayName = 'Panel'
 
@@ -94,8 +104,8 @@
         }
     }
 
-    $: ptContext = {
-        props: $$props,
+    let ptContext = $derived({
+        props: _props,
         state: {
             id,
             collapsed
@@ -105,161 +115,177 @@
     } satisfies PanelPassThroughMethodOptions & {
         ptOptions: PassThroughOptions | null
         unstyled: boolean
-    }
+    })
 
     // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            class: [
-                'p-panel p-component',
-                className,
-                {
-                    'p-panel-toggleable': toggleable
-                }
-            ],
-            style,
-            'data-pc-name': 'panel',
-            'data-pc-section': 'root',
-            id
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let rootAttributes = $derived(
+        resolveDivPt(
+            {
+                class: [
+                    'p-panel p-component',
+                    className,
+                    {
+                        'p-panel-toggleable': toggleable
+                    }
+                ],
+                style,
+                'data-pc-name': 'panel',
+                'data-pc-section': 'root',
+                id
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 
     // "header" element
-    $: headerAttributes = resolvePT(
-        {
-            class: ['p-panel-header'],
-            'data-pc-section': 'header',
-            id: headerId
-        },
-        pt?.header,
-        globalPt?.header,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let headerAttributes = $derived(
+        resolveDivPt(
+            {
+                class: ['p-panel-header'],
+                'data-pc-section': 'header',
+                id: headerId
+            },
+            pt?.header,
+            globalPt?.header,
+            ptContext
+        )
+    )
 
     // "title" element
-    $: titleAttributes = resolvePT(
-        {
-            class: ['p-panel-title'],
-            'data-pc-section': 'title',
-            id: titleId
-        },
-        pt?.title,
-        globalPt?.title,
-        ptContext
-    ) satisfies HTMLSpanAttributes
+    let titleAttributes = $derived(
+        resolveSpanPt(
+            {
+                class: ['p-panel-title'],
+                'data-pc-section': 'title',
+                id: titleId
+            },
+            pt?.title,
+            globalPt?.title,
+            ptContext
+        )
+    )
 
     // "icons" element
-    $: iconsAttributes = resolvePT(
-        {
-            class: ['p-panel-icons'],
-            'data-pc-section': 'icons'
-        },
-        pt?.icons,
-        globalPt?.icons,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let iconsAttributes = $derived(
+        resolveDivPt(
+            {
+                class: ['p-panel-icons'],
+                'data-pc-section': 'icons'
+            },
+            pt?.icons,
+            globalPt?.icons,
+            ptContext
+        )
+    )
 
     // "toggler" element
-    $: togglerAttributes = resolvePT(
-        {
-            class: ['p-panel-header-icon p-panel-toggler p-link'],
-            'data-pc-section': 'toggler',
-            id: buttonId,
-            'aria-controls': contentId,
-            'aria-expanded': !collapsed,
-            role: 'button',
-            'aria-label': header
-        },
-        pt?.toggler,
-        globalPt?.toggler,
-        ptContext
-    ) satisfies HTMLButtonAttributes
+    let togglerAttributes = $derived(
+        resolveButtonPt(
+            {
+                class: ['p-panel-header-icon p-panel-toggler p-link'],
+                'data-pc-section': 'toggler',
+                id: buttonId,
+                'aria-controls': contentId,
+                'aria-expanded': !collapsed,
+                role: 'button',
+                'aria-label': typeof header === 'string' ? header : null
+            },
+            pt?.toggler,
+            globalPt?.toggler,
+            ptContext
+        )
+    )
 
     // "toggleableContent" element
-    $: toggleableContentAttributes = resolvePT(
-        {
-            class: ['p-toggleable-content'],
-            'data-pc-section': 'toggleableContent',
-            'aria-hidden': collapsed,
-            role: 'region',
-            id: contentId,
-            'aria-labelledby': headerId
-        },
-        pt?.toggleableContent,
-        globalPt?.toggleableContent,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let toggleableContentAttributes = $derived(
+        resolveDivPt(
+            {
+                class: ['p-toggleable-content'],
+                'data-pc-section': 'toggleableContent',
+                'aria-hidden': collapsed,
+                role: 'region',
+                id: contentId,
+                'aria-labelledby': headerId
+            },
+            pt?.toggleableContent,
+            globalPt?.toggleableContent,
+            ptContext
+        )
+    )
 
     // "content" element
-    $: contentAttributes = resolvePT(
-        {
-            class: ['p-panel-content'],
-            'data-pc-section': 'content'
-        },
-        pt?.content,
-        globalPt?.content,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let contentAttributes = $derived(
+        resolveDivPt(
+            {
+                class: ['p-panel-content'],
+                'data-pc-section': 'content'
+            },
+            pt?.content,
+            globalPt?.content,
+            ptContext
+        )
+    )
 
     // "footer" element
-    $: footerAttributes = resolvePT(
-        {
-            class: ['p-panel-footer'],
-            'data-pc-section': 'footer'
-        },
-        pt?.footer,
-        globalPt?.footer,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let footerAttributes = $derived(
+        resolveDivPt(
+            {
+                class: ['p-panel-footer'],
+                'data-pc-section': 'footer'
+            },
+            pt?.footer,
+            globalPt?.footer,
+            ptContext
+        )
+    )
 
     // "togglerIcon" element
-    $: resolvedExpandIcon = resolveIconPT(
-        expandIcon,
-        {
-            class: ['p-icon']
-        },
-        pt?.togglerIcon,
-        globalPt?.togglerIcon,
-        ptContext
-    ) satisfies ResolvedIconPT
+    let resolvedExpandIcon = $derived(
+        resolveIconPT(
+            expandIcon,
+            {
+                class: ['p-icon']
+            },
+            pt?.togglerIcon,
+            globalPt?.togglerIcon,
+            ptContext
+        )
+    )
 
     // "togglerIcon" element
-    $: resolvedCollapseIcon = resolveIconPT(
-        collapseIcon,
-        {
-            class: ['p-icon']
-        },
-        pt?.togglerIcon,
-        globalPt?.togglerIcon,
-        ptContext
-    ) satisfies ResolvedIconPT
+    let resolvedCollapseIcon = $derived(
+        resolveIconPT(
+            collapseIcon,
+            {
+                class: ['p-icon']
+            },
+            pt?.togglerIcon,
+            globalPt?.togglerIcon,
+            ptContext
+        )
+    )
 
-    $: resolvedTogglerIcon = collapsed ? resolvedExpandIcon : (resolvedCollapseIcon satisfies ResolvedIconPT)
+    let resolvedTogglerIcon: ResolvedIconPT = $derived(collapsed ? resolvedExpandIcon : resolvedCollapseIcon)
 </script>
 
-<div bind:this={panelEl} {...rootAttributes} {...$$restProps}>
+<div bind:this={panelEl} {...rootAttributes} {..._restProps}>
     <!-- Header  -->
 
-    {#if $$slots.header}
-        <slot
-            name="header"
-            {headerAttributes}
-            {titleAttributes}
-            {iconsAttributes}
-            {togglerAttributes}
-            {resolvedTogglerIcon}
-            {header}
-            {toggle}
-            {toggleable}
-            {collapsed}
-        >
-            <slot name="header_content" target="header_content" {titleAttributes} />
-            <slot name="header_icons" target="header_icons" {iconsAttributes} />
-            <slot name="header_toggler" target="header_toggler" {togglerAttributes} {resolvedTogglerIcon} />
-        </slot>
+    {#if headerTemplate}
+        {@render headerTemplate({
+            headerAttributes,
+            titleAttributes,
+            iconsAttributes,
+            togglerAttributes,
+            resolvedTogglerIcon,
+            header,
+            toggle,
+            icons,
+            toggleable,
+            collapsed
+        })}
     {:else}
         <PanelHeader
             {headerAttributes}
@@ -269,29 +295,27 @@
             {resolvedTogglerIcon}
             {header}
             {toggle}
+            {icons}
             {toggleable}
             {collapsed}
-        >
-            <slot name="header_content" target="header_content" {titleAttributes} />
-            <slot name="header_icons" target="header_icons" {iconsAttributes} />
-            <slot name="header_toggler" target="header_toggler" {togglerAttributes} {resolvedTogglerIcon} />
-        </PanelHeader>
+        />
     {/if}
 
     <!-- Content  -->
 
     {#if !collapsed}
         <div bind:this={contentEl} transition:slide={{ duration: 300 }} {...toggleableContentAttributes}>
-            <div {...contentAttributes}><slot /></div>
+            <div {...contentAttributes}>{@render children?.()}</div>
         </div>
     {/if}
 
     <!-- Footer  -->
 
-    {#if $$slots.footer}
-        <slot name="footer" {footerAttributes} {footer}>
-            <slot name="footer_content" target="footer_content" />
-        </slot>
+    {#if footerTemplate}
+        {@render footerTemplate({
+            footerAttributes,
+            footer
+        })}
     {:else if footer}
         <PanelFooter {footerAttributes} {footer} />
     {/if}

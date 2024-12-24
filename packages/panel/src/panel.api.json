@@ -91,18 +91,42 @@
                 "description": "Icon of a expanded tab."
             },
             {
+                "name": "footer",
+                "optional": true,
+                "readonly": false,
+                "type": "PanelFooterContentSnippet | string | null",
+                "default": "null",
+                "description": "Custom footer template of the panel."
+            },
+            {
+                "name": "footerTemplate",
+                "optional": true,
+                "readonly": false,
+                "type": "PanelFooterTemplateSnippet | null",
+                "default": "null",
+                "description": "Footer template of the panel to customize more."
+            },
+            {
                 "name": "header",
                 "optional": true,
                 "readonly": false,
-                "type": "string | null",
+                "type": "PanelHeaderContentSnippet | string | null",
                 "default": "null",
                 "description": "Custom header template of the panel."
+            },
+            {
+                "name": "headerTemplate",
+                "optional": true,
+                "readonly": false,
+                "type": "PanelHeaderTemplateSnippet | null",
+                "default": "null",
+                "description": "Header template of the panel to customize more."
             },
             {
                 "name": "icons",
                 "optional": true,
                 "readonly": false,
-                "type": "typeof SvelteComponent | null",
+                "type": "PanelHeaderIconsSnippet | null",
                 "default": "null",
                 "description": "Custom icons template for the header."
             },

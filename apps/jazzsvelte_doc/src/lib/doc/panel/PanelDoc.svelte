@@ -1,7 +1,6 @@
 <script lang="ts">
     import { projectName } from '../common/doc.utils'
     import { panelApiData } from '@jazzsvelte/panel'
-    import DocApiTable from '../common/DocApiTable.svelte'
     import DocComponent from '../common/DocComponent.svelte'
     import AccessibilityDoc from './AccessibilityDoc.svelte'
     import BasicDoc from './BasicDoc.svelte'

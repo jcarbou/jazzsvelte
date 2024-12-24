@@ -7,13 +7,25 @@ import type {
     PtAttr,
     ResolvedIconPT,
     MainElementAttributes,
-    PassThroughOptions
+    PassThroughOptions,
+    CssStyle,
+    ClassNameEntry,
+    HTMLAnchorAttributes,
+    HTMLButtonAttributes,
+    HTMLSpanAttributes,
+    HTMLDivAttributes,
+    HTMLInputAttributes,
+    HTMLLiAttributes,
+    HTMLUlAttributes,
+    HTMLSVGAttributes,
+    HTMLImageAttributes
 } from './pt.types'
 import { JAZZ_SVELTE } from './JazzSvelte'
 import { mergeCssClasses } from './cssClasses'
 import { mergeCssStyles } from './cssStyles'
+import { HTMLAttributes } from 'svelte/elements'
 
-type Options<T, M> = PassThroughType<T, M> | undefined
+type Options<INNER_ATTR, FUNCTION_OPTIONS> = PassThroughType<INNER_ATTR, FUNCTION_OPTIONS> | undefined
 
 function ptToAttributes<ELT extends Element, M, PROPS, STATE, CTX>(
     options: Options<PtAttr<ELT>, M>,
@@ -48,10 +60,239 @@ function ptToAttributes<ELT extends Element, M, PROPS, STATE, CTX>(
     return attributes
 }
 
-export function resolvePT<ELT extends Element, M, PROPS, STATE, CTX>(
-    elementAttributes: MainElementAttributes<ELT>,
-    elementOptions: Options<PtAttr<ELT>, M>,
-    globalOptions: Options<PtAttr<ELT>, M>,
+type PtHTMLAttributes<ELT extends Element, ATTR extends HTMLAttributes<ELT>> = Omit<ATTR, 'style'> & {
+    style?: string | { [key: string]: string }
+}
+
+type PtOptions<ELT extends Element, ATTR extends HTMLAttributes<ELT>, FUNCTION_OPTIONS> = Options<
+    PtHTMLAttributes<ELT, ATTR>,
+    FUNCTION_OPTIONS
+>
+
+type CustomHTMLAttributes<ELT extends Element, ATTR extends HTMLAttributes<ELT>> = Omit<ATTR, 'style' | 'class'> & {
+    style?: CssStyle | CssStyle[]
+    class: ClassNameEntry[]
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLAnchorAttributes
+ * @param elementAttributes - inner HTMLAnchorAttributes of component
+ * @param elementOptions - pass trough HTMLAnchorAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLAnchorAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLAnchorAttributes
+ */
+export function resolveAnchorPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLAnchorElement, HTMLAnchorAttributes>,
+    elementOptions: PtOptions<HTMLAnchorElement, HTMLAnchorAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLAnchorElement, HTMLAnchorAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLAnchorAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLButtonAttributes
+ * @param elementAttributes - inner HTMLButtonAttributes of component
+ * @param elementOptions - pass trough HTMLButtonAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLButtonAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLButtonAttributes
+ */
+export function resolveButtonPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLButtonElement, HTMLButtonAttributes>,
+    elementOptions: PtOptions<HTMLButtonElement, HTMLButtonAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLButtonElement, HTMLButtonAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLButtonAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLDivAttributes
+ * @param elementAttributes - inner HTMLDivAttributes of component
+ * @param elementOptions - pass trough HTMLDivAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLDivAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLDivAttributes
+ */
+export function resolveDivPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLDivElement, HTMLDivAttributes>,
+    elementOptions: PtOptions<HTMLDivElement, HTMLDivAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLDivElement, HTMLDivAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLDivAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLImageAttributes
+ * @param elementAttributes - inner HTMLImageAttributes of component
+ * @param elementOptions - pass trough HTMLImageAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLImageAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLImageAttributes
+ */
+export function resolveImagePt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLImageElement, HTMLImageAttributes>,
+    elementOptions: PtOptions<HTMLImageElement, HTMLImageAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLImageElement, HTMLImageAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLImageAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLInputAttributes
+ * @param elementAttributes - inner HTMLInputAttributes of component
+ * @param elementOptions - pass trough HTMLInputAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLInputAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLInputAttributes
+ */
+export function resolveInputPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLInputElement, HTMLInputAttributes>,
+    elementOptions: PtOptions<HTMLInputElement, HTMLInputAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLInputElement, HTMLInputAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLInputAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLLiAttributes
+ * @param elementAttributes - inner HTMLLiAttributes of component
+ * @param elementOptions - pass trough HTMLLiAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLLiAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLLiAttributes
+ */
+export function resolveLiPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLLIElement, HTMLLiAttributes>,
+    elementOptions: PtOptions<HTMLLIElement, HTMLLiAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLLIElement, HTMLLiAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLLiAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLSpanAttributes
+ * @param elementAttributes - inner HTMLSpanAttributes of component
+ * @param elementOptions - pass trough HTMLSpanAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLSpanAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLSpanAttributes
+ */
+export function resolveSpanPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLSpanElement, HTMLSpanAttributes>,
+    elementOptions: PtOptions<HTMLSpanElement, HTMLSpanAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLSpanElement, HTMLSpanAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLSpanAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLSVGAttributes
+ * @param elementAttributes - inner HTMLSVGAttributes of component
+ * @param elementOptions - pass trough HTMLSVGAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLSVGAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLSVGAttributes
+ */
+export function resolveSVGPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<SVGSVGElement, HTMLSVGAttributes>,
+    elementOptions: PtOptions<SVGSVGElement, HTMLSVGAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<SVGSVGElement, HTMLSVGAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLSVGAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLUlAttributes
+ * @param elementAttributes - inner HTMLUlAttributes of component
+ * @param elementOptions - pass trough HTMLUlAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLUlAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLUlAttributes
+ */
+export function resolveUlPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLUListElement, HTMLUlAttributes>,
+    elementOptions: PtOptions<HTMLUListElement, HTMLUlAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLUListElement, HTMLUlAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLUlAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLAttributes
+ * @param elementAttributes - inner HTMLAttributes of component
+ * @param elementOptions - pass trough HTMLAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLAttributes
+ */
+export function resolvePT<ELT extends Element, ATTR extends HTMLAttributes<ELT>, FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<ELT, ATTR>,
+    elementOptions: PtOptions<ELT, ATTR, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<ELT, ATTR, FUNCTION_OPTIONS>,
     ptContext: {
         props: PROPS
         state?: STATE

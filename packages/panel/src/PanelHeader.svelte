@@ -1,33 +1,41 @@
 <script lang="ts">
-    import type { HTMLButtonAttributes, HTMLDivAttributes, HTMLSpanAttributes, ResolvedIconPT } from '@jazzsvelte/api'
+    import type { PanelHeaderProps } from './panel.types'
+
+    import { snippetValueOrNull, stringValueOrNull } from '@jazzsvelte/utils'
     import PanelToggler from './PanelToggler.svelte'
 
-    export let headerAttributes: HTMLDivAttributes
-    export let titleAttributes: HTMLSpanAttributes
-    export let iconsAttributes: HTMLDivAttributes
-    export let togglerAttributes: HTMLButtonAttributes
-    export let resolvedTogglerIcon: ResolvedIconPT
-    export let toggle: (event?: Event) => void
-    export let toggleable: boolean
-    export let collapsed: boolean
-    export let header: string | null = null
+    let {
+        headerAttributes,
+        titleAttributes,
+        iconsAttributes,
+        togglerAttributes,
+        resolvedTogglerIcon,
+        toggle,
+        toggleable,
+        collapsed,
+        header = null,
+        icons
+    }: PanelHeaderProps = $props()
+
+    let _headerSnippet = $derived(snippetValueOrNull(header))
+    let _headerString = $derived(stringValueOrNull(header))
 </script>
 
-{#if header || $$slots.header_content || toggleable}
+{#if _headerSnippet || _headerString || toggleable}
     <div {...headerAttributes}>
         <span {...titleAttributes}>
-            {#if $$slots.header_content}
-                <slot name="header_content" {header} {toggle} {collapsed} />
+            {#if _headerSnippet}
+                {@render _headerSnippet({ toggle, collapsed })}
             {:else}
-                {header}
+                {_headerString}
             {/if}
         </span>
         <div {...iconsAttributes}>
-            {#if $$slots.header_icons}
-                <slot name="header_icons" {toggle} {collapsed} />
+            {#if icons}
+                {@render icons?.({ toggle, collapsed })}
             {/if}
             {#if toggleable}
-                <PanelToggler {togglerAttributes} {toggle} {collapsed} {resolvedTogglerIcon} />
+                <PanelToggler {togglerAttributes} {toggle} {resolvedTogglerIcon} />
             {/if}
         </div>
     </div>

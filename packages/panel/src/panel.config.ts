@@ -24,6 +24,8 @@ export const defaultPanelProps: Omit<Required<BasePanelProps>, 'pt' | 'ptOptions
     collapseIcon: MinusIcon,
     expandIcon: PlusIcon,
     header: null,
+    headerTemplate: null,
+    footerTemplate: null,
     footer: null,
     icons: null,
     onCollapse: null,

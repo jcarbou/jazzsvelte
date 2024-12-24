@@ -4,27 +4,17 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
     import { Panel } from '@jazzsvelte/panel'
-
     import type { DocSection } from '$lib/doc/common/doc.types'
 
-    export let docSection: DocSection
+    interface Props {
+        docSection: DocSection
+    }
+
+    let { docSection }: Props = $props()
 
     let panelCmp: Panel
 
-    const code = {
-        basic: `
-<Panel header="Header" toggleable>
-    <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-</Panel>
-        `,
-        javascript: `
-${importJS(['Panel', 'Button'], '   let panelCmp')}
-
+    const codeBasic = `
 <Button label="Toggle" class="m-2" on:click={() => panelCmp.toggle()} />
 <Button label="Expand" class="m-2" on:click={() => panelCmp.expand()} />
 <Button label="Collapse" class="m-2" on:click={() => panelCmp.collapse()} />
@@ -36,22 +26,18 @@ ${importJS(['Panel', 'Button'], '   let panelCmp')}
         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
 </Panel>
-        `,
+`
+
+    const code = {
+        basic: codeBasic,
+        javascript: `
+${importJS(['Panel', 'Button'], '   let panelCmp')}
+${codeBasic}>
+`,
         typescript: `
 ${importTS(['Panel', 'Button'], '   let panelCmp : Panel')}
-
-<Button label="Toggle" class="m-2" on:click={() => panelCmp?.toggle()} />
-<Button label="Expand" class="m-2" on:click={() => panelCmp?.expand()} />
-<Button label="Collapse" class="m-2" on:click={() => panelCmp?.collapse()} />
-<Panel ref={ref} header="Header" toggleable>
-    <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-</Panel>
-        `
+${codeBasic}>
+`
     }
 </script>
 
@@ -63,9 +49,9 @@ ${importTS(['Panel', 'Button'], '   let panelCmp : Panel')}
     </p>
 </DocSectionText>
 <div class="card">
-    <Button label="Toggle" class="m-2" on:click={() => panelCmp.toggle()} />
-    <Button label="Expand" class="m-2" on:click={() => panelCmp.expand()} />
-    <Button label="Collapse" class="m-2" on:click={() => panelCmp.collapse()} />
+    <Button label="Toggle" class="m-2" onclick={() => panelCmp.toggle()} />
+    <Button label="Expand" class="m-2" onclick={() => panelCmp.expand()} />
+    <Button label="Collapse" class="m-2" onclick={() => panelCmp.collapse()} />
 
     <Panel bind:this={panelCmp} header="Header" toggleable>
         <p class="m-0">

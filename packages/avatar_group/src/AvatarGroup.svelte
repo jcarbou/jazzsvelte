@@ -1,7 +1,8 @@
 <script lang="ts">
     import type { AvatarGroupPassThroughMethodOptions, AvatarGroupProps } from './avatarGroup.types'
-    import type { HTMLDivAttributes, PassThroughOptions } from '@jazzsvelte/api'
-    import { resolvePT } from '@jazzsvelte/api'
+    import type { PassThroughOptions } from '@jazzsvelte/api'
+
+    import { resolveDivPt } from '@jazzsvelte/api'
     import { defaultAvatarGroupProps as DEFAULT, globalAvatarGroupPT as globalPt } from './avatarGroup.config'
 
     let {
@@ -39,8 +40,8 @@
     })
 
     // "root element"
-    let rootAttributes: HTMLDivAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveDivPt(
             {
                 class: ['p-avatar-group', 'p-component', className, {}],
                 style,

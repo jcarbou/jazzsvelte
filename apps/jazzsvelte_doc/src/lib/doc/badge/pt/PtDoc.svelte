@@ -3,25 +3,16 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
-    import { importJS, importTS } from '$lib/doc/common/doc.utils'
+    import { simpleCode } from '$lib/doc/common/doc.utils'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 
-    const codeBasic = `
+    const code = simpleCode(
+        ['Badge'],
+        `
 <Badge value="2" pt={{ root: { class: 'bg-primary border-round-sm' } }} />
 `
-
-    const code = {
-        basic: codeBasic,
-        javascript: `
-${importJS('Badge')}
-${codeBasic}
-`,
-        typescript: `
-${importTS('Badge')}
-${codeBasic}
-`
-    }
+    )
 </script>
 
 <DocSectionText {docSection} />

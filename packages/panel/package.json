@@ -17,6 +17,7 @@
         "@jazzsvelte/minus_icon": "workspace:^0.1.0"
     },
     "dependencies": {
+        "@jazzsvelte/utils": "workspace:^0.1.0",
         "@jazzsvelte/object": "workspace:^0.1.0"
     },
     "keywords": [],

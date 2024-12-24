@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { ButtonBadgeSnippet, ButtonLabelSnippet, ButtonPassThroughMethodOptions, ButtonProps } from './button.types'
-    import type { JazzSvelteContext, HTMLSpanAttributes, ResolvedIconPT, PassThroughOptions } from '@jazzsvelte/api'
+    import type { ButtonPassThroughMethodOptions, ButtonProps } from './button.types'
+    import type { JazzSvelteContext, PassThroughOptions } from '@jazzsvelte/api'
     import type { ButtonGroupContext } from './buttonGroup.types'
 
-    import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
+    import { resolveButtonPt, resolveIconPT, resolveSpanPt } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
     import { Ripple } from '@jazzsvelte/ripple'
     import { Badge } from '@jazzsvelte/badge'
@@ -14,7 +14,6 @@
     import { focusEl } from '@jazzsvelte/dom'
     import { stopProgagation } from '@jazzsvelte/stop_propagation_action'
     import { stringValueOrNull, snippetValueOrNull } from '@jazzsvelte/utils'
-    import { HTMLButtonAttributes } from '@jazzsvelte/api'
 
     let {
         children,
@@ -89,10 +88,10 @@
     let _severity = $derived(severity ?? buttonGroup?.severity)
     //let _label = $derived(label ?? _restProps['aria-label'])
     let _hasLabel: boolean = $derived(!!label)
-    let _labelSnippet: ButtonLabelSnippet | null = $derived(snippetValueOrNull(label))
-    let _labelString: string | null = $derived(stringValueOrNull(label))
-    let _badgeSnippet: ButtonBadgeSnippet | null = $derived(snippetValueOrNull(badge))
-    let _badgeString: string | null = $derived(stringValueOrNull(badge))
+    let _labelSnippet = $derived(snippetValueOrNull(label))
+    let _labelString = $derived(stringValueOrNull(label))
+    let _badgeSnippet = $derived(snippetValueOrNull(badge))
+    let _badgeString = $derived(stringValueOrNull(badge))
 
     let ptContext: ButtonPassThroughMethodOptions & {
         ptOptions: PassThroughOptions | null
@@ -105,8 +104,8 @@
     })
 
     // "root element"
-    let rootAttributes: HTMLButtonAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveButtonPt(
             {
                 class: [
                     'p-button p-component',
@@ -140,8 +139,8 @@
     )
 
     // "label element"
-    let labelAttributes: HTMLSpanAttributes = $derived(
-        resolvePT(
+    let labelAttributes = $derived(
+        resolveSpanPt(
             {
                 class: ['p-button-label p-c'],
                 'data-pc-section': 'label'
@@ -153,7 +152,7 @@
     )
 
     // "icon element"
-    let resolvedIcon: ResolvedIconPT = $derived(
+    let resolvedIcon = $derived(
         resolveIconPT(
             icon,
             {
@@ -171,7 +170,7 @@
     )
 
     // "loading icon element"
-    let resolvedLoadingIcon: ResolvedIconPT = $derived(
+    let resolvedLoadingIcon = $derived(
         resolveIconPT(
             loadingIcon,
             {
@@ -192,8 +191,8 @@
     )
 
     // "badge" element
-    let badgeAttributes: HTMLSpanAttributes = $derived(
-        resolvePT(
+    let badgeAttributes = $derived(
+        resolveSpanPt(
             {
                 class: [],
                 'data-pc-section': 'badge'

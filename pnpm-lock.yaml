@@ -997,6 +997,9 @@ importers:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object
+      '@jazzsvelte/utils':
+        specifier: workspace:^0.1.0
+        version: link:../utils
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0

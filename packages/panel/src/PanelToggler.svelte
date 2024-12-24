@@ -4,15 +4,19 @@
     import { Ripple } from '@jazzsvelte/ripple'
     import { getContext } from 'svelte'
 
-    export let togglerAttributes: HTMLButtonAttributes
-    export let toggle: (event?: Event) => void
-    export let resolvedTogglerIcon: ResolvedIconPT
+    interface Props {
+        togglerAttributes: HTMLButtonAttributes
+        toggle: (event?: Event) => void
+        resolvedTogglerIcon: ResolvedIconPT
+    }
+
+    let { togglerAttributes, toggle, resolvedTogglerIcon }: Props = $props()
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
-    $: ripple = jazzSvelteContext.ripple
+    let ripple = $derived(jazzSvelteContext.ripple)
 </script>
 
-<button {...togglerAttributes} on:click={toggle}>
+<button {...togglerAttributes} onclick={toggle}>
     <IconBuilder resolvedIcon={resolvedTogglerIcon} />
     {#if $ripple}
         <Ripple />

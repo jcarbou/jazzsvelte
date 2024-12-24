@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { JazzSvelteContext, HTMLDivAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, PassThroughOptions } from '@jazzsvelte/api'
     import type { ToastPassThroughMethodOptions, ToastProps } from './toast.types'
 
     import { getContext } from 'svelte'
-    import { mergeCssStyles, resolvePT, zIndex } from '@jazzsvelte/api'
+    import { mergeCssStyles, resolveDivPt, zIndex } from '@jazzsvelte/api'
     import ToastMessage from './ToastMessage.svelte'
     import { toastMessages } from './toast.store'
     import { fade, fly } from 'svelte/transition'
@@ -36,8 +36,8 @@
     })
 
     // "roor" elements
-    let rootAttributes: HTMLDivAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveDivPt(
             {
                 class: [
                     className,

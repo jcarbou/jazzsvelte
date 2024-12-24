@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { JazzSvelteContext, HTMLInputAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, PassThroughOptions } from '@jazzsvelte/api'
     import type { InputTextPassThroughMethodOptions, InputTextProps } from './inputText.types'
 
-    import { resolvePT } from '@jazzsvelte/api'
+    import { resolveInputPt } from '@jazzsvelte/api'
     import { getContext } from 'svelte'
     import { tooltip, TooltipTargetDisabled } from '@jazzsvelte/tooltip'
     import { keyFilter } from '@jazzsvelte/key_filter_action'
@@ -72,8 +72,8 @@
     })
 
     // "root element"
-    let rootAttributes: HTMLInputAttributes = $derived(
-        resolvePT(
+    let rootAttributes = $derived(
+        resolveInputPt(
             {
                 class: [
                     'p-inputtext p-component',

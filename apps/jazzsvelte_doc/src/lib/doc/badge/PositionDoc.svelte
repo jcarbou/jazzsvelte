@@ -3,11 +3,13 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
-    import { importJS, importTS } from '../common/doc.utils'
+    import { simpleCode } from '../common/doc.utils'
 
     let { docSection }: ComponentDocProps = $props()
 
-    const codeBasic = `
+    const code = simpleCode(
+        ['Badge'],
+        `
 <i class="pi pi-bell p-overlay-badge" style="font-size:2rem;">
     <Badge value="2"></Badge>
 </i>
@@ -18,18 +20,7 @@
     <Badge severity="danger"></Badge>
 </i>
 `
-
-    const code = {
-        basic: codeBasic,
-        javascript: `
-${importJS('Badge')}
-${codeBasic}
-`,
-        typescript: `
-${importTS('Badge')}
-${codeBasic}
-`
-    }
+    )
 </script>
 
 <DocSectionText {docSection}>
