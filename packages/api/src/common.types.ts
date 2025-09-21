@@ -16,7 +16,7 @@ export type MenuItem = {
     separator?: boolean
     style?: CssObject | string
     target?: string
-    template?: Component | null
+    template?: Component<{ item: MenuItem }> | null
     url?: string
     visible?: boolean
     badge?: string | number

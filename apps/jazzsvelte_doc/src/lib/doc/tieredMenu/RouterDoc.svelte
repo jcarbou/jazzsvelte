@@ -46,16 +46,10 @@
         }
     ]
 
-    const code = {
-        basic: `
+    const codeBasic = `
 <TieredMenu model={items} breakpoint="767px" />
-        `,
-        javascript: `
-${importJS(
-    'TieredMenu',
-    importExt('goto', '$app/navigation'),
-    `
-    const items = [
+`
+    const codeItems = `
         {
             label: 'Router',
             icon: 'pi pi-palette',
@@ -91,58 +85,27 @@ ${importJS(
                 }
             ]
         }
-    ]`
-)}
-        
-<TieredMenu model={items} breakpoint="767px" />
+`
+    const code = {
+        basic: codeBasic,
+        javascript: `
+${importJS(
+    'TieredMenu',
+    importExt('goto', '$app/navigation'),
+    `
+    const items = [${codeItems}]`
+)}        
+${codeBasic}
         `,
         typescript: `
 ${importTS(
     'TieredMenu',
     importObject('MenuItem', 'api'),
     importExt('goto', '$app/navigation'),
-    `
-    const items: MenuItem = [
-        {
-            label: 'Router',
-            icon: 'pi pi-palette',
-            items: [
-                {
-                    label: 'Styled',
-                    url: '/theming'
-                },
-                {
-                    label: 'Unstyled',
-                    url: '/unstyled'
-                }
-            ]
-        },
-        {
-            label: 'Programmatic',
-            icon: 'pi pi-link',
-            command: () => {
-                router.push('/installation');
-            }
-        },
-        {
-            label: 'External',
-            icon: 'pi pi-home',
-            items: [
-                {
-                    label: 'React.js',
-                    url: 'https://react.dev/'
-                },
-                {
-                    label: 'Vite.js',
-                    url: 'https://vitejs.dev/'
-                }
-            ]
-        }
-    ]`
+    `    
+    const items : MenuItems = [${codeItems}]`
 )}
-        
-<TieredMenu model={items} breakpoint="767px" />
-        `
+${codeBasic}`
     }
 </script>
 

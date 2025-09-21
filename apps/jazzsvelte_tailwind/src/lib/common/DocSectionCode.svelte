@@ -142,7 +142,7 @@
         justify-content: end;
         z-index: 1;
         top: 0.75rem;
-        right: 0.75rem;
+        right: 1.25rem;
         gap: 0.5rem;
         display: none;
         background: rgba(255, 255, 255, 0.05);

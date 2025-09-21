@@ -1,7 +1,7 @@
 import type { CssObject, CssStyle } from './pt.types'
 import { toKebabCase } from '@jazzsvelte/object'
 
-export function mergeCssStyles(styles: (CssStyle | undefined)[]) {
+export function mergeCssStyles(styles: (CssStyle | undefined | null)[]) {
     const cssObject = {}
     for (const style of styles) {
         if (!style) continue

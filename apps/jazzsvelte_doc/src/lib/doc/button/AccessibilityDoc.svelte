@@ -4,7 +4,7 @@
     import type { ComponentDocProps } from '../common/doc.types'
     import DocTableWrapper from '../common/DocTableWrapper.svelte'
 
-    let { docSection }: ComponentDocProps = $props()
+    let {}: ComponentDocProps = $props()
 
     const code = {
         basic: `

@@ -70,7 +70,7 @@ type PtOptions<ELT extends Element, ATTR extends HTMLAttributes<ELT>, FUNCTION_O
 >
 
 type CustomHTMLAttributes<ELT extends Element, ATTR extends HTMLAttributes<ELT>> = Omit<ATTR, 'style' | 'class'> & {
-    style?: CssStyle | CssStyle[]
+    style?: CssStyle | (CssStyle | undefined | null)[]
     class: ClassNameEntry[]
 }
 

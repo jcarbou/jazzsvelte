@@ -177,6 +177,11 @@ export interface ButtonProps extends Omit<HTMLButtonAttributes, 'disabled' | 'st
  */
 export declare type ButtonPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, ButtonPassThroughMethodOptions>
 
+export interface ButtonPtContext extends ButtonPassThroughMethodOptions {
+    ptOptions: PassThroughOptions | null
+    unstyled: boolean
+}
+
 /**
  * Custom passthrough(pt) option method.
  * @group ptOptionMethod

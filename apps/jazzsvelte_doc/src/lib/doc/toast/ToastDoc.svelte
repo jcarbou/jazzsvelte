@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { Doc } from '../common/doc.types'
     import DocApiPtTable from '../common/DocApiPtTable.svelte'
     import DocComponent from '../common/DocComponent.svelte'
     import AccessibilityDoc from './AccessibilityDoc.svelte'
@@ -16,7 +17,7 @@
     import TailwindDoc from './theming/TailwindDoc.svelte'
     import { toastApiData, toastMessageApiData } from '@jazzsvelte/toast'
 
-    const docs = [
+    const docs: Doc[] = [
         {
             id: 'import',
             label: 'Import',

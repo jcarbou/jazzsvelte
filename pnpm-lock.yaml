@@ -1037,6 +1037,9 @@ importers:
       '@jazzsvelte/click_outside_action':
         specifier: workspace:^0.1.0
         version: link:../click_outside_action
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object

@@ -4,10 +4,9 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { SplitButton } from '@jazzsvelte/split_button'
     import { items, save, importCode, dataJsCode, dataTsCode } from './data'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
-
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
     const code = {
         basic: `
@@ -44,7 +43,7 @@ ${importTS('SplitButton', importCode, dataTsCode)}
 </DocSectionText>
 <div class="card flex justify-content-center">
     <SplitButton icon="pi pi-prime" model={items} severity="contrast">
-        <span slot="buttonLabel">Jazz Svelte</span>
+        <span>Jazz Svelte</span>
     </SplitButton>
 </div>
 <DocSectionCode {code} />

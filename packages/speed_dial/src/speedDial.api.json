@@ -49,10 +49,10 @@
                 "description": "Inline style of the button element."
             },
             {
-                "name": "buttonTemplate",
+                "name": "buttonSnippet",
                 "optional": true,
                 "readonly": false,
-                "type": "typeof SvelteComponent | null ",
+                "type": "Snippet | null ",
                 "default": "null",
                 "description": "Template of button element."
             },
@@ -140,7 +140,7 @@
                 "name": "ptOptions",
                 "optional": true,
                 "readonly": false,
-                "type": "SpeedDialPassThroughMethodOptions",
+                "type": "PassThroughOptions",
                 "default": "null",
                 "description": "Used to configure passthrough(pt) options of the component."
             },

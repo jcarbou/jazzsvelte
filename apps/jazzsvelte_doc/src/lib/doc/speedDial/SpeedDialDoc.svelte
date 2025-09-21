@@ -15,7 +15,6 @@
     import TailwindDoc from './theming/TailwindDoc.svelte'
     import TooltipDoc from './TooltipDoc.svelte'
     import { speedDialApiData } from '@jazzsvelte/speed_dial'
-    import type { Doc } from '../common/doc.types'
 
     const docs = [
         {
@@ -58,7 +57,6 @@
             label: 'Custom',
             component: CustomDoc
         },
-
         {
             id: 'accessibility',
             label: 'Accessibility',

@@ -254,7 +254,7 @@
                 "name": "ptOptions",
                 "optional": true,
                 "readonly": false,
-                "type": "VirtualScrollerPassThroughMethodOptions",
+                "type": "PassThroughOptions",
                 "default": "null",
                 "description": "Used to configure passthrough(pt) options of the component."
             },

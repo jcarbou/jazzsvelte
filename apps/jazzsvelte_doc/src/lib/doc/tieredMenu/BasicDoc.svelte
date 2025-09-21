@@ -1,28 +1,28 @@
 <script lang="ts">
-    import { importJS, importObject, importTS, importType } from '../common/doc.utils'
+    import { importJS, importTS, importType } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
-    import { dataJsCode, dataTsCode, items } from './data'
+    import { dataJsCode, dataTsCode, items } from './tieredMenu.data'
 
     export let docSection: DocSection
 
-    const code = {
-        basic: `
+    const codeBasic = `
 <TieredMenu model={items} breakpoint="767px" />
-        `,
+`
+
+    const code = {
+        basic: codeBasic,
         javascript: `
 ${importJS('TieredMenu', dataJsCode)}
-
- <TieredMenu model={items} breakpoint="767px" />
-        `,
+${codeBasic}
+`,
         typescript: `
 ${importTS('TieredMenu', importType('MenuItem', 'api'), dataTsCode)}
-
-<TieredMenu model={items} breakpoint="767px" />
-        `
+${codeBasic}
+`
     }
 </script>
 

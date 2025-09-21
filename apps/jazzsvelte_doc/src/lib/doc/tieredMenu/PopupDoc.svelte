@@ -1,22 +1,22 @@
 <script lang="ts">
-    import { importJS, importObject, importTS, importType } from '../common/doc.utils'
+    import { importJS, importTS, importType } from '../common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
+    import { dataJsCode, dataTsCode, items } from './tieredMenu.data'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
-    import { dataJsCode, dataTsCode, items } from './data'
-
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
     let menu: TieredMenu
 
-    const code = {
-        basic: `
+    const codeBasic = `
 <TieredMenu model={items} popup bind:this={menu} breakpoint="767px" />
 <Button label="Toggle" on:click={(e) => menu.toggle(e)} />
-        `,
+`
+    const code = {
+        basic: codeBasic,
         javascript: `
 ${importJS(
     ['TieredMenu', 'Button'],
@@ -24,10 +24,8 @@ ${importJS(
     let menu`,
     dataJsCode
 )}
-            
-<TieredMenu model={items} popup bind:this={menu} breakpoint="767px" />
-<Button label="Toggle" on:click={(e) => menu.toggle(e)} />
-        `,
+${codeBasic}
+`,
         typescript: `
 ${importTS(
     ['TieredMenu', 'Button'],
@@ -36,9 +34,8 @@ ${importTS(
     let menu: TieredMenu`,
     dataTsCode
 )}
-            
-<TieredMenu model={items} popup bind:this={menu} breakpoint="767px" />
-<Button label="Toggle" on:click={(e) => menu.toggle(e)} />        `
+${codeBasic}
+`
     }
 </script>
 
@@ -49,6 +46,6 @@ ${importTS(
 </DocSectionText>
 <div class="card flex justify-content-center">
     <TieredMenu model={items} popup bind:this={menu} breakpoint="767px" />
-    <Button label="Toggle" on:click={(e) => menu.toggle(e)} />
+    <Button label="Toggle" onclick={(e: Event) => menu.toggle(e)} />
 </div>
 <DocSectionCode {code} />

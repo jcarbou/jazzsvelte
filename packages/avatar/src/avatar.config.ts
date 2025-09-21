@@ -16,10 +16,11 @@ export function avatarPT(options: AvatarPassThroughOptions) {
 /**
  * Default avatar  props
  */
-export const defaultAvatarProps: Omit<Required<BaseAvatarProps>, 'pt' | 'ptOptions' | 'onClick' | 'onImageError'> = {
+export const defaultAvatarProps: Omit<Required<BaseAvatarProps>, 'pt' | 'ptOptions' | 'onclick' | 'onImageError'> = {
     class: null,
     icon: null,
     image: null,
+    content: null,
     imageAlt: 'avatar',
     imageFallback: 'default',
     label: null,
@@ -33,6 +34,6 @@ export const defaultAvatarProps: Omit<Required<BaseAvatarProps>, 'pt' | 'ptOptio
  * Set global default props (for all avatars)
  * @param options
  */
-export function avatarDefaultProps(props: Partial<Omit<BaseAvatarProps, 'pt' | 'ptOptions'>>) {
+export function avatarDefaultProps(props: Partial<Omit<BaseAvatarProps, 'pt' | 'ptOptions' | 'onClick' | 'onImageError'>>) {
     Object.assign(defaultAvatarProps, props)
 }

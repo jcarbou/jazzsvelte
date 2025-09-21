@@ -4,9 +4,9 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     //import { Skeleton } from '@jazzsvelte/skeleton'
     import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    export let docSection: DocSection
+    let { docSection }: ComponentDocProps = $props()
 
     const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)
 

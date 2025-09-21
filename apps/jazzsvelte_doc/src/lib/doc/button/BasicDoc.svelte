@@ -2,9 +2,9 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { importJS, importTS } from '../common/doc.utils'
     import { showToast } from '@jazzsvelte/toast'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
     let { docSection }: ComponentDocProps = $props()
 

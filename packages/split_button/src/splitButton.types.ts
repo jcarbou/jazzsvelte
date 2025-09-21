@@ -9,9 +9,10 @@ import type {
     PassThroughHTMLAttributes,
     PassThroughType,
     MenuItem,
-    AppendTo
+    AppendTo,
+    PassThroughOptions
 } from '@jazzsvelte/api'
-import { ButtonPassThroughOptions, ButtonProps, ButtonSeverity } from '@jazzsvelte/button'
+import { ButtonLabelSnippet, ButtonPassThroughOptions, ButtonProps, ButtonSeverity } from '@jazzsvelte/button'
 import { TieredMenuPassThroughOptions, TieredMenuPassThroughType, TieredMenuProps } from '@jazzsvelte/tiered_menu'
 
 /**
@@ -83,7 +84,7 @@ export interface BaseSplitButtonProps {
      * Text of the button.
      * @default  null
      */
-    label?: string | null
+    label?: string | ButtonLabelSnippet | null
 
     /**
      * Display loading icon of the button
@@ -128,6 +129,36 @@ export interface BaseSplitButtonProps {
     model?: MenuItem[]
 
     /**
+     * Callback to invoke when the main button is click
+     * @default null
+     */
+    onButtonClick?: ((event: Event) => void) | null
+
+    /**
+     * Callback to invoke when a popup menu is hidden.
+     * @default null
+     */
+    onMenuHide?: ((event: Event) => void) | null
+
+    /**
+     * Callback to invoke when a popup menu is shown.
+     * @default null
+     */
+    onMenuShow?: ((event: Event) => void) | null
+
+    /**
+     * Callback to invoke when a popup menu is click
+     * @default null
+     */
+    onMenuClick?: ((event: Event) => void) | null
+
+    /**
+     * Callback to invoke when menu receives focus.
+     * @default null
+     */
+    onFocus?: ((event: Event) => void) | null
+
+    /**
      * Add a border class without a background initially.
      * @default  false
      */
@@ -137,13 +168,13 @@ export interface BaseSplitButtonProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: SplitButtonPassThroughOptions
+    pt?: SplitButtonPassThroughOptions | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
      * @default  null
      */
-    ptOptions?: SplitButtonPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
 
     /**
      * Add a shadow to indicate elevation.
@@ -232,6 +263,11 @@ export declare type SplitButtonPassThroughType<T> = PassThroughType<
  */
 export interface SplitButtonPassThroughMethodOptions {
     props: SplitButtonProps
+}
+
+export interface SplitButtonPtContext extends SplitButtonPassThroughMethodOptions {
+    ptOptions: PassThroughOptions | null
+    unstyled: boolean
 }
 
 /**

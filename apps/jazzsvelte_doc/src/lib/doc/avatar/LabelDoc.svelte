@@ -6,7 +6,7 @@
     import { Badge } from '@jazzsvelte/badge'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 
     const codeCommon = `
 <div class="flex flex-wrap gap-5">

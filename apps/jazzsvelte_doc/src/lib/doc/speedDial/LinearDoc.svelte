@@ -3,150 +3,27 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { SpeedDial } from '@jazzsvelte/speed_dial'
-    import { showToast } from '@jazzsvelte/toast'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { CODE_SPEED_DIAL_ITEMS, SPEED_DIAL_ITEMS } from './speedDial.data'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
-    export let docSection: DocSection
-
-    const items = [
-        {
-            label: 'Add',
-            icon: 'pi pi-pencil',
-            command: () => {
-                showToast({ severity: 'info', summary: 'Add', detail: 'Data Added' })
-            }
-        },
-        {
-            label: 'Update',
-            icon: 'pi pi-refresh',
-            command: () => {
-                showToast({ severity: 'success', summary: 'Update', detail: 'Data Updated' })
-            }
-        },
-        {
-            label: 'Delete',
-            icon: 'pi pi-trash',
-            command: () => {
-                showToast({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' })
-            }
-        },
-        {
-            label: 'Upload',
-            icon: 'pi pi-upload',
-            command: () => {
-                showToast({ severity: 'info', summary: 'Add', detail: 'File Uploaded' })
-            }
-        },
-        {
-            label: 'React Website',
-            icon: 'pi pi-external-link',
-            command: () => {
-                window.location.href = 'https://react.dev/'
-            }
-        }
-    ]
-
-    const code = {
-        basic: `
+    const codeBasic = `
 <SpeedDial model={items} direction="up" style="left:calc(50% - 2rem);bottom:0;" />
 <SpeedDial model={items} direction="down" style="left:calc(50% - 2rem);top:0;" />
 <SpeedDial model={items} direction="left" style="top:calc(50% - 2rem);right:0;" />
 <SpeedDial model={items} direction="right" style="top:calc(50% - 2rem);left:0;" />
-        `,
+`
+
+    const code = {
+        basic: codeBasic,
         javascript: `
-${importJS(
-    'SpeedDial',
-    `import { showToast } from '@jazzsvelte/toast'`,
-    `const items = [
-        {
-            label: 'Add',
-            icon: 'pi pi-pencil',
-            command: () => {
-                showToast({ severity: 'info', summary: 'Add', detail: 'Data Added' })
-            }
-        },
-        {
-            label: 'Update',
-            icon: 'pi pi-refresh',
-            command: () => {
-                showToast({ severity: 'success', summary: 'Update', detail: 'Data Updated' })
-            }
-        },
-        {
-            label: 'Delete',
-            icon: 'pi pi-trash',
-            command: () => {
-                showToast({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' })
-            }
-        },
-        {
-            label: 'Upload',
-            icon: 'pi pi-upload',
-            command: () => {
-                showToast({ severity: 'info', summary: 'Add', detail: 'File Uploaded' })
-            }
-        },
-        {
-            label: 'React Website',
-            icon: 'pi pi-external-link',
-            command: () => {
-                window.location.href = 'https://react.dev/'
-            }
-        }
-    ])`
-)}
-        <SpeedDial model={items} direction="up" style="left:calc(50% - 2rem);bottom:0;" />
-        <SpeedDial model={items} direction="down" style="left:calc(50% - 2rem);top:0;" />
-        <SpeedDial model={items} direction="left" style="top:calc(50% - 2rem);right:0;" />
-        <SpeedDial model={items} direction="right" style="top:calc(50% - 2rem);left:0;" />
+${importJS('SpeedDial', `import { showToast } from '@jazzsvelte/toast'`, CODE_SPEED_DIAL_ITEMS)}
+${codeBasic}
 `,
         typescript: `
-${importTS(
-    'SpeedDial',
-    `import { showToast } from '@jazzsvelte/toast'`,
-    `const items = [
-        {
-            label: 'Add',
-            icon: 'pi pi-pencil',
-            command: () => {
-                showToast({ severity: 'info', summary: 'Add', detail: 'Data Added' })
-            }
-        },
-        {
-            label: 'Update',
-            icon: 'pi pi-refresh',
-            command: () => {
-                showToast({ severity: 'success', summary: 'Update', detail: 'Data Updated' })
-            }
-        },
-        {
-            label: 'Delete',
-            icon: 'pi pi-trash',
-            command: () => {
-                showToast({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' })
-            }
-        },
-        {
-            label: 'Upload',
-            icon: 'pi pi-upload',
-            command: () => {
-                showToast({ severity: 'info', summary: 'Add', detail: 'File Uploaded' })
-            }
-        },
-        {
-            label: 'React Website',
-            icon: 'pi pi-external-link',
-            command: () => {
-                window.location.href = 'https://react.dev/'
-            }
-        }
-    ])`
-)}
-<SpeedDial model={items} direction="up" style="left:calc(50% - 2rem);bottom:0;" />
-        <SpeedDial model={items} direction="down" style="left:calc(50% - 2rem);top:0;" />
-        <SpeedDial model={items} direction="left" style="top:calc(50% - 2rem);right:0;" />
-        <SpeedDial model={items} direction="right" style="top:calc(50% - 2rem);left:0;" />
+${importTS('SpeedDial', `import { showToast } from '@jazzsvelte/toast'`, CODE_SPEED_DIAL_ITEMS)}
+${codeBasic}
 `
     }
 </script>
@@ -159,10 +36,10 @@ ${importTS(
 </DocSectionText>
 <div class="card">
     <div style="position:relative;height:500px;">
-        <SpeedDial model={items} direction="up" style="left:calc(50% - 2rem);bottom:0;" />
-        <SpeedDial model={items} direction="down" style="left:calc(50% - 2rem);top:0;" />
-        <SpeedDial model={items} direction="left" style="top:calc(50% - 2rem);right:0;" />
-        <SpeedDial model={items} direction="right" style="top:calc(50% - 2rem);left:0;" />
+        <SpeedDial model={SPEED_DIAL_ITEMS} direction="up" style="left:calc(50% - 2rem);bottom:0;" />
+        <SpeedDial model={SPEED_DIAL_ITEMS} direction="down" style="left:calc(50% - 2rem);top:0;" />
+        <SpeedDial model={SPEED_DIAL_ITEMS} direction="left" style="top:calc(50% - 2rem);right:0;" />
+        <SpeedDial model={SPEED_DIAL_ITEMS} direction="right" style="top:calc(50% - 2rem);left:0;" />
     </div>
 </div>
 <DocSectionCode {code} />

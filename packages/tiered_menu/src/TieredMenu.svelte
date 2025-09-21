@@ -4,27 +4,17 @@
         FocusedItemInfoStore,
         ProcessedItem,
         ProcessedItemEvent,
-        TieredMenuPassThroughMethodOptions,
-        TieredMenuPassThroughOptions,
+        TieredMenuProps,
+        TieredMenuPtContext,
         TieredMenuTreeContext
     } from './tieredMenu.types'
 
-    import type {
-        JazzSvelteContext,
-        HTMLDivAttributes,
-        IconComponent,
-        CssStyle,
-        PassThroughOptions,
-        MenuItem,
-        AppendTo,
-        OnEvent,
-        TimeoutId
-    } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, TimeoutId } from '@jazzsvelte/api'
 
     import { portal } from '@jazzsvelte/portal_action'
     import { getContext, setContext, tick } from 'svelte'
-    import { derived } from 'svelte/store'
-    import { mergeCssStyles, resolvePT, zIndex } from '@jazzsvelte/api'
+    import { derived as storeDerived } from 'svelte/store'
+    import { mergeCssStyles, resolveDivPt, zIndex } from '@jazzsvelte/api'
     import { defaultTieredMenuProps as DEFAULT, globalTieredMenuPT as globalPt } from './tieredMenu.config'
     import { fade } from 'svelte/transition'
     import TieredMenuSub from './TieredMenuSub.svelte'
@@ -50,26 +40,48 @@
     import { windowEvents } from '@jazzsvelte/window_events_action'
     import { isPrintableCharacter } from '@jazzsvelte/object'
 
-    export let appendTo: AppendTo = DEFAULT.appendTo
-    export let autoZIndex: boolean = DEFAULT.autoZIndex
-    export let baseZIndex: number = DEFAULT.baseZIndex
-    export let breakpoint: string | null = DEFAULT.breakpoint
-    let className: string | null = DEFAULT.class
-    export { className as class }
-    export let id: string | null = null
-    export let model: MenuItem[] = DEFAULT.model
-    export let popup: boolean = DEFAULT.popup
-    export let pt: TieredMenuPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let scrollHeight: string | null = DEFAULT.scrollHeight
-    export let style: CssStyle | null = DEFAULT.style
-    export let submenuIcon: string | IconComponent | null = DEFAULT.submenuIcon
-    export let unstyled: boolean = DEFAULT.unstyled
+    let {
+        appendTo = DEFAULT.appendTo,
+        autoZIndex = DEFAULT.autoZIndex,
+        baseZIndex = DEFAULT.baseZIndex,
+        breakpoint = DEFAULT.breakpoint,
+        class: className = DEFAULT.class,
+        id = null,
+        model = DEFAULT.model,
+        popup = DEFAULT.popup,
+        pt = null,
+        ptOptions = null,
+        scrollHeight = DEFAULT.scrollHeight,
+        style = DEFAULT.style,
+        submenuIcon = DEFAULT.submenuIcon,
+        unstyled = DEFAULT.unstyled,
+        onHide = null,
+        onShow = null,
+        onBlur = null,
+        onFocus = null,
+        ..._restProps
+    }: TieredMenuProps = $props()
 
-    export let onHide: OnEvent = null
-    export let onShow: OnEvent = null
-    export let onBlur: OnEvent = null
-    export let onFocus: OnEvent = null
+    let _props: TieredMenuProps = $derived({
+        appendTo,
+        autoZIndex,
+        baseZIndex,
+        breakpoint,
+        class: className,
+        id,
+        model,
+        popup,
+        pt,
+        ptOptions,
+        scrollHeight,
+        style,
+        submenuIcon,
+        unstyled,
+        onHide,
+        onShow,
+        onBlur,
+        onFocus
+    })
 
     export const displayName = 'TieredMenu'
     export function getElement(): HTMLDivElement | null {
@@ -90,11 +102,12 @@
         return visible
     }
 
-    $: visible = !popup satisfies boolean
-    $: _id = (id || uniqueId('tieredMenu_')) satisfies string
+    let visible = $state(!popup)
 
-    $: ptContext = {
-        props: { ...DEFAULT, ...$$props },
+    let _tieredMenuId: string = $derived(id || uniqueId('tieredMenu_'))
+
+    let ptContext: TieredMenuPtContext = $derived({
+        props: { ...DEFAULT, ..._props, ..._restProps },
         context: {
             active: false
         },
@@ -104,46 +117,46 @@
         },
         ptOptions,
         unstyled
-    } satisfies TieredMenuPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    })
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
     const { inputStyle, ripple } = jazzSvelteContext
 
-    // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            class: [
-                'p-component',
-                className,
-                'p-tieredmenu',
-                {
-                    'p-tieredmenu-overlay': popup,
-                    'p-tieredmenu-isMobile': $isMobileMode,
-                    'p-tieredmenu-isPopup': !!popup,
-                    'p-input-filled': $inputStyle === 'filled',
-                    'p-ripple-disabled': $ripple === false
-                }
-            ],
-            style: mergeCssStyles([style, popupStyle]),
-            'data-pc-name': 'tieredMenu',
-            'data-pc-section': 'root'
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLDivAttributes
-
-    $: processedItems = createProcessedItems(model) satisfies ProcessedItem[] | null
-    $: matchMediaQuery = breakpoint ? `screen and (max-width: ${breakpoint})` : (null satisfies string | null)
-    let focused: boolean = false
-    let popupStyle: string | null = ''
     let isMobileMode = createBooleanStore(false)
+    let popupStyle: string | null = '' // TODO : $state  ?
+
+    // "root element"
+    let rootAttributes = $derived(
+        resolveDivPt(
+            {
+                class: [
+                    'p-component',
+                    className,
+                    'p-tieredmenu',
+                    {
+                        'p-tieredmenu-overlay': popup,
+                        'p-tieredmenu-isMobile': $isMobileMode,
+                        'p-tieredmenu-isPopup': !!popup,
+                        'p-input-filled': $inputStyle === 'filled',
+                        'p-ripple-disabled': $ripple === false
+                    }
+                ],
+                style: mergeCssStyles([style, popupStyle]),
+                'data-pc-name': 'tieredMenu',
+                'data-pc-section': 'root'
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
+
+    let processedItems: ProcessedItem[] | null = $derived(createProcessedItems(model))
+    let matchMediaQuery: string | null = $derived(breakpoint ? `screen and (max-width: ${breakpoint})` : null)
+    let focused: boolean = $state(false)
     let activeItemPath: ActiveItemPathStore = createActiveItemPathStore()
     let focusedItemInfo: FocusedItemInfoStore = createFocusedItemInfoStore()
-    let visibleItems = derived<[ActiveItemPathStore, FocusedItemInfoStore], ProcessedItem[]>(
+    let visibleItems = storeDerived<[ActiveItemPathStore, FocusedItemInfoStore], ProcessedItem[]>(
         [activeItemPath, focusedItemInfo],
         ([$activeItemPath, $focusedItemInfo]) => {
             const processedItem = $activeItemPath.find((p) => p.key === $focusedItemInfo.parentKey)
@@ -151,15 +164,19 @@
             return processed || []
         }
     )
+    // svelte-ignore non_reactive_update
     let menu: TieredMenuSub
     let dirty: boolean = false
     let relatedTargetEl: HTMLElement | null = null
     let targetEl: HTMLElement | null = null
+    // svelte-ignore non_reactive_update
     let containerEl: HTMLDivElement | null = null
-    $: focusedItemId =
+
+    let focusedItemId = $derived(
         $focusedItemInfo.index !== -1
-            ? `${_id}${$focusedItemInfo.parentKey ? '_' + $focusedItemInfo.parentKey : ''}_${$focusedItemInfo.index}`
+            ? `${_tieredMenuId}${$focusedItemInfo.parentKey ? '_' + $focusedItemInfo.parentKey : ''}_${$focusedItemInfo.index}`
             : null
+    )
     let searchValue: string | null = null
     let searchTimeoutId: TimeoutId = null
 
@@ -374,7 +391,7 @@
     }
 
     function scrollInView(index: number = -1) {
-        const elementId = index !== -1 ? `${_id}_${index}` : focusedItemId
+        const elementId = index !== -1 ? `${_tieredMenuId}_${index}` : focusedItemId
         const element = findSingleEl(menu.getElement(), `li[id="${elementId}"]`)
 
         element?.scrollIntoView?.({ block: 'nearest', inline: 'start' })
@@ -515,36 +532,41 @@
         _hide(event, !popup)
     }
 
+    //let tieredMenuTreeContext: TieredMenuTreeContext = $derived()
+
+    // setContext<TieredMenuTreeContext>('tieredMenuTree', tieredMenuTreeContext)
+
+    // $effect(() => {
     setContext<TieredMenuTreeContext>('tieredMenuTree', {
-        menuId: _id,
+        menuId: _tieredMenuId,
         popup,
         submenuIcon,
-        unstyled,
         pt,
-        ptOptions,
+        ptContext,
         hostName: 'TieredMenu',
         onItemClick,
         onFocus: _onFocus,
         onBlur: _onBlur,
         onKeyDown,
         onItemMouseEnter,
-        ariaLabel: $$restProps.ariaLabel,
+        ariaLabel: _restProps['aria-label'] || undefined,
         ariaOrientation: 'vertical',
         activeItemPath,
         isMobileMode: () => $isMobileMode
     })
+    // })
 </script>
 
 {#if processedItems && visible}
     <div
-        id={_id}
+        id={_tieredMenuId}
         {...rootAttributes}
-        {...$$restProps}
+        {..._restProps}
         bind:this={containerEl}
         transition:fade={{ duration: 300 }}
         role="none"
-        on:click={onRootClick}
-        on:clickoutside={onClickOutside}
+        onclick={onRootClick}
+        onclickoutside={onClickOutside}
         use:portal={popup ? 'body' : 'none'}
         use:windowEvents={{ resize: (ev) => !$isMobileMode && _hide(ev, true) }}
         use:clickOutside={{ getAdditionalElements: () => [targetEl] }}
@@ -552,14 +574,13 @@
         use:matchMedia={{ query: matchMediaQuery, matches: isMobileMode }}
     >
         <TieredMenuSub
-            id={_id + '_list'}
+            id={_tieredMenuId + '_list'}
             bind:this={menu}
-            menuProps={$$props}
+            menuProps={_props}
             model={processedItems}
-            ariaLabelledBy={$$restProps.ariaLabelledBy}
+            aria-labelledby={_restProps['aria-labelledby'] || undefined}
             ariaActiveDescendant={focused ? focusedItemId : undefined}
             level={0}
-            onHide={_hide}
             root
             {focusedItemId}
             style={$isMobileMode ? { 'max-height': scrollHeight, overflow: scrollHeight ? 'auto' : '' } : {}}

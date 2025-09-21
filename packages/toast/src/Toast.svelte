@@ -10,6 +10,7 @@
     import { defaultToastProps as DEFAULT, globalToastPT as globalPt } from './toast.config'
 
     let _props = $props()
+
     let {
         class: className = DEFAULT.class,
         id = DEFAULT.id,

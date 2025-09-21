@@ -1,9 +1,6 @@
 <script lang="ts">
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import DocSimpleTable from '../common/DocSimpleTable.svelte'
-
-    let {}: ComponentDocProps = $props()
 </script>
 
 <DocSectionText docSection={{ id: 'style', label: 'Style' }}>

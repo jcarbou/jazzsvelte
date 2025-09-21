@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { importJS, importTS } from '../common/doc.utils'
     import DocSimpleTable from '../common/DocSimpleTable.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 </script>
 
 <DocSectionText docSection={{ id: 'style', label: 'Style' }}>

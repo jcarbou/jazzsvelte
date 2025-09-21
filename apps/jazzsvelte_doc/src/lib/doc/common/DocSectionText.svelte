@@ -1,16 +1,18 @@
 <script lang="ts">
-    import { page } from '$app/stores'
+    import type { Snippet } from 'svelte'
     import type { DocSection } from './doc.types'
+
+    import { page } from '$app/stores'
     import { onLinkClickScrollToAnchor } from './doc.utils'
 
     interface Props {
         docSection: DocSection
-        children?: import('svelte').Snippet
+        children?: Snippet
     }
 
     let { docSection, children }: Props = $props()
 
-    const { pathname } = $page.url
+    const { pathname } = $page?.url || ''
 
     let hx = $derived('h' + (docSection.level || 2))
 </script>

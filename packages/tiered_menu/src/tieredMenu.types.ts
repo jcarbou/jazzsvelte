@@ -33,9 +33,8 @@ export type TieredMenuTreeContext = {
     popup: boolean
     hostName: string
     submenuIcon: string | IconComponent | null
-    unstyled: boolean
     pt: TieredMenuPassThroughOptions | null
-    ptOptions: PassThroughOptions | null
+    ptContext: TieredMenuPtContext
     onItemClick: (event: ProcessedItemEvent) => void
     onFocus: (ev: Event) => void
     onBlur: (ev: Event) => void
@@ -54,7 +53,7 @@ export type ProcessedItem = {
     key: string
     parent: ProcessedItem | null
     parentKey: string | null
-    items: ProcessedItem[] | null
+    items?: ProcessedItem[] | null
     isSeparator: boolean
     isDisabled: boolean
     isVisible: boolean
@@ -111,9 +110,33 @@ export interface BaseTieredMenuProps {
 
     /**
      * An array of menuitems.
-     * @default  null
+     * @default  []
      */
-    model?: MenuItem[]
+    model: MenuItem[]
+
+    /**
+     * Callback to invoke when a popup menu is hidden.
+     * @default null
+     */
+    onHide?: ((event: Event) => void) | null
+
+    /**
+     * Callback to invoke when a popup menu is shown.
+     * @default null
+     */
+    onShow?: ((event: Event) => void) | null
+
+    /**
+     * Callback to invoke when menu loses focus.
+     * @default null
+     */
+    onBlur?: ((event: Event) => void) | null
+
+    /**
+     * Callback to invoke when menu receives focus.
+     * @default null
+     */
+    onFocus?: ((event: Event) => void) | null
 
     /**
      * Defines if menu would displayed as a popup.
@@ -125,13 +148,13 @@ export interface BaseTieredMenuProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: TieredMenuPassThroughOptions
+    pt?: TieredMenuPassThroughOptions | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
      * @default  null
      */
-    ptOptions?: TieredMenuPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
 
     /**
      * Maximum height of the options panel on responsive mode.
@@ -262,4 +285,35 @@ export interface TieredMenuState {
      * Current visible state as a boolean.
      */
     visible: boolean
+}
+
+export interface TieredMenuPtContext extends TieredMenuPassThroughMethodOptions {
+    ptOptions: PassThroughOptions | null
+    unstyled: boolean
+}
+
+export interface TieredMenuSubProps extends Omit<HTMLUlAttributes, 'style'> {
+    focusedItemId: string | null
+    id: string
+    root?: boolean
+    parentActive?: boolean
+    ariaActiveDescendant?: string | null
+    model: ProcessedItem[]
+    menuProps: TieredMenuProps
+    level: number
+    /**
+     * Style to add to root element.
+     * @default  null
+     */
+    style?: string | CssStyle | null
+}
+
+export interface TieredMenuItemProps {
+    menuSubId: string
+    processedItem: ProcessedItem
+    index: number
+    model?: ProcessedItem[]
+    menuProps: TieredMenuProps
+    level: number
+    focusedItemId: string | null
 }

@@ -1,73 +1,91 @@
 <script lang="ts">
-    import type {
-        SpeedDialPassThroughMethodOptions,
-        SpeedDialPassThroughOptions,
-        SpeedDialDirection,
-        SpeedDialType,
-        SpeedDialContext
-    } from './speedDial.types'
-
-    import type {
-        HTMLDivAttributes,
-        HTMLUlAttributes,
-        IconComponent,
-        CssStyle,
-        PassThroughOptions,
-        MenuItem,
-        CssObject
-    } from '@jazzsvelte/api'
-    import type { TooltipGetter, TooltipOptions } from '@jazzsvelte/tooltip'
+    import type { SpeedDialPassThroughMethodOptions, SpeedDialContext, SpeedDialProps } from './speedDial.types'
+    import type { CssStyle, PassThroughOptions, MenuItem } from '@jazzsvelte/api'
     import type { ButtonProps } from '@jazzsvelte/button'
 
-    import { SvelteComponent, setContext } from 'svelte'
-
-    import { mergeCssClasses, resolvePT } from '@jazzsvelte/api'
+    import { setContext } from 'svelte'
+    import { mergeCssClasses, resolveDivPt, resolveUlPt } from '@jazzsvelte/api'
     import { Button } from '@jazzsvelte/button'
     import { defaultSpeedDialProps as DEFAULT, globalSpeedDialPT as globalPt } from './speedDial.config'
     import SpeedDialMenuItem from './SpeedDialMenuItem.svelte'
     import { uniqueId } from '@jazzsvelte/utils'
     import { findNextOptionIndex, findPrevOptionIndex } from './speedDial.utils'
-    import { focusEl } from '../../dom/src'
+    import { focusEl } from '@jazzsvelte/dom'
     import { clickOutside } from '@jazzsvelte/click_outside_action'
 
-    export let buttonClass: string | null = DEFAULT.buttonClass
-    export let buttonStyle: string | CssObject | null = DEFAULT.buttonStyle
-    export let buttonTemplate: typeof SvelteComponent | null = DEFAULT.buttonTemplate
-    let className: string | null = DEFAULT.class
-    export { className as class }
-    export let direction: SpeedDialDirection | null = DEFAULT.direction
-    export let disabled: boolean = DEFAULT.disabled
-    export let hideIcon: string | IconComponent | null = DEFAULT.hideIcon
-    export let hideOnClickOutside: boolean = DEFAULT.hideOnClickOutside
-    export let mask: boolean = DEFAULT.mask
-    export let maskClass: string | null = DEFAULT.maskClass
-    export let maskStyle: string | CssObject | null = DEFAULT.maskStyle
-    export let model: MenuItem[] = DEFAULT.model
-    export let pt: SpeedDialPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let radius: number = DEFAULT.radius
-    export let rotateAnimation: boolean = DEFAULT.rotateAnimation
-    export let showIcon: string | IconComponent | null = DEFAULT.showIcon
-    export let style: CssStyle | null = DEFAULT.style
-    export let getTooltip: TooltipGetter<MenuItem> = DEFAULT.getTooltip
-    export let tooltipOptions: TooltipOptions | null = DEFAULT.tooltipOptions
-    export let transitionDelay: number = DEFAULT.transitionDelay
-    export let type: SpeedDialType = DEFAULT.type
-    export let unstyled: boolean = DEFAULT.unstyled
-    let visibleProp: boolean = DEFAULT.visible
-    export { visibleProp as visible }
+    let {
+        buttonClass = DEFAULT.buttonClass,
+        buttonStyle = DEFAULT.buttonStyle,
+        buttonSnippet = DEFAULT.buttonSnippet,
+        class: className = DEFAULT.class,
+        direction = DEFAULT.direction,
+        disabled = DEFAULT.disabled,
+        hideIcon = DEFAULT.hideIcon,
+        hideOnClickOutside = DEFAULT.hideOnClickOutside,
+        mask = DEFAULT.mask,
+        maskClass = DEFAULT.maskClass,
+        maskStyle = DEFAULT.maskStyle,
+        model = DEFAULT.model,
+        pt = null,
+        ptOptions = null,
+        radius = $bindable(DEFAULT.radius),
+        rotateAnimation = DEFAULT.rotateAnimation,
+        showIcon = DEFAULT.showIcon,
+        style = DEFAULT.style,
+        getTooltip = DEFAULT.getTooltip,
+        tooltipOptions = DEFAULT.tooltipOptions,
+        transitionDelay = DEFAULT.transitionDelay,
+        type = DEFAULT.type,
+        unstyled = DEFAULT.unstyled,
+        visible = DEFAULT.visible,
+        onHide = null,
+        onShow = null,
+        onClick = null,
+        onVisibleChange = null,
+        ..._restProps
+    }: SpeedDialProps = $props()
 
-    export let onHide: (() => void) | null = null
-    export let onShow: (() => void) | null = null
-    export let onClick: ((ev: Event) => void) | null = null
-    export let onVisibleChange: ((visible: boolean) => void) | null = null
+    let _props: SpeedDialProps = $derived({
+        buttonClass,
+        buttonStyle,
+        buttonSnippet,
+        class: className,
+        direction,
+        disabled,
+        hideIcon,
+        hideOnClickOutside,
+        mask,
+        maskClass,
+        maskStyle,
+        model,
+        pt,
+        ptOptions,
+        radius,
+        rotateAnimation,
+        showIcon,
+        style,
+        getTooltip,
+        tooltipOptions,
+        transitionDelay,
+        type,
+        unstyled,
+        visible,
+        onHide,
+        onShow,
+        onClick,
+        onVisibleChange
+    })
 
     export const displayName = 'SpeedDial'
 
     export function getElement(): HTMLDivElement {
         return rootEl
     }
-    let rootEl: HTMLDivElement
+
+    export function getMenuElement(): HTMLUListElement {
+        return menuEl
+    }
+
     export function hide(): void {
         onVisibleChange ? onVisibleChange(false) : (visibleState = false)
         onHide && onHide()
@@ -78,26 +96,13 @@
         onShow && onShow()
     }
 
-    let visibleState = false
-    $: visible = onVisibleChange ? visibleProp : visibleState
+    let rootEl: HTMLDivElement
+    let menuEl: HTMLUListElement
     let button: Button
-    let menu: HTMLUListElement
-    let focused = false
-    let focusedOptionIndex = -1
 
-    $: ptContext = {
-        props: { ...DEFAULT, ...$$props },
-        state: {
-            visible
-        },
-        ptOptions,
-        unstyled
-    } satisfies SpeedDialPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
-
-    $: idState = uniqueId('speedDial_') satisfies string
+    let visibleState = $state(false)
+    let focused = $state(false)
+    let focusedOptionIndex = $state(-1)
 
     const onItemClick = (e: MouseEvent | KeyboardEvent, item: MenuItem) => {
         item.command && item.command({ originalEvent: e, item })
@@ -112,83 +117,19 @@
         hide
     })
 
-    // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            id: idState,
-            class: [
-                'p-component',
-                'p-speeddial',
-                `p-speeddial-${type}`,
-                className,
-                {
-                    [`p-speeddial-direction-${direction}`]: type !== 'circle',
-                    'p-speeddial-opened': visible,
-                    'p-disabled': disabled
-                }
-            ],
-            style: [
-                style,
-                {
-                    alignItems: direction === 'up' || direction === 'down' ? 'center' : '',
-                    justifyContent: direction === 'left' || direction === 'right' ? 'center' : '',
-                    flexDirection:
-                        direction === 'up'
-                            ? 'column-reverse'
-                            : direction === 'down'
-                              ? 'column'
-                              : direction === 'left'
-                                ? 'row-reverse'
-                                : direction === 'right'
-                                  ? 'row'
-                                  : null
-                }
-            ],
-            'data-pc-name': 'speedDial',
-            'data-pc-section': 'root'
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLDivAttributes
-
     function onClickOutSide(): void {
-        if (!hideOnClickOutside || !visible) return
+        if (!hideOnClickOutside || !_visible) return
         hide()
     }
 
-    // "button" element
-    $: showIconVisible = ((!visible && !!showIcon) || rotateAnimation) satisfies boolean
-    $: hideIconVisible = (visible && !!hideIcon) satisfies boolean
-    $: buttonAttributes = {
-        class: mergeCssClasses([
-            buttonClass,
-            'p-speeddial-button p-button-rounded',
-            {
-                'p-speeddial-rotate': rotateAnimation
-            }
-        ]),
-        'data-pc-section': 'button',
-        role: 'button',
-        style: buttonStyle,
-        icon: showIconVisible ? showIcon : hideIconVisible ? hideIcon : null,
-        disabled: disabled,
-        'aria-label': $$props['aria-label'],
-        'aria-expanded': visible,
-        'aria-haspopup': true,
-        'aria-controls': idState + '_list',
-        'aria-labelledby': $$props['aria-labelledby']
-        // pt?:  ???
-    } satisfies ButtonProps
-
     function _onClick(ev: MouseEvent): void {
-        visible ? hide() : show()
+        _visible ? hide() : show()
         onClick && onClick(ev)
     }
 
     function onTogglerArrowUp(event: KeyboardEvent): void {
         focused = true
-        focusEl(menu)
+        focusEl(menuEl)
         show()
         navigatePrevItem(event)
         event.preventDefault()
@@ -196,7 +137,7 @@
 
     function onTogglerArrowDown(event: KeyboardEvent): void {
         focused = true
-        focusEl(menu)
+        focusEl(menuEl)
         show()
         navigateNextItem(event)
         event.preventDefault()
@@ -219,32 +160,6 @@
                 break
         }
     }
-
-    // "menu" element
-    $: menuAttributes = resolvePT(
-        {
-            class: ['p-speeddial-list'],
-            'data-pc-section': 'menu',
-            style: {
-                flexDirection:
-                    direction === 'up'
-                        ? 'column-reverse'
-                        : direction === 'down'
-                          ? 'column'
-                          : direction === 'left'
-                            ? 'row-reverse'
-                            : direction === 'right'
-                              ? 'row'
-                              : null
-            },
-            role: 'menu',
-            tabindex: -1,
-            'aria-activedescendant': focused ? focusedOptionId() : undefined
-        },
-        pt?.menu,
-        globalPt?.menu,
-        ptContext
-    ) satisfies HTMLUlAttributes
 
     function onMenuFocus(): void {
         focused = true
@@ -345,24 +260,6 @@
         }
     }
 
-    // "mask" element
-    $: maskAttributes = resolvePT(
-        {
-            class: [
-                'p-speeddial-mask',
-                maskClass,
-                {
-                    'p-speeddial-mask-visible': visible
-                }
-            ],
-            style: maskStyle,
-            'data-pc-section': 'mask'
-        },
-        pt?.mask,
-        globalPt?.mask,
-        ptContext
-    ) satisfies HTMLDivAttributes
-
     function getItemStyle(index: number): CssStyle {
         const transitionDelay = calculateTransitionDelay(index)
         const pointStyle = calculatePointStyle(index)
@@ -376,7 +273,7 @@
     const calculateTransitionDelay = (index: number) => {
         const length = model.length
 
-        return (visible ? length - index - 1 : index) * transitionDelay
+        return (_visible ? length - index - 1 : index) * transitionDelay
     }
 
     function calculatePointStyle(index: number): {
@@ -429,12 +326,137 @@
 
         return {}
     }
+    let _visible = $derived(onVisibleChange ? visible : visibleState)
+    let ptContext: SpeedDialPassThroughMethodOptions & {
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    } = $derived({
+        props: { ...DEFAULT, ..._props },
+        state: {
+            visible: _visible
+        },
+        ptOptions,
+        unstyled
+    })
+    let idState = $derived(uniqueId('speedDial_'))
+
+    // "root element"
+    let rootAttributes = $derived(
+        resolveDivPt(
+            {
+                id: idState,
+                class: [
+                    'p-component',
+                    'p-speeddial',
+                    `p-speeddial-${type}`,
+                    className,
+                    {
+                        [`p-speeddial-direction-${direction}`]: type !== 'circle',
+                        'p-speeddial-opened': _visible,
+                        'p-disabled': disabled
+                    }
+                ],
+                style: [
+                    style,
+                    {
+                        alignItems: direction === 'up' || direction === 'down' ? 'center' : '',
+                        justifyContent: direction === 'left' || direction === 'right' ? 'center' : '',
+                        flexDirection:
+                            direction === 'up'
+                                ? 'column-reverse'
+                                : direction === 'down'
+                                  ? 'column'
+                                  : direction === 'left'
+                                    ? 'row-reverse'
+                                    : direction === 'right'
+                                      ? 'row'
+                                      : null
+                    }
+                ],
+                'data-pc-name': 'speedDial',
+                'data-pc-section': 'root'
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
+    // "button" element
+    let showIconVisible = $derived((!_visible && !!showIcon) || rotateAnimation)
+    let hideIconVisible = $derived(_visible && !!hideIcon)
+    let buttonAttributes: ButtonProps = $derived({
+        class: mergeCssClasses([
+            buttonClass,
+            'p-speeddial-button p-button-rounded',
+            {
+                'p-speeddial-rotate': rotateAnimation
+            }
+        ]),
+        'data-pc-section': 'button',
+        role: 'button',
+        style: buttonStyle,
+        icon: showIconVisible ? showIcon : hideIconVisible ? hideIcon : null,
+        disabled: disabled,
+        'aria-label': _props['aria-label'],
+        'aria-expanded': _visible,
+        'aria-haspopup': true,
+        'aria-controls': idState + '_list',
+        'aria-labelledby': _props['aria-labelledby']
+    })
+
+    // "menu" element
+    let menuAttributes = $derived(
+        resolveUlPt(
+            {
+                class: ['p-speeddial-list'],
+                'data-pc-section': 'menu',
+                style: {
+                    flexDirection:
+                        direction === 'up'
+                            ? 'column-reverse'
+                            : direction === 'down'
+                              ? 'column'
+                              : direction === 'left'
+                                ? 'row-reverse'
+                                : direction === 'right'
+                                  ? 'row'
+                                  : null
+                },
+                role: 'menu',
+                tabindex: -1,
+                'aria-activedescendant': focused ? focusedOptionId() : undefined
+            },
+            pt?.menu,
+            globalPt?.menu,
+            ptContext
+        )
+    )
+
+    // "mask" element
+    let maskAttributes = $derived(
+        resolveDivPt(
+            {
+                class: [
+                    'p-speeddial-mask',
+                    maskClass,
+                    {
+                        'p-speeddial-mask-visible': _visible
+                    }
+                ],
+                style: maskStyle,
+                'data-pc-section': 'mask'
+            },
+            pt?.mask,
+            globalPt?.mask,
+            ptContext
+        )
+    )
 </script>
 
-<div bind:this={rootEl} {...rootAttributes} {...$$restProps} use:clickOutside on:clickoutside={onClickOutSide}>
-    <Button bind:this={button} {...buttonAttributes} on:click={_onClick} on:keydown={onButtonKeydown} />
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <ul bind:this={menu} {...menuAttributes} on:focus={onMenuFocus} on:keydown={onMenuKeyDown} on:blur={onMenuBlur}>
+<div bind:this={rootEl} {...rootAttributes} {..._restProps} use:clickOutside onclickoutside={onClickOutSide}>
+    <Button bind:this={button} {...buttonAttributes} onclick={_onClick} onkeydown={onButtonKeydown} />
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+    <ul bind:this={menuEl} {...menuAttributes} onfocus={onMenuFocus} onkeydown={onMenuKeyDown} onblur={onMenuBlur}>
         {#each model as item, index (index)}
             <SpeedDialMenuItem
                 id={`${idState}_${index}`}

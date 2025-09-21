@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@jazzsvelte/click_outside_action": "workspace:^0.1.0",
+        "@jazzsvelte/dom": "workspace:^0.1.0",
         "@jazzsvelte/utils": "workspace:^0.1.0",
         "@jazzsvelte/object": "workspace:^0.1.0"
     },

@@ -2,8 +2,8 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { simpleCode } from '../common/doc.utils'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
     let { docSection }: ComponentDocProps = $props()
 

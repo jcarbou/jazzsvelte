@@ -89,7 +89,7 @@
                     class="h-2rem w-2rem p-0 inline-flex align-items-center justify-content-center shadow-none"
                     tooltip="Edit in StackBlitz"
                     tooltipOptions={{ position: 'bottom', class: 'doc-section-code-tooltip' }}
-                    onclick={() => codeEditor.openStackBlitz(codeLang)}
+                    onclick={() => codeLang !== 'basic' && codeEditor.openStackBlitz(codeLang)}
                 >
                     <svg role="img" viewBox="0 0 13 19" width={13} height={18} fill={'currentColor'} style="display: block;">
                         <path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z" />
@@ -146,7 +146,7 @@
         justify-content: end;
         z-index: 1;
         top: 0.75rem;
-        right: 0.75rem;
+        right: 1.25rem;
         gap: 0.5rem;
         display: none;
         background: rgba(255, 255, 255, 0.05);

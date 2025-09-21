@@ -1,66 +1,53 @@
 <script lang="ts">
-    import type { SplitButtonPassThroughMethodOptions, SplitButtonPassThroughOptions, SplitButtonSize } from './splitButton.types'
-
-    import type {
-        JazzSvelteContext,
-        HTMLDivAttributes,
-        IconComponent,
-        CssStyle,
-        PassThroughOptions,
-        CssObject,
-        AppendTo,
-        OnEvent
-    } from '@jazzsvelte/api'
-    import type { TooltipOptions } from '@jazzsvelte/tooltip'
-    import type { ButtonSeverity } from '@jazzsvelte/button'
-    import type { MenuItem } from '@jazzsvelte/api'
-
+    import type { SplitButtonPtContext, SplitButtonProps } from './splitButton.types'
+    import type { JazzSvelteContext } from '@jazzsvelte/api'
     import { Button } from '@jazzsvelte/button'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
     import { getContext } from 'svelte'
     import { tooltip } from '@jazzsvelte/tooltip'
-    import { mergeCssClasses, resolvePT } from '@jazzsvelte/api'
+    import { mergeCssClasses, resolveDivPt } from '@jazzsvelte/api'
     import { defaultSplitButtonProps as DEFAULT, globalSplitButtonPT as globalPt } from './splitButton.config'
-    import { uniqueId } from '@jazzsvelte/utils'
+    import { snippetValueOrNull, stringValueOrNull, uniqueId } from '@jazzsvelte/utils'
 
-    export let appendTo: AppendTo = DEFAULT.appendTo
-    export let autoZIndex: boolean = DEFAULT.autoZIndex
-    export let baseZIndex: number = DEFAULT.baseZIndex
-    export let buttonClass: string | null = DEFAULT.buttonClass
-    export let buttonProps: any = DEFAULT.buttonProps
-    export let disabled: boolean = DEFAULT.disabled
-    export let dropdownIcon: string | IconComponent | null = DEFAULT.dropdownIcon
-    export let icon: string | IconComponent | null = DEFAULT.icon
-    export let label: string | null = DEFAULT.label
-    export let loading: boolean = DEFAULT.loading
-    export let loadingIcon: string | IconComponent | null = DEFAULT.loadingIcon
-    export let menuButtonClass: string | null = DEFAULT.menuButtonClass
-    export let menuButtonProps: any = DEFAULT.menuButtonProps
-    export let menuClass: string | null = DEFAULT.menuClass
-    export let menuStyle: string | CssObject | null = DEFAULT.menuStyle
-    export let model: MenuItem[] = DEFAULT.model
-    export let outlined: boolean = DEFAULT.outlined
-    export let raised: boolean = DEFAULT.raised
-    export let rounded: boolean = DEFAULT.rounded
-    export let severity: ButtonSeverity | null = DEFAULT.severity
-    export let size: SplitButtonSize | null = DEFAULT.size
-    export let text: boolean = DEFAULT.text
-    export let tooltipOptions: TooltipOptions | null = DEFAULT.tooltipOptions
-    export let unstyled: boolean = DEFAULT.unstyled
-    export let visible: boolean = DEFAULT.visible
-    export let pt: SplitButtonPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let style: CssStyle | null = DEFAULT.style
-    let className: string | null = DEFAULT.class
-    export { className as class }
-    let tooltipContent: string | null = null
-    export { tooltipContent as tooltip }
-    export let tabIndex: string | null = null // Dom attribute
-
-    export let onClick: OnEvent = null
-    export let onMenuHide: OnEvent = null
-    export let onMenuShow: OnEvent = null
-    export let onMenuClick: OnEvent = null
+    let {
+        children,
+        appendTo = DEFAULT.appendTo,
+        autoZIndex = DEFAULT.autoZIndex,
+        baseZIndex = DEFAULT.baseZIndex,
+        buttonClass = DEFAULT.buttonClass,
+        buttonProps = DEFAULT.buttonProps,
+        class: className = DEFAULT.class,
+        disabled = DEFAULT.disabled,
+        dropdownIcon = DEFAULT.dropdownIcon,
+        icon = DEFAULT.icon,
+        label = DEFAULT.label,
+        loading = DEFAULT.loading,
+        loadingIcon = DEFAULT.loadingIcon,
+        menuButtonClass = DEFAULT.menuButtonClass,
+        menuButtonProps = DEFAULT.menuButtonProps,
+        menuClass = DEFAULT.menuClass,
+        menuStyle = DEFAULT.menuStyle,
+        model = DEFAULT.model,
+        outlined = DEFAULT.outlined,
+        raised = DEFAULT.raised,
+        rounded = DEFAULT.rounded,
+        severity = DEFAULT.severity,
+        size = DEFAULT.size,
+        text = DEFAULT.text,
+        tooltipOptions = DEFAULT.tooltipOptions,
+        unstyled = DEFAULT.unstyled,
+        visible = DEFAULT.visible,
+        pt = null,
+        ptOptions = null,
+        style = DEFAULT.style,
+        tooltip: tooltipContent = null,
+        tabindex = null, // Dom attribute,
+        onButtonClick = null,
+        onMenuHide = null,
+        onMenuShow = null,
+        onMenuClick = null,
+        ..._restProps
+    }: SplitButtonProps = $props()
 
     export const displayName = 'SplitButton'
     export const show = () => {
@@ -75,48 +62,49 @@
 
     let rootEl: HTMLDivElement
     const menuId: string = uniqueId('splitButton_menuButton_')
+    let _labelString = $derived(stringValueOrNull(label))
 
-    $: ptContext = {
-        props: { ...DEFAULT, ...$$props },
+    let ptContext: SplitButtonPtContext = {
+        props: { ...DEFAULT, ..._restProps, ..._restProps },
         //context: {},
+        // state: {},
         ptOptions,
         unstyled
-    } satisfies SplitButtonPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
     }
 
     // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            class: [
-                'p-component',
-                'p-splitbutton',
-                className,
-                {
-                    'p-disabled': disabled,
-                    'p-button-loading-label-only': loading && !icon && label,
-                    [`p-button-${severity}`]: severity,
-                    'p-button-raised': raised,
-                    'p-button-rounded': rounded,
-                    'p-button-text': text,
-                    'p-button-outlined': outlined,
-                    [`p-button-${size}`]: size
-                }
-            ],
-            style,
-            'data-pc-name': 'splitButton',
-            'data-pc-section': 'root'
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let rootAttributes = $derived(
+        resolveDivPt(
+            {
+                class: [
+                    'p-component',
+                    'p-splitbutton',
+                    className,
+                    {
+                        'p-disabled': disabled,
+                        'p-button-loading-label-only': loading && !icon && label,
+                        [`p-button-${severity}`]: severity,
+                        'p-button-raised': raised,
+                        'p-button-rounded': rounded,
+                        'p-button-text': text,
+                        'p-button-outlined': outlined,
+                        [`p-button-${size}`]: size
+                    }
+                ],
+                style,
+                'data-pc-name': 'splitButton',
+                'data-pc-section': 'root'
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 
-    $: defaultButtonClass = mergeCssClasses(['p-splitbutton-defaultbutton', buttonClass]) || null
-    $: menuButtonClass = mergeCssClasses(['p-splitbutton-menubutton', menuButtonClass]) || null
+    let defaultButtonClass = $derived(mergeCssClasses(['p-splitbutton-defaultbutton', buttonClass]) || null)
+    let _menuButtonClass = $derived(mergeCssClasses(['p-splitbutton-menubutton', menuButtonClass]) || null)
 
-    let menuVisible: boolean = false
+    let menuVisible: boolean = $state(false)
     let menuCmp: TieredMenu
 
     function _onMenuHide(event: Event): void {
@@ -130,7 +118,7 @@
     }
 
     function _onClick(event: Event): void {
-        onClick && onClick(event)
+        onButtonClick && onButtonClick(event)
     }
 
     function onMenuButtonClick(event: Event): void {
@@ -151,7 +139,7 @@
     <div
         bind:this={rootEl}
         {...rootAttributes}
-        {...$$restProps}
+        {..._restProps}
         use:tooltip={{ tooltipContent, tooltipOptions, jazzSvelteContext }}
     >
         <Button
@@ -160,10 +148,10 @@
             {loadingIcon}
             {severity}
             {label}
-            aria-label={label}
+            aria-label={_labelString}
             {raised}
             {disabled}
-            {tabIndex}
+            {tabindex}
             {size}
             {outlined}
             {text}
@@ -172,13 +160,15 @@
             data-pc-section="button"
             pt={pt?.button}
             {...buttonProps}
-            on:click={_onClick}
+            onclick={_onClick}
         >
-            <slot name="buttonLabel" slot="label" />
+            {#if children}
+                {@render children()}
+            {/if}
         </Button>
         <Button
             icon={dropdownIcon}
-            on:click={onMenuButtonClick}
+            onclick={onMenuButtonClick}
             {disabled}
             aria-expanded={menuVisible}
             aria-haspopup="true"
@@ -190,10 +180,10 @@
             {text}
             {raised}
             {unstyled}
-            class={menuButtonClass}
+            class={_menuButtonClass}
             data-pc-section="menuButton"
             pt={pt?.menuButton}
-            onKeyDown={onMenuButtonKeyDown}
+            onkeydown={onMenuButtonKeyDown}
         />
         <TieredMenu
             bind:this={menuCmp}
@@ -206,7 +196,7 @@
             class={menuClass}
             {autoZIndex}
             {baseZIndex}
-            onClick={onMenuClick}
+            onclick={onMenuClick}
             onShow={_onMenuShow}
             onHide={_onMenuHide}
             pt={pt?.menu}

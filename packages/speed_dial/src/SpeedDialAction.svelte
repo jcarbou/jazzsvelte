@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { JazzSvelteContext, MenuItem, PassThroughOptions } from '@jazzsvelte/api'
     import type { SpeedDialContext, SpeedDialPassThroughMethodOptions, SpeedDialPassThroughOptions } from './speedDial.types'
+
     import { resolveAnchorPt, resolveIconPT } from '@jazzsvelte/api'
     import { globalSpeedDialPT as globalPt } from './speedDial.config'
     import { getContext } from 'svelte'
@@ -46,10 +47,6 @@
         )
     )
 
-    const onItemClick = (e: MouseEvent) => {
-        speedDialContext.onItemClick(e, item)
-    }
-
     // "actionIcon" element
     let resolvedActionIcon = $derived(
         resolveIconPT(
@@ -62,6 +59,10 @@
             ptContext
         )
     )
+
+    const onItemClick = (e: MouseEvent) => {
+        speedDialContext.onItemClick(e, item)
+    }
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')
     let speedDialContext = getContext<SpeedDialContext>('speedDial')

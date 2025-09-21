@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { ButtonPassThroughMethodOptions, ButtonProps } from './button.types'
-    import type { JazzSvelteContext, PassThroughOptions } from '@jazzsvelte/api'
+    import type { ButtonProps, ButtonPtContext } from './button.types'
+    import type { JazzSvelteContext } from '@jazzsvelte/api'
     import type { ButtonGroupContext } from './buttonGroup.types'
 
     import { resolveButtonPt, resolveIconPT, resolveSpanPt } from '@jazzsvelte/api'
@@ -93,10 +93,7 @@
     let _badgeSnippet = $derived(snippetValueOrNull(badge))
     let _badgeString = $derived(stringValueOrNull(badge))
 
-    let ptContext: ButtonPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    } = $derived({
+    let ptContext: ButtonPtContext = $derived({
         props: { ...DEFAULT, ..._props, ..._restProps },
         context: { disabled },
         ptOptions,

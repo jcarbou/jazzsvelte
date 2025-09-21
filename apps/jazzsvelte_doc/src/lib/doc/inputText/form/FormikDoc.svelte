@@ -9,7 +9,7 @@ import { importJS, importTS} from '../common/doc.utils'
     import { Toast } from '@jazzsvelte/toast'
     import classs from '$lib/components/utils/classs.svelte'
 import { useFormik } from 'formik';
-import { useRef } from 'react';
+import { useRef } from 'react'
 
     import type { DocSection } from '$lib/doc/common/doc.types'
     

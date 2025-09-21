@@ -27,6 +27,7 @@
         background: rgb(55, 65, 81);
         margin: 0;
         padding: 0;
+        min-height: 4rem;
         max-height: 40rem;
         height: inherite;
         overflow: auto;
@@ -56,15 +57,18 @@
     }
 
     .codeLanguage {
+        flex: 1;
         border-left: 1rem solid transparent;
         box-shadow: none;
         margin: 0;
         font-size: 14px;
         border-radius: 10px;
         color: #fff;
+        min-height: inherit;
         max-height: inherit;
         height: inherit;
         padding: 0 1rem;
+        padding-bottom: 1rem;
         display: block;
         overflow: auto;
         font-family:

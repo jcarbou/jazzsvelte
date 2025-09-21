@@ -1,9 +1,7 @@
 <script lang="ts">
-    import type { TieredMenuPassThroughMethodOptions, TieredMenuProps, TieredMenuTreeContext } from './tieredMenu.types'
-    import type { ProcessedItem } from './tieredMenu.types'
-    import type { HTMLUlAttributes, PassThroughOptions } from '@jazzsvelte/api'
+    import type { TieredMenuSubProps, TieredMenuTreeContext } from './tieredMenu.types'
 
-    import { resolvePT } from '@jazzsvelte/api'
+    import { resolveUlPt } from '@jazzsvelte/api'
     import { getContext, onMount } from 'svelte'
     import { globalTieredMenuPT as globalPt } from './tieredMenu.config'
     import {
@@ -17,40 +15,48 @@
     import TieredMenuSeparator from './TieredMenuSeparator.svelte'
     import TieredMenuItem from './TieredMenuItem.svelte'
 
-    export let focusedItemId: string | null
-    export let id: string
-    export let root: boolean = false
-    export let parentActive: boolean = true
-    export let ariaLabelledby: string | null = null
-    export let ariaActiveDescendant: string | null = null
-    export let model: ProcessedItem[]
-    export let menuProps: TieredMenuProps
-    export let level: number
+    let {
+        focusedItemId,
+        id,
+        root = false,
+        parentActive = true,
+        ariaActiveDescendant = null,
+        model,
+        menuProps,
+        level,
+        style,
+        ..._restProps
+    }: TieredMenuSubProps = $props()
+
+    /*let _props: TieredMenuSubProps = $derived({
+        focusedItemId,
+        id,
+        root,
+        parentActive,
+        ariaActiveDescendant,
+        model,
+        menuProps,
+        level,
+        style
+    })*/
 
     export const displayName = 'TieredMenuSub'
 
     export function getElement(): HTMLUListElement {
         return menuEl
     }
+    let menuEl: HTMLUListElement
 
-    const { isMobileMode, unstyled, pt, ptOptions, onFocus, onBlur, onKeyDown, ariaLabel, ariaOrientation } =
-        getContext<TieredMenuTreeContext>('tieredMenuTree')
-
-    $: ptContext = {
-        props: $$props,
-        context: {
-            active: false
-        },
-        state: {
-            attributeSelector: '',
-            visible: false
-        },
-        ptOptions,
-        unstyled
-    } satisfies TieredMenuPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    const {
+        isMobileMode, // force new line
+        pt,
+        ptContext,
+        onFocus,
+        onBlur,
+        onKeyDown,
+        ariaLabel,
+        ariaOrientation
+    } = getContext<TieredMenuTreeContext>('tieredMenuTree')
 
     function position(): void {
         const parentItemEl = menuEl.parentElement
@@ -80,32 +86,34 @@
     })
 
     // "menu" element
-    $: menuAttributes = resolvePT(
-        {
-            class: [root ? 'p-tieredmenu-root-list' : 'p-submenu-list'],
-            style: {
-                display: root ? undefined : parentActive ? 'block' : 'none'
+    let menuAttributes = $derived(
+        resolveUlPt(
+            {
+                class: [root ? 'p-tieredmenu-root-list' : 'p-submenu-list'],
+                style: [
+                    style,
+                    {
+                        display: root ? undefined : parentActive ? 'block' : 'none'
+                    }
+                ],
+                'data-pc-section': root ? 'menubar' : 'menu',
+                role: root ? 'menubar' : 'menu',
+                id: id,
+                tabindex: 0,
+                'aria-label': ariaLabel,
+                'aria-labelledby': _restProps['aria-labelledby'],
+                'aria-orientation': ariaOrientation,
+                'aria-activedescendant': ariaActiveDescendant
             },
-            'data-pc-section': root ? 'menubar' : 'menu',
-            role: root ? 'menubar' : 'menu',
-            id: id,
-            tabIndex: 0,
-            'aria-label': ariaLabel,
-            'aria-labelledby': ariaLabelledby,
-            'aria-orientation': ariaOrientation,
-            'aria-activedescendant': ariaActiveDescendant
-        },
-        pt?.menu,
-        globalPt?.menu,
-        ptContext
-    ) satisfies HTMLUlAttributes
-
-    let menuEl: HTMLUListElement
+            pt?.menu,
+            globalPt?.menu,
+            ptContext
+        )
+    )
 </script>
 
-<!-- svelte-ignore missing-declaration -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<ul bind:this={menuEl} {...menuAttributes} on:focus={onFocus} on:blur={onBlur} on:keydown={onKeyDown}>
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+<ul bind:this={menuEl} {...menuAttributes} {..._restProps} onfocus={onFocus} onblur={onBlur} onkeydown={onKeyDown}>
     {#if model}
         {#each model as processedItem, index (processedItem.key)}
             {#if processedItem.isSeparator}

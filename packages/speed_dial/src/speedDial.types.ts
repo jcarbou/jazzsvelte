@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte'
+import type { Snippet } from 'svelte'
 import type {
     CssObject,
     MenuItem,
@@ -10,7 +10,8 @@ import type {
     PassThroughType,
     HTMLLiAttributes,
     HTMLUlAttributes,
-    HTMLAnchorAttributes
+    HTMLAnchorAttributes,
+    PassThroughOptions
 } from '@jazzsvelte/api'
 import type { TooltipGetter, TooltipOptions } from '@jazzsvelte/tooltip'
 
@@ -51,7 +52,7 @@ export interface BaseSpeedDialProps {
      * Template of button element.
      * @default  null
      */
-    buttonTemplate?: typeof SvelteComponent | null
+    buttonSnippet?: Snippet | null
 
     /**
      * CSS classes to add to root element.
@@ -111,13 +112,13 @@ export interface BaseSpeedDialProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: SpeedDialPassThroughOptions
+    pt?: SpeedDialPassThroughOptions | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
      * @default  null
      */
-    ptOptions?: SpeedDialPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
 
     /**
      * Radius for *circle types.
@@ -136,6 +137,12 @@ export interface BaseSpeedDialProps {
      * @default  null
      */
     showIcon?: string | IconComponent | null
+
+    /**
+     * Style to add to root element.
+     * @default  null
+     */
+    style?: string | CssObject | null
 
     /**
      * Tooltip builder.
@@ -159,13 +166,7 @@ export interface BaseSpeedDialProps {
      * Specifies the opening type of actions.
      * @default  'linear'
      */
-    type?: 'linear' | 'circle' | 'semi-circle' | 'quarter-circle'
-
-    /**
-     * Style to add to root element.
-     * @default  null
-     */
-    style?: string | CssObject | null
+    type?: SpeedDialType
 
     /**
      * When enabled, it removes component related styles in the core.
@@ -178,6 +179,30 @@ export interface BaseSpeedDialProps {
      * @default  false
      */
     visible?: boolean
+
+    /**
+     * Fired when the actions are hidden.
+     *  @default  null
+     */
+    onHide?: (() => void) | null
+
+    /**
+     * Fired when the actions are visible.
+     *  @default  null
+     */
+    onShow?: (() => void) | null
+
+    /**
+     * Fired when the actions are clicked.
+     *  @default  null
+     */
+    onClick?: ((ev: Event) => void) | null
+
+    /**
+     * Fired when the visibility of element changed
+     *  @default  null
+     */
+    onVisibleChange?: ((visible: boolean) => void) | null
 }
 
 /**

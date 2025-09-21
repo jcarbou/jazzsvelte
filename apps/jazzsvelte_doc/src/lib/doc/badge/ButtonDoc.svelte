@@ -3,8 +3,8 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
     import { Button } from '@jazzsvelte/button'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { simpleCode } from '../common/doc.utils'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
     let { docSection }: ComponentDocProps = $props()
 

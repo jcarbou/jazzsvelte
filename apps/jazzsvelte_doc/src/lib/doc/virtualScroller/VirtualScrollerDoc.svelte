@@ -14,8 +14,9 @@
     import Wireframe from './pt/Wireframe.svelte'
     import StyledDoc from './theming/StyledDoc.svelte'
     import DocApiPtTable from '../common/DocApiPtTable.svelte'
+    import type { Doc } from '../common/doc.types'
 
-    const docs = [
+    const docs: Doc[] = [
         {
             id: 'import',
             label: 'Import',

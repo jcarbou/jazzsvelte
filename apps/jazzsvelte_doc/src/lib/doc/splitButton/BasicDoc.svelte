@@ -3,12 +3,11 @@
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { SplitButton } from '@jazzsvelte/split_button'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    let { docSection }: ComponentDocProps = $props()
 
     import { items, save, importCode, dataJsCode, dataTsCode } from './data'
-
-    export let docSection: DocSection
 
     const code = {
         basic: `

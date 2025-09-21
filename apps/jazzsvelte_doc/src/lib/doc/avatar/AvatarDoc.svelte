@@ -12,8 +12,9 @@
     import TailwindDoc from './theming/TailwindDoc.svelte'
     import DocComponent from '../common/DocComponent.svelte'
     import DocApiPtTable from '../common/DocApiPtTable.svelte'
+    import type { Doc } from '../common/doc.types'
 
-    const docs = [
+    const docs: Doc[] = [
         {
             id: 'import',
             label: 'Import',
@@ -93,4 +94,4 @@
     apiDocData={[avatarApiData]}
     {ptDocs}
     {themingDocs}
-/>;
+/>

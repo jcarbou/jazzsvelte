@@ -18,10 +18,13 @@ export function speedDialPT(options: SpeedDialPassThroughOptions) {
 /**
  * Default speedDial  props
  */
-export const defaultSpeedDialProps: Omit<Required<BaseSpeedDialProps>, 'pt' | 'ptOptions'> = {
+export const defaultSpeedDialProps: Omit<
+    Required<BaseSpeedDialProps>,
+    'pt' | 'ptOptions' | 'onHide' | 'onShow' | 'onClick' | 'onVisibleChange'
+> = {
     buttonClass: null,
     buttonStyle: null,
-    buttonTemplate: null,
+    buttonSnippet: null,
     direction: 'up',
     disabled: false,
     hideIcon: MinusIcon,
