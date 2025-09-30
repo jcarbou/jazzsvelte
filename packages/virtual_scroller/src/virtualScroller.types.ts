@@ -25,6 +25,14 @@ export type VirtualScrollerOptions = {
  * @group types
  **/
 export type VirtualScrollerOrientation = 'both' | 'horizontal' | 'vertical'
+export type VirtualScrollerRenderedRange = {
+    first: InnerState
+    last: InnerState
+    viewport: {
+        first: InnerState
+        last: InnerState
+    }
+}
 
 export type VirtualScrollerContentSnippetOptions = {
     style: CssObject

@@ -6,19 +6,15 @@
     import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { itemSnippet, loadingSnippet } from './VirtualScrollerDoc.modules.svelte'
-    import { codeItemSnippet, codeLoadingSnippet } from './virtualScrollerDoc.codes'
+    import { codeItemSnippetTS, codeItemSnippetJS, codeLoadingSnippetTS, codeLoadingSnippetJS } from './virtualScrollerDoc.codes'
 
     let { docSection }: ComponentDocProps = $props()
 
     const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)
 
     const codeItems = 'const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)'
-    const codeSnippets = `
-    ${codeItemSnippet}
-    ${codeLoadingSnippet}`
 
-    function codeVirtualScroller(basic: boolean = false) {
-        return `
+    const codeBase = `
 <VirtualScroller
     {items}
     itemSize={50}
@@ -34,21 +30,24 @@
     delay={250}
     class="border-1 surface-border border-round"
     style="width:200px;height:200px;"
-></VirtualScroller>
-${basic ? '...' : codeSnippets}`
-    }
+></VirtualScroller>`
 
     const code = {
         basic: `
-${codeVirtualScroller(true)}
+${codeBase}
+...
 `,
         javascript: `
 ${importJS('VirtualScroller', codeItems)}
-${codeVirtualScroller()}
+${codeBase}
+${codeItemSnippetJS}
+${codeLoadingSnippetJS}
 `,
         typescript: `
 ${importJS('VirtualScroller', codeItems)}
-${codeVirtualScroller()}
+${codeBase}
+${codeItemSnippetTS}
+${codeLoadingSnippetTS}
 `
     }
 </script>

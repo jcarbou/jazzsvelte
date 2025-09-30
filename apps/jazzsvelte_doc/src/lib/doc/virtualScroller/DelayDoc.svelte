@@ -5,7 +5,7 @@
     import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import { itemSnippet } from './VirtualScrollerDoc.modules.svelte'
-    import { codeItemSnippet } from './virtualScrollerDoc.codes'
+    import { codeItemSnippetTS, codeItemSnippetJS } from './virtualScrollerDoc.codes'
     let { docSection }: ComponentDocProps = $props()
 
     const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)
@@ -26,12 +26,12 @@ ${codeVirtualScroller(true)}
         javascript: `
 ${importJS('VirtualScroller', codeItems)}
 ${codeVirtualScroller()}
-${codeItemSnippet}
+${codeItemSnippetJS}
 `,
         typescript: `
 ${importTS('VirtualScroller', codeItems)}
 ${codeVirtualScroller()}
-${codeItemSnippet}
+${codeItemSnippetTS}
 `
     }
 </script>

@@ -6,7 +6,8 @@
         LazyLoadState,
         VirtualScrollerPtContext,
         VirtualScrollerLoadingSnippetOptions,
-        ScrollPos
+        ScrollPos,
+        VirtualScrollerRenderedRange
     } from './virtualScroller.types'
 
     import type { TimeoutId, CssObject } from '@jazzsvelte/api'
@@ -314,12 +315,12 @@
         return step ? pageState !== getPageByFirst(first) : true
     }
 
-    function scrollTo(options: ScrollToOptions): void {
+    export function scrollTo(options: ScrollToOptions): void {
         lastScrollPos = both ? { top: 0, left: 0 } : 0
         rootEl?.scrollTo(options)
     }
 
-    function scrollToIndex(index: number | number[], behavior: ScrollBehavior = 'auto'): void {
+    export function scrollToIndex(index: number | number[], behavior: ScrollBehavior = 'auto'): void {
         const { newNumToleratedItems } = calculateNumItems()
         const contentPos = getContentPosition(contentEl)
         const scrollToItem = (left = 0, top = 0) => scrollTo({ left, top, behavior })
@@ -348,7 +349,7 @@
         firstState = newFirst
     }
 
-    function scrollInView(index: number | number[], to: 'to-start' | 'to-end', behavior: ScrollBehavior = 'auto'): void {
+    export function scrollInView(index: number | number[], to: 'to-start' | 'to-end', behavior: ScrollBehavior = 'auto'): void {
         if (!to) {
             scrollToIndex(index, behavior)
             return
@@ -418,14 +419,7 @@
         return columns || undefined
     }
 
-    function getRenderedRange(): {
-        first: InnerState
-        last: InnerState
-        viewport: {
-            first: InnerState
-            last: InnerState
-        }
-    } {
+    export function getRenderedRange(): VirtualScrollerRenderedRange {
         let firstInViewport: InnerState = firstState
         let lastInViewport: InnerState = 0
 

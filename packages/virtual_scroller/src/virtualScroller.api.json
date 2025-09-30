@@ -4,10 +4,28 @@
         "description": "Defines methods that can be accessed by the component's reference.",
         "values": [
             {
-                "name": "getElementRef",
+                "name": "getElement",
                 "parameters": [],
-                "returnType": "Ref<HTMLDivElement>",
-                "description": "Returns the reference of virtualScroller's container."
+                "returnType": "HTMLDivElement | null",
+                "description": "Returns the virtualScroller's container."
+            },
+            {
+                "name": "getSpacerElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement | null",
+                "description": "Returns the spacer's container."
+            },
+            {
+                "name": "getStickyElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement | null",
+                "description": "Returns the sticky's container."
+            },
+            {
+                "name": "getContentElement | null",
+                "parameters": [],
+                "returnType": "HTMLElement",
+                "description": "Returns the content's container."
             },
             {
                 "name": "getRenderedRange",
@@ -157,7 +175,7 @@
                 "name": "items",
                 "optional": true,
                 "readonly": false,
-                "type": "null | any[] | any[][]",
+                "type": "VirtualScrollerItems",
                 "default": "null",
                 "description": "An array of objects to display."
             },
@@ -192,15 +210,6 @@
                 "type": "boolean",
                 "default": "false",
                 "description": "Used to implement a custom loader instead of using the loader feature in the VirtualScroller."
-            },
-            {
-                "name": "loaderIconTemplate",
-                "optional": true,
-                "readonly": false,
-                "type": "typeof SvelteComponent | null",
-                "default": "null",
-                "description": "The template of loader's icon.",
-                "deprecated": "Since v9.2.3, use "
             },
             {
                 "name": "loading",
@@ -450,7 +459,14 @@
         "label": "Props types",
         "shortLabel": "Props types",
         "description": "Types used by properties of the VirtualScroller component.",
-        "values": [{ "name": "VirtualScrollerOrientation", "value": "'both' | 'horizontal' | 'vertical'" }]
+        "values": [
+            { "name": "VirtualScrollerOrientation", "value": "'both' | 'horizontal' | 'vertical'" },
+            { "name": "VirtualScrollerItems", "value": " null | any[] | any[][]" },
+            {
+                "name": "VirtualScrollerRenderedRange",
+                "value": "{first: InnerState, last: InnerState, viewport: { first: InnerState, last: InnerState}}"
+            }
+        ]
     },
     "state": {
         "description": "Defines current inline state in VirtualScroller component.",

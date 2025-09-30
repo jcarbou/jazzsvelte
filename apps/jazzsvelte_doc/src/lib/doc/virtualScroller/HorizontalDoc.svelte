@@ -10,8 +10,8 @@
     const items = Array.from({ length: 100000 }).map((_, i) => `Item # ${i}`)
 
     const codeItems = 'const items = Array.from({ length: 100000 }).map((_, i) => `Item # ${i}`)'
-    const codeItemSnippet = `
-    {#snippet itemSnippet({ item, options }: VirtualScrollerItemSnippetProps)}
+    const codeItemSnippetTS = `
+{#snippet itemSnippet({ item, options }: VirtualScrollerItemSnippetProps)}
     <div
         class={\`flex align-items-center p-2\${options.odd ? ' surface-hover' : ''}\`}
         style={\`height: \${options._props.itemSize}px;writing-mode:vertical-lr\`}
@@ -19,29 +19,39 @@
         {item}
     </div>
 {/snippet}`
-    function codeVirtualScroller(basic: boolean = false) {
-        return `
+    const codeItemSnippetJS = `
+{#snippet itemSnippet({ item, options })}
+    <div
+        class={\`flex align-items-center p-2\${options.odd ? ' surface-hover' : ''}\`}
+        style={\`height: \${options._props.itemSize}px;writing-mode:vertical-lr\`}
+    >
+        {item}
+    </div>
+{/snippet}`
+
+    const codeBase = `
 <VirtualScroller
     {items}
     itemSize={50}
     orientation="horizontal"
     class="border-1 surface-border border-round"
     style="width:200px;height:200px;"
-></VirtualScroller>
-${basic ? '...' : codeItemSnippet}`
-    }
+></VirtualScroller>`
 
     const code = {
         basic: `
-${codeVirtualScroller(true)}
-        `,
+${codeBase}
+${codeItemSnippetTS}
+`,
         javascript: `
 ${importJS('VirtualScroller', codeItems)}
-${codeVirtualScroller()}
+${codeBase}
+${codeItemSnippetJS}
 `,
         typescript: `
 ${importTS('VirtualScroller', codeItems)}
-${codeVirtualScroller()}
+${codeBase}
+${codeItemSnippetTS}
  `
     }
 </script>

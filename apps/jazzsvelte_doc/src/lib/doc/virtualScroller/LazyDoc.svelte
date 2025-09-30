@@ -8,7 +8,7 @@
     import type { TimeoutId } from '@jazzsvelte/api'
     import { onMount } from 'svelte'
     import { itemSnippet, loadingSnippet } from './VirtualScrollerDoc.modules.svelte'
-    import { codeItemSnippet, codeLoadingSnippet } from './virtualScrollerDoc.codes'
+    import { codeItemSnippetTS, codeItemSnippetJS, codeLoadingSnippetTS, codeLoadingSnippetJS } from './virtualScrollerDoc.codes'
     let { docSection }: ComponentDocProps = $props()
 
     let loadLazyTimeout: TimeoutId = null
@@ -113,12 +113,8 @@
             Math.random() * 1000 + 250
         )
     }`
-    const codeSnippets = `
-    ${codeItemSnippet}
-    ${codeLoadingSnippet}`
 
-    function codeVirtualScroller(basic: boolean = false) {
-        return `
+    const codeBase = `
  <VirtualScroller
     items={lazyItems}
     itemSize={50}
@@ -130,20 +126,24 @@
     loading={lazyLoading}
     class="border-1 surface-border border-round"
     style="width:200px;height:200px;"
-></VirtualScroller>
-${basic ? '...' : codeSnippets}`
-    }
+></VirtualScroller>`
 
     const code = {
         basic: `
-${codeVirtualScroller(true)}
-        `,
+${codeBase}
+...
+`,
         javascript: `
 ${importJS('VirtualScroller', codeItemsJS)}
-${codeVirtualScroller()}`,
+${codeBase}
+${codeItemSnippetJS}
+${codeLoadingSnippetJS}
+`,
         typescript: `
 ${importTS('VirtualScroller', codeItemsTS)}
-${codeVirtualScroller()}
+${codeBase}
+${codeItemSnippetTS}
+${codeLoadingSnippetTS}
 `
     }
 </script>
