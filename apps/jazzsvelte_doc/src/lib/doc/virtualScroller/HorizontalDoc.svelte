@@ -2,7 +2,7 @@
     import { importJS, importTS } from '$lib/doc/common/doc.utils'
     import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-    import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
+    import { VirtualScroller, type VirtualScrollerItemSnippetProps } from '@jazzsvelte/virtual_scroller'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
 
     let { docSection }: ComponentDocProps = $props()
@@ -10,16 +10,15 @@
     const items = Array.from({ length: 100000 }).map((_, i) => `Item # ${i}`)
 
     const codeItems = 'const items = Array.from({ length: 100000 }).map((_, i) => `Item # ${i}`)'
-    const codeVirtualScrollerSlot = `
+    const codeItemSnippet = `
+    {#snippet itemSnippet({ item, options }: VirtualScrollerItemSnippetProps)}
     <div
-        slot="item"
-        let:item
-        let:options
         class={\`flex align-items-center p-2\${options.odd ? ' surface-hover' : ''}\`}
-        style={\`width: \${options.$$props.itemSize}px;writing-mode:vertical-lr\`}
+        style={\`height: \${options._props.itemSize}px;writing-mode:vertical-lr\`}
     >
         {item}
-    </div>`
+    </div>
+{/snippet}`
     function codeVirtualScroller(basic: boolean = false) {
         return `
 <VirtualScroller
@@ -28,9 +27,8 @@
     orientation="horizontal"
     class="border-1 surface-border border-round"
     style="width:200px;height:200px;"
->
-    ${basic ? '...' : codeVirtualScrollerSlot}
-</VirtualScroller>`
+></VirtualScroller>
+${basic ? '...' : codeItemSnippet}`
     }
 
     const code = {
@@ -58,19 +56,19 @@ ${codeVirtualScroller()}
     <VirtualScroller
         {items}
         itemSize={50}
+        {itemSnippet}
         orientation="horizontal"
         class="border-1 surface-border border-round"
         style="width:200px;height:200px;"
-    >
-        <div
-            slot="item"
-            let:item
-            let:options
-            class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-            style={`width: ${options.$$props.itemSize}px;writing-mode:vertical-lr`}
-        >
-            {item}
-        </div>
-    </VirtualScroller>
+    ></VirtualScroller>
 </div>
 <DocSectionCode {code} />
+
+{#snippet itemSnippet({ item, options }: VirtualScrollerItemSnippetProps)}
+    <div
+        class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
+        style={`width: ${options._props.itemSize}px;writing-mode:vertical-lr`}
+    >
+        {item}
+    </div>
+{/snippet}

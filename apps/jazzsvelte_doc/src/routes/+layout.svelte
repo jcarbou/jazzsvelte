@@ -5,6 +5,7 @@
     import NewsSection from '$lib/layout/newsSection/NewsSection.svelte'
     import Sidebar from '$lib/layout/sidebar/Sidebar.svelte'
     import TopBar from '$lib/layout/topbar/TopBar.svelte'
+    import 'primeflex/primeflex.css'
     import '../app.css'
     import '../core.css'
     import './layout.css'
@@ -18,7 +19,6 @@
 </script>
 
 <svelte:head>
-    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
     <link rel="stylesheet" href="/primeicons.css" />
 
     <title>JazzSvelte - Svelte UI Component Library</title>

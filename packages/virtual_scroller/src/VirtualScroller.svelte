@@ -1,73 +1,125 @@
 <script lang="ts">
     import type {
-        VirtualScrollerPassThroughMethodOptions,
-        VirtualScrollerPassThroughOptions,
-        VirtualScrollerOrientation,
+        VirtualScrollerProps,
         InnerBothState,
         InnerState,
         LazyLoadState,
-        LazyLoadCallback
+        VirtualScrollerPtContext,
+        VirtualScrollerLoadingSnippetOptions,
+        ScrollPos
     } from './virtualScroller.types'
 
-    import type {
-        HTMLDivAttributes,
-        IconComponent,
-        CssStyle,
-        ResolvedIconPT,
-        PassThroughOptions,
-        TimeoutId,
-        CssObject
-    } from '@jazzsvelte/api'
-    import { afterUpdate, onMount } from 'svelte'
-    import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
+    import type { TimeoutId, CssObject } from '@jazzsvelte/api'
+    import { onMount } from 'svelte'
+    import { resolveDivPt, resolveIconPT } from '@jazzsvelte/api'
     import { IconBuilder } from '@jazzsvelte/icons'
     import { defaultVirtualScrollerProps as DEFAULT, globalVirtualScrollerPT as globalPt } from './virtualScroller.config'
     import { getHeight, getWidth, isVisible, findSingleEl } from '@jazzsvelte/dom'
     import { windowEvents } from '@jazzsvelte/window_events_action'
+    import {
+        bothPos,
+        bothSize,
+        bothState,
+        compueSpacerSize,
+        computeLoadItems,
+        getContentPosition,
+        updateRootElSize,
+        simplePos,
+        simpleSize,
+        simpleState
+    } from './virtualScroller.utils'
 
-    type BothScrollPos = { top: number; left: number }
-    type ScrollPos = BothScrollPos | number
     type Columns = any[]
     type Items = any[] | any[][]
 
-    export let appendOnly: boolean = DEFAULT.appendOnly
-    export let autoSize: boolean = DEFAULT.autoSize
-    export let columns: Columns | null = DEFAULT.columns
-    export let delay: number = DEFAULT.delay
-    export let disabled: boolean = DEFAULT.disabled
-    export let id: string | null = DEFAULT.id
-    export let inline: boolean = DEFAULT.inline
-    export let items: Items | null = DEFAULT.items
-    export let itemSize: number | number[]
-    export let lazy: boolean = DEFAULT.lazy
-    export let loaderDisabled: boolean = DEFAULT.loaderDisabled
-    export let loading: boolean = DEFAULT.loading
-    export let loadingIcon: string | IconComponent | null = DEFAULT.loadingIcon
-    export let numToleratedItems: number | number[] | null = DEFAULT.numToleratedItems
-    export let orientation: VirtualScrollerOrientation = DEFAULT.orientation
-    export let resizeDelay: number = DEFAULT.resizeDelay
-    export let scrollHeight: string | null = DEFAULT.scrollHeight
-    export let scrollWidth: string | null = DEFAULT.scrollWidth
-    export let showLoader: boolean = DEFAULT.showLoader
-    export let showSpacer: boolean = DEFAULT.showSpacer
-    export let step: number = DEFAULT.step
-    export let tabIndex: number = DEFAULT.tabIndex
-    export let pt: VirtualScrollerPassThroughOptions | null = null
-    export let ptOptions: PassThroughOptions | null = null
-    export let style: CssStyle | null = DEFAULT.style
-    let className: string | null = DEFAULT.class
-    export { className as class }
-    export let onLazyLoad: LazyLoadCallback | null = null
-    export let onScrollIndexChange: LazyLoadCallback | null = null
-    export let onScroll: ((event: Event) => void) | null = null
+    let {
+        children,
+        appendOnly = DEFAULT.appendOnly,
+        autoSize = DEFAULT.autoSize,
+        class: className = DEFAULT.class,
+        columns = DEFAULT.columns,
+        contentSnippet = null,
+        delay = DEFAULT.delay,
+        disabled = DEFAULT.disabled,
+        id = DEFAULT.id,
+        inline = DEFAULT.inline,
+        items = DEFAULT.items,
+        itemSize,
+        itemSnippet = null,
+        lazy = DEFAULT.lazy,
+        loaderDisabled = DEFAULT.loaderDisabled,
+        loading = DEFAULT.loading,
+        loadingIcon = DEFAULT.loadingIcon,
+        loadingSnippet = null,
+        numToleratedItems = DEFAULT.numToleratedItems,
+        orientation = DEFAULT.orientation,
+        resizeDelay = DEFAULT.resizeDelay,
+        scrollHeight = DEFAULT.scrollHeight,
+        scrollWidth = DEFAULT.scrollWidth,
+        showLoader = DEFAULT.showLoader,
+        showSpacer = DEFAULT.showSpacer,
+        step = DEFAULT.step,
+        tabIndex = DEFAULT.tabIndex,
+        pt = null,
+        ptOptions = null,
+        style = DEFAULT.style,
+        onLazyLoad = null,
+        onScrollIndexChange = null,
+        onScroll = null,
+        ..._restProps
+    }: VirtualScrollerProps = $props()
+
+    //export let onScrollIndexChange: LazyLoadCallback | null = null
+    //export let onScroll: ((event: Event) => void) | null = null
+
+    let _props: VirtualScrollerProps = $derived({
+        appendOnly,
+        autoSize,
+        class: className,
+        columns,
+        delay,
+        disabled,
+        id,
+        inline,
+        items,
+        itemSize,
+        lazy,
+        loaderDisabled,
+        loading,
+        loadingIcon,
+        numToleratedItems,
+        orientation,
+        resizeDelay,
+        scrollHeight,
+        scrollWidth,
+        showLoader,
+        showSpacer,
+        step,
+        tabIndex,
+        pt,
+        ptOptions,
+        style,
+        onLazyLoad,
+        onScrollIndexChange,
+        onScroll
+    })
 
     export const displayName = 'VirtualScroller'
     export function getElement(): HTMLDivElement | null {
         return rootEl
     }
+    export function getSpacerElement(): HTMLDivElement | null {
+        return spacerEl
+    }
+    export function getStickyElement(): HTMLDivElement | null {
+        return stickyEl
+    }
+    export function getContentElement(): HTMLElement | null {
+        return contentEl
+    }
     export function getHandler() {
         return {
-            props: $$props,
+            props: _props,
             getElement,
             scrollTo,
             scrollToIndex,
@@ -76,8 +128,65 @@
         }
     }
 
-    $: ptContext = {
-        props: $$props,
+    let rootEl: HTMLDivElement | null = null //const elementRef = React.useRef(null);
+    let contentEl: HTMLElement | null = null
+    let spacerEl: HTMLDivElement | null = null
+    let stickyEl: HTMLDivElement | null = null
+
+    let currentItems: Items | null = null
+    let previousLoading: boolean = false
+    let previousItems: Items | null = null
+
+    let loadingState: boolean = $state(false)
+    let numToleratedItemsState: number | number[] = $state(0)
+    let pageState: number = $state(0)
+    let loaderArrState: undefined[] | (undefined[] | undefined)[] = $state([])
+    let firstState: InnerState = $state(orientation === 'both' ? { rows: 0, cols: 0 } : 0)
+    let lastState: InnerState = $state(0)
+    let numItemsInViewportState: InnerState = $state(0)
+    let lazyLoadState: { first: InnerState; last: InnerState } | null = $state(null)
+    let contentStyle: CssObject = $state({})
+    let spacerStyle: CssObject = $state({})
+
+    let lastScrollPos: ScrollPos = $state(0)
+    let scrollTimeout: TimeoutId = $state(null)
+    let resizeTimeout: TimeoutId = $state(null)
+    let defaultWidth: number | null = $state(null)
+    let defaultHeight: number | null = $state(null)
+    let defaultContentWidth: number | null = $state(null)
+    let defaultContentHeight: number | null = $state(null)
+    let isItemRangeChanged: boolean = $state(false)
+    let currentLoading: boolean = $state(false)
+
+    let vertical = $derived(orientation === 'vertical')
+    let horizontal = $derived(orientation === 'horizontal')
+    let both = $derived(orientation === 'both')
+    let loadedItems: any[] | any[][] = $derived(
+        computeLoadItems({
+            items,
+            loadingState,
+            both,
+            appendOnly,
+            firstState,
+            lastState,
+            horizontal,
+            columns
+        })
+    )
+    let itemsForLoadingSnippet = $derived(
+        loaderArrState.map((_, index) => {
+            return loaderOptions(index, both ? { numCols: bothState(numItemsInViewportState).cols } : undefined)
+        })
+    )
+    let itemsForItemSnippet = $derived(
+        loadedItems.map((item, index) => ({
+            item,
+            options: getOptions(index)
+        })) || []
+    )
+
+    let ptContext: VirtualScrollerPtContext = $derived({
+        props: { ...DEFAULT, ..._props, ..._restProps },
         state: {
             first: firstState,
             last: lastState,
@@ -90,71 +199,74 @@
         //context: {},
         ptOptions,
         unstyled: false
-    } satisfies VirtualScrollerPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    })
 
     // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            class: [
-                'p-component',
-                'p-virtualscroller',
-                className,
-                {
-                    'p-virtualscroller-inline': inline,
-                    'p-virtualscroller-both p-both-scroll': both,
-                    'p-virtualscroller-horizontal p-horizontal-scroll': horizontal
-                }
-            ],
-            style,
-            'data-pc-name': 'virtualScroller',
-            'data-pc-section': 'root',
-            tabindex: tabIndex
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let rootAttributes = $derived(
+        resolveDivPt(
+            {
+                class: [
+                    'p-component',
+                    'p-virtualscroller',
+                    className,
+                    {
+                        'p-virtualscroller-inline': inline,
+                        'p-virtualscroller-both p-both-scroll': both,
+                        'p-virtualscroller-horizontal p-horizontal-scroll': horizontal
+                    }
+                ],
+                style,
+                'data-pc-name': 'virtualScroller',
+                'data-pc-section': 'root',
+                tabindex: tabIndex
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )
 
     // "content" element
-    $: contentAttributes = resolvePT(
-        {
-            class: [
-                'p-virtualscroller-content',
-                {
-                    'p-virtualscroller-loading': loadingState
-                }
-            ],
-            'data-pc-section': 'content',
-            style: contentStyle
-        },
-        pt?.content,
-        globalPt?.content,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let contentAttributes = $derived(
+        resolveDivPt(
+            {
+                class: [
+                    'p-virtualscroller-content',
+                    {
+                        'p-virtualscroller-loading': loadingState
+                    }
+                ],
+                'data-pc-section': 'content',
+                style: contentStyle
+            },
+            pt?.content,
+            globalPt?.content,
+            ptContext
+        )
+    )
 
     // "loader" element
-    $: loaderAttributes = resolvePT(
-        {
-            class: [
-                'p-virtualscroller-loader',
-                {
-                    'p-component-overlay': !$$slots.loading
-                }
-            ],
-            'data-pc-section': 'loader'
-        },
-        pt?.loader,
-        globalPt?.loader,
-        ptContext
-    ) satisfies HTMLDivAttributes
+    let loaderAttributes = $derived(
+        resolveDivPt(
+            {
+                class: [
+                    'p-virtualscroller-loader',
+                    {
+                        'p-component-overlay': loadingSnippet
+                    }
+                ],
+                'data-pc-section': 'loader'
+            },
+            pt?.loader,
+            globalPt?.loader,
+            ptContext
+        )
+    )
 
     // "spacer" element
-    $: spacerAttributes = (
+    let spacerAttributes = $derived(
         showSpacer
-            ? resolvePT(
+            ? resolveDivPt(
                   {
                       class: [],
                       'data-pc-section': 'spacer',
@@ -165,76 +277,20 @@
                   ptContext
               )
             : null
-    ) satisfies HTMLDivAttributes | null
+    )
 
     // "loadingIcon" element
-    $: resolvedLoadingIcon = resolveIconPT(
-        loadingIcon,
-        {
-            class: ['p-virtualscroller-spacer', 'p-icon-spin', 'pi', 'p-icon']
-        },
-        pt?.loadingIcon,
-        globalPt?.loadingIcon,
-        ptContext
-    ) satisfies ResolvedIconPT
-
-    $: vertical = (orientation === 'vertical') satisfies boolean
-    $: horizontal = (orientation === 'horizontal') satisfies boolean
-    $: both = (orientation === 'both') satisfies boolean
-    let loadingState: boolean = false
-    let numToleratedItemsState: number | number[] = 0
-    let pageState: number = 0
-    let loaderArrState: undefined[] | (undefined[] | undefined)[] = []
-    let firstState: InnerState = 0
-    let lastState: InnerState = 0
-    let numItemsInViewportState: InnerState = 0
-
-    let rootEl: HTMLDivElement | null = null //const elementRef = React.useRef(null);
-    let contentEl: HTMLElement | null = null
-    let spacerEl: HTMLDivElement | null = null
-    let stickyEl: HTMLDivElement | null = null
-    let lastScrollPos: ScrollPos = 0
-    let scrollTimeout: TimeoutId = null
-    let resizeTimeout: TimeoutId = null
-    let contentStyle: CssObject = {}
-    let spacerStyle: CssObject = {}
-    let defaultWidth: number | null = null
-    let defaultHeight: number | null = null
-    let defaultContentWidth: number | null = null
-    let defaultContentHeight: number | null = null
-    let isItemRangeChanged: boolean = false
-    let lazyLoadState: { first: InnerState; last: InnerState } | null = null
-
-    // Update lastScrollPos,firstState and lastState when both (orientation) change
-    $: if (both !== undefined) {
-        lastScrollPos = both ? { top: 0, left: 0 } : 0
-        firstState = both ? { rows: 0, cols: 0 } : 0
-        lastState = both ? { rows: 0, cols: 0 } : 0
-        numItemsInViewportState = both ? { rows: 0, cols: 0 } : 0
-    }
-    $: if (loading !== undefined) loadingState = loading
-
-    function bothState(state: InnerState): InnerBothState {
-        return state as InnerBothState
-    }
-
-    function simpleState(state: InnerState): number {
-        return state as number
-    }
-    function bothPos(pos: ScrollPos): BothScrollPos {
-        return pos as BothScrollPos
-    }
-
-    function simplePos(pos: ScrollPos): number {
-        return pos as number
-    }
-
-    function bothSize(size: number | number[]): number[] {
-        return size as number[]
-    }
-    function simpleSize(size: number | number[]): number {
-        return size as number
-    }
+    let resolvedLoadingIcon = $derived(
+        resolveIconPT(
+            loadingIcon,
+            {
+                class: ['p-virtualscroller-spacer', 'p-icon-spin', 'pi', 'p-icon']
+            },
+            pt?.loadingIcon,
+            globalPt?.loadingIcon,
+            ptContext
+        )
+    )
 
     function calculateFirst(_index: number = 0, _numT: number): number {
         return _index <= _numT ? 0 : _index
@@ -264,16 +320,16 @@
     }
 
     function scrollToIndex(index: number | number[], behavior: ScrollBehavior = 'auto'): void {
-        const { numToleratedItems } = calculateNumItems()
-        const contentPos = getContentPosition()
+        const { newNumToleratedItems } = calculateNumItems()
+        const contentPos = getContentPosition(contentEl)
         const scrollToItem = (left = 0, top = 0) => scrollTo({ left, top, behavior })
         let newFirst = both ? { rows: 0, cols: 0 } : 0
         let isRangeChanged = false
 
         if (both) {
             newFirst = {
-                rows: calculateFirst(bothSize(index)[0], bothSize(numToleratedItems)[0]),
-                cols: calculateFirst(bothSize(index)[1], bothSize(numToleratedItems)[1])
+                rows: calculateFirst(bothSize(index)[0], bothSize(newNumToleratedItems)[0]),
+                cols: calculateFirst(bothSize(index)[1], bothSize(newNumToleratedItems)[1])
             }
             scrollToItem(
                 calculateCoord(newFirst.cols, bothSize(itemSize)[1], contentPos.left),
@@ -281,7 +337,7 @@
             )
             isRangeChanged = bothState(firstState).rows !== newFirst.rows || bothState(firstState).cols !== newFirst.cols
         } else {
-            newFirst = calculateFirst(simpleSize(index), simpleSize(numToleratedItems))
+            newFirst = calculateFirst(simpleSize(index), simpleSize(newNumToleratedItems))
             horizontal
                 ? scrollToItem(calculateCoord(newFirst, simpleSize(itemSize), contentPos.left), 0)
                 : scrollToItem(0, calculateCoord(newFirst, simpleSize(itemSize), contentPos.top))
@@ -404,76 +460,76 @@
     }
 
     function calculateNumItems() {
-        const contentPos = getContentPosition()
+        const contentPos = getContentPosition(contentEl)
         const contentWidth = rootEl ? rootEl.offsetWidth - contentPos.left : 0
         const contentHeight = rootEl ? rootEl.offsetHeight - contentPos.top : 0
         const calculateNumItemsInViewport = (_contentSize: number, _itemSize: number) =>
             Math.ceil(_contentSize / (_itemSize || _contentSize))
         const calculateNumToleratedItems = (_numItems: number) => Math.ceil(_numItems / 2)
-        const numItemsInViewport: InnerBothState | number = both
+        const newNumItemsInViewport: InnerBothState | number = both
             ? {
                   rows: calculateNumItemsInViewport(contentHeight, bothSize(itemSize)[0]),
                   cols: calculateNumItemsInViewport(contentWidth, bothSize(itemSize)[1])
               }
             : calculateNumItemsInViewport(horizontal ? contentWidth : contentHeight, simpleSize(itemSize))
 
-        const numToleratedItems: number[] | number =
+        const newNumToleratedItems: number[] | number =
             numToleratedItemsState ||
             (both
                 ? [
-                      calculateNumToleratedItems(bothState(numItemsInViewport).rows),
-                      calculateNumToleratedItems(bothState(numItemsInViewport).cols)
+                      calculateNumToleratedItems(bothState(newNumItemsInViewport).rows),
+                      calculateNumToleratedItems(bothState(newNumItemsInViewport).cols)
                   ]
-                : calculateNumToleratedItems(simpleState(numItemsInViewport)))
+                : calculateNumToleratedItems(simpleState(newNumItemsInViewport)))
 
-        return { numItemsInViewport, numToleratedItems }
+        return { newNumItemsInViewport, newNumToleratedItems }
     }
 
     function calculateOptions() {
-        const { numItemsInViewport, numToleratedItems } = calculateNumItems()
+        const { newNumItemsInViewport, newNumToleratedItems } = calculateNumItems()
         const calculateLast = (_first: number, _num: number, _numT: number, _isCols = false) =>
             getLast(_first + _num + (_first < _numT ? 2 : 3) * _numT, _isCols)
         const last = both
             ? {
                   rows: calculateLast(
                       bothState(firstState).rows,
-                      bothState(numItemsInViewport).rows,
-                      bothSize(numToleratedItems)[0]
+                      bothState(newNumItemsInViewport).rows,
+                      bothSize(newNumToleratedItems)[0]
                   ),
                   cols: calculateLast(
                       bothState(firstState).cols,
-                      bothState(numItemsInViewport).cols,
-                      bothSize(numToleratedItems)[1],
+                      bothState(newNumItemsInViewport).cols,
+                      bothSize(newNumToleratedItems)[1],
                       true
                   )
               }
-            : calculateLast(simpleState(firstState), simpleState(numItemsInViewport), simpleSize(numToleratedItems))
+            : calculateLast(simpleState(firstState), simpleState(newNumItemsInViewport), simpleSize(newNumToleratedItems))
 
-        numItemsInViewportState = numItemsInViewport
-        numToleratedItemsState = numToleratedItems
+        numItemsInViewportState = newNumItemsInViewport
+        numToleratedItemsState = newNumToleratedItems
         lastState = last
 
         if (showLoader) {
             loaderArrState = both
-                ? Array.from({ length: bothState(numItemsInViewport).rows }).map(() =>
-                      Array.from({ length: bothState(numItemsInViewport).cols })
+                ? Array.from({ length: bothState(newNumItemsInViewport).rows }).map(() =>
+                      Array.from({ length: bothState(newNumItemsInViewport).cols })
                   )
-                : Array.from({ length: simpleState(numItemsInViewport) })
+                : Array.from({ length: simpleState(newNumItemsInViewport) })
         }
 
         if (lazy) {
             Promise.resolve().then(() => {
-                const lazyLoadState = {
+                const onLazyLoadProps = {
                     first: step ? (both ? { rows: 0, cols: bothState(firstState).cols } : 0) : firstState,
                     last: Math.min(step ? simpleState(step) : simpleState(last), (items || []).length)
                 }
-                onLazyLoad && onLazyLoad(lazyLoadState)
+                onLazyLoad && onLazyLoad(onLazyLoadProps)
             })
         }
     }
 
-    function calculateAutoSize(loading: boolean): void {
-        if (autoSize && !loading && defaultWidth !== null && defaultHeight != null) {
+    function calculateAutoSize(isLoading: boolean): void {
+        if (autoSize && !isLoading && defaultWidth !== null && defaultHeight != null) {
             Promise.resolve().then(() => {
                 if (contentEl && rootEl && defaultWidth !== null && defaultHeight != null) {
                     contentEl.style.minHeight = contentEl.style.minWidth = 'auto'
@@ -497,53 +553,6 @@
 
     function getLast(last: number = 0, isCols: boolean) {
         return items ? Math.min(isCols ? (columns || items[0])?.length || 0 : (items || []).length, last) : 0
-    }
-
-    const getContentPosition = () => {
-        if (contentEl) {
-            const style = getComputedStyle(contentEl)
-            const left = parseFloat(style.paddingLeft) + Math.max(parseFloat(style.left) || 0, 0)
-            const right = parseFloat(style.paddingRight) + Math.max(parseFloat(style.right) || 0, 0)
-            const top = parseFloat(style.paddingTop) + Math.max(parseFloat(style.top) || 0, 0)
-            const bottom = parseFloat(style.paddingBottom) + Math.max(parseFloat(style.bottom) || 0, 0)
-
-            return { left, right, top, bottom, x: left + right, y: top + bottom }
-        }
-
-        return { left: 0, right: 0, top: 0, bottom: 0, x: 0, y: 0 }
-    }
-
-    function setSize() {
-        if (rootEl) {
-            const parentElement = rootEl.parentElement
-            const width = scrollWidth || `${rootEl.offsetWidth || parentElement?.offsetWidth}px`
-            const height = scrollHeight || `${rootEl.offsetHeight || parentElement?.offsetHeight}px`
-            const setProp = (_name: 'width' | 'height', _value: string) => rootEl && (rootEl.style[_name] = _value)
-
-            if (both || horizontal) {
-                setProp('height', height)
-                setProp('width', width)
-            } else {
-                setProp('height', height)
-            }
-        }
-    }
-
-    function setSpacerSize() {
-        if (items) {
-            const contentPos = getContentPosition()
-            const setProp = (_name: 'width' | 'height', _value: Items, _size: number, _cpos = 0) =>
-                (spacerStyle = { ...spacerStyle, ...{ [`${_name}`]: (_value || []).length * _size + _cpos + 'px' } })
-
-            if (both) {
-                setProp('height', items, bothSize(itemSize)[0], contentPos.y)
-                setProp('width', columns || items[1], bothSize(itemSize)[1], contentPos.x)
-            } else {
-                horizontal
-                    ? setProp('width', columns || items, simpleSize(itemSize), contentPos.x)
-                    : setProp('height', items, simpleSize(itemSize), contentPos.y)
-            }
-        }
     }
 
     function setContentPosition(pos: LazyLoadState) {
@@ -571,7 +580,7 @@
 
     function onScrollPositionChange(event: Event) {
         const target = event.target
-        const contentPos = getContentPosition()
+        const contentPos = getContentPosition(contentEl)
         const calculateScrollPos = (_pos: number, _cpos: number) => (_pos ? (_pos > _cpos ? _pos - _cpos : _pos) : 0)
         const calculateCurrentIndex = (_pos: number, _size: number) => Math.floor(_pos / (_size || _pos))
 
@@ -826,7 +835,7 @@
         }
 
         resizeTimeout = setTimeout(() => {
-            if (rootEl) {
+            if (rootEl && numToleratedItems !== null) {
                 const [width, height] = [getWidth(rootEl), getHeight(rootEl)]
                 const [isDiffWidth, isDiffHeight] = [width !== defaultWidth, height !== defaultHeight]
                 const reinit = both ? isDiffWidth || isDiffHeight : horizontal ? isDiffWidth : vertical ? isDiffHeight : false
@@ -853,11 +862,11 @@
             last: index === count - 1,
             even: index % 2 === 0,
             odd: index % 2 !== 0,
-            $$props
+            _props
         }
     }
 
-    function loaderOptions(index: number, extOptions: any) {
+    function loaderOptions(index: number, extOptions?: { numCols?: number }): VirtualScrollerLoadingSnippetOptions {
         const count = loaderArrState.length || 0
 
         return {
@@ -867,27 +876,33 @@
             last: index === count - 1,
             even: index % 2 === 0,
             odd: index % 2 !== 0,
-            $$props,
+            _props,
             ...extOptions
         }
     }
 
-    let loadedItems: any[] | any[][] = []
-    $: {
-        if (!items || loadingState) {
-            loadedItems = []
-        } else if (both) {
-            loadedItems = items
-                .slice(appendOnly ? 0 : bothState(firstState).rows, bothState(lastState).rows)
-                .map((item) =>
-                    columns ? item : item.slice(appendOnly ? 0 : bothState(firstState).cols, bothState(lastState).cols)
-                )
-        } else if (!horizontal || !columns) {
-            loadedItems = items.slice(appendOnly ? 0 : simpleState(firstState), simpleState(lastState))
+    function init() {
+        if (!disabled) {
+            updateRootElSize({
+                rootEl,
+                scrollWidth,
+                scrollHeight,
+                horizontal,
+                both
+            })
+            calculateOptions()
+            spacerStyle = compueSpacerSize({
+                contentEl,
+                items,
+                both,
+                columns,
+                horizontal,
+                itemSize
+            })
         }
     }
 
-    function viewInit() {
+    onMount(() => {
         if (rootEl && isVisible(rootEl)) {
             setContentElement(contentEl)
             init()
@@ -897,45 +912,40 @@
             defaultContentWidth = getWidth(contentEl)
             defaultContentHeight = getHeight(contentEl)
         }
-    }
+    })
 
-    function init() {
-        if (!disabled) {
-            setSize()
-            calculateOptions()
-            setSpacerSize()
+    // Update lastScrollPos,firstState and lastState when both (orientation) change
+    $effect(() => {
+        if (both !== undefined) {
+            lastScrollPos = both ? { top: 0, left: 0 } : 0
+            firstState = both ? { rows: 0, cols: 0 } : 0
+            lastState = both ? { rows: 0, cols: 0 } : 0
+            numItemsInViewportState = both ? { rows: 0, cols: 0 } : 0
         }
-    }
+    })
+    $effect(() => {
+        if (loading !== undefined) loadingState = loading
+    })
 
-    onMount(() => viewInit())
+    $effect(() => {
+        if (numToleratedItems !== numToleratedItemsState) {
+            numToleratedItems = numToleratedItemsState
+            init() // reinit after resizing
+        }
+    })
 
-    // TODO :  reactToChanges(itemSize, scrollHeight, scrollWidth )
-    $: if (itemSize !== undefined || scrollHeight !== undefined || scrollWidth !== undefined) {
-        init()
-    }
-
-    $: if (numToleratedItems !== numToleratedItemsState) {
-        numToleratedItems = numToleratedItemsState
-    }
-
-    $: if (numToleratedItems === numToleratedItemsState) {
-        init() // reinit after resizing
-    }
-
-    let currentItems: Items | null = null
-    let previousItems: Items | null = null
-    $: {
+    $effect(() => {
+        console.log('effect : previous items')
         previousItems = currentItems
         currentItems = items
-    }
-    let currentLoading: boolean = false
-    let previousLoading: boolean = false
-    $: {
+    })
+    $effect(() => {
+        console.log('effect : previous loading')
         previousLoading = currentLoading
         currentLoading = loading
-    }
+    })
 
-    afterUpdate(() => {
+    $effect(() => {
         // Check if the previous/current rows array exists
         const prevRowsExist = !!previousItems
         const currentRowsExist = items !== undefined && items !== null
@@ -962,28 +972,17 @@
             init()
         }
 
-        let _loading = loadingState
+        let isLoading = loadingState
 
         if (lazy && previousLoading !== loading && loading !== loadingState) {
-            console.log('After update loadingState ' + loading)
             loadingState = loading
-            _loading = loading
+            isLoading = loading
         }
 
-        calculateAutoSize(_loading)
+        calculateAutoSize(isLoading)
     })
 
-    $: slotLoadingItems = loaderArrState.map((_, index) => {
-        return loaderOptions(index, both && { numCols: bothState(numItemsInViewportState).cols })
-    })
-
-    $: slotItemItems =
-        loadedItems.map((item, index) => ({
-            item,
-            options: getOptions(index)
-        })) || []
-
-    function slotContentOptions() {
+    function contentSnippetOptions() {
         return {
             style: contentStyle,
             className,
@@ -995,9 +994,9 @@
             getItemOptions: (index: number) => getOptions(index),
             children: items,
             //element: content,
-            props: $$props,
+            props: _props,
             loading: loadingState,
-            getLoaderOptions: (index: number, ext: any) => loaderOptions(index, ext),
+            getLoaderOptions: (index: number, ext?: { numCols?: number }) => loaderOptions(index, ext),
             //loadingTemplate: props.loadingTemplate,
             itemSize,
             rows: getRows(),
@@ -1010,40 +1009,42 @@
 </script>
 
 {#if disabled}
-    <slot />
-    {#if $$slots.content}
-        <slot name="content" />
+    {#if children}
+        {@render children()}
+    {/if}
+    {#if contentSnippet}
+        {@render contentSnippet({ options: contentSnippetOptions() })}
     {/if}
 {:else}
     <div
         bind:this={rootEl}
         {...rootAttributes}
-        {...$$restProps}
-        on:scroll={_onScroll}
+        {..._restProps}
+        onscroll={_onScroll}
         use:windowEvents={{ resize: onResize, windoworientationchange: onResize }}
     >
         {#if !loaderDisabled && showLoader && loadingState}
             <div {...loaderAttributes}>
-                {#if $$slots.loading}
-                    {#each slotLoadingItems as options (options.index)}
-                        <slot name="loading" {options} />
+                {#if loadingSnippet}
+                    {#each itemsForLoadingSnippet as options (options.index)}
+                        {@render loadingSnippet({ options })}
                     {/each}
                 {:else}
                     <IconBuilder resolvedIcon={resolvedLoadingIcon} spin={true} />
                 {/if}
             </div>
         {/if}
-        {#if $$slots.content}
-            <slot name="content" options={slotContentOptions()} />
-        {:else}
+        {#if contentSnippet}
+            {@render contentSnippet({ options: contentSnippetOptions() })}
+        {:else if itemSnippet}
             <div {...contentAttributes}>
-                {#each slotItemItems as slotItem (slotItem.options.index)}
-                    <slot name="item" item={slotItem.item} options={slotItem.options} />
+                {#each itemsForItemSnippet as slotItem (slotItem.options.index)}
+                    {@render itemSnippet({ item: slotItem.item, options: slotItem.options })}
                 {/each}
             </div>
         {/if}
         {#if showSpacer}
-            <div bind:this={spacerEl} {...spacerAttributes} />
+            <div bind:this={spacerEl} {...spacerAttributes}></div>
         {/if}
     </div>
 {/if}

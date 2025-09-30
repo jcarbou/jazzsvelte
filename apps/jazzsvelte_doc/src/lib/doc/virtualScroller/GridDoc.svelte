@@ -4,6 +4,8 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { itemArraySnippet } from './VirtualScrollerDoc.modules.svelte'
+    import { codeItemArraySnippet } from './virtualScrollerDoc.codes'
 
     let { docSection }: ComponentDocProps = $props()
 
@@ -12,30 +14,20 @@
     const codeItems = `const items =  Array.from({ length: 1000 }).map(
         (_, i) => Array.from({ length: 1000 }).map((_j, j) => \`Item #\${i}_\${j}\`)
     )`
-    const codeVirtualScrollerSlot = `<div
-        slot="item"
-        let:item
-        let:options
-        class={\`flex align-items-center p-2\${options.odd ? ' surface-hover' : ''}\`}
-        style={\`height: \${options.$$props.itemSize[0]}px\`}
-    >
-        {#each item as childItem, index (index)}
-            <div style={\`width:\${options.$$props.itemSize[1]}px\`}>
-                {childItem}
-            </div>
-        {/each}
-    </div>`
+
     function codeVirtualScroller(basic: boolean = false) {
         return `
 <VirtualScroller
     {items}
     itemSize={[50, 100]}
+    itemSnippet={itemArraySnippet}
     orientation="both"
     class="border-1 surface-border border-round"
     style="width:200px;height:200px;"
->
-    ${basic ? '...' : codeVirtualScrollerSlot}
-</VirtualScroller>`
+>    
+</VirtualScroller>
+
+${basic ? '...' : codeItemArraySnippet}`
     }
 
     const code = {
@@ -60,23 +52,10 @@ ${importTS('VirtualScroller', codeItems)}
     <VirtualScroller
         {items}
         itemSize={[50, 100]}
+        itemSnippet={itemArraySnippet}
         orientation="both"
         class="border-1 surface-border border-round"
         style="width:200px;height:200px;"
-    >
-        <div
-            slot="item"
-            let:item
-            let:options
-            class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-            style={`height: ${options.$$props.itemSize[0]}px`}
-        >
-            {#each item as childItem, index (index)}
-                <div style={`width:${options.$$props.itemSize[1]}px`}>
-                    {childItem}
-                </div>
-            {/each}
-        </div>
-    </VirtualScroller>
+    ></VirtualScroller>
 </div>
 <DocSectionCode {code} />

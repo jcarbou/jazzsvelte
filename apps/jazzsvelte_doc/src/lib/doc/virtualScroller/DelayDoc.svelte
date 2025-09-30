@@ -4,25 +4,17 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
-
+    import { itemSnippet } from './VirtualScrollerDoc.modules.svelte'
+    import { codeItemSnippet } from './virtualScrollerDoc.codes'
     let { docSection }: ComponentDocProps = $props()
 
     const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)
 
     const codeItems = 'const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)'
-    const codeVirtualScrollerSlot = `<div
-        slot="item"
-        let:item
-        let:options
-        class={\`flex align-items-center p-2\${options.odd ? ' surface-hover' : ''}\`}
-        style={\`height: \${options.$$props.itemSize}px\`}
-    >
-        {item}
-    </div>`
+
     function codeVirtualScroller(basic: boolean = false) {
         const code = `
-<VirtualScroller {items} itemSize={50} _DELAY_ class="border-1 surface-border border-round" style="width:200px;height:200px;">
-    ${basic ? '...' : codeVirtualScrollerSlot}
+<VirtualScroller {items} itemSize={50} {itemSnippet} _DELAY_ class="border-1 surface-border border-round" style="width:200px;height:200px;">
 </VirtualScroller>`
         return code.replace('_DELAY_', '') + code.replace('_DELAY_', 'delay={150}') + code.replace('_DELAY_', 'delay={500}')
     }
@@ -34,10 +26,12 @@ ${codeVirtualScroller(true)}
         javascript: `
 ${importJS('VirtualScroller', codeItems)}
 ${codeVirtualScroller()}
+${codeItemSnippet}
 `,
         typescript: `
 ${importTS('VirtualScroller', codeItems)}
 ${codeVirtualScroller()}
+${codeItemSnippet}
 `
     }
 </script>
@@ -50,56 +44,35 @@ ${codeVirtualScroller()}
 <div class="card flex flex-wrap justify-content-center gap-5">
     <div>
         <span class="font-bold block mb-2">No Delay</span>
-        <VirtualScroller {items} itemSize={50} class="border-1 surface-border border-round" style="width:200px;height:200px;">
-            <div
-                slot="item"
-                let:item
-                let:options
-                class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-                style={`height: ${options.$$props.itemSize}px`}
-            >
-                {item}
-            </div>
-        </VirtualScroller>
+        <VirtualScroller
+            {items}
+            itemSize={50}
+            {itemSnippet}
+            class="border-1 surface-border border-round"
+            style="width:200px;height:200px;"
+        ></VirtualScroller>
     </div>
     <div>
         <span class="font-bold block mb-2">150ms</span>
         <VirtualScroller
             {items}
             itemSize={50}
+            {itemSnippet}
             class="border-1 surface-border border-round"
             style="width:200px;height:200px;"
             delay={150}
-        >
-            <div
-                slot="item"
-                let:item
-                let:options
-                class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-                style={`height: ${options.$$props.itemSize}px`}
-            >
-                {item}
-            </div>
-        </VirtualScroller>
+        ></VirtualScroller>
     </div>
     <div>
         <span class="font-bold block mb-2">500ms</span>
         <VirtualScroller
             {items}
             itemSize={50}
+            {itemSnippet}
             class="border-1 surface-border border-round"
             style="width:200px;height:200px;"
             delay={500}
-            ><div
-                slot="item"
-                let:item
-                let:options
-                class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-                style={`height: ${options.$$props.itemSize}px`}
-            >
-                {item}
-            </div>
-        </VirtualScroller>
+        ></VirtualScroller>
     </div>
 </div>
 <DocSectionCode {code} />

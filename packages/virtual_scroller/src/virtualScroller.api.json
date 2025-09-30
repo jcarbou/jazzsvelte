@@ -114,10 +114,10 @@
                 "description": "Columns of the virtual scroller for vertical option."
             },
             {
-                "name": "contentTemplate",
+                "name": "contentSnippet",
                 "optional": true,
                 "readonly": false,
-                "type": "typeof SvelteComponent | null",
+                "type": "VirtualScrollerContentSnippet | null",
                 "default": "null",
                 "description": "The template of item's wrapper element."
             },
@@ -170,10 +170,10 @@
                 "description": "The height/width of item according to orientation."
             },
             {
-                "name": "itemTemplate",
+                "name": "itemSnippet",
                 "optional": true,
                 "readonly": false,
-                "type": "typeof SvelteComponent | null",
+                "type": "VirtualScrollerItemSnippet | null",
                 "default": "null",
                 "description": "The template of item."
             },
@@ -219,10 +219,10 @@
                 "description": "The icon to show while indicating data load is in progress."
             },
             {
-                "name": "loadingTemplate",
+                "name": "loadingSnippet",
                 "optional": true,
                 "readonly": false,
-                "type": "typeof SvelteComponent | null",
+                "type": "VirtualScrollerLoadingSnippet | null",
                 "default": "null",
                 "description": "The template of loader."
             },

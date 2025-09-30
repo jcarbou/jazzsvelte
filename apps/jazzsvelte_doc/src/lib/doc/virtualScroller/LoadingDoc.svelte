@@ -5,24 +5,18 @@
     //import { Skeleton } from '@jazzsvelte/skeleton'
     import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { itemSnippet, loadingSnippet } from './VirtualScrollerDoc.modules.svelte'
+    import { codeItemSnippet, codeLoadingSnippet } from './virtualScrollerDoc.codes'
 
     let { docSection }: ComponentDocProps = $props()
 
     const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)
 
     const codeItems = 'const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)'
-    const codeVirtualScrollerSlotItem = `<div
-        slot="item"
-        let:item
-        let:options
-        class={\`flex align-items-center p-2\${options.odd ? ' surface-hover' : ''}\`}
-        style={\`height: \${options.$$props.itemSize}px\`}
-    >
-        {item}
-    </div>`
-    const codeVirtualScrollerSlotLoading = `<div slot="loading" let:options class={\`flex align-items-center \${options.odd && 'odd'}\`} style="height:50px;">
-        <div style="width:60%;height:1.3rem;background-color:grey;border-radius:4px" />
-    </div>`
+    const codeSnippets = `
+    ${codeItemSnippet}
+    ${codeLoadingSnippet}`
+
     function codeVirtualScroller(basic: boolean = false) {
         return `
 <VirtualScroller
@@ -32,9 +26,7 @@
     delay={250}
     class="border-1 surface-border border-round"
     style="width:200px;height:200px;"
->
-   ${basic ? '...' : codeVirtualScrollerSlotItem}
-</VirtualScroller>
+></VirtualScroller>
 <VirtualScroller
     {items}
     itemSize={50}
@@ -42,9 +34,8 @@
     delay={250}
     class="border-1 surface-border border-round"
     style="width:200px;height:200px;"
->    
-    ${basic ? '...' : codeVirtualScrollerSlotItem + codeVirtualScrollerSlotLoading}
-</VirtualScroller>`
+></VirtualScroller>
+${basic ? '...' : codeSnippets}`
     }
 
     const code = {
@@ -75,46 +66,25 @@ ${codeVirtualScroller()}
         <VirtualScroller
             {items}
             itemSize={50}
+            {itemSnippet}
             showLoader
             delay={250}
             class="border-1 surface-border border-round"
             style="width:200px;height:200px;"
-        >
-            <div
-                slot="item"
-                let:item
-                let:options
-                class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-                style={`height: ${options.$$props.itemSize}px`}
-            >
-                {item}
-            </div>
-        </VirtualScroller>
+        ></VirtualScroller>
     </div>
     <div>
         <span class="font-bold block mb-2">Skeleton</span>
         <VirtualScroller
             {items}
             itemSize={50}
+            {itemSnippet}
+            {loadingSnippet}
             showLoader
             delay={250}
             class="border-1 surface-border border-round"
             style="width:200px;height:200px;"
-        >
-            <div
-                slot="item"
-                let:item
-                let:options
-                class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-                style={`height: ${options.$$props.itemSize}px`}
-            >
-                {item}
-            </div>
-            <div slot="loading" let:options class={`flex align-items-center ${options.odd && 'odd'}`} style="height:50px;">
-                <!---<Skeleton width={options.even ? '60%' : '50%'} height="1.3rem" />-->
-                <div style="width:60%;height:1.3rem;background-color:grey;border-radius:4px" />
-            </div>
-        </VirtualScroller>
+        ></VirtualScroller>
     </div>
 </div>
 <DocSectionCode {code} />

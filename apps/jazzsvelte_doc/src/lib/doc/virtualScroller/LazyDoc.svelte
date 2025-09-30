@@ -4,15 +4,16 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     //import { Skeleton } from '@jazzsvelte/skeleton'
     import { VirtualScroller, type LazyLoadCallback } from '@jazzsvelte/virtual_scroller'
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
     import type { TimeoutId } from '@jazzsvelte/api'
     import { onMount } from 'svelte'
-
-    export let docSection: DocSection
+    import { itemSnippet, loadingSnippet } from './VirtualScrollerDoc.modules.svelte'
+    import { codeItemSnippet, codeLoadingSnippet } from './virtualScrollerDoc.codes'
+    let { docSection }: ComponentDocProps = $props()
 
     let loadLazyTimeout: TimeoutId = null
-    let lazyLoading = true
-    let lazyItems: String[] = []
+    let lazyLoading = $state(true)
+    let lazyItems: String[] = $state([])
 
     onMount(() => {
         lazyItems = Array.from({ length: 100000 })
@@ -112,34 +113,25 @@
             Math.random() * 1000 + 250
         )
     }`
-    const codeVirtualScrollerSlot = `
-    <div
-        slot="item"
-        let:item
-        let:options
-        class={\`flex align-items-center p-2\${options.odd ? ' surface-hover' : ''}\`}
-        style={\`height: \${options.$$props.itemSize}px\`}
-    >
-        {item}
-    </div>
-    <div slot="loading" let:options class={\`flex align-items-center \${options.odd && 'odd'}\`} style="height:50px;">
-        <!---<Skeleton width={options.even ? '60%' : '50%'} height="1.3rem" />-->
-        <div style="width:60%;height:1.3rem;background-color:grey;border-radius:4px" />
-    </div>`
+    const codeSnippets = `
+    ${codeItemSnippet}
+    ${codeLoadingSnippet}`
+
     function codeVirtualScroller(basic: boolean = false) {
         return `
  <VirtualScroller
     items={lazyItems}
     itemSize={50}
+    {itemSnippet}
+    {loadingSnippet}
     lazy
     {onLazyLoad}
     showLoader
     loading={lazyLoading}
     class="border-1 surface-border border-round"
     style="width:200px;height:200px;"
->
-   ${basic ? '...' : codeVirtualScrollerSlot}
-</VirtualScroller>`
+></VirtualScroller>
+${basic ? '...' : codeSnippets}`
     }
 
     const code = {
@@ -167,26 +159,14 @@ ${codeVirtualScroller()}
     <VirtualScroller
         items={lazyItems}
         itemSize={50}
+        {itemSnippet}
+        {loadingSnippet}
         lazy
         {onLazyLoad}
         showLoader
         loading={lazyLoading}
         class="border-1 surface-border border-round"
         style="width:200px;height:200px;"
-    >
-        <div
-            slot="item"
-            let:item
-            let:options
-            class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-            style={`height: ${options.$$props.itemSize}px`}
-        >
-            {item}
-        </div>
-        <div slot="loading" let:options class={`flex align-items-center ${options.odd && 'odd'}`} style="height:50px;">
-            <!---<Skeleton width={options.even ? '60%' : '50%'} height="1.3rem" />-->
-            <div style="width:60%;height:1.3rem;background-color:grey;border-radius:4px" />
-        </div>
-    </VirtualScroller>
+    ></VirtualScroller>
 </div>
 <DocSectionCode {code} />

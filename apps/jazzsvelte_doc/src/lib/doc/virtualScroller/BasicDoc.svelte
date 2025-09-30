@@ -4,26 +4,21 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
     import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { itemSnippet } from './VirtualScrollerDoc.modules.svelte'
+    import { codeItemSnippet } from './virtualScrollerDoc.codes'
 
     let { docSection }: ComponentDocProps = $props()
 
     const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)
 
     const codeItems = 'const items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`)'
-    const codeVirtualScrollerSlot = `<div
-        slot="item"
-        let:item
-        let:options
-        class={\`flex align-items-center p-2\${options.odd ? ' surface-hover' : ''}\`}
-        style={\`height: \${options.$$props.itemSize}px\`}
-    >
-        {item}
-    </div>`
+
     function codeVirtualScroller(basic: boolean = false) {
         return `    
-<VirtualScroller {items} itemSize={50} class="border-1 surface-border border-round" style="width:200px;height:200px;">
-   ${basic ? '...' : codeVirtualScrollerSlot}
-</VirtualScroller>`
+<VirtualScroller {items} itemSize={50} {itemSnippet} class="border-1 surface-border border-round" style="width:200px;height:200px;">
+</VirtualScroller>
+${codeItemSnippet}
+`
     }
 
     const code = {
@@ -50,16 +45,12 @@ ${codeVirtualScroller()}
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <VirtualScroller {items} itemSize={50} class="border-1 surface-border border-round" style="width:200px;height:200px;">
-        <div
-            slot="item"
-            let:item
-            let:options
-            class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
-            style={`height: ${options.$$props.itemSize}px`}
-        >
-            {item}
-        </div>
-    </VirtualScroller>
+    <VirtualScroller
+        {items}
+        itemSize={50}
+        {itemSnippet}
+        class="border-1 surface-border border-round"
+        style="width:200px;height:200px;"
+    ></VirtualScroller>
 </div>
 <DocSectionCode {code} />

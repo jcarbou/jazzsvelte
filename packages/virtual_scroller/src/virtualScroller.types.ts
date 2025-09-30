@@ -1,4 +1,4 @@
-import type { SvelteComponent } from 'svelte'
+import type { Snippet, SvelteComponent } from 'svelte'
 import type {
     CssObject,
     HTMLDivAttributes,
@@ -6,6 +6,7 @@ import type {
     HTMLSpanAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
+    PassThroughOptions,
     PassThroughType
 } from '@jazzsvelte/api'
 
@@ -24,6 +25,78 @@ export type VirtualScrollerOptions = {
  * @group types
  **/
 export type VirtualScrollerOrientation = 'both' | 'horizontal' | 'vertical'
+
+export type VirtualScrollerContentSnippetOptions = {
+    style: CssObject
+    className: string | null
+    spacerStyle: CssObject
+    contentRef: (el: HTMLElement) => HTMLElement
+    spacerRef: (el: HTMLDivElement) => HTMLDivElement
+    stickyRef: (el: HTMLDivElement) => HTMLDivElement
+    items: unknown[] | unknown[][]
+    getItemOptions: (index: number) => {
+        index: number
+        count: number
+        first: boolean
+        last: boolean
+        even: boolean
+        odd: boolean
+        _props: VirtualScrollerProps
+    }
+    children: unknown[] | unknown[][] | null
+    props: VirtualScrollerProps
+    loading: boolean
+    getLoaderOptions: (index: number, ext?: { numCols?: number }) => VirtualScrollerLoadingSnippetOptions
+    itemSize: number | number[]
+    rows: unknown[] | unknown[][]
+    columns: unknown[] | unknown[][] | undefined
+    vertical: boolean
+    horizontal: boolean
+    both: boolean
+}
+
+export type VirtualScrollerContentSnippetProps = {
+    options: VirtualScrollerContentSnippetOptions
+}
+
+export type VirtualScrollerItemSnippetOptions = {
+    index: number
+    count: number
+    first: boolean
+    last: boolean
+    even: boolean
+    odd: boolean
+    _props: VirtualScrollerProps
+}
+
+export type VirtualScrollerLoadingSnippetOptions = {
+    index: number
+    count: number
+    first: boolean
+    last: boolean
+    even: boolean
+    odd: boolean
+    _props: VirtualScrollerProps
+    numCols?: number
+}
+
+export type VirtualScrollerLoadingSnippetProps = {
+    options: VirtualScrollerLoadingSnippetOptions
+}
+
+export type VirtualScrollerItemSnippetProps = {
+    item: unknown
+    options: VirtualScrollerItemSnippetOptions
+}
+
+export type VirtualScrollerContentSnippet = Snippet<[VirtualScrollerContentSnippetProps]>
+export type VirtualScrollerLoadingSnippet = Snippet<[VirtualScrollerLoadingSnippetProps]>
+export type VirtualScrollerItemSnippet = Snippet<[VirtualScrollerItemSnippetProps]>
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type VirtualScrollerItems = null | any[] | any[][]
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type VirtualScrollerColumns = any[] | null
 
 /**
  * undefined
@@ -52,14 +125,13 @@ export interface BaseVirtualScrollerProps {
      * Columns of the virtual scroller for vertical option.
      * @default  null
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    columns?: any[] | null
+    columns?: VirtualScrollerColumns
 
     /**
      * The template of item's wrapper element.
      * @default  null
      */
-    contentTemplate?: typeof SvelteComponent | null
+    contentSnippet?: VirtualScrollerContentSnippet | null
 
     /**
      * Delay in scroll before new data is loaded.
@@ -89,20 +161,19 @@ export interface BaseVirtualScrollerProps {
      * An array of objects to display.
      * @default  null
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    items?: null | any[] | any[][]
+    items?: VirtualScrollerItems
 
     /**
      * The height/width of item according to orientation.
      * @default  null
      */
-    itemSize?: number | number[]
+    itemSize: number | number[]
 
     /**
      * The template of item.
      * @default  null
      */
-    itemTemplate?: typeof SvelteComponent | null
+    itemSnippet?: VirtualScrollerItemSnippet | null
 
     /**
      * Defines if data is loaded and interacted with in lazy manner.
@@ -138,7 +209,7 @@ export interface BaseVirtualScrollerProps {
      * The template of loader.
      * @default  null
      */
-    loadingTemplate?: typeof SvelteComponent | null
+    loadingSnippet?: VirtualScrollerLoadingSnippet | null
 
     /**
      * Determines how many additional elements to add to the DOM outside of the view. According to the scrolls made up and down, extra items are added in a certain algorithm in the form of multiples of this number. Default value is half the number of items shown in the view.
@@ -152,6 +223,16 @@ export interface BaseVirtualScrollerProps {
     onLazyLoad?: LazyLoadCallback | null
 
     /**
+     * "Callback to invoke when scroll position and item's range in view changes.
+     */
+    onScrollIndexChange?: LazyLoadCallback | null
+
+    /**
+     * Callback to invoke when scroll position changes.
+     */
+    onScroll?: ((event: Event) => void) | null
+
+    /**
      * The orientation of scrollbar, valid values are 'vertical', 'horizontal' and 'both'.
      * @default  'vertical'
      */
@@ -161,13 +242,13 @@ export interface BaseVirtualScrollerProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: VirtualScrollerPassThroughOptions
+    pt?: VirtualScrollerPassThroughOptions | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
      * @default  null
      */
-    ptOptions?: VirtualScrollerPassThroughMethodOptions
+    ptOptions?: PassThroughOptions | null
 
     /**
      * Delay after window's resize finishes.
@@ -241,6 +322,11 @@ export interface VirtualScrollerPassThroughMethodOptions {
     state: VirtualScrollerState
 }
 
+export interface VirtualScrollerPtContext extends VirtualScrollerPassThroughMethodOptions {
+    ptOptions: PassThroughOptions | null
+    unstyled: boolean
+}
+
 /**
  * Custom passthrough(pt) options.
  * @group ptOptions
@@ -272,6 +358,8 @@ export type InnerBothState = { rows: number; cols: number }
 export type InnerState = InnerBothState | number
 export type LazyLoadState = { first: InnerState; last: InnerState } | null
 export type LazyLoadCallback = (state: LazyLoadState) => void
+export type BothScrollPos = { top: number; left: number }
+export type ScrollPos = BothScrollPos | number
 
 /**
  * Defines current state of VirtualScroller component.
