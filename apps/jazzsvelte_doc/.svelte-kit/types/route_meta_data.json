@@ -29,8 +29,17 @@
 	"/playground": [
 		"src/routes/playground/+page.ts"
 	],
+	"/progressbar": [
+		"src/routes/progressbar/+page.ts"
+	],
+	"/progressspinner": [
+		"src/routes/progressspinner/+page.ts"
+	],
 	"/ripple": [
 		"src/routes/ripple/+page.ts"
+	],
+	"/skeleton": [
+		"src/routes/skeleton/+page.ts"
 	],
 	"/speeddial": [
 		"src/routes/speeddial/+page.ts"

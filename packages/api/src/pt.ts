@@ -18,7 +18,8 @@ import type {
     HTMLLiAttributes,
     HTMLUlAttributes,
     HTMLSVGAttributes,
-    HTMLImageAttributes
+    HTMLImageAttributes,
+    HTMLSVGCircleAttributes
 } from './pt.types'
 import { JAZZ_SVELTE } from './JazzSvelte'
 import { mergeCssClasses } from './cssClasses'
@@ -117,6 +118,29 @@ export function resolveButtonPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
         unstyled: boolean
     }
 ): HTMLButtonAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLSVGCircleAttributes
+ * @param elementAttributes - inner HTMLSVGAttributes of component
+ * @param elementOptions - pass trough HTMLSVGAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLSVGAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLSVGAttributes
+ */
+export function resolveSVGCirclePt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<SVGCircleElement, HTMLSVGCircleAttributes>,
+    elementOptions: PtOptions<SVGCircleElement, HTMLSVGCircleAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<SVGCircleElement, HTMLSVGCircleAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLSVGCircleAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
 

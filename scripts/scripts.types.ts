@@ -60,6 +60,7 @@ export type CmpContext = {
     cmp_name: string
     cmpHomePath: string
     cmpSrcPath: string
+    docPackagePath: string
     packagePath: string
     tsConfigPath: string
     svelteConfigPath: string

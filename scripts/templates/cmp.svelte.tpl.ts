@@ -5,85 +5,85 @@ export function render({ props, ptContext, meta, types, ptOptions }: CmpApiDoc, 
     const { importApi, tooltip, icon } = meta
 
     return `<script lang="ts">
-   import type {
-       ${CmpName}PassThroughMethodOptions,
-       ${CmpName}PassThroughOptions,
-   ${eachValue(types, ({ name }) => `   ${name},`)}
-   } from './${cmpName}.types'
-
-   import type {
+    import type { ${CmpName}Props, ${CmpName}PtContext } from './${cmpName}.types'
+    import type {
        JazzSvelteContext,
-${eachValue(omitValues(importApi, ['SVG']), ({ name }) => `   HTML${name}Attributes,`)}
-${meta.icon && `   IconComponent,`}
-       CssStyle,
+${meta.icon ? `   IconComponent,` : ''}
 ${icon ? '      ResolvedIconPT,' : ''}
-        PassThroughOptions
    } from '@jazzsvelte/api'
 ${icon ? `   import type { TooltipOptions } from '@jazzsvelte/tooltip'` : ''}
     
    import { getContext } from 'svelte'
-${tooltip && `   import { tooltip } from '@jazzsvelte/tooltip'`}
-   import { resolveIconPT, resolvePT } from '@jazzsvelte/api'
+${tooltip ? `   import { tooltip } from '@jazzsvelte/tooltip'` : ''}
+   import { 
+      resolveIconPT, 
+      ${eachValue(omitValues(importApi, ['SVG']), ({ name }) => `   resolve${name}Pt,`)} 
+    } from '@jazzsvelte/api'
 ${icon ? `   import { IconBuilder } from '@jazzsvelte/icons'` : ''}
    import { default${CmpName}Props as DEFAULT, global${CmpName}PT as globalPt } from './${cmpName}.config'
 
-${eachValue(
-    omitValues(props, ['class', 'style', 'tooltip', 'pt', 'ptOptions']),
-    ({ name, type }) => `   export let ${name}: ${type} = DEFAULT.${name}`
-)}
-   export let pt: ${CmpName}PassThroughOptions | null = null
-   export let ptOptions: PassThroughOptions | null = null
-   export let style: CssStyle | null = DEFAULT.style
-   let className: string | null = DEFAULT.class
-   export { className as class }
+   let {
+        children,
+${eachValue(omitValues(props, ['class', 'style', 'tooltip', 'pt', 'ptOptions']), ({ name }) => `     ${name} = DEFAULT.${name},`)}
+      pt = null,
+      ptOptions = null,
+      class: className = DEFAULT.class,
+      style = DEFAULT.style,
 ${
     tooltip
-        ? `   let tooltipContent: string | null = null
-    export { tooltipContent as tooltip }`
+        ? `      tooltip: tooltipContent = null,
+      tooltipOptions = undefined,`
         : ''
 }
+      ..._restProps
+   }: ${CmpName}Props = $props()
 
+   let _props: ${CmpName}Props = $derived({
+${eachValue(omitValues(props, ['class', 'tooltip']), ({ name }) => `     ${name},`)}
+      class: className,
+${tooltip ? '      tooltip: tooltipContent,' : ''}
+   })
+
+   export const displayName = '${CmpName}'
    export function getElement(): HTMLDivElement {
         return rootEl
-   }
-   export const displayName = '${CmpName}'
+   }   
 
    let rootEl: HTMLDivElement
 
-   $: ptContext = {
-        props: $$props,
+   let ptContext: ${CmpName}PtContext = $derived({
+        props: { ...DEFAULT, ..._props, ..._restProps },
         context: { 
 ${eachValue(ptContext, ({ name }) => '      ' + name)}            
         },
         ptOptions,
         unstyled
-    } satisfies ${CmpName}PassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+   })
 
 ${withValue(
     ptOptions,
     'root',
     ({ type }) =>
         `   // "root element"
-    $: rootAttributes = resolvePT(
-        {
-            class: [
-                'p-component',
-                className,
-                {
-                    
-                }
-            ],
-            style,
-            'data-pc-name': '${cmpName}',
-            'data-pc-section': 'root'
-        },
-        pt?.root,
-        globalPt?.root,
-        ptContext
-    ) satisfies HTML${type}Attributes`
+    let rootAttributes = $derived(
+        resolve${type}Pt(
+            {
+                class: [
+                    'p-component',
+                    className,
+                    {
+                        
+                    }
+                ],
+                style,
+                'data-pc-name': '${cmpName}',
+                'data-pc-section': 'root'
+            },
+            pt?.root,
+            globalPt?.root,
+            ptContext
+        )
+    )`
 )}
 
 ${eachValue(
@@ -91,31 +91,34 @@ ${eachValue(
     ({ name, type }) =>
         `
     // "${name}" element
-    $: ${name}Attributes = resolvePT(
-        {
-            class: [],
-            'data-pc-section': '${name}'
-        },
-        pt?.${name},
-        globalPt?.${name},
-        ptContext
-    ) satisfies HTML${type}Attributes
-`
+    let ${name}Attributes = $derived(
+        resolve${type}Pt(
+            {
+                class: [],
+                'data-pc-section': '${name}'
+            },
+            pt?.${name},
+            globalPt?.${name},
+            ptContext
+        )
+    )`
 )}
 ${eachValue(
     filterValues(ptOptions, ({ type }) => type == 'Icon'),
     ({ name }) =>
         `
      // "${name}" element
-    $: resolved${upperFirst(name)} = resolveIconPT(
-        ${name},
-        {
-            class: []
-        },
-        pt?.${name},
-        globalPt?.${name},
-        ptContext
-    ) satisfies ResolvedIconPT
+    let resolved${upperFirst(name)} = $derived(
+        resolveIconPT(
+            ${name},
+            {
+                class: []
+            },
+            pt?.${name},
+            globalPt?.${name},
+            ptContext
+        )
+    )
 `
 )}
 
@@ -129,7 +132,7 @@ ${withValue(
         `<${type.toLocaleLowerCase()}
    bind:this={rootEl}
    {...rootAttributes}
-   {...$$restProps}
+   {..._restProps}
 ${tooltip ? '   use:tooltip={{ tooltipContent, tooltipOptions, jazzSvelteContext }}' : ''}
 >`
 )}

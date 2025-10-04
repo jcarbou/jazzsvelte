@@ -13,6 +13,7 @@ export function buildCmpContext(name: string): CmpContext {
         cmpname = start.toLocaleLowerCase() + end.toLocaleLowerCase(),
         cmp_name = toKebabCase(cmpName),
         cmpHomePath = `./packages/${cmp_name}`,
+        docPackagePath = './apps/jazzsvelte_doc/package.json',
         docHomePath = './apps/jazzsvelte_doc/src',
         cmpDocHomePath = `${docHomePath}/lib/doc/${cmpName}`,
         cmpDocHomeMainPath = `${cmpDocHomePath}/${CmpName}Doc.svelte`,
@@ -34,7 +35,7 @@ export function buildCmpContext(name: string): CmpContext {
         prApiDocPath = `${prPath}/components/doc/common/apidoc/index.json`,
         prCmpApiDocPath = `${prPath}/components/doc/${cmpName}`,
         prCmpDocPageDirPath = `${prPath}/pages/${cmpname}`,
-        prCmpDocPagePath = `${prCmpDocPageDirPath}/index.ts`
+        prCmpDocPagePath = `${prCmpDocPageDirPath}/index.js`
 
     return {
         CmpName,
@@ -46,6 +47,7 @@ export function buildCmpContext(name: string): CmpContext {
         cmpDocHomeMainPath,
         cmpDocRoutesPath,
         cmpSrcPath,
+        docPackagePath,
         packagePath,
         svelteConfigPath,
         tsConfigPath,
@@ -68,6 +70,17 @@ export function buildCmpContext(name: string): CmpContext {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function readJson(path: string): any {
     return JSON.parse(fs.readFileSync(path, 'utf8'))
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function sortPropsByName(data: any, path: string) {
+    data[path] = Object.keys(data[path])
+        .sort()
+        .reduce((acc, value) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ;(acc as any)[value] = data[path][value]
+            return acc
+        }, {})
 }
 
 export function readText(path: string): string {

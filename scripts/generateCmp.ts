@@ -6,7 +6,7 @@ import { generateCmpSvelte } from './templates/cmp.svelte.tpl'
 import { generateCmpTsConfig } from './templates/cmp.tsconfig.tpl'
 import { generateCmpTypes } from './templates/cmp.types.tpl'
 import { generateCmpTest } from './templates/cmp.test.tpl'
-import { buildCmpContext, getScriptOptions } from './scripts.utils'
+import { buildCmpContext, getScriptOptions, readJson, sortPropsByName, writeText } from './scripts.utils'
 
 const options = getScriptOptions()
 
@@ -22,3 +22,8 @@ generateCmpConfig(context, options)
 generateCmpIndex(context, options)
 generateCmpSvelte(context, options)
 generateCmpTest(context, options)
+
+const json = readJson(context.docPackagePath)
+json.devDependencies[`@jazzsvelte/${context.cmp_name}`] = 'workspace:^0.1.0'
+sortPropsByName(json, 'devDependencies')
+writeText(context.docPackagePath, JSON.stringify(json, null, 2))

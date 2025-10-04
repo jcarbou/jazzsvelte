@@ -10,7 +10,7 @@
         "format:check": "prettier --check \"{components,pages,service,api-scripts}/**/*.{js,ts,svelte,d.ts}\"",
         "lint:fix": "lint --fix --ignore-path .gitignore .",
         "importCmp": "pnpx tsx ./scripts/importCmp",
-        "importCmpDoc": "pnpx tsx ./scripts/importCmpDoc",
+        "importCmpDocList": "pnpx tsx ./scripts/importCmpDocList",
         "generateCmp": "pnpx tsx ./scripts/generateCmp"
     },
     "devDependencies": {

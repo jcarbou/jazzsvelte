@@ -20,7 +20,10 @@ export const nodes = [
 	() => import('./nodes/16'),
 	() => import('./nodes/17'),
 	() => import('./nodes/18'),
-	() => import('./nodes/19')
+	() => import('./nodes/19'),
+	() => import('./nodes/20'),
+	() => import('./nodes/21'),
+	() => import('./nodes/22')
 ];
 
 export const server_loads = [];
@@ -36,14 +39,17 @@ export const dictionary = {
 		"/installation": [9],
 		"/panel": [10],
 		"/playground": [11],
-		"/ripple": [12],
-		"/speeddial": [13],
-		"/splitbutton": [14],
-		"/theming": [15],
-		"/tieredmenu": [16],
-		"/toast": [17],
-		"/tooltip": [18],
-		"/virtualscroller": [19]
+		"/progressbar": [12],
+		"/progressspinner": [13],
+		"/ripple": [14],
+		"/skeleton": [15],
+		"/speeddial": [16],
+		"/splitbutton": [17],
+		"/theming": [18],
+		"/tieredmenu": [19],
+		"/toast": [20],
+		"/tooltip": [21],
+		"/virtualscroller": [22]
 	};
 
 export const hooks = {

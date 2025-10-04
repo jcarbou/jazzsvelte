@@ -14,7 +14,8 @@ CssObject,
 ${eachValue(importApi, ({ name }) => `   HTML${name}Attributes,`)}
 ${meta.icon ? `   IconComponent,` : ''}
    PassThroughHTMLAttributes,
-   PassThroughType
+   PassThroughType,
+   PassThroughOptions
 } from '@jazzsvelte/api'
 
 ${ifValues(
@@ -66,6 +67,11 @@ export interface ${CmpName}PassThroughMethodOptions {
 ${eachValue(ptMethodOptions, ({ name, type }) => `   ${name}: ${type}`)}
 }`
 )}
+
+export interface ${CmpName}PtContext extends ${CmpName}PassThroughMethodOptions {
+    ptOptions: PassThroughOptions | null
+    unstyled: boolean
+}
 
 ${ifValues(
     ptOptions,

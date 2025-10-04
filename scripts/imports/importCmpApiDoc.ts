@@ -1,5 +1,5 @@
 import { CmpContext, ScriptOptions } from '../scripts.types'
-import { fileExist, mkDir, readJson, writeText } from '../scripts.utils'
+import { fileExist, mkDir, readJson, upperFirst, writeText } from '../scripts.utils'
 
 type DocItem = {
     type: string
@@ -34,7 +34,7 @@ type NewApiDoc = {
         tooltip: boolean
         svelteComponent: boolean
     }
-    types: DocEntity
+    types: Omit<DocEntity, 'values'> & { values: { name: string; value: string }[] }
     ptContext?: DocEntity
     state?: DocEntity
 }
@@ -69,6 +69,13 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
         return
     }
 
+    newCmpApiDoc.types = {
+        label: 'Props types',
+        shortLabel: 'Props types',
+        description: `Types used by properties of the ${CmpName} component.`,
+        values: []
+    }
+
     newCmpApiDoc.props.values?.forEach((item: DocItem) => {
         const { type, optional } = item
         if (optional) {
@@ -85,10 +92,14 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
             item.type = 'string | CssObject | null'
         }
         if (item.type === 'ReactNode | Function') {
-            item.type = 'typeof SvelteComponent | null'
+            item.type = `${CmpName + upperFirst(item.name)}Snippet | null`
+            newCmpApiDoc.types.values?.push({ name: item.type, value: 'Snippet<[HTMLDivAttributes]>' })
         }
         if (item.name === 'ptOptions') {
-            item.type = `${CmpName}PassThroughMethodOptions`
+            item.type = `PassThroughOptions | null`
+        }
+        if (item.name === 'pt') {
+            item.type = `${CmpName}PassThroughOptions | null`
         }
         if (type.indexOf('IconType') === 0) {
             item.type = 'string | IconComponent' + (optional ? ' | null' : '')
@@ -138,13 +149,6 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
         icon: !!newCmpApiDoc.props.values?.find(({ type }) => type.includes('IconComponent')),
         tooltip: !!newCmpApiDoc.props.values?.find(({ name }) => name.includes('Tooltip')),
         svelteComponent: !!newCmpApiDoc.props.values?.find(({ type }) => type === 'typeof SvelteComponent | null')
-    }
-
-    newCmpApiDoc.types = {
-        label: 'Props types',
-        shortLabel: 'Props types',
-        description: `Types used by properties of the ${CmpName} component.`,
-        values: []
     }
 
     newCmpApiDoc.ptContext = cmpApiDoc.interfaces.values[`${CmpName}Context`]

@@ -1,0 +1,184 @@
+{
+    "description": "ProgressBar is a process status indicator.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in ProgressBar component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "color",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Color for the background of the progress."
+            },
+            {
+                "name": "labelSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "ProgressBarLabelSnippet | null",
+                "default": "null",
+                "description": "Label snippet"
+            },
+            {
+                "name": "mode",
+                "optional": true,
+                "readonly": false,
+                "type": "ProgressBarMode",
+                "default": "determinate",
+                "description": "Defines the mode of the progress, valid values are \"determinate\" and \"indeterminate\"."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "ProgressBarPassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "showValue",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "true",
+                "description": "Show or hide progress bar value."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "unit",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "%",
+                "description": "Unit sign appended to the value."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            },
+            {
+                "name": "value",
+                "optional": true,
+                "readonly": false,
+                "type": "null | string | number",
+                "default": "null",
+                "description": "Current value of the progress."
+            }
+        ],
+        "label": "ProgressBarProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "progressBar",
+    "label": "ProgressBar",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the ProgressBar component.",
+        "values": [{ "name": "ProgressBarMode", "value": "\"determinate\" | \"indeterminate\"" }]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "ProgressBarProps"
+            }
+        ],
+        "label": "ProgressBarPassThroughMethodOptions",
+        "shortLabel": "ProgressBarPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "container",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the container's DOM element."
+            },
+            {
+                "name": "value",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the value's DOM element."
+            },
+            {
+                "name": "label",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the label's DOM element."
+            }
+        ],
+        "label": "ProgressBarPassThroughOptions",
+        "shortLabel": "ProgressBarPtOptions"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": false
+    }
+}

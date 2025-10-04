@@ -6,7 +6,8 @@ import type {
     HTMLButtonAttributes as SvelteHTMLButtonAttributes,
     HTMLAnchorAttributes as SvelteHTMLAnchorAttributes,
     HTMLInputAttributes as SvelteHTMLInputAttributes,
-    HTMLLiAttributes as SvelteHTMLLiAttributes
+    HTMLLiAttributes as SvelteHTMLLiAttributes,
+    SVGAttributes
 } from 'svelte/elements'
 
 export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: any }
@@ -71,7 +72,8 @@ export type HTMLInputAttributes = SvelteHTMLInputAttributes
 export type HTMLLiAttributes = SvelteHTMLLiAttributes
 export type HTMLUlAttributes = HTMLAttributes<HTMLUListElement>
 export type HTMLSpanAttributes = HTMLAttributes<HTMLSpanElement>
-export type HTMLSVGAttributes = HTMLAttributes<SVGSVGElement>
+export type HTMLSVGAttributes = SVGAttributes<SVGSVGElement>
+export type HTMLSVGCircleAttributes = SVGAttributes<SVGCircleElement>
 export type HTMLImageAttributes = HTMLAttributes<HTMLImageElement>
 
 export type HTMLSpanOrSvgAttributes = HTMLSpanAttributes | HTMLSVGAttributes

@@ -35,7 +35,7 @@ declare module '$env/static/private' {
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
 	export const DriverData: string;
-	export const EFC_8680_1592913036: string;
+	export const EFC_8944_1592913036: string;
 	export const GIT_ASKPASS: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
@@ -103,7 +103,10 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__jazzsvelte_input_text: string;
 	export const npm_package_devDependencies__jazzsvelte_object: string;
 	export const npm_package_devDependencies__jazzsvelte_panel: string;
+	export const npm_package_devDependencies__jazzsvelte_progress_bar: string;
+	export const npm_package_devDependencies__jazzsvelte_progress_spinner: string;
 	export const npm_package_devDependencies__jazzsvelte_ripple: string;
+	export const npm_package_devDependencies__jazzsvelte_skeleton: string;
 	export const npm_package_devDependencies__jazzsvelte_speed_dial: string;
 	export const npm_package_devDependencies__jazzsvelte_spinner_icon: string;
 	export const npm_package_devDependencies__jazzsvelte_split_button: string;
@@ -220,7 +223,7 @@ declare module '$env/dynamic/private' {
 		COMPUTERNAME: string;
 		ComSpec: string;
 		DriverData: string;
-		EFC_8680_1592913036: string;
+		EFC_8944_1592913036: string;
 		GIT_ASKPASS: string;
 		HOME: string;
 		HOMEDRIVE: string;
@@ -288,7 +291,10 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__jazzsvelte_input_text: string;
 		npm_package_devDependencies__jazzsvelte_object: string;
 		npm_package_devDependencies__jazzsvelte_panel: string;
+		npm_package_devDependencies__jazzsvelte_progress_bar: string;
+		npm_package_devDependencies__jazzsvelte_progress_spinner: string;
 		npm_package_devDependencies__jazzsvelte_ripple: string;
+		npm_package_devDependencies__jazzsvelte_skeleton: string;
 		npm_package_devDependencies__jazzsvelte_speed_dial: string;
 		npm_package_devDependencies__jazzsvelte_spinner_icon: string;
 		npm_package_devDependencies__jazzsvelte_split_button: string;

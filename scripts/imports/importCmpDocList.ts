@@ -17,9 +17,9 @@ function addImport(content: string) {
 function docExportPatch(content: string) {
     return content.replace(
         /^<\/script>/gm,
-        `    import type { DocSection } from '$lib/doc/common/doc.types'
-    
-    export let docSection: DocSection
+        `    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+
+    let { docSection }: ComponentDocProps = $props()
 </script>`
     )
 }
@@ -141,7 +141,7 @@ function docTabelWrapper(content: string) {
     return newContent
 }
 
-function renameDocFiles(dirPath: string, context: CmpContext) {
+function renameAndPatchDocFiles(dirPath: string, context: CmpContext) {
     const { cmpName } = context
 
     for (const fileName of fs.readdirSync(dirPath)) {
@@ -157,7 +157,7 @@ function renameDocFiles(dirPath: string, context: CmpContext) {
         /// Migrate
         const oldFilePath = `${dirPath}/${fileName}`
         if (fs.lstatSync(oldFilePath).isDirectory()) {
-            renameDocFiles(oldFilePath, context)
+            renameAndPatchDocFiles(oldFilePath, context)
             continue
         }
 
@@ -193,7 +193,7 @@ function renameDocFiles(dirPath: string, context: CmpContext) {
     }
 }
 
-export function importCmpDoc(context: CmpContext, options: ScriptOptions) {
+export function importCmpDocList(context: CmpContext, options: ScriptOptions) {
     const { cmpDocHomePath, prCmpApiDocPath } = context
     const { test, override } = options
     let dirPath = cmpDocHomePath
@@ -208,6 +208,6 @@ export function importCmpDoc(context: CmpContext, options: ScriptOptions) {
 
     rmDir(dirPath)
     copyDir(prCmpApiDocPath, dirPath)
-    renameDocFiles(dirPath, context)
+    renameAndPatchDocFiles(dirPath, context)
     prettierFormat(dirPath)
 }

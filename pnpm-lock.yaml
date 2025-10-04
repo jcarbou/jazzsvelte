@@ -238,9 +238,18 @@ importers:
       '@jazzsvelte/panel':
         specifier: workspace:^0.1.0
         version: link:../../packages/panel
+      '@jazzsvelte/progress_bar':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/progress_bar
+      '@jazzsvelte/progress_spinner':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/progress_spinner
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../../packages/ripple
+      '@jazzsvelte/skeleton':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/skeleton
       '@jazzsvelte/speed_dial':
         specifier: workspace:^0.1.0
         version: link:../../packages/speed_dial
@@ -1022,6 +1031,32 @@ importers:
 
   packages/portal_action: {}
 
+  packages/progress_bar:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+
+  packages/progress_spinner:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+
   packages/ripple:
     dependencies:
       '@jazzsvelte/dom':
@@ -1031,6 +1066,19 @@ importers:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
+
+  packages/skeleton:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
 
   packages/speed_dial:
     dependencies:
