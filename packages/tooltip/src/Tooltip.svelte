@@ -9,7 +9,7 @@
     } from './tooltip.types'
     import type { JazzSvelteContext, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
 
-    import { getContext, type Snippet, tick } from 'svelte'
+    import { getContext, tick } from 'svelte'
     import { fade } from 'svelte/transition'
     import { resolveDivPt, zIndex } from '@jazzsvelte/api'
     import { escape, ESC_KEY_HANDLING_PRIORITIES } from '@jazzsvelte/escape_action'
@@ -20,7 +20,8 @@
     interface Props {
         targetElement: HTMLElement
         tooltipLayoutState: TooltipLayoutActionState
-        content?: string | Snippet | null
+        content?: string | null
+        contentSnippet?: TooltipContentSnippet | null
         options?: TooltipOptions | undefined
         children?: import('svelte').Snippet
     }
@@ -30,6 +31,7 @@
         targetElement, // force prettier align
         tooltipLayoutState,
         content = null,
+        contentSnippet = null,
         options = undefined,
         children
     }: Props = _props
@@ -66,8 +68,8 @@
     }
 
     export function updateContent(newContent: TooltipContentSnippet | string | null) {
-        _contentSnippet = snippetValueOrNull(newContent)
-        _contentString = stringValueOrNull(newContent)
+        contentSnippet = snippetValueOrNull(newContent)
+        content = stringValueOrNull(newContent)
     }
 
     let visible: boolean = $state(true)
@@ -79,9 +81,6 @@
     let _position: TooltipPosition = $derived(options?.position || 'right')
     let unstyled: boolean = $derived(options?.unstyled ?? false)
     let style: CssStyle = $derived(options?.style || null)
-
-    let _contentSnippet: TooltipContentSnippet | null = $derived(snippetValueOrNull(content))
-    let _contentString: string | null = $derived(stringValueOrNull(content))
 
     const { autoZIndex, baseZIndex, closeOnEscape } = options || {}
     let classNameState = ''
@@ -131,10 +130,10 @@
     >
         <div {...arrowAttributes}></div>
         <div {...textAttributes}>
-            {#if _contentString}
-                {_contentString}
-            {:else if _contentSnippet}
-                {@render _contentSnippet(textAttributes)}
+            {#if content}
+                {content}
+            {:else if contentSnippet}
+                {@render contentSnippet(textAttributes)}
             {/if}
             {@render children?.()}
         </div>

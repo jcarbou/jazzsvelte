@@ -18,3 +18,14 @@ pnpm i
 `pnpm run importCmpDocList myCmp`
 
 Replace in file MyCmpDoc.svelte, for ptDocs, the type DocApiTable by DocApiPtTable
+
+Migrate test
+
+TODO 
+
+Replace by 2 property
+
+let _labelSnippet = $derived(snippetValueOrNull(label))
+    let _labelString = $derived(stringValueOrNull(label))
+    let _badgeSnippet = $derived(snippetValueOrNull(badge))
+    let _badgeString = $derived(stringValueOrNull(badge))

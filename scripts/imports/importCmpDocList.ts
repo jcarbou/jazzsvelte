@@ -24,6 +24,10 @@ function docExportPatch(content: string) {
     )
 }
 
+function clearPrimreactImportCmp(content: string, { CmpName, cmpName }: CmpContext) {
+    return content.replaceAll(`import { ${CmpName} } from 'primereact/${cmpName}';`, '')
+}
+
 function importCmpDocPatch(content: string, { CmpName }: CmpContext) {
     // const importCmpDocThemingRegExp = new RegExp(`import\\s*\\{\\s*${CmpName}\\s*\\}\\s*from.*`, 'gm')
     //content = content.replace(importCmpDocThemingRegExp, '')
@@ -186,7 +190,8 @@ function renameAndPatchDocFiles(dirPath: string, context: CmpContext) {
             jsonStyleToString,
             addImport,
             importCmpDocPatch,
-            addScriptTsDeclaration
+            addScriptTsDeclaration,
+            clearPrimreactImportCmp
         ])
 
         console.log(`"${newFilePath}" generated !`)

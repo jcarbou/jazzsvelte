@@ -1,3 +1,3 @@
-import * as universal from "../../../../src/routes/tooltip/+page.ts";
+import * as universal from "../../../../src/routes/toast/+page.ts";
 export { universal };
-export { default as component } from "../../../../src/routes/tooltip/+page.svelte";
+export { default as component } from "../../../../src/routes/toast/+page.svelte";

@@ -15,9 +15,11 @@
         collapseIcon = DEFAULT.collapseIcon,
         expandIcon = DEFAULT.expandIcon,
         footer = DEFAULT.footer,
-        footerTemplate = null,
+        footerSnippet = DEFAULT.footerSnippet,
+        footerContainerSnippet = null,
         header = DEFAULT.header,
-        headerTemplate = null,
+        headerSnippet = DEFAULT.headerSnippet,
+        headerContainerSnippet = null,
         icons = null,
         onCollapse = DEFAULT.onCollapse,
         onExpand = DEFAULT.onExpand,
@@ -273,14 +275,15 @@
 <div bind:this={panelEl} {...rootAttributes} {..._restProps}>
     <!-- Header  -->
 
-    {#if headerTemplate}
-        {@render headerTemplate({
+    {#if headerContainerSnippet}
+        {@render headerContainerSnippet({
             headerAttributes,
             titleAttributes,
             iconsAttributes,
             togglerAttributes,
             resolvedTogglerIcon,
             header,
+            headerSnippet,
             toggle,
             icons,
             toggleable,
@@ -294,6 +297,7 @@
             {togglerAttributes}
             {resolvedTogglerIcon}
             {header}
+            {headerSnippet}
             {toggle}
             {icons}
             {toggleable}
@@ -311,10 +315,11 @@
 
     <!-- Footer  -->
 
-    {#if footerTemplate}
-        {@render footerTemplate({
+    {#if footerContainerSnippet}
+        {@render footerContainerSnippet({
             footerAttributes,
-            footer
+            footer,
+            footerSnippet
         })}
     {:else if footer}
         <PanelFooter {footerAttributes} {footer} />

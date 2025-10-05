@@ -47,6 +47,9 @@
 	"/splitbutton": [
 		"src/routes/splitbutton/+page.ts"
 	],
+	"/tag": [
+		"src/routes/tag/+page.ts"
+	],
 	"/theming": [
 		"src/routes/theming/+page.ts"
 	],

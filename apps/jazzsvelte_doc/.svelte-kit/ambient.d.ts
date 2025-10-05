@@ -110,6 +110,7 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__jazzsvelte_speed_dial: string;
 	export const npm_package_devDependencies__jazzsvelte_spinner_icon: string;
 	export const npm_package_devDependencies__jazzsvelte_split_button: string;
+	export const npm_package_devDependencies__jazzsvelte_tag: string;
 	export const npm_package_devDependencies__jazzsvelte_tiered_menu: string;
 	export const npm_package_devDependencies__jazzsvelte_timescircle_icon: string;
 	export const npm_package_devDependencies__jazzsvelte_toast: string;
@@ -298,6 +299,7 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__jazzsvelte_speed_dial: string;
 		npm_package_devDependencies__jazzsvelte_spinner_icon: string;
 		npm_package_devDependencies__jazzsvelte_split_button: string;
+		npm_package_devDependencies__jazzsvelte_tag: string;
 		npm_package_devDependencies__jazzsvelte_tiered_menu: string;
 		npm_package_devDependencies__jazzsvelte_timescircle_icon: string;
 		npm_package_devDependencies__jazzsvelte_toast: string;

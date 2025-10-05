@@ -259,6 +259,9 @@ importers:
       '@jazzsvelte/split_button':
         specifier: workspace:^0.1.0
         version: link:../../packages/split_button
+      '@jazzsvelte/tag':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/tag
       '@jazzsvelte/tiered_menu':
         specifier: workspace:^0.1.0
         version: link:../../packages/tiered_menu
@@ -1162,6 +1165,22 @@ importers:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object
+
+  packages/tag:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
 
   packages/test:
     devDependencies:

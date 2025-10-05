@@ -7,7 +7,7 @@
     import { tooltip } from '@jazzsvelte/tooltip'
     import { mergeCssClasses, resolveDivPt } from '@jazzsvelte/api'
     import { defaultSplitButtonProps as DEFAULT, globalSplitButtonPT as globalPt } from './splitButton.config'
-    import { snippetValueOrNull, stringValueOrNull, uniqueId } from '@jazzsvelte/utils'
+    import { stringValueOrNull, uniqueId } from '@jazzsvelte/utils'
 
     let {
         children,

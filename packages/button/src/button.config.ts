@@ -17,7 +17,10 @@ export function buttonPT(options: ButtonPassThroughOptions) {
 /**
  * Default buttons  props
  */
-export const defaultButtonProps: Omit<Required<BaseButtonProps>, 'pt' | 'ptOptions' | 'label'> = {
+export const defaultButtonProps: Omit<
+    Required<BaseButtonProps>,
+    'pt' | 'ptOptions' | 'label' | 'badgeSnippet' | 'labelSnippet'
+> = {
     badge: null,
     disabled: false,
     icon: null,

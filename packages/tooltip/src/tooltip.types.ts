@@ -190,7 +190,12 @@ export interface TooltipOptions {
      * Content to be displayed in tooltip.
      * @defaultValue null
      */
-    content?: TooltipContentSnippet | string | null
+    content?: string | null
+    /**
+     * Content snippet to be displayed in tooltip.
+     * @defaultValue null
+     */
+    contentSnippet?: TooltipContentSnippet | null
     /**
      * When present, it specifies that the tooltip should be hidden.
      * @defaultValue false

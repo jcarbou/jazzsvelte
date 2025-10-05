@@ -94,15 +94,23 @@
                 "name": "footer",
                 "optional": true,
                 "readonly": false,
-                "type": "PanelFooterContentSnippet | string | null",
+                "type": "string | null",
                 "default": "null",
                 "description": "Custom footer template of the panel."
             },
             {
-                "name": "footerTemplate",
+                "name": "footerSnippet",
                 "optional": true,
                 "readonly": false,
-                "type": "PanelFooterTemplateSnippet | null",
+                "type": "PanelFooterContentSnippet | null",
+                "default": "null",
+                "description": "Custom footer snippet of the panel."
+            },
+            {
+                "name": "footerContainerSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "PanelFooterContainerSnippet | null",
                 "default": "null",
                 "description": "Footer template of the panel to customize more."
             },
@@ -110,15 +118,23 @@
                 "name": "header",
                 "optional": true,
                 "readonly": false,
-                "type": "PanelHeaderContentSnippet | string | null",
+                "type": "string | null",
                 "default": "null",
                 "description": "Custom header template of the panel."
             },
             {
-                "name": "headerTemplate",
+                "name": "headerSnippet",
                 "optional": true,
                 "readonly": false,
-                "type": "PanelHeaderTemplateSnippet | null",
+                "type": "PanelHeaderContentSnippet | null",
+                "default": "null",
+                "description": "Custom header snippet of the panel."
+            },
+            {
+                "name": "headerContainerSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "PanelHeaderContainerSnippet | null",
                 "default": "null",
                 "description": "Header template of the panel to customize more."
             },

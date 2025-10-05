@@ -1,0 +1,171 @@
+{
+    "description": "Tag component is used to categorize content.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLSpanElement",
+                "description": "Used to get container element."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in Tag component. In addition to these, all properties of HTMLSpanElement can be used in this component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Icon of the tag to display next to the value."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "TagPassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "rounded",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether the corners of the tag are rounded."
+            },
+            {
+                "name": "severity",
+                "optional": true,
+                "readonly": false,
+                "type": "TagSeverity",
+                "default": "null",
+                "description": "Severity type of the tag."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            },
+            {
+                "name": "valueSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "TagValueSnippet | null",
+                "default": "null",
+                "description": "Value Snippet to display inside the tag."
+            },
+            {
+                "name": "value",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Value to display inside the tag."
+            }
+        ],
+        "label": "TagProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "tag",
+    "label": "Tag",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the Tag component.",
+        "values": [
+            { "name": "TagSeverity", "value": "null | 'success' | 'warning' | 'secondary' | 'info' | 'danger' | 'contrast'" }
+        ]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "TagProps"
+            }
+        ],
+        "label": "TagPassThroughMethodOptions",
+        "shortLabel": "TagPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "value",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the value's DOM element."
+            }
+        ],
+        "label": "TagPassThroughOptions",
+        "shortLabel": "TagPtOptions"
+    },
+    "meta": {
+        "RootType": "Span",
+        "omitAttributes": "'style'",
+        "icon": true,
+        "tooltip": false,
+        "svelteComponent": false
+    }
+}

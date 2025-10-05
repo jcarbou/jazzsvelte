@@ -31,7 +31,13 @@ export interface BaseButtonProps {
      * Value of the badge.
      * @default  null
      */
-    badge?: string | ButtonBadgeSnippet | null
+    badge?: string | null
+
+    /**
+     * Value snippet of the badge.
+     * @default  null
+     */
+    badgeSnippet?: ButtonBadgeSnippet | null
 
     /**
      * CSS classes to add to root element.
@@ -61,7 +67,13 @@ export interface BaseButtonProps {
      * Text of the button.
      * @default  null
      */
-    label?: string | ButtonLabelSnippet | null
+    label?: string | null
+
+    /**
+     * Text snippet of the button.
+     * @default  null
+     */
+    labelSnippet?: ButtonLabelSnippet | null
 
     /**
      * Add a link style to the button.

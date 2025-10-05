@@ -50,25 +50,37 @@ export interface BasePanelProps {
      * Custom header of the panel.
      * @default  null
      */
-    footer?: PanelFooterContentSnippet | string | null
+    footer?: string | null
+
+    /**
+     * Custom header snippet of the panel.
+     * @default  null
+     */
+    footerSnippet?: PanelFooterContentSnippet | null
 
     /**
      * Footer template of the panel to customize more.
      * @default  null
      */
-    footerTemplate?: PanelFooterTemplateSnippet | null
+    footerContainerSnippet?: PanelFooterContainerSnippet | null
 
     /**
      * Custom header of the panel.
      * @default  null
      */
-    header?: PanelHeaderContentSnippet | string | null
+    header?: string | null
+
+    /**
+     * Custom header snippet of the panel.
+     * @default  null
+     */
+    headerSnippet?: PanelHeaderContentSnippet | null
 
     /**
      * Header template of the panel to customize more.
      * @default  null
      */
-    headerTemplate?: PanelHeaderTemplateSnippet | null
+    headerContainerSnippet?: PanelHeaderContainerSnippet | null
 
     /**
      * Custom icons template for the header.
@@ -161,7 +173,8 @@ export interface PanelHeaderProps {
     toggle: (event?: Event) => void
     toggleable: boolean
     collapsed: boolean
-    header?: PanelHeaderContentSnippet | string | null
+    header?: string | null
+    headerSnippet?: PanelHeaderContentSnippet | null
     icons?: PanelHeaderIconsSnippet | null
 }
 
@@ -192,14 +205,15 @@ export type PanelHeaderIconsSnippet = Snippet<
 /**
  * Panel header snippet to customize header
  */
-export type PanelHeaderTemplateSnippet = Snippet<[PanelHeaderProps]>
+export type PanelHeaderContainerSnippet = Snippet<[PanelHeaderProps]>
 
 /**
  * Panel footer props
  */
 export interface PanelFooterProps {
     footerAttributes: HTMLDivAttributes
-    footer: PanelFooterContentSnippet | string | null
+    footer?: string | null
+    footerSnippet?: PanelFooterContentSnippet | null
 }
 
 /**
@@ -210,7 +224,7 @@ export type PanelFooterContentSnippet = Snippet<[]>
 /**
  * Panel footer snippet to customize footer
  */
-export type PanelFooterTemplateSnippet = Snippet<[PanelFooterProps]>
+export type PanelFooterContainerSnippet = Snippet<[PanelFooterProps]>
 
 /**
  * Custom passthrough(pt) options.

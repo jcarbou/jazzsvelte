@@ -13,16 +13,17 @@
     import { defaultButtonProps as DEFAULT, globalButtonPT as globalPt } from './button.config'
     import { focusEl } from '@jazzsvelte/dom'
     import { stopProgagation } from '@jazzsvelte/stop_propagation_action'
-    import { stringValueOrNull, snippetValueOrNull } from '@jazzsvelte/utils'
 
     let {
         children,
         badge = DEFAULT.badge,
+        badgeSnippet = null,
         class: className = DEFAULT.class,
         disabled = DEFAULT.disabled,
         icon = DEFAULT.icon,
         iconPos = DEFAULT.iconPos,
         label = null,
+        labelSnippet = null,
         link = DEFAULT.link,
         loading = DEFAULT.loading,
         loadingIcon = DEFAULT.loadingIcon,
@@ -45,11 +46,13 @@
 
     let _props: ButtonProps = $derived({
         badge,
+        badgeSnippet,
         class: className,
         disabled,
         icon,
         iconPos,
         label,
+        labelSnippet,
         link,
         loading,
         loadingIcon,
@@ -86,12 +89,7 @@
     const buttonGroup = getContext<ButtonGroupContext>('buttonGroup')
 
     let _severity = $derived(severity ?? buttonGroup?.severity)
-    //let _label = $derived(label ?? _restProps['aria-label'])
-    let _hasLabel: boolean = $derived(!!label)
-    let _labelSnippet = $derived(snippetValueOrNull(label))
-    let _labelString = $derived(stringValueOrNull(label))
-    let _badgeSnippet = $derived(snippetValueOrNull(badge))
-    let _badgeString = $derived(stringValueOrNull(badge))
+    let _hasLabel: boolean = $derived(!!label || !!labelSnippet)
 
     let ptContext: ButtonPtContext = $derived({
         props: { ...DEFAULT, ..._props, ..._restProps },
@@ -127,7 +125,7 @@
                 style,
                 'data-pc-name': 'button',
                 'data-pc-section': 'root',
-                'aria-label': _restProps['aria-label'] ?? (_labelString ? _labelString + (badge ? ' ' + badge : '') : '')
+                'aria-label': _restProps['aria-label'] ?? (label ? label + (badge ? ' ' + badge : '') : '')
             },
             pt?.root,
             globalPt?.root,
@@ -220,15 +218,15 @@
             {:else if loadingIcon && loading}
                 <IconBuilder resolvedIcon={resolvedLoadingIcon} spin={true} />
             {/if}
-            {#if _labelString}
+            {#if label}
                 <span {...labelAttributes}>{label}</span>
-            {:else if _labelSnippet}
-                {@render _labelSnippet(labelAttributes)}
+            {:else if labelSnippet}
+                {@render labelSnippet(labelAttributes)}
             {/if}
-            {#if _badgeString}
-                <Badge value={_badgeString} {...badgeAttributes}></Badge>
-            {:else if _badgeSnippet}
-                {@render _badgeSnippet(badgeAttributes)}
+            {#if badge}
+                <Badge value={badge} {...badgeAttributes}></Badge>
+            {:else if badgeSnippet}
+                {@render badgeSnippet(badgeAttributes)}
             {/if}
             {#if children}
                 {@render children()}

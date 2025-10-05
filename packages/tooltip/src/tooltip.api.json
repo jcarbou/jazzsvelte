@@ -65,9 +65,17 @@
                 "name": "content",
                 "optional": true,
                 "readonly": false,
-                "type": "typeof SvelteComponent | null",
+                "type": "string | null",
                 "default": "null",
                 "description": "Content to be displayed in tooltip."
+            },
+            {
+                "name": "contentSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "TooltipContentSnippet | null",
+                "default": "null",
+                "description": "Content snippet to be displayed in tooltip."
             },
             {
                 "name": "disabled",

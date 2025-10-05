@@ -6,34 +6,40 @@
     import { Badge } from '@jazzsvelte/badge'
     import { importJS, importTS } from '../common/doc.utils'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 
     const code = {
         basic: `
 <Button type="button" label="Emails" badge="8" />
-<Button type="button" label="Messages" icon="pi pi-users" outlined>
-    <Badge slot="badge" value="2" severity="danger" size="medium" />
-</Button>
+<Button type="button" label="Messages" {badgeSnippet} icon="pi pi-users" outlined/>
+
+{#snippet badgeSnippet()}
+    <Badge value="2" severity="danger" size="medium" />
+{/snippet}
         `,
         javascript: `
 ${importJS('Button')}
 
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button type="button" label="Emails" badge="8" />
-    <Button type="button" label="Messages" icon="pi pi-users" outlined>
-        <Badge slot="badge" value="2" severity="danger" size="medium" />
-    </Button>
+    <Button type="button" label="Messages" {badgeSnippet} icon="pi pi-users" outlined/>
 </div>
+
+{#snippet badgeSnippet()}
+    <Badge value="2" severity="danger" size="medium" />
+{/snippet}
         `,
         typescript: `
 ${importTS('Button')}
 
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button type="button" label="Emails" badge="8" />
-    <Button type="button" label="Messages" icon="pi pi-users" outlined>
-        <Badge slot="badge" value="2" severity="danger" size="medium" />
-    </Button>
+    <Button type="button" label="Messages" {badgeSnippet} icon="pi pi-users" outlined/>
 </div>
+
+{#snippet badgeSnippet()}
+    <Badge value="2" severity="danger" size="medium" />
+{/snippet}
         `
     }
 </script>
@@ -45,10 +51,10 @@ ${importTS('Button')}
 </DocSectionText>
 <div class="card flex flex-wrap justify-content-center gap-3">
     <Button type="button" label="Emails" badge="8" />
-    <Button type="button" label="Messages" icon="pi pi-users" outlined>
-        {#snippet badge()}
-            <Badge value="2" severity="danger" size="medium" />
-        {/snippet}
-    </Button>
+    <Button type="button" label="Messages" {badgeSnippet} icon="pi pi-users" outlined />
 </div>
 <DocSectionCode {code} />
+
+{#snippet badgeSnippet()}
+    <Badge value="2" severity="danger" size="medium" />
+{/snippet}
