@@ -106,6 +106,7 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__jazzsvelte_progress_bar: string;
 	export const npm_package_devDependencies__jazzsvelte_progress_spinner: string;
 	export const npm_package_devDependencies__jazzsvelte_ripple: string;
+	export const npm_package_devDependencies__jazzsvelte_scroll_top: string;
 	export const npm_package_devDependencies__jazzsvelte_skeleton: string;
 	export const npm_package_devDependencies__jazzsvelte_speed_dial: string;
 	export const npm_package_devDependencies__jazzsvelte_spinner_icon: string;
@@ -295,6 +296,7 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__jazzsvelte_progress_bar: string;
 		npm_package_devDependencies__jazzsvelte_progress_spinner: string;
 		npm_package_devDependencies__jazzsvelte_ripple: string;
+		npm_package_devDependencies__jazzsvelte_scroll_top: string;
 		npm_package_devDependencies__jazzsvelte_skeleton: string;
 		npm_package_devDependencies__jazzsvelte_speed_dial: string;
 		npm_package_devDependencies__jazzsvelte_spinner_icon: string;

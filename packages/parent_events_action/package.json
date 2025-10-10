@@ -1,14 +1,15 @@
 {
-    "name": "@jazzsvelte/chevronup_icon",
+    "name": "@jazzsvelte/parent_events_action",
     "version": "0.1.0",
-    "description": "ChevronUpIcon",
-    "main": "/index.ts",
+    "description": "",
+    "main": "src/index.ts",
     "sideEffects": false,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@jazzsvelte/icons": "workspace:*"
+        "@jazzsvelte/dom": "workspace:^0.1.0",
+        "@jazzsvelte/object": "workspace:^0.1.0"
     },
     "keywords": [],
     "author": "",

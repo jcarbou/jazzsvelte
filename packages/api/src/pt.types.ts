@@ -9,6 +9,7 @@ import type {
     HTMLLiAttributes as SvelteHTMLLiAttributes,
     SVGAttributes
 } from 'svelte/elements'
+import { TransitionConfig } from 'svelte/transition'
 
 export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: any }
 
@@ -88,3 +89,5 @@ export type PassThroughHTMLImageAttributes = PassThroughHTMLAttributes<HTMLImage
 
 export type IconAttributes = HTMLSVGAttributes & { label?: string | null; spin?: boolean; class?: string | null }
 export type IconComponent = Component<IconAttributes>
+
+export type TransitionFactory = (node: HTMLElement) => TransitionConfig

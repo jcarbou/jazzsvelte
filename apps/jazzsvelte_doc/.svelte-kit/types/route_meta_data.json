@@ -38,6 +38,9 @@
 	"/ripple": [
 		"src/routes/ripple/+page.ts"
 	],
+	"/scrolltop": [
+		"src/routes/scrolltop/+page.ts"
+	],
 	"/skeleton": [
 		"src/routes/skeleton/+page.ts"
 	],

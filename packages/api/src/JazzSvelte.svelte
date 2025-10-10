@@ -27,9 +27,11 @@
     {/if}
     {#if $ripple}
         <style type="text/css">
-            .p-ripple {
-                overflow: hidden;
-                position: relative;
+            @layer primereact {
+                .p-ripple {
+                    overflow: hidden;
+                    position: relative;
+                }
             }
         </style>
     {/if}

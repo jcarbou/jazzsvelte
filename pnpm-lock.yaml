@@ -247,6 +247,9 @@ importers:
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../../packages/ripple
+      '@jazzsvelte/scroll_top':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/scroll_top
       '@jazzsvelte/skeleton':
         specifier: workspace:^0.1.0
         version: link:../../packages/skeleton
@@ -1032,6 +1035,15 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../test
 
+  packages/parent_events_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+
   packages/portal_action: {}
 
   packages/progress_bar:
@@ -1069,6 +1081,37 @@ importers:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
+
+  packages/scroll_top:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/chevronup_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/chevronup
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../dom
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/parent_events_action':
+        specifier: workspace:^0.1.0
+        version: link:../parent_events_action
+      '@jazzsvelte/ripple':
+        specifier: workspace:^0.1.0
+        version: link:../ripple
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+      '@jazzsvelte/window_events_action':
+        specifier: workspace:^0.1.0
+        version: link:../window_events_action
 
   packages/skeleton:
     dependencies:

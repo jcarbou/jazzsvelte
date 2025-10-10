@@ -1,0 +1,207 @@
+{
+    "description": "ScrollTop gets displayed after a certain scroll position and used to navigates to the top of the page quickly.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLButtonElement",
+                "description": "Used to get container element."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in ScrollTop component.",
+        "values": [
+            {
+                "name": "behavior",
+                "optional": true,
+                "readonly": false,
+                "type": "ScrollTopBehavior",
+                "default": "smooth",
+                "description": "Defines the scrolling behavior, \"smooth\" adds an animation and \"auto\" scrolls with a jump."
+            },
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Name of the icon or IconComponent for icon."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "ScrollTopPassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Inline style of the component."
+            },
+            {
+                "name": "target",
+                "optional": true,
+                "readonly": false,
+                "type": "ScrollTopTarget",
+                "default": "window",
+                "description": "Target of the ScrollTop, valid values are \"window\" and \"parent\"."
+            },
+            {
+                "name": "threshold",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "400",
+                "description": "Defines the threshold value of the vertical scroll position of the target to toggle the visibility."
+            },
+            {
+                "name": "transition",
+                "optional": true,
+                "readonly": false,
+                "type": "TransitionFactory",
+                "default": "null",
+                "description": "Svelte transition."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ],
+        "label": "ScrollTopProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onHide",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Callback to invoke when overlay becomes hidden."
+            },
+            {
+                "name": "onShow",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Callback to invoke when overlay panel becomes visible."
+            }
+        ],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "scrollTop",
+    "label": "ScrollTop",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the ScrollTop component.",
+        "values": [
+            { "name": "ScrollTopBehavior", "value": "'auto' | 'smooth'" },
+            { "name": "ScrollTopTarget", "value": "'window' | 'parent'" }
+        ]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "ScrollTopProps"
+            },
+            {
+                "name": "state",
+                "optional": false,
+                "readonly": false,
+                "type": "ScrollTopState"
+            }
+        ],
+        "label": "ScrollTopPassThroughMethodOptions",
+        "shortLabel": "ScrollTopPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Button",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "transition",
+                "optional": true,
+                "readonly": false,
+                "type": "ScrollTopPassThrou",
+                "description": "Used to control React Transition API."
+            }
+        ],
+        "label": "ScrollTopPassThroughOptions",
+        "shortLabel": "ScrollTopPtOptions"
+    },
+    "meta": {
+        "RootType": "Button",
+        "omitAttributes": "'style'",
+        "icon": true,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "state": {
+        "description": "Defines current inline state in ScrollTop component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "visible",
+                "optional": false,
+                "readonly": false,
+                "type": "boolean",
+                "description": "Current visible state as a boolean."
+            }
+        ],
+        "label": "ScrollTopState",
+        "shortLabel": "Context"
+    }
+}
