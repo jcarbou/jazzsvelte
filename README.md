@@ -25,6 +25,13 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
    - Toast [PrimeReact version](https://primereact.org/toast/)
 - **Misc**
    - Avatar [PrimeReact version](https://primereact.org/avatar/)
+   - Badge [PrimeReact version](https://primereact.org/badge/)
+   - Chip [PrimeReact version](https://primereact.org/chip/)
+   - ScrollTop [PrimeReact version](https://primereact.org/scrolltop/)
+   - Skeleton [PrimeReact version](https://primereact.org/skeleton/)
+   - ProgressBar [PrimeReact version](https://primereact.org/progressbar/)
+   - ProgressSpinner [PrimeReact version](https://primereact.org/progressspinner/)
+   - Tag [PrimeReact version](https://primereact.org/tag/)
    - Icons
    - Ripple [PrimeReact version](https://primereact.org/ripple/)
 
