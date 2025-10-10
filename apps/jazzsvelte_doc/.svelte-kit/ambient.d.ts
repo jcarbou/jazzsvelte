@@ -95,6 +95,7 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__jazzsvelte_button: string;
 	export const npm_package_devDependencies__jazzsvelte_button_group: string;
 	export const npm_package_devDependencies__jazzsvelte_check_icon: string;
+	export const npm_package_devDependencies__jazzsvelte_chip: string;
 	export const npm_package_devDependencies__jazzsvelte_click_outside_action: string;
 	export const npm_package_devDependencies__jazzsvelte_dom: string;
 	export const npm_package_devDependencies__jazzsvelte_exclamationtriangle_icon: string;
@@ -285,6 +286,7 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__jazzsvelte_button: string;
 		npm_package_devDependencies__jazzsvelte_button_group: string;
 		npm_package_devDependencies__jazzsvelte_check_icon: string;
+		npm_package_devDependencies__jazzsvelte_chip: string;
 		npm_package_devDependencies__jazzsvelte_click_outside_action: string;
 		npm_package_devDependencies__jazzsvelte_dom: string;
 		npm_package_devDependencies__jazzsvelte_exclamationtriangle_icon: string;

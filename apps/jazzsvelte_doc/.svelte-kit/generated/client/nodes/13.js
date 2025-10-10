@@ -1,3 +1,3 @@
-import * as universal from "../../../../src/routes/progressspinner/+page.ts";
+import * as universal from "../../../../src/routes/progressbar/+page.ts";
 export { universal };
-export { default as component } from "../../../../src/routes/progressspinner/+page.svelte";
+export { default as component } from "../../../../src/routes/progressbar/+page.svelte";

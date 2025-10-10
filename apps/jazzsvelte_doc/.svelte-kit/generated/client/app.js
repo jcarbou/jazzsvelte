@@ -25,7 +25,8 @@ export const nodes = [
 	() => import('./nodes/21'),
 	() => import('./nodes/22'),
 	() => import('./nodes/23'),
-	() => import('./nodes/24')
+	() => import('./nodes/24'),
+	() => import('./nodes/25')
 ];
 
 export const server_loads = [];
@@ -36,24 +37,25 @@ export const dictionary = {
 		"/badge": [4],
 		"/buttongroup": [6],
 		"/button": [5],
-		"/configuration": [7],
-		"/inputtext": [8],
-		"/installation": [9],
-		"/panel": [10],
-		"/playground": [11],
-		"/progressbar": [12],
-		"/progressspinner": [13],
-		"/ripple": [14],
-		"/scrolltop": [15],
-		"/skeleton": [16],
-		"/speeddial": [17],
-		"/splitbutton": [18],
-		"/tag": [19],
-		"/theming": [20],
-		"/tieredmenu": [21],
-		"/toast": [22],
-		"/tooltip": [23],
-		"/virtualscroller": [24]
+		"/chip": [7],
+		"/configuration": [8],
+		"/inputtext": [9],
+		"/installation": [10],
+		"/panel": [11],
+		"/playground": [12],
+		"/progressbar": [13],
+		"/progressspinner": [14],
+		"/ripple": [15],
+		"/scrolltop": [16],
+		"/skeleton": [17],
+		"/speeddial": [18],
+		"/splitbutton": [19],
+		"/tag": [20],
+		"/theming": [21],
+		"/tieredmenu": [22],
+		"/toast": [23],
+		"/tooltip": [24],
+		"/virtualscroller": [25]
 	};
 
 export const hooks = {

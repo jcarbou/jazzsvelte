@@ -214,6 +214,9 @@ importers:
       '@jazzsvelte/check_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/check
+      '@jazzsvelte/chip':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/chip
       '@jazzsvelte/click_outside_action':
         specifier: workspace:^0.1.0
         version: link:../../packages/click_outside_action
@@ -933,6 +936,25 @@ importers:
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
+
+  packages/chip:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+      '@jazzsvelte/timescircle_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/timescircle
 
   packages/click_outside_action:
     dependencies:

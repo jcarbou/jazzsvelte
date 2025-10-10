@@ -39,6 +39,7 @@
     "@jazzsvelte/button": "workspace:^0.1.0",
     "@jazzsvelte/button_group": "workspace:^0.1.0",
     "@jazzsvelte/check_icon": "workspace:^0.1.0",
+    "@jazzsvelte/chip": "workspace:^0.1.0",
     "@jazzsvelte/click_outside_action": "workspace:^0.1.0",
     "@jazzsvelte/dom": "workspace:^0.1.0",
     "@jazzsvelte/exclamationtriangle_icon": "workspace:^0.1.0",
