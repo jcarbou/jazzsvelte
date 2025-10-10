@@ -15,6 +15,8 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
    - Button [PrimeReact version](https://primereact.org/button/)
    - SpeedDial [PrimeReact version](https://primereact.org/speeddial/)
    - SplitButton [PrimeReact version](https://primereact.org/splitbutton/)
+- **Data**
+   - VirtualScroller [PrimeReact version](https://primereact.org/virtualscroller/)
 - **Panel**
    - Panel [PrimeReact version](https://primereact.org/panel/)
 - **Overlay**
