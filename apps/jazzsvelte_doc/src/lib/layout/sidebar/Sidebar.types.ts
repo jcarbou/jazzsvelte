@@ -14,6 +14,7 @@ export type MenuItemData = {
     name: string
     href?: string
     to?: string
+    done?: boolean
 }
 
 export type SubMenuData = {

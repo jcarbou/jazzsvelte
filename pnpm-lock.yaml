@@ -235,6 +235,9 @@ importers:
       '@jazzsvelte/input_text':
         specifier: workspace:^0.1.0
         version: link:../../packages/input_text
+      '@jazzsvelte/meter_group':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/meter_group
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../../packages/object
@@ -1026,6 +1029,19 @@ importers:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object
+
+  packages/meter_group:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
 
   packages/object: {}
 

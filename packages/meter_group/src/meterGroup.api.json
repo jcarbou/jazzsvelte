@@ -1,0 +1,248 @@
+{
+    "description": "MeterGroup is an extension to standard input element with theming and keyfiltering.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in MeterGroup component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "className",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Additional CSS classes to apply to the MeterGroup."
+            },
+            {
+                "name": "endnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupEndSnippet | null",
+                "default": "null"
+            },
+            {
+                "name": "labelListSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupLabelListSnippet | null",
+                "default": "null"
+            },
+            {
+                "name": "labelOrientation",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupOrientation",
+                "default": "'horizontal'",
+                "description": "The orientation of the label. Can be either 'horizontal' or 'vertical'."
+            },
+            {
+                "name": "labelPosition",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupLabelPosition",
+                "default": "'end'",
+                "description": "The position of the label. Can be either 'start' or 'end'."
+            },
+            {
+                "name": "max",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "100",
+                "description": "The maximum value for the MeterGroup."
+            },
+            {
+                "name": "meterSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupMeterSnippet | null",
+                "default": "null"
+            },
+            {
+                "name": "min",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "0",
+                "description": "The minimum value for the MeterGroup."
+            },
+            {
+                "name": "orientation",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupOrientation",
+                "default": "'horizontal'",
+                "description": "The orientation of the MeterGroup. Can be either 'horizontal' or 'vertical'."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupPassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "startSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupStartSnippet | null",
+                "default": "null"
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "values",
+                "optional": true,
+                "readonly": false,
+                "type": "MeterGroupValue[]",
+                "default": "null",
+                "description": "An array of values to be represented by the MeterGroup."
+            }
+        ],
+        "label": "MeterGroupProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "meterGroup",
+    "label": "MeterGroup",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the MeterGroup component.",
+        "values": [
+            { "name": "MeterGroupOrientation", "value": "'horizontal' | 'vertical'" },
+            { "name": "MeterGroupLabelPosition", "value": "'start' | 'end'" }
+        ]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "MeterGroupProps"
+            },
+            {
+                "name": "context",
+                "optional": false,
+                "readonly": false,
+                "type": "MeterGroupContext"
+            }
+        ],
+        "label": "MeterGroupPassThroughMethodOptions",
+        "shortLabel": "MeterGroupPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Used to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "labeList",
+                "optional": true,
+                "readonly": false,
+                "type": "OList",
+                "description": "Used to pass attributes to the label list's DOM element."
+            },
+            {
+                "name": "labelListItem",
+                "optional": true,
+                "readonly": false,
+                "type": "LI",
+                "description": "Used to pass attributes to the label list item's DOM element."
+            },
+            {
+                "name": "labelListIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Used to pass attributes to the label list icon's DOM element."
+            },
+            {
+                "name": "label",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Used to pass attributes to the label's DOM element."
+            },
+            {
+                "name": "labelIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "I",
+                "description": "Used to pass attributes to the label icon's DOM element."
+            },
+            {
+                "name": "meterContainer",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Used to pass attributes to the meter container's DOM element."
+            },
+            {
+                "name": "meter",
+                "optional": true,
+                "readonly": false,
+                "type": "Element",
+                "description": "Used to pass attributes to the meter's DOM element."
+            }
+        ],
+        "label": "MeterGroupContext",
+        "shortLabel": "Context"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "ptContext": {
+        "description": "Defines current options in MeterGroup component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": []
+    }
+}

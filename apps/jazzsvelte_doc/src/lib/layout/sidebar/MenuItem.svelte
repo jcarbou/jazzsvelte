@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { MenuItemData } from './Sidebar.types'
+    import { Badge } from '@jazzsvelte/badge'
 
     interface Props {
         data: MenuItemData
@@ -11,7 +12,9 @@
 <li class="layout-sidebar-menuItem">
     <a target={data.href ? '_blank' : '_self'} href={data.href ?? data.to}>
         <span>{data?.name}</span>
-        <!-- {menuItem?.badge && <Badge value={menuItem?.badge} className="ml-auto"></Badge>} -->
+        {#if data?.done}
+            <Badge value="Done" class="ml-auto"></Badge>
+        {/if}
     </a>
 </li>
 

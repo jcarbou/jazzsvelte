@@ -21,6 +21,8 @@ Replace in file MyCmpDoc.svelte, for ptDocs, the type DocApiTable by DocApiPtTab
 
 Migrate test
 
+Add done attribute on apps\jazzsvelte_doc\src\lib\layout\sidebar\menuData.json
+
 TODO 
 
 Replace by 2 property

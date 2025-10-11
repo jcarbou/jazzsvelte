@@ -46,6 +46,7 @@
     "@jazzsvelte/icons": "workspace:^0.1.0",
     "@jazzsvelte/infocircle_icon": "workspace:^0.1.0",
     "@jazzsvelte/input_text": "workspace:^0.1.0",
+    "@jazzsvelte/meter_group": "workspace:^0.1.0",
     "@jazzsvelte/object": "workspace:^0.1.0",
     "@jazzsvelte/panel": "workspace:^0.1.0",
     "@jazzsvelte/progress_bar": "workspace:^0.1.0",

@@ -69,9 +69,12 @@ export interface PassThroughOptions {
 export type HTMLAnchorAttributes = SvelteHTMLAnchorAttributes
 export type HTMLButtonAttributes = SvelteHTMLButtonAttributes
 export type HTMLDivAttributes = HTMLAttributes<HTMLDivElement>
+export type HTMLElementAttributes = HTMLAttributes<HTMLElement>
 export type HTMLInputAttributes = SvelteHTMLInputAttributes
+export type HTMLIAttributes = HTMLAttributes<HTMLElement>
 export type HTMLLiAttributes = SvelteHTMLLiAttributes
 export type HTMLUlAttributes = HTMLAttributes<HTMLUListElement>
+export type HTMLOlAttributes = HTMLAttributes<HTMLOListElement>
 export type HTMLSpanAttributes = HTMLAttributes<HTMLSpanElement>
 export type HTMLSVGAttributes = SVGAttributes<SVGSVGElement>
 export type HTMLSVGCircleAttributes = SVGAttributes<SVGCircleElement>
@@ -80,7 +83,7 @@ export type HTMLImageAttributes = HTMLAttributes<HTMLImageElement>
 export type HTMLSpanOrSvgAttributes = HTMLSpanAttributes | HTMLSVGAttributes
 //export type HTMLSpanOrSvgAttributes = Common<HTMLSpanAttributes, HTMLSVGAttributes>
 //export type SVGAttributes = SVGAttributes<SVGSVGElement>// | HTMLAttributes<HTMLSpanElement | SVGSVGElement>
-
+export type PassThroughHTMLIAttributes = PassThroughHTMLAttributes<HTMLIAttributes>
 export type PassThroughHTMLButtonAttributes = PassThroughHTMLAttributes<HTMLButtonAttributes>
 export type PassThroughHTMLSpanAttributes = PassThroughHTMLAttributes<HTMLSpanAttributes>
 export type PassThroughHTMLDivAttributes = PassThroughHTMLAttributes<HTMLDivAttributes>

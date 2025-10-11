@@ -1,0 +1,52 @@
+<script lang="ts">
+    import { importJS, importTS } from '$lib/doc/common/doc.utils'
+    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
+    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import { MeterGroup } from '@jazzsvelte/meter_group'
+
+    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+
+    let { docSection }: ComponentDocProps = $props()
+
+    const codeValues = `
+    const values = [
+        { label: 'Apps', color: '#34d399', value: 16 },
+        { label: 'Messages', color: '#fbbf24', value: 8 },
+        { label: 'Media', color: '#60a5fa', value: 24 },
+        { label: 'System', color: '#c084fc', value: 10 }
+    ]`
+    const code = {
+        basic: `
+<MeterGroup values={values} />
+        `,
+        javascript: `
+${importJS('MeterGroup', codeValues)}
+
+<div class="card flex justify-content-center">
+    <MeterGroup values={values} />
+</div>
+`,
+        typescript: `
+${importTS('MeterGroup', codeValues)}
+
+<div class="card flex justify-content-center">
+    <MeterGroup values={values} />
+</div>
+`
+    }
+
+    const values = [
+        { label: 'Apps', color: '#34d399', value: 16 },
+        { label: 'Messages', color: '#fbbf24', value: 8 },
+        { label: 'Media', color: '#60a5fa', value: 24 },
+        { label: 'System', color: '#c084fc', value: 10 }
+    ]
+</script>
+
+<DocSectionText {docSection}>
+    <p>Adding more items to the array displays the meters in a group.</p>
+</DocSectionText>
+<div class="card">
+    <MeterGroup {values} />
+</div>
+<DocSectionCode {code} />

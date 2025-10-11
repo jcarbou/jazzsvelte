@@ -75,7 +75,8 @@
                         },
                         {
                             "name": "InputText",
-                            "to": "/inputtext"
+                            "to": "/inputtext",
+                            "done": true
                         },
                         {
                             "name": "InputTextarea",
@@ -144,19 +145,23 @@
                     "children": [
                         {
                             "name": "Button",
-                            "to": "/button"
+                            "to": "/button",
+                            "done": true
                         },
                         {
                             "name": "ButtonGroup",
-                            "to": "/buttongroup"
+                            "to": "/buttongroup",
+                            "done": true
                         },
                         {
                             "name": "Speed Dial",
-                            "to": "/speeddial"
+                            "to": "/speeddial",
+                            "done": true
                         },
                         {
                             "name": "SplitButton",
-                            "to": "/splitbutton"
+                            "to": "/splitbutton",
+                            "done": true
                         }
                     ]
                 },
@@ -205,7 +210,8 @@
                         },
                         {
                             "name": "VirtualScroller",
-                            "to": "/virtualscroller"
+                            "to": "/virtualscroller",
+                            "done": true
                         }
                     ]
                 },
@@ -234,7 +240,8 @@
                         },
                         {
                             "name": "Panel",
-                            "to": "/panel"
+                            "to": "/panel",
+                            "done": true
                         },
                         {
                             "name": "ScrollPanel",
@@ -279,7 +286,8 @@
                         },
                         {
                             "name": "Tooltip",
-                            "to": "/tooltip"
+                            "to": "/tooltip",
+                            "done": true
                         }
                     ]
                 },
@@ -333,7 +341,8 @@
                         },
                         {
                             "name": "TieredMenu",
-                            "to": "/tieredmenu"
+                            "to": "/tieredmenu",
+                            "done": true
                         }
                     ]
                 },
@@ -359,7 +368,8 @@
                         },
                         {
                             "name": "Toast",
-                            "to": "/toast"
+                            "to": "/toast",
+                            "done": true
                         }
                     ]
                 },
@@ -385,11 +395,13 @@
                     "children": [
                         {
                             "name": "Avatar",
-                            "to": "/avatar"
+                            "to": "/avatar",
+                            "done": true
                         },
                         {
                             "name": "Badge",
-                            "to": "/badge"
+                            "to": "/badge",
+                            "done": true
                         },
                         {
                             "name": "BlockUI",
@@ -397,31 +409,42 @@
                         },
                         {
                             "name": "Chip",
-                            "to": "/chip"
+                            "to": "/chip",
+                            "done": true
                         },
                         {
                             "name": "Inplace",
                             "to": "/inplace"
                         },
                         {
+                            "name": "MeterGroup",
+                            "to": "/metergroup",
+                            "done": true
+                        },
+                        {
                             "name": "ScrollTop",
-                            "to": "/scrolltop"
+                            "to": "/scrolltop",
+                            "done": true
                         },
                         {
                             "name": "Skeleton",
-                            "to": "/skeleton"
+                            "to": "/skeleton",
+                            "done": true
                         },
                         {
                             "name": "ProgressBar",
-                            "to": "/progressbar"
+                            "to": "/progressbar",
+                            "done": true
                         },
                         {
                             "name": "ProgressSpinner",
-                            "to": "/progressspinner"
+                            "to": "/progressspinner",
+                            "done": true
                         },
                         {
                             "name": "Ripple",
-                            "to": "/ripple"
+                            "to": "/ripple",
+                            "done": true
                         },
                         {
                             "name": "StyleClass",
@@ -429,7 +452,8 @@
                         },
                         {
                             "name": "Tag",
-                            "to": "/tag"
+                            "to": "/tag",
+                            "done": true
                         },
                         {
                             "name": "Terminal",

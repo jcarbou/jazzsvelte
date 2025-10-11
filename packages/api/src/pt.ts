@@ -19,7 +19,10 @@ import type {
     HTMLUlAttributes,
     HTMLSVGAttributes,
     HTMLImageAttributes,
-    HTMLSVGCircleAttributes
+    HTMLSVGCircleAttributes,
+    HTMLIAttributes,
+    HTMLElementAttributes,
+    HTMLOlAttributes
 } from './pt.types'
 import { JAZZ_SVELTE } from './JazzSvelte'
 import { mergeCssClasses } from './cssClasses'
@@ -73,6 +76,29 @@ type PtOptions<ELT extends Element, ATTR extends HTMLAttributes<ELT>, FUNCTION_O
 type CustomHTMLAttributes<ELT extends Element, ATTR extends HTMLAttributes<ELT>> = Omit<ATTR, 'style' | 'class'> & {
     style?: CssStyle | (CssStyle | undefined | null)[]
     class: ClassNameEntry[]
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLElementAttributes
+ * @param elementAttributes - inner HTMLElementAttributes of component
+ * @param elementOptions - pass trough HTMLElementAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLElementAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLElementAttributes
+ */
+export function resolveElementPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLElement, HTMLElementAttributes>,
+    elementOptions: PtOptions<HTMLElement, HTMLElementAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLElement, HTMLElementAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLElementAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
 
 /**
@@ -168,6 +194,29 @@ export function resolveDivPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
 }
 
 /**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLIAttributes
+ * @param elementAttributes - inner HTMLIAttributes of component
+ * @param elementOptions - pass trough HTMLIAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLIAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLIAttributes
+ */
+export function resolveIPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLElement, HTMLIAttributes>,
+    elementOptions: PtOptions<HTMLElement, HTMLIAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLElement, HTMLIAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLIAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
  * Resolve "P"ass "T"rough configuration ans generate HTMLImageAttributes
  * @param elementAttributes - inner HTMLImageAttributes of component
  * @param elementOptions - pass trough HTMLImageAttributes of "pt" attributte
@@ -233,6 +282,29 @@ export function resolveLiPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
         unstyled: boolean
     }
 ): HTMLLiAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLOlAttributes
+ * @param elementAttributes - inner HTMLOlAttributes of component
+ * @param elementOptions - pass trough HTMLOlAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLOlAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLOlAttributes
+ */
+export function resolveOlPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLOListElement, HTMLOlAttributes>,
+    elementOptions: PtOptions<HTMLOListElement, HTMLOlAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLOListElement, HTMLOlAttributes, FUNCTION_OPTIONS>,
+    ptContext: {
+        props: PROPS
+        state?: STATE
+        context?: CTX
+        ptOptions: PassThroughOptions | null
+        unstyled: boolean
+    }
+): HTMLOlAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
 
