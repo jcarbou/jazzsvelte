@@ -5,8 +5,7 @@
     import { resolveButtonPt, resolveDivPt, resolveIconPT, resolveSpanPt } from '@jazzsvelte/api'
     import { defaultPanelProps as DEFAULT, globalPanelPT as globalPt } from './panel.config'
     import { uniqueId } from '../../utils/src'
-    import PanelHeader from './PanelHeader.svelte'
-    import PanelFooter from './PanelFooter.svelte'
+    import PanelToggler from './PanelToggler.svelte'
     import { slide } from 'svelte/transition'
 
     let {
@@ -269,41 +268,28 @@
         )
     )
 
+    let _headerContainerSnippet = $derived(headerContainerSnippet || defaultHeaderContainerSnipppet)
+    let _footerContainerSnippet = $derived(footerContainerSnippet || defaultFooterContainerSnippet)
+
     let resolvedTogglerIcon: ResolvedIconPT = $derived(collapsed ? resolvedExpandIcon : resolvedCollapseIcon)
 </script>
 
 <div bind:this={panelEl} {...rootAttributes} {..._restProps}>
     <!-- Header  -->
 
-    {#if headerContainerSnippet}
-        {@render headerContainerSnippet({
-            headerAttributes,
-            titleAttributes,
-            iconsAttributes,
-            togglerAttributes,
-            resolvedTogglerIcon,
-            header,
-            headerSnippet,
-            toggle,
-            icons,
-            toggleable,
-            collapsed
-        })}
-    {:else}
-        <PanelHeader
-            {headerAttributes}
-            {titleAttributes}
-            {iconsAttributes}
-            {togglerAttributes}
-            {resolvedTogglerIcon}
-            {header}
-            {headerSnippet}
-            {toggle}
-            {icons}
-            {toggleable}
-            {collapsed}
-        />
-    {/if}
+    {@render _headerContainerSnippet({
+        headerAttributes,
+        titleAttributes,
+        iconsAttributes,
+        togglerAttributes,
+        resolvedTogglerIcon,
+        header,
+        headerSnippet,
+        toggle,
+        icons,
+        toggleable,
+        collapsed
+    })}
 
     <!-- Content  -->
 
@@ -315,16 +301,46 @@
 
     <!-- Footer  -->
 
-    {#if footerContainerSnippet}
-        {@render footerContainerSnippet({
+    {#if footerContainerSnippet || footerSnippet || footer}
+        {@render _footerContainerSnippet({
             footerAttributes,
             footer,
             footerSnippet
         })}
-    {:else if footer}
-        <PanelFooter {footerAttributes} {footer} />
     {/if}
 </div>
+
+{#snippet defaultHeaderContainerSnipppet()}
+    {#if headerSnippet || header || toggleable}
+        <div {...headerAttributes}>
+            <span {...titleAttributes}>
+                {#if headerSnippet}
+                    {@render headerSnippet({ toggle, collapsed })}
+                {:else}
+                    {header}
+                {/if}
+            </span>
+            <div {...iconsAttributes}>
+                {#if icons}
+                    {@render icons?.({ toggle, collapsed })}
+                {/if}
+                {#if toggleable}
+                    <PanelToggler {togglerAttributes} {toggle} {resolvedTogglerIcon} />
+                {/if}
+            </div>
+        </div>
+    {/if}
+{/snippet}
+
+{#snippet defaultFooterContainerSnippet()}
+    <div {...footerAttributes}>
+        {#if footerSnippet}
+            {@render footerSnippet()}
+        {:else}
+            {footer}
+        {/if}
+    </div>
+{/snippet}
 
 <style>
     @layer primereact {
