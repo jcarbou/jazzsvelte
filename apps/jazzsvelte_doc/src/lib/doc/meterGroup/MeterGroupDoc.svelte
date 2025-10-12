@@ -10,7 +10,7 @@
     import LabelDoc from './LabelDoc.svelte'
     import VerticalDoc from './VerticalDoc.svelte'
     import MinMaxDoc from './MinMaxDoc.svelte'
-    //import TemplateDoc from './TemplateDoc.svelte'
+    import TemplateDoc from './TemplateDoc.svelte'
     import AccessibilityDoc from './AccessibilityDoc.svelte'
     import Wireframe from './pt/Wireframe.svelte'
     import StyledDoc from './theming/StyledDoc.svelte'
@@ -51,11 +51,11 @@
             label: 'Min-Max',
             component: MinMaxDoc
         },
-        /*{
+        {
             id: 'template',
             label: 'Template',
             component: TemplateDoc
-        },*/
+        },
         {
             id: 'accessibility',
             label: 'Accessibility',

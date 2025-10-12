@@ -1,5 +1,11 @@
-<script lang="ts">
-    import type { MeterGroupEntry, MeterGroupLabelListProps, MeterGroupProps, MeterGroupPtContext } from './meterGroup.types'
+<script lang="ts" generics="ITEM extends MeterGroupItem">
+    import type {
+        MeterGroupEntry,
+        MeterGroupItem,
+        MeterGroupLabelListSnippetProps,
+        MeterGroupProps,
+        MeterGroupPtContext
+    } from './meterGroup.types'
     import {
         resolveDivPt,
         resolveSpanPt,
@@ -29,9 +35,9 @@
         class: className = DEFAULT.class,
         style = DEFAULT.style,
         ..._restProps
-    }: MeterGroupProps = $props()
+    }: MeterGroupProps<ITEM> = $props()
 
-    let _props: MeterGroupProps = $derived({
+    let _props: MeterGroupProps<ITEM> = $derived({
         endSnippet,
         labelListSnippet,
         labelOrientation,
@@ -75,7 +81,7 @@
         })
     )
 
-    let ptContext: MeterGroupPtContext = $derived({
+    let ptContext: MeterGroupPtContext<ITEM> = $derived({
         props: { ...DEFAULT, ..._props, ..._restProps },
         context: {},
         ptOptions,
@@ -234,7 +240,7 @@
 </div>
 
 <!-- Default template for label -->
-{#snippet defaultLabelListSnippet({ entries, totalPercent }: MeterGroupLabelListProps)}
+{#snippet defaultLabelListSnippet({ entries, totalPercent }: MeterGroupLabelListSnippetProps)}
     <ol {...labelListAttributes}>
         {#each entries as { item, percentage }}
             <li {...labelListItemAttributes}>

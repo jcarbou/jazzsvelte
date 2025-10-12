@@ -121,7 +121,7 @@
                 "name": "values",
                 "optional": true,
                 "readonly": false,
-                "type": "MeterGroupValue[]",
+                "type": "MeterGroupItem[]",
                 "default": "null",
                 "description": "An array of values to be represented by the MeterGroup."
             }

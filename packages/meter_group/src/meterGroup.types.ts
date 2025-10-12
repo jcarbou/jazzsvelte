@@ -19,7 +19,7 @@ import { Snippet } from 'svelte'
 export type MeterGroupOrientation = 'horizontal' | 'vertical'
 export type MeterGroupLabelPosition = 'start' | 'end'
 
-export type MeterGroupValue = {
+export type MeterGroupItem = {
     value: number
     label?: string
     labelSnippet?: Snippet
@@ -28,8 +28,8 @@ export type MeterGroupValue = {
     meterSnippet?: MeterGroupMeterSnippet
 }
 
-export type MeterGroupEntry = {
-    item: MeterGroupValue
+export type MeterGroupEntry<ITEM extends MeterGroupItem> = {
+    item: ITEM
     percentage: number
     totalPercent: number
     meterStyles: {
@@ -39,32 +39,32 @@ export type MeterGroupEntry = {
     }
 }
 
-export interface MeterGroupLabelListProps {
+export interface MeterGroupLabelListSnippetProps {
     entries: MeterGroupEntry[]
     totalPercent: number
 }
 
-export interface MeterGroupStartEndProps {
+export interface MeterGroupStartOrEndSnippetProps {
     entries: MeterGroupEntry[]
     totalPercent: number
 }
 
-export interface MeterGroupMeterProps {
+export interface MeterGroupMeterSnippetProps {
     index: number
     entry: MeterGroupEntry
     meterAttributes: HTMLElementAttributes
 }
 
-export type MeterGroupLabelListSnippet = Snippet<[MeterGroupLabelListProps]>
-export type MeterGroupStartSnippet = Snippet<[MeterGroupStartEndProps]>
-export type MeterGroupEndSnippet = Snippet<[MeterGroupStartEndProps]>
-export type MeterGroupMeterSnippet = Snippet<[MeterGroupMeterProps]>
+export type MeterGroupLabelListSnippet = Snippet<[MeterGroupLabelListSnippetProps]>
+export type MeterGroupStartSnippet = Snippet<[MeterGroupStartOrEndSnippetProps]>
+export type MeterGroupEndSnippet = Snippet<[MeterGroupStartOrEndSnippetProps]>
+export type MeterGroupMeterSnippet = Snippet<[MeterGroupMeterSnippetProps]>
 
 /**
  * undefined
  * @group baseProperties
  */
-export interface BaseMeterGroupProps {
+export interface BaseMeterGroupProps<ITEM extends MeterGroupItem> {
     /**
      * CSS classes to add to root element.
      * @default  null
@@ -123,7 +123,7 @@ export interface BaseMeterGroupProps {
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
      */
-    pt?: MeterGroupPassThroughOptions | null
+    pt?: MeterGroupPassThroughOptions<ITEM> | null
 
     /**
      * Used to configure passthrough(pt) options of the component.
@@ -153,33 +153,35 @@ export interface BaseMeterGroupProps {
      * An array of values to be represented by the MeterGroup.
      * @default  null
      */
-    values?: MeterGroupValue[]
+    values?: ITEM[]
 }
 
 /**
  * Defines valid properties in MeterGroup component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface MeterGroupProps extends Omit<HTMLDivAttributes, 'style'>, BaseMeterGroupProps {}
+export interface MeterGroupProps<ITEM extends MeterGroupItem>
+    extends Omit<HTMLDivAttributes, 'style'>,
+        BaseMeterGroupProps<ITEM> {}
 
 /**
  * @group ptType
  */
-export declare type MeterGroupPassThroughType<T> = PassThroughType<
+export declare type MeterGroupPassThroughType<T, ITEM extends MeterGroupItem> = PassThroughType<
     PassThroughHTMLAttributes<T>,
-    MeterGroupPassThroughMethodOptions
+    MeterGroupPassThroughMethodOptions<ITEM>
 >
 
 /**
  * Custom passthrough(pt) option method.
  * @group ptOptionMethod
  */
-export interface MeterGroupPassThroughMethodOptions {
-    props: MeterGroupProps
+export interface MeterGroupPassThroughMethodOptions<ITEM extends MeterGroupItem> {
+    props: MeterGroupProps<ITEM>
     context: MeterGroupContext
 }
 
-export interface MeterGroupPtContext extends MeterGroupPassThroughMethodOptions {
+export interface MeterGroupPtContext<ITEM extends MeterGroupItem> extends MeterGroupPassThroughMethodOptions<ITEM> {
     ptOptions: PassThroughOptions | null
     unstyled: boolean
 }
@@ -188,39 +190,39 @@ export interface MeterGroupPtContext extends MeterGroupPassThroughMethodOptions 
  * Custom passthrough(pt) options.
  * @group ptOptions
  */
-export interface MeterGroupPassThroughOptions {
+export interface MeterGroupPassThroughOptions<ITEM extends MeterGroupItem> {
     /**
      * Used to pass attributes to the root's DOM element.
      */
-    root?: MeterGroupPassThroughType<HTMLDivAttributes>
+    root?: MeterGroupPassThroughType<HTMLDivAttributes, ITEM>
     /**
      * Used to pass attributes to the label list's DOM element.
      */
-    labelList?: MeterGroupPassThroughType<HTMLOlAttributes>
+    labelList?: MeterGroupPassThroughType<HTMLOlAttributes, ITEM>
     /**
      * Used to pass attributes to the label list item's DOM element.
      */
-    labelListItem?: MeterGroupPassThroughType<HTMLLiAttributes>
+    labelListItem?: MeterGroupPassThroughType<HTMLLiAttributes, ITEM>
     /**
      * Used to pass attributes to the label list icon's DOM element.
      */
-    labelListIcon?: MeterGroupPassThroughType<HTMLSpanAttributes>
+    labelListIcon?: MeterGroupPassThroughType<HTMLSpanAttributes, ITEM>
     /**
      * Used to pass attributes to the label's DOM element.
      */
-    label?: MeterGroupPassThroughType<HTMLSpanAttributes>
+    label?: MeterGroupPassThroughType<HTMLSpanAttributes, ITEM>
     /**
      * Used to pass attributes to the label icoon's DOM element.
      */
-    labelIcon?: MeterGroupPassThroughType<HTMLIAttributes>
+    labelIcon?: MeterGroupPassThroughType<HTMLIAttributes, ITEM>
     /**
      * Used to pass attributes to the meter container's DOM element.
      */
-    meterContainer?: MeterGroupPassThroughType<HTMLDivAttributes>
+    meterContainer?: MeterGroupPassThroughType<HTMLDivAttributes, ITEM>
     /**
      * Used to pass attributes to the meter's DOM element.
      */
-    meter?: MeterGroupPassThroughType<HTMLElementAttributes>
+    meter?: MeterGroupPassThroughType<HTMLElementAttributes, ITEM>
 }
 
 /**
