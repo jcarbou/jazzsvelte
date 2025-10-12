@@ -365,7 +365,8 @@
                         },
                         {
                             "name": "Messages",
-                            "to": "/messages"
+                            "to": "/messages",
+                            "done": true
                         },
                         {
                             "name": "Toast",

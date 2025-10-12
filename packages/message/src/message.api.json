@@ -1,0 +1,190 @@
+{
+    "description": "Message is used to display inline message with various severities.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in Message component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "contentSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "MessageContentSnippet | null",
+                "default": "null",
+                "description": "Custom template of the message."
+            },
+            {
+                "name": "content",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Custom template of the message."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "based on severity",
+                "description": "Icon for the message. If not set it will default to severity icon."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "MessagePassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "severity",
+                "optional": true,
+                "readonly": false,
+                "type": "MessageSeverity",
+                "default": "null",
+                "description": "Severity level of the message."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "textSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "MessageTextSnippet | null",
+                "default": "null",
+                "description": "Text of the message."
+            },
+            {
+                "name": "text",
+                "optional": true,
+                "readonly": false,
+                "type": "sting | null",
+                "default": "null",
+                "description": "Text of the message."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ],
+        "label": "MessageProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "message",
+    "label": "Message",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the Message component.",
+        "values": [
+            {
+                "name": "MessageSeverity",
+                "value": "'error' | 'success' | 'secondary' | 'info' | 'warn' | 'contrast'"
+            },
+            {
+                "name": "MessageContentSnippet | null",
+                "value": "Snippet<[HTMLDivAttributes]>"
+            },
+            {
+                "name": "MessageTextSnippet | null",
+                "value": "Snippet<[HTMLDivAttributes]>"
+            }
+        ]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "MessageProps"
+            }
+        ],
+        "label": "MessagePassThroughMethodOptions",
+        "shortLabel": "MessagePtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "text",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the text's DOM element."
+            }
+        ],
+        "label": "MessagePassThroughOptions",
+        "shortLabel": "MessagePtOptions"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": true,
+        "tooltip": false,
+        "svelteComponent": false
+    }
+}

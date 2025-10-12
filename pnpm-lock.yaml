@@ -238,6 +238,9 @@ importers:
       '@jazzsvelte/input_text':
         specifier: workspace:^0.1.0
         version: link:../../packages/input_text
+      '@jazzsvelte/message':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/message
       '@jazzsvelte/meter_group':
         specifier: workspace:^0.1.0
         version: link:../../packages/meter_group
@@ -1045,6 +1048,34 @@ importers:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../object
+
+  packages/message:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/check_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/check
+      '@jazzsvelte/exclamationtriangle_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/exclamationtriangle
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/infocircle_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/infocircle
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+      '@jazzsvelte/timescircle_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/timescircle
 
   packages/meter_group:
     dependencies:
