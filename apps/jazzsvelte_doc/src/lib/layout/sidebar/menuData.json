@@ -361,12 +361,12 @@
                     "children": [
                         {
                             "name": "Message",
-                            "to": "/message"
+                            "to": "/message",
+                            "done": true
                         },
                         {
                             "name": "Messages",
-                            "to": "/messages",
-                            "done": true
+                            "to": "/messages"
                         },
                         {
                             "name": "Toast",
