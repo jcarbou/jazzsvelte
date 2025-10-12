@@ -21,7 +21,9 @@ Replace in file MyCmpDoc.svelte, for ptDocs, the type DocApiTable by DocApiPtTab
 
 Migrate test
 
-Add done attribute on apps\jazzsvelte_doc\src\lib\layout\sidebar\menuData.json
+Add "done" attribute on apps\jazzsvelte_doc\src\lib\layout\sidebar\menuData.json
+
+Modify README.md adding the new component to "done" list
 
 TODO 
 

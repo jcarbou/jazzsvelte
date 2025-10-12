@@ -224,7 +224,8 @@
                         },
                         {
                             "name": "Card",
-                            "to": "/card"
+                            "to": "/card",
+                            "done": true
                         },
                         {
                             "name": "Deferred",

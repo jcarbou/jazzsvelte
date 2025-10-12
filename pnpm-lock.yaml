@@ -211,6 +211,9 @@ importers:
       '@jazzsvelte/button_group':
         specifier: workspace:^0.1.0
         version: link:../../packages/button_group
+      '@jazzsvelte/card':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/card
       '@jazzsvelte/check_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/check
@@ -939,6 +942,19 @@ importers:
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
+
+  packages/card:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
 
   packages/chip:
     dependencies:

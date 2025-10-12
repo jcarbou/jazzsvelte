@@ -1,17 +1,7 @@
-import  { screen, fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/svelte';
-    import {describe, expect, vi} from 'vitest'
-    import MeterGroup from './MeterGroup.svelte';
-    import { containerTest, snapshot} from '@jazzsvelte/test'
-    
-    describe('Button', () => { 
-        snapshot('when TODO', MeterGroup, {aProp:'todo'})
-    })   
+import { describe } from 'vitest'
+import { snapshot } from '@jazzsvelte/test'
+import MeterGroup from './MeterGroup.svelte'
 
-    containerTest('when todo', MeterGroup, {aProp:'todo'}, async (meterGroupEl, meterGroup) => {
-        expect(meterGroupEl).not.toBeNull()
-        expect(meterGroup).not.toBeNull()
-
-        if ($MeterGroupEl) {
-
-        }
-    })
+describe('MeterGroup', () => {
+    snapshot('when default', MeterGroup, { values: [{ label: 'default', value: 15 }] })
+})

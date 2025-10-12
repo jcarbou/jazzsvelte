@@ -18,6 +18,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
 - **Data**
    - VirtualScroller [PrimeReact version](https://primereact.org/virtualscroller/)
 - **Panel**
+   - Card [PrimeReact version](https://primereact.org/card/)
    - Panel [PrimeReact version](https://primereact.org/panel/)
 - **Overlay**
    - Tooltip [PrimeReact version](https://primereact.org/tooltip/)
@@ -29,6 +30,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
    - Avatar [PrimeReact version](https://primereact.org/avatar/)
    - Badge [PrimeReact version](https://primereact.org/badge/)
    - Chip [PrimeReact version](https://primereact.org/chip/)
+   - MeterGroup [PrimeReact version](https://primereact.org/metergroup/)
    - ScrollTop [PrimeReact version](https://primereact.org/scrolltop/)
    - Skeleton [PrimeReact version](https://primereact.org/skeleton/)
    - ProgressBar [PrimeReact version](https://primereact.org/progressbar/)

@@ -1,0 +1,215 @@
+{
+    "description": "Card is a flexible container component.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in Card component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "footerSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "CardFooterSnippet | null",
+                "default": "null",
+                "description": "Footer of the card."
+            },
+            {
+                "name": "headerSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "CardHeaderSnippet | null",
+                "default": "null",
+                "description": "Header of the card."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "CardPassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "subTitle",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Secondary title of the card."
+            },
+            {
+                "name": "subTitleSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "CardSubTitleSnippet | null",
+                "default": "null",
+                "description": "Secondary title of the card."
+            },
+            {
+                "name": "title",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Title of the card."
+            },
+            {
+                "name": "titleSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "CardTitleSnippet | null",
+                "default": "null",
+                "description": "Title of the card."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ],
+        "label": "CardProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "card",
+    "label": "Card",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the Card component.",
+        "values": [
+            {
+                "name": "CardFooterSnippet | null",
+                "value": "Snippet<[HTMLDivAttributes]>"
+            },
+            {
+                "name": "CardHeaderSnippet | null",
+                "value": "Snippet<[HTMLDivAttributes]>"
+            },
+            {
+                "name": "CardSubTitleSnippet | null",
+                "value": "Snippet<[HTMLDivAttributes]>"
+            },
+            {
+                "name": "CardTitleSnippet | null",
+                "value": "Snippet<[HTMLDivAttributes]>"
+            }
+        ]
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "CardProps"
+            }
+        ],
+        "label": "CardPassThroughMethodOptions",
+        "shortLabel": "CardPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "header",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the header's DOM element."
+            },
+            {
+                "name": "body",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the body's DOM element."
+            },
+            {
+                "name": "title",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the title's DOM element."
+            },
+            {
+                "name": "subTitle",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the subtitle's DOM element."
+            },
+            {
+                "name": "content",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the content's DOM element."
+            },
+            {
+                "name": "footer",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the footer's DOM element."
+            }
+        ],
+        "label": "CardPassThroughOptions",
+        "shortLabel": "CardPtOptions"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": false
+    }
+}

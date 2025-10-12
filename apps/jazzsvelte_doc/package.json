@@ -38,6 +38,7 @@
     "@jazzsvelte/badge": "workspace:^0.1.0",
     "@jazzsvelte/button": "workspace:^0.1.0",
     "@jazzsvelte/button_group": "workspace:^0.1.0",
+    "@jazzsvelte/card": "workspace:^0.1.0",
     "@jazzsvelte/check_icon": "workspace:^0.1.0",
     "@jazzsvelte/chip": "workspace:^0.1.0",
     "@jazzsvelte/click_outside_action": "workspace:^0.1.0",
