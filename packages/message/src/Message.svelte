@@ -59,7 +59,7 @@
                 class: [
                     'p-component',
                     className,
-                    'p-inline-message p-component',
+                    'p-inline-message',
                     {
                         [`p-inline-message-${severity}`]: severity
                     }

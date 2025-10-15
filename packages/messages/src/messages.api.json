@@ -1,0 +1,277 @@
+{
+    "description": "Messages is used to display inline messages with various severities.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "clear",
+                "parameters": [],
+                "returnType": "void",
+                "description": "Used to clear the shown messages."
+            },
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            },
+            {
+                "name": "remove",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "type": "MessagesMessageState",
+                        "description": "Message to remove"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Used to remove messages."
+            },
+            {
+                "name": "removeList",
+                "parameters": [
+                    {
+                        "name": "messageList",
+                        "type": "MessagesMessageState[]",
+                        "description": "Messages to remove"
+                    }
+                ],
+                "returnType": "void",
+                "description": "Used to remove messages."
+            },
+            {
+                "name": "replace",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "type": "MessagesMessage",
+                        "description": "New message."
+                    }
+                ],
+                "returnType": "MessagesMessageState",
+                "description": "Used to add new message after removing all old messages."
+            },
+            {
+                "name": "replaceByList",
+                "parameters": [
+                    {
+                        "name": "messageList",
+                        "type": "MessagesMessages[]",
+                        "description": "New message."
+                    }
+                ],
+                "returnType": "MessagesMessageState[]",
+                "description": "Used to add new messages after removing all old messages."
+            },
+            {
+                "name": "show",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "type": "MessagesMessage",
+                        "description": "Showed message."
+                    }
+                ],
+                "returnType": "MessagesMessageState",
+                "description": "Used to show the message."
+            },
+            {
+                "name": "showList",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "type": "MessagesMessage[]",
+                        "description": "Showed messages."
+                    }
+                ],
+                "returnType": "MessagesMessageState[]",
+                "description": "Used to show the message."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in Messages component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "MessagesPassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "transition",
+                "optional": true,
+                "readonly": false,
+                "type": "TransitionFactory | null",
+                "default": "null",
+                "description": "The properties of CSSTransition can be customized."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ],
+        "label": "MessagesProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onClick",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "optional": false,
+                        "type": "MessagesMessage",
+                        "description": "Clicked message."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when a message gets clicked."
+            },
+            {
+                "name": "onRemove",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "optional": false,
+                        "type": "MessagesMessageState",
+                        "description": "Removed message."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when a message is removed."
+            }
+        ],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "messages",
+    "label": "Messages",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the Messages component.",
+        "values": []
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "MessagesProps"
+            }
+        ],
+        "label": "MessagesPassThroughMethodOptions",
+        "shortLabel": "MessagesPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "wrapper",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the wrapper's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "summary",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the summary's DOM element."
+            },
+            {
+                "name": "detail",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the detail's DOM element."
+            },
+            {
+                "name": "button",
+                "optional": true,
+                "readonly": false,
+                "type": "Button",
+                "description": "Uses to pass attributes to the button's DOM element."
+            },
+            {
+                "name": "buttonIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the button icon's DOM element."
+            },
+            {
+                "name": "transition",
+                "optional": true,
+                "readonly": false,
+                "type": "MessagesPassThroug",
+                "description": "Used to control React Transition API."
+            }
+        ],
+        "label": "MessagesPassThroughOptions",
+        "shortLabel": "MessagesPtOptions"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": false
+    }
+}

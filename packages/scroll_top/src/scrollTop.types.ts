@@ -83,7 +83,7 @@ export interface BaseScrollTopProps {
     threshold?: number
 
     /**
-     * The properties of CSSTransition can be customized, except for "nodeRef" and "in" properties.
+     * The properties of CSSTransition can be customized.
      * @default  null
      */
     transition?: TransitionFactory

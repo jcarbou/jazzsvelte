@@ -26,6 +26,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
     - TieredMenu  [PrimeReact version](https://primereact.org/tooltip/)
 - **Messages**
    - Message [PrimeReact version](https://primereact.org/message/)
+   - Messages [PrimeReact version](https://primereact.org/messages/)
    - Toast [PrimeReact version](https://primereact.org/toast/)
 - **Misc**
    - Avatar [PrimeReact version](https://primereact.org/avatar/)

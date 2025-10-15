@@ -86,7 +86,7 @@
                 "readonly": false,
                 "type": "TransitionFactory",
                 "default": "null",
-                "description": "Svelte transition."
+                "description": "The properties of CSSTransition can be customized."
             },
             {
                 "name": "unstyled",
