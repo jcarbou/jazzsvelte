@@ -46,6 +46,7 @@
     "@jazzsvelte/exclamationtriangle_icon": "workspace:^0.1.0",
     "@jazzsvelte/icons": "workspace:^0.1.0",
     "@jazzsvelte/infocircle_icon": "workspace:^0.1.0",
+    "@jazzsvelte/inplace": "workspace:^0.1.0",
     "@jazzsvelte/input_text": "workspace:^0.1.0",
     "@jazzsvelte/message": "workspace:^0.1.0",
     "@jazzsvelte/messages": "workspace:^0.1.0",

@@ -33,6 +33,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
    - Badge [PrimeReact version](https://primereact.org/badge/)
    - Chip [PrimeReact version](https://primereact.org/chip/)
    - MeterGroup [PrimeReact version](https://primereact.org/metergroup/)
+   - Inplace [PrimeReact version](https://primereact.org/inplace/)
    - ScrollTop [PrimeReact version](https://primereact.org/scrolltop/)
    - Skeleton [PrimeReact version](https://primereact.org/skeleton/)
    - ProgressBar [PrimeReact version](https://primereact.org/progressbar/)

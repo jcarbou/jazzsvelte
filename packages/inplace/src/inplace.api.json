@@ -1,0 +1,252 @@
+{
+    "description": "Inplace provides an easy to do editing and display at the same time where clicking the output displays the actual content.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in Inplace component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "active",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether the content is displayed or not."
+            },
+            {
+                "name": "ariaLabel",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "Used to define a string that labels the component."
+            },
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "closable",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Displays a button to switch back to display mode."
+            },
+            {
+                "name": "closeIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Icon of the close button."
+            },
+            {
+                "name": "contentSnippet",
+                "optional": false,
+                "readonly": false,
+                "type": "Snippet<[]>",
+                "description": "Content template"
+            },
+            {
+                "name": "displaySnippet",
+                "optional": false,
+                "readonly": false,
+                "type": "Snippet<[]>",
+                "description": "Display template"
+            },
+            {
+                "name": "disabled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When present, it specifies that the element should be disabled."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "InplacePassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ],
+        "label": "InplaceProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onClose",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "MouseEvent",
+                        "description": "Browser event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when inplace is closed."
+            },
+            {
+                "name": "onOpen",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "KeyboardEvent | MouseEvent",
+                        "description": "Browser event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when inplace is opened."
+            },
+            {
+                "name": "onToggle",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "InplaceToggleEvent",
+                        "description": "Custom toggle event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when inplace is opened or closed."
+            }
+        ],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "inplace",
+    "label": "Inplace",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the Inplace component.",
+        "values": []
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "InplaceProps"
+            },
+            {
+                "name": "state",
+                "optional": false,
+                "readonly": false,
+                "type": "InplaceState"
+            }
+        ],
+        "label": "InplacePassThroughMethodOptions",
+        "shortLabel": "InplacePtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "display",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the display's DOM element."
+            },
+            {
+                "name": "content",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the content's DOM element."
+            },
+            {
+                "name": "closeButton",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonPassThroughO",
+                "description": "Uses to pass attributes to the Button component."
+            }
+        ],
+        "label": "InplacePassThroughOptions",
+        "shortLabel": "InplacePtOptions"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": true,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "state": {
+        "description": "Defines current inline state in Inplace component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "active",
+                "optional": false,
+                "readonly": false,
+                "type": "boolean",
+                "description": "Current active state as a boolean."
+            }
+        ],
+        "label": "InplaceState",
+        "shortLabel": "Context"
+    }
+}

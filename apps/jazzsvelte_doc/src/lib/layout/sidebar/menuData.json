@@ -417,7 +417,8 @@
                         },
                         {
                             "name": "Inplace",
-                            "to": "/inplace"
+                            "to": "/inplace",
+                            "done": true
                         },
                         {
                             "name": "MeterGroup",

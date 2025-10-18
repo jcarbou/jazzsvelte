@@ -235,6 +235,9 @@ importers:
       '@jazzsvelte/infocircle_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/infocircle
+      '@jazzsvelte/inplace':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/inplace
       '@jazzsvelte/input_text':
         specifier: workspace:^0.1.0
         version: link:../../packages/input_text
@@ -1014,6 +1017,28 @@ importers:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../api
+
+  packages/inplace:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+      '@jazzsvelte/button':
+        specifier: workspace:^0.1.0
+        version: link:../button
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../test
+      '@jazzsvelte/times_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/times
 
   packages/input_text:
     dependencies:
