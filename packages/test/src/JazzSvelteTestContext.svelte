@@ -1,18 +1,18 @@
-<script lang="ts">
+<script lang="ts" generics="CMP extends Component">
     import { JazzSvelte } from '@jazzsvelte/api'
-    import { Component as _Component, SvelteComponent } from 'svelte'
+    import { Component } from 'svelte'
+    import { ComponentToTestProps, TestedComponent } from './utils.types'
 
     interface Props {
-        Component: _Component
-        props?: any
+        ComponentToTest: CMP
+        props?: ComponentToTestProps<CMP>
     }
 
-    let { Component, props = {} }: Props = $props()
-    export const getTestedComponent = () => component
-
-    let component: SvelteComponent | null = $state(null)
+    let { ComponentToTest, props }: Props = $props()
+    let testedComponent: TestedComponent
+    export const getTestedComponent = () => testedComponent
 </script>
 
 <JazzSvelte>
-    <Component bind:this={component} {...props} />
+    <ComponentToTest bind:this={testedComponent} {...props}></ComponentToTest>
 </JazzSvelte>

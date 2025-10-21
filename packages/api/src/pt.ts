@@ -378,6 +378,15 @@ export function resolveUlPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
 }
 
 /**
+ * Return unstyled state
+ * @param props - component props or ptContext
+ * @returns state
+ */
+export function isUnstyled<PROPS extends { unstyled?: boolean }>(props: PROPS) {
+    return !!props.unstyled || JAZZ_SVELTE.unstyled
+}
+
+/**
  * Resolve "P"ass "T"rough configuration ans generate HTMLAttributes
  * @param elementAttributes - inner HTMLAttributes of component
  * @param elementOptions - pass trough HTMLAttributes of "pt" attributte
@@ -397,7 +406,7 @@ export function resolvePT<ELT extends Element, ATTR extends HTMLAttributes<ELT>,
         unstyled: boolean
     }
 ): Omit<PtAttr<ELT>, 'style'> & { style?: string } {
-    const unstyled = ptContext.unstyled || JAZZ_SVELTE.unstyled
+    const unstyled = isUnstyled(ptContext)
     let elementStyle = elementAttributes.style
     const elementClasses = elementAttributes.class
     elementStyle = !elementStyle ? [] : Array.isArray(elementStyle) ? elementStyle : [elementStyle]

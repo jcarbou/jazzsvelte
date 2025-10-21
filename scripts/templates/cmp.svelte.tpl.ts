@@ -1,7 +1,7 @@
 import { CmpApiDoc, CmpContext, ScriptOptions } from '../scripts.types'
 import { eachValue, filterValues, upperFirst, omitValues, withValue, generateCmpFile } from '../scripts.utils'
 
-export function render({ props, ptContext, meta, types, ptOptions }: CmpApiDoc, { CmpName, cmpName }: CmpContext): string {
+export function render({ props, ptContext, meta, callbacks, ptOptions }: CmpApiDoc, { CmpName, cmpName }: CmpContext): string {
     const { importApi, tooltip, icon } = meta
 
     return `<script lang="ts">
@@ -25,6 +25,7 @@ ${icon ? `   import { IconBuilder } from '@jazzsvelte/icons'` : ''}
    let {
         children,
 ${eachValue(omitValues(props, ['class', 'style', 'tooltip', 'pt', 'ptOptions']), ({ name }) => `     ${name} = DEFAULT.${name},`)}
+${eachValue(callbacks, ({ name }) => `     ${name} = null,`)}
       pt = null,
       ptOptions = null,
       class: className = DEFAULT.class,
@@ -40,6 +41,7 @@ ${
 
    let _props: ${CmpName}Props = $derived({
 ${eachValue(omitValues(props, ['class', 'tooltip']), ({ name }) => `     ${name},`)}
+${eachValue(callbacks, ({ name }) => `     ${name},`)}
       class: className,
 ${tooltip ? '      tooltip: tooltipContent,' : ''}
    })

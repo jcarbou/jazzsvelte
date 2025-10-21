@@ -1,29 +1,30 @@
 import { render } from '@testing-library/svelte'
 import { expect, test } from 'vitest'
 import JazzSvelteTestContext from './JazzSvelteTestContext.svelte'
-import { ComponentProps, Component as _Component, SvelteComponent } from 'svelte'
+import { ComponentProps, Component } from 'svelte'
+import { TestedComponent } from './utils.types'
 
-export function snapshot<CMP extends SvelteComponent>(label: string, Component: _Component<CMP>, props: ComponentProps<CMP>) {
-    containerTest(label, Component, props, (container) => {
+export function snapshot<CMP extends Component>(label: string, ComponentToTest: CMP, props: ComponentProps<CMP>) {
+    containerTest(label, ComponentToTest, props, (container) => {
         expect(container).toMatchSnapshot()
     })
 }
 
-export function containerTest<CMP extends SvelteComponent>(
+export function containerTest<CMP extends Component>(
     label: string,
-    Component: _Component<CMP>,
-    props: ComponentProps<CMP>,
+    ComponentToTest: CMP,
+    componentToProps: ComponentProps<CMP>,
     callback: (
         container: Element | null,
-        testedComponent: SvelteComponent | null,
-        contextComponent: JazzSvelteTestContext
+        testedComposnent: TestedComponent | null,
+        contextComponent: JazzSvelteTestContext<CMP>
     ) => void
 ) {
     test(label, async () => {
-        const { container, component } = render(JazzSvelteTestContext, {
+        const { container, component } = render(JazzSvelteTestContext<CMP>, {
             props: {
-                Component,
-                props: { ...props, 'data-tested-element': true }
+                ComponentToTest,
+                props: { ...componentToProps, 'data-tested-element': true }
             }
         })
 

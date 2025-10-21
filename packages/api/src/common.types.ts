@@ -1,4 +1,4 @@
-import { Component } from 'svelte'
+import { Snippet } from 'svelte'
 import { CssObject, IconComponent } from './pt.types'
 
 export type MenuItem = {
@@ -16,11 +16,22 @@ export type MenuItem = {
     separator?: boolean
     style?: CssObject | string
     target?: string
-    template?: Component<{ item: MenuItem }> | null
+    snippet?: Snippet<[MenuItemSnippetProps]> | null
     url?: string
     visible?: boolean
     badge?: string | number
     shortcut?: string
+}
+
+export type MenuItemDefaultSnippetProps = {
+    item: MenuItem
+    index: number
+}
+
+export type MenuItemSnippetProps = {
+    item: MenuItem
+    index: number
+    defaultSnippet?: Snippet<[MenuItemDefaultSnippetProps]>
 }
 
 export type AppendTo = null | HTMLElement | 'self' | 'body' | (() => HTMLElement | 'self' | 'body')

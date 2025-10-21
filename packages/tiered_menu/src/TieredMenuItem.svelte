@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { TieredMenuItemProps, TieredMenuPtContext, TieredMenuTreeContext } from './tieredMenu.types'
     import type { ProcessedItem } from './tieredMenu.types'
-    import type { JazzSvelteContext, HTMLAnchorAttributes } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, HTMLAnchorAttributes, MenuItem } from '@jazzsvelte/api'
 
     import { getContext } from 'svelte'
     import { resolveAnchorPt, resolveDivPt, resolveIconPT, resolveLiPt, resolveSpanPt } from '@jazzsvelte/api'
@@ -188,15 +188,10 @@
         onclick={(event) => _onItemClick(event, processedItem)}
         onmouseenter={(event) => _onItemMouseEnter(event, processedItem)}
     >
-        {#if item.template}
-            <item.template {item} />
+        {#if item.snippet}
+            {@render item.snippet({ item, index, defaultSnippet })}
         {:else}
-            <a href={url || '#'} {...actionAttributes} onfocus={(event) => event.stopPropagation()}>
-                {#if icon}<IconBuilder {resolvedIcon} />{/if}
-                {#if item.label}<span {...labelAttributes}>{item.label}</span>{/if}
-                {#if grouped}<IconBuilder resolvedIcon={resolvedSubmenuIcon} />{/if}
-                {#if !disabled && $ripple}<Ripple />{/if}
-            </a>
+            {@render defaultSnippet({ item, index })}
         {/if}
     </div>
     {#if !!processedItem.items}
@@ -211,3 +206,12 @@
         />
     {/if}
 </li>
+
+{#snippet defaultSnippet({ item, index }: { item: MenuItem; index: number })}
+    <a href={url || '#'} {...actionAttributes} onfocus={(event) => event.stopPropagation()}>
+        {#if icon}<IconBuilder {resolvedIcon} />{/if}
+        {#if item.label}<span {...labelAttributes}>{item.label}</span>{/if}
+        {#if grouped}<IconBuilder resolvedIcon={resolvedSubmenuIcon} />{/if}
+        {#if !disabled && $ripple}<Ripple />{/if}
+    </a>
+{/snippet}

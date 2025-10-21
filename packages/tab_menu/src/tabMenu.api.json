@@ -1,0 +1,214 @@
+{
+    "description": "TabMenu is a navigation/command component that displays items as tab headers.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in TabMenu component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "activeIndex",
+                "optional": true,
+                "readonly": false,
+                "type": "number",
+                "default": "0",
+                "description": "Active index of menuitem."
+            },
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "model",
+                "optional": true,
+                "readonly": false,
+                "type": "MenuItem[] | null",
+                "default": "null",
+                "description": "An array of menuitems."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "TabMenuPassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ],
+        "label": "TabMenuProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onTabChange",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "TabMenuTabChangeEvent",
+                        "description": "Custom tab change event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when active tab changes."
+            }
+        ],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "tabMenu",
+    "label": "TabMenu",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the TabMenu component.",
+        "values": []
+    },
+    "ptMethodOptions": {
+        "values": [],
+        "label": "TabMenuPassThroughMethodOptions",
+        "shortLabel": "TabMenuPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "menu",
+                "optional": true,
+                "readonly": false,
+                "type": "UList",
+                "description": "Uses to pass attributes to the list's DOM element."
+            },
+            {
+                "name": "menuitem",
+                "optional": true,
+                "readonly": false,
+                "type": "LI",
+                "description": "Uses to pass attributes to the list item's DOM element."
+            },
+            {
+                "name": "action",
+                "optional": true,
+                "readonly": false,
+                "type": "Anchor",
+                "description": "Uses to pass attributes to the action's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "label",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the label's DOM element."
+            },
+            {
+                "name": "inkbar",
+                "optional": true,
+                "readonly": false,
+                "type": "LI",
+                "description": "Uses to pass attributes to the inkbar's DOM element."
+            }
+        ],
+        "label": "TabMenuContext",
+        "shortLabel": "Context"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style'",
+        "icon": false,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "ptContext": {
+        "description": "Defines current options in TabMenu component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "item",
+                "optional": false,
+                "readonly": false,
+                "type": "any",
+                "description": "Current menuitem"
+            },
+            {
+                "name": "index",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Index of the menuitem"
+            }
+        ]
+    },
+    "state": {
+        "description": "Defines current inline state in TabMenu component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "activeIndex",
+                "optional": false,
+                "readonly": false,
+                "type": "number",
+                "description": "Current active index state as a number."
+            }
+        ],
+        "label": "TabMenuState",
+        "shortLabel": "Context"
+    }
+}

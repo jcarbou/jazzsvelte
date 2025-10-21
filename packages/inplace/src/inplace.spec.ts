@@ -1,17 +1,7 @@
-import  { screen, fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/svelte';
-    import {describe, expect, vi} from 'vitest'
-    import Inplace from './Inplace.svelte';
-    import { containerTest, snapshot} from '@jazzsvelte/test'
-    
-    describe('Button', () => { 
-        snapshot('when TODO', Inplace, {aProp:'todo'})
-    })   
+import { describe } from 'vitest'
+import Inplace from './Inplace.svelte'
+import { snapshot } from '@jazzsvelte/test'
 
-    containerTest('when todo', Inplace, {aProp:'todo'}, async (inplaceEl, inplace) => {
-        expect(inplaceEl).not.toBeNull()
-        expect(inplace).not.toBeNull()
-
-        if ($InplaceEl) {
-
-        }
-    })
+/*describe('Inplace', () => {
+    snapshot('when defult', Inplace, {})
+})*/

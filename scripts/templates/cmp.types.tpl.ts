@@ -2,7 +2,7 @@ import { CmpApiDoc, CmpContext, ScriptOptions } from '../scripts.types'
 import { eachValue, generateCmpFile, ifValues } from '../scripts.utils'
 
 export function render(
-    { meta, props, types, ptMethodOptions, ptContext, ptOptions, state }: CmpApiDoc,
+    { meta, props, types, callbacks, ptMethodOptions, ptContext, ptOptions, state }: CmpApiDoc,
     { CmpName }: CmpContext
 ): string {
     const { importApi, tooltip, RootType, omitAttributes } = meta
@@ -41,6 +41,16 @@ ${eachValue(
      * @default  ${d || 'null'}
      */
     ${name}${optional ? '?' : ''}: ${type}
+`
+)}
+${eachValue(
+    callbacks,
+    ({ name, parameters, returnType, description }) =>
+        `   /**
+     * ${description}
+     * @default 'null'
+     */
+    ${name}? : ((${parameters}) => ${returnType}) |null
 `
 )}
 }

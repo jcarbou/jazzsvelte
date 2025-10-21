@@ -112,8 +112,8 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
     newCmpApiDoc.methods.label = `Methods`
     newCmpApiDoc.methods.shortLabel = `Methods`
 
-    newCmpApiDoc.ptMethodOptions = cmpApiDoc.interfaces.values[`${CmpName}PassThroughMethodOptions`]
-    newCmpApiDoc.ptMethodOptions.values = newCmpApiDoc.ptMethodOptions.props
+    newCmpApiDoc.ptMethodOptions = cmpApiDoc.interfaces.values[`${CmpName}PassThroughMethodOptions`] || {}
+    newCmpApiDoc.ptMethodOptions.values = newCmpApiDoc.ptMethodOptions?.props || []
     delete newCmpApiDoc.ptMethodOptions.props
     newCmpApiDoc.ptMethodOptions.label = `${CmpName}PassThroughMethodOptions`
     newCmpApiDoc.ptMethodOptions.shortLabel = `${CmpName}PtMethodOptions`

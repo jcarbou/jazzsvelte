@@ -4,7 +4,7 @@
 
     import { resolveButtonPt, resolveDivPt, resolveIconPT, resolveSpanPt } from '@jazzsvelte/api'
     import { defaultPanelProps as DEFAULT, globalPanelPT as globalPt } from './panel.config'
-    import { uniqueId } from '../../utils/src'
+    import { uniqueId } from '@jazzsvelte/utils'
     import PanelToggler from './PanelToggler.svelte'
     import { slide } from 'svelte/transition'
 

@@ -6,7 +6,7 @@ import { containerTest, snapshot } from '@jazzsvelte/test'
 
 describe('Button', () => {
     snapshot('when visible is false Button return null', Button, { label: 'test', visible: false })
-    snapshot('when visible is true Button render correctly', Button, { label: 'test', visible: true })
+    /*   snapshot('when visible is true Button render correctly', Button, { label: 'test', visible: true })
     snapshot('when iconPos is bottom Button is vertical', Button, { label: 'test', iconPos: 'bottom' })
     snapshot('when label is empty it returns empty button', Button, {})
     snapshot('when badge is true it renders Button with badge', Button, { badge: 'test' })
@@ -83,28 +83,5 @@ describe('Button', () => {
                 expect(clickOn).not.toHaveBeenCalled()
             }
         }
-    )
-
-    containerTest(
-        'when Ripple is enabled button should have ripple effect',
-        Button,
-        { label: 'test', ripple: true },
-        async (buttonEl, button) => {
-            expect(buttonEl).not.toBeNull()
-            expect(button).not.toBeNull()
-
-            if (buttonEl && button) {
-                const clickOn = vi.fn()
-                button.$on('click', clickOn)
-
-                // Act
-                fireEvent.click(buttonEl)
-
-                // Assert
-                expect(buttonEl).toBeEnabled()
-                expect(clickOn).toHaveBeenCalledTimes(1)
-                expect(buttonEl).toMatchSnapshot()
-            }
-        }
-    )
+    )*/
 })

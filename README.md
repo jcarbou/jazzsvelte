@@ -23,7 +23,8 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
 - **Overlay**
    - Tooltip [PrimeReact version](https://primereact.org/tooltip/)
 - **Menu**
-    - TieredMenu  [PrimeReact version](https://primereact.org/tooltip/)
+    - TabMenu  [PrimeReact version](https://primereact.org/tabmenu/)
+    - TieredMenu  [PrimeReact version](https://primereact.org/tieredmenu/)
 - **Messages**
    - Message [PrimeReact version](https://primereact.org/message/)
    - Messages [PrimeReact version](https://primereact.org/messages/)
@@ -31,6 +32,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
 - **Misc**
    - Avatar [PrimeReact version](https://primereact.org/avatar/)
    - Badge [PrimeReact version](https://primereact.org/badge/)
+   - BlockUI [PrimeReact version](https://primereact.org/blockui/)
    - Chip [PrimeReact version](https://primereact.org/chip/)
    - MeterGroup [PrimeReact version](https://primereact.org/metergroup/)
    - Inplace [PrimeReact version](https://primereact.org/inplace/)

@@ -1,0 +1,14 @@
+{
+    "name": "@jazzsvelte/mount_action",
+    "version": "0.1.0",
+    "description": "Add actions on mount / unmount",
+    "main": "src/index.ts",
+    "sideEffects": false,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {},
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

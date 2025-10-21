@@ -338,7 +338,8 @@
                         },
                         {
                             "name": "TabMenu",
-                            "to": "/tabmenu"
+                            "to": "/tabmenu",
+                            "done": true
                         },
                         {
                             "name": "TieredMenu",
@@ -408,7 +409,8 @@
                         },
                         {
                             "name": "BlockUI",
-                            "to": "/blockui"
+                            "to": "/blockui",
+                            "done": true
                         },
                         {
                             "name": "Chip",

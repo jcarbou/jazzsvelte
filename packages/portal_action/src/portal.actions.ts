@@ -7,10 +7,8 @@ export type PortalOptions = string | HTMLElement
 
 interface Attributes {}
 
-export type WindowResizeEvent = CustomEvent<{ event: Event }>
-
 /**
- * Usage: <div use:portal={'css selector'}> or <div use:portal={document.body}>
+ * Usage: <div use:portal={'css selector'}> or <div use:portal={'body'}>
  *
  * @param {HTMLElement} el
  * @param {HTMLElement|string} target DOM Element or CSS Selector
@@ -18,7 +16,7 @@ export type WindowResizeEvent = CustomEvent<{ event: Event }>
 export function portal(el: HTMLElement, target: PortalOptions = 'body'): ActionReturn<PortalOptions, Attributes> {
     let targetEl
 
-    if (target === 'none') return {}
+    if (target === 'none' || target === 'self') return {}
 
     async function update(newTarget: PortalOptions) {
         target = newTarget

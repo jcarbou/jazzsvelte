@@ -4,8 +4,8 @@
     import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
     import type { DocSection } from '$lib/doc/common/doc.types'
-    import MenuItemTemplate from './MenuItemTemplate.svelte'
-    import type { MenuItem } from '@jazzsvelte/api'
+    import type { MenuItem, MenuItemDefaultSnippetProps } from '@jazzsvelte/api'
+    import { Badge } from '@jazzsvelte/badge'
 
     export let docSection: DocSection
 
@@ -22,19 +22,19 @@
                             label: 'Document',
                             icon: 'pi pi-file',
                             shortcut: '⌘+N',
-                            template: MenuItemTemplate
+                            snippet: menuItemSnippet
                         },
                         {
                             label: 'Image',
                             icon: 'pi pi-image',
                             shortcut: '⌘+I',
-                            template: MenuItemTemplate
+                            snippet: menuItemSnippet
                         },
                         {
                             label: 'Video',
                             icon: 'pi pi-video',
                             shortcut: '⌘+L',
-                            template: MenuItemTemplate
+                            snippet: menuItemSnippet
                         }
                     ]
                 },
@@ -42,13 +42,13 @@
                     label: 'Open',
                     icon: 'pi pi-folder-open',
                     shortcut: '⌘+O',
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
                     shortcut: '⌘+P',
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 }
             ]
         },
@@ -60,13 +60,13 @@
                     label: 'Copy',
                     icon: 'pi pi-copy',
                     shortcut: '⌘+C',
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 },
                 {
                     label: 'Delete',
                     icon: 'pi pi-times',
                     shortcut: '⌘+D',
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 }
             ]
         },
@@ -74,7 +74,7 @@
             label: 'Search',
             icon: 'pi pi-search',
             shortcut: '⌘+S',
-            template: MenuItemTemplate
+            snippet: menuItemSnippet
         },
         {
             separator: true
@@ -87,13 +87,13 @@
                     label: 'Slack',
                     icon: 'pi pi-slack',
                     badge: 2,
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 },
                 {
                     label: 'Whatsapp',
                     icon: 'pi pi-whatsapp',
                     badge: 3,
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 }
             ]
         }
@@ -123,19 +123,19 @@
                             label: 'Document',
                             icon: 'pi pi-file',
                             shortcut: '⌘+N',
-                            template: MenuItemTemplate
+                            snippet: menuItemSnippet
                         },
                         {
                             label: 'Image',
                             icon: 'pi pi-image',
                             shortcut: '⌘+I',
-                            template: MenuItemTemplate
+                            snippet: menuItemSnippet
                         },
                         {
                             label: 'Video',
                             icon: 'pi pi-video',
                             shortcut: '⌘+L',
-                            template: MenuItemTemplate
+                            snippet: menuItemSnippet
                         }
                     ]
                 },
@@ -143,13 +143,13 @@
                     label: 'Open',
                     icon: 'pi pi-folder-open',
                     shortcut: '⌘+O',
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
                     shortcut: '⌘+P',
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 }
             ]
         },
@@ -161,13 +161,13 @@
                     label: 'Copy',
                     icon: 'pi pi-copy',
                     shortcut: '⌘+C',
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 },
                 {
                     label: 'Delete',
                     icon: 'pi pi-times',
                     shortcut: '⌘+D',
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 }
             ]
         },
@@ -175,7 +175,7 @@
             label: 'Search',
             icon: 'pi pi-search',
             shortcut: '⌘+S',
-            template: MenuItemTemplate
+            snippet: menuItemSnippet
         },
         {
             separator: true
@@ -188,13 +188,13 @@
                     label: 'Slack',
                     icon: 'pi pi-slack',
                     badge: 2,
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 },
                 {
                     label: 'Whatsapp',
                     icon: 'pi pi-whatsapp',
                     badge: 3,
-                    template: MenuItemTemplate
+                    snippet: menuItemSnippet
                 }
             ]
         }`
@@ -258,3 +258,16 @@ ${codeBasic}`
     <TieredMenu model={items} breakpoint="767px" />
 </div>
 <DocSectionCode {code} />
+
+{#snippet menuItemSnippet({ item, index }: MenuItemDefaultSnippetProps)}
+    <a href="#" class="flex align-items-center p-menuitem-link">
+        <span class={item.icon as string}></span>
+        <span class="mx-2">{item.label}</span>
+        {#if item.badge}
+            <Badge class="ml-auto" value={item.badge} />
+        {/if}
+        {#if item.shortcut}
+            <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>
+        {/if}
+    </a>
+{/snippet}

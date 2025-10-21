@@ -1,7 +1,7 @@
 import { CmpApiDoc, CmpContext, ScriptOptions } from '../scripts.types'
 import { eachValue, filterValues, omitValues, generateCmpFile } from '../scripts.utils'
 
-export function render({ props }: CmpApiDoc, { CmpName, cmpName }: CmpContext): string {
+export function render({ props, callbacks }: CmpApiDoc, { CmpName, cmpName }: CmpContext): string {
     return `import type { Base${CmpName}Props, ${CmpName}PassThroughOptions } from './${cmpName}.types'
 ${eachValue(
     filterValues(props, (p) => !!p.defaultImport),
@@ -24,7 +24,7 @@ export function ${cmpName}PT(options: ${CmpName}PassThroughOptions) {
 /**
  * Default ${cmpName}  props
  */
-export const default${CmpName}Props: Omit<Required<Base${CmpName}Props>, 'pt' | 'ptOptions'> = {
+export const default${CmpName}Props: Omit<Required<Base${CmpName}Props>, 'pt' | 'ptOptions' ${eachValue(callbacks, ({ name }) => `| '${name}' `)}> = {
 ${eachValue(omitValues(props, ['pt', 'ptOptions']), ({ name, default: d }) => `   ${name}: ${d},`)}
 }
 

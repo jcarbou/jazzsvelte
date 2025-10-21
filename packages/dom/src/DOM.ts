@@ -150,6 +150,42 @@ export function getOffset(el: HTMLElement | null): { top: number; left: number }
     }
 }
 
+export function addMultipleClasses(element: HTMLElement | null, classNames: string): void {
+    if (!element || !classNames) return
+
+    for (const className of classNames.split(' ')) {
+        element.classList.add(className.trim())
+    }
+}
+
+export function removeMultipleClasses(element: HTMLElement | null, classNames: string): void {
+    if (!element || !classNames) return
+
+    for (const className of classNames.split(' ')) {
+        element.classList.remove(className.trim())
+    }
+}
+
+export function addClass(element: HTMLElement | null, className: string): void {
+    if (!element || !className) return
+    element.classList.add(className)
+}
+
+export function toogleClass(element: HTMLElement | null, className: string, state: boolean): void {
+    if (!element || !className) return
+    element.classList.toggle(className, state)
+}
+
+export function removeClass(element: HTMLElement | null, className: string): void {
+    if (!element || !className) return
+    element.classList.remove(className)
+}
+
+export function hasClass(element: HTMLElement | null, className: string): boolean {
+    if (!element) return false
+    return element.classList.contains(className)
+}
+
 /**
  * Compute viewport size
  * @returns
@@ -227,6 +263,16 @@ export function addStyles(element: any, styles: { [key: string]: string } = {}):
     if (element) {
         Object.entries(styles).forEach(([key, value]) => (element.style[key] = value))
     }
+}
+
+/**
+ * Select chilnd elements that match selector
+ * @param element - parent element
+ * @param selector - selector
+ * @returns
+ */
+export function findEl(element: HTMLElement | null, selector: string): HTMLElement[] {
+    return element ? Array.from(element.querySelectorAll(selector)) : []
 }
 
 /**
@@ -581,4 +627,50 @@ export function absolutePosition(element: HTMLElement, target: HTMLElement, alig
         element.style.top = top + 'px'
         element.style.left = left + 'px'
     }
+}
+
+/**
+ * Test if element has CSS animation
+ * @param element - element
+ * @returns state
+ */
+export function hasCSSAnimation(element: HTMLElement): boolean {
+    if (element) {
+        const style = getComputedStyle(element)
+        const animationDuration = parseFloat(style.getPropertyValue('animation-duration') || '0')
+        return animationDuration > 0
+    }
+    return false
+}
+
+/**
+ * Test if element has CSS transition
+ * @param element - element
+ * @returns state
+ */
+export function hasCSSTransition(element: HTMLElement): boolean {
+    if (element) {
+        const style = getComputedStyle(element)
+        const transitionDuration = parseFloat(style.getPropertyValue('transition-duration') || '0')
+        return transitionDuration > 0
+    }
+    return false
+}
+
+export function calculateBodyScrollbarWidth(): number {
+    return window.innerWidth - document.documentElement.offsetWidth
+}
+
+export function unblockBodyScroll(className: string = 'p-overflow-hidden'): void {
+    document.body.style.removeProperty('--scrollbar-width')
+    removeClass(document.body, className)
+}
+
+export function blockBodyScroll(className: string = 'p-overflow-hidden'): void {
+    /* PR Ref: https://github.com/primefaces/primereact/pull/4976
+     * @todo This method is called several times after this PR. Refactors will be made to prevent this in future releases.
+     */
+    const hasScrollbarWidth = !!document.body.style.getPropertyValue('--scrollbar-width')
+    !hasScrollbarWidth && document.body.style.setProperty('--scrollbar-width', calculateBodyScrollbarWidth() + 'px')
+    addClass(document.body, className)
 }
