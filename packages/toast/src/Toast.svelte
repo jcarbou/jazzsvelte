@@ -3,7 +3,8 @@
     import type { ToastPassThroughMethodOptions, ToastProps } from './toast.types'
 
     import { getContext } from 'svelte'
-    import { mergeCssStyles, resolveDivPt, zIndex } from '@jazzsvelte/api'
+    import { mergeCssStyles, resolveDivPt } from '@jazzsvelte/api'
+    import { zIndex } from '@jazzsvelte/z_index_action'
     import ToastMessage from './ToastMessage.svelte'
     import { toastMessages } from './toast.store'
     import { fade, fly } from 'svelte/transition'

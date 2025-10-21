@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { BlockUIProps, BlockUIPtContext } from './blockUI.types'
     import type { JazzSvelteContext } from '@jazzsvelte/api'
-    import { zIndex } from '@jazzsvelte/api'
+    import { zIndex } from '@jazzsvelte/z_index_action'
     import { getContext, onMount } from 'svelte'
     import { resolveDivPt, isUnstyled } from '@jazzsvelte/api'
     import { onMountElement } from '@jazzsvelte/mount_action'

@@ -8,7 +8,9 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
-        "@jazzsvelte/api": "workspace:*"
+        "@jazzsvelte/api": "workspace:*",
+        "@jazzsvelte/utils": "workspace:*",
+        "@jazzsvelte/z_index_action": "workspace:^0.1.0"
     },
     "dependencies": {
         "@jazzsvelte/dom": "workspace:*",

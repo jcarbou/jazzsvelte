@@ -15,7 +15,8 @@
         "@jazzsvelte/infocircle_icon": "workspace:^0.1.0",
         "@jazzsvelte/ripple": "workspace:^0.1.0",
         "@jazzsvelte/timescircle_icon": "workspace:^0.1.0",
-        "@jazzsvelte/times_icon": "workspace:^0.1.0"
+        "@jazzsvelte/times_icon": "workspace:^0.1.0",
+        "@jazzsvelte/z_index_action": "workspace:^0.1.0"
     },
     "dependencies": {},
     "keywords": [],

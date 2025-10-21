@@ -16,7 +16,8 @@
         "@jazzsvelte/chevronup_icon": "workspace:^0.1.0",
         "@jazzsvelte/parent_events_action": "workspace:^0.1.0",
         "@jazzsvelte/ripple": "workspace:^0.1.0",
-        "@jazzsvelte/window_events_action": "workspace:^0.1.0"
+        "@jazzsvelte/window_events_action": "workspace:^0.1.0",
+        "@jazzsvelte/z_index_action": "workspace:^0.1.0"
     },
     "dependencies": {
         "@jazzsvelte/object": "workspace:^0.1.0"

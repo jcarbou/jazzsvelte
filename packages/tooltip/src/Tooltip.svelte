@@ -8,14 +8,14 @@
         TooltipPosition
     } from './tooltip.types'
     import type { JazzSvelteContext, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
-
     import { getContext, tick } from 'svelte'
     import { fade } from 'svelte/transition'
-    import { resolveDivPt, zIndex } from '@jazzsvelte/api'
+    import { resolveDivPt } from '@jazzsvelte/api'
+    import { zIndex } from '@jazzsvelte/z_index_action'
     import { escape, ESC_KEY_HANDLING_PRIORITIES } from '@jazzsvelte/escape_action'
     import { tooltipLayout } from './tooltip.actions'
     import { globalButtonPT as globalPt } from './tooltip.config'
-    import { snippetValueOrNull, stringValueOrNull } from '../../utils/src'
+    import { snippetValueOrNull, stringValueOrNull } from '@jazzsvelte/utils'
 
     interface Props {
         targetElement: HTMLElement

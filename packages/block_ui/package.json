@@ -13,7 +13,8 @@
         "@jazzsvelte/dom": "workspace:^0.1.0",
         "@jazzsvelte/mount_action": "workspace:^0.1.0",
         "@jazzsvelte/portal_action": "workspace:^0.1.0",
-        "@jazzsvelte/test": "workspace:^0.1.0"
+        "@jazzsvelte/test": "workspace:^0.1.0",
+        "@jazzsvelte/z_index_action": "workspace:^0.1.0"
     },
     "dependencies": {
         "@jazzsvelte/object": "workspace:^0.1.0"

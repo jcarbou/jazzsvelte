@@ -195,7 +195,7 @@ importers:
         version: 4.5.10
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../../packages/api
+        version: link:../../packages/_tools/api
       '@jazzsvelte/avatar':
         specifier: workspace:^0.1.0
         version: link:../../packages/avatar
@@ -225,10 +225,10 @@ importers:
         version: link:../../packages/chip
       '@jazzsvelte/click_outside_action':
         specifier: workspace:^0.1.0
-        version: link:../../packages/click_outside_action
+        version: link:../../packages/_actions/click_outside_action
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../../packages/dom
+        version: link:../../packages/_tools/dom
       '@jazzsvelte/exclamationtriangle_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/exclamationtriangle
@@ -255,7 +255,7 @@ importers:
         version: link:../../packages/meter_group
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../../packages/object
+        version: link:../../packages/_tools/object
       '@jazzsvelte/panel':
         specifier: workspace:^0.1.0
         version: link:../../packages/panel
@@ -303,7 +303,7 @@ importers:
         version: link:../../packages/tooltip
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
-        version: link:../../packages/utils
+        version: link:../../packages/_tools/utils
       '@jazzsvelte/virtual_scroller':
         specifier: workspace:^0.1.0
         version: link:../../packages/virtual_scroller
@@ -421,7 +421,7 @@ importers:
         version: 4.5.10
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../../packages/api
+        version: link:../../packages/_tools/api
       '@jazzsvelte/badge':
         specifier: workspace:^0.1.0
         version: link:../../packages/badge
@@ -439,7 +439,7 @@ importers:
         version: link:../jazzsvelte_doc
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../../packages/dom
+        version: link:../../packages/_tools/dom
       '@jazzsvelte/exclamationtriangle_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/exclamationtriangle
@@ -454,7 +454,7 @@ importers:
         version: link:../../packages/input_text
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../../packages/object
+        version: link:../../packages/_tools/object
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../../packages/ripple
@@ -475,7 +475,7 @@ importers:
         version: link:../../packages/tooltip
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
-        version: link:../../packages/utils
+        version: link:../../packages/_tools/utils
       '@rollup/plugin-alias':
         specifier: ^5.1.0
         version: 5.1.0(rollup@2.79.1)
@@ -572,6 +572,79 @@ importers:
       vitest:
         specifier: ^1.2.0
         version: 1.3.0(@types/node@20.11.19)(jsdom@24.0.0)(sass@1.71.0)(terser@5.27.2)
+
+  packages/_actions/click_outside_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/object
+
+  packages/_actions/escape_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/object
+
+  packages/_actions/key_filter_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/object
+
+  packages/_actions/match_media_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/object
+
+  packages/_actions/mount_action: {}
+
+  packages/_actions/parent_events_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/object
+
+  packages/_actions/portal_action: {}
+
+  packages/_actions/stop_propagation_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/object
+
+  packages/_actions/window_events_action:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/object
+
+  packages/_actions/z_index_action:
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../../_tools/api
 
   packages/_icons/angledoubledown:
     dependencies:
@@ -855,7 +928,7 @@ importers:
         specifier: workspace:*
         version: link:../../icons
 
-  packages/api:
+  packages/_tools/api:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
@@ -864,18 +937,35 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../utils
 
+  packages/_tools/dom:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../object
+
+  packages/_tools/object: {}
+
+  packages/_tools/utils:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:*
+        version: link:../dom
+      '@jazzsvelte/object':
+        specifier: workspace:*
+        version: link:../object
+
   packages/avatar:
     dependencies:
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
@@ -887,11 +977,11 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/avatar':
         specifier: workspace:^0.1.0
         version: link:../avatar
@@ -903,11 +993,11 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
@@ -916,36 +1006,39 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/mount_action':
         specifier: workspace:^0.1.0
-        version: link:../mount_action
+        version: link:../_actions/mount_action
       '@jazzsvelte/portal_action':
         specifier: workspace:^0.1.0
-        version: link:../portal_action
+        version: link:../_actions/portal_action
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
+      '@jazzsvelte/z_index_action':
+        specifier: workspace:^0.1.0
+        version: link:../_actions/z_index_action
 
   packages/button:
     dependencies:
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/badge':
         specifier: workspace:^0.1.0
         version: link:../badge
@@ -960,7 +1053,7 @@ importers:
         version: link:../_icons/spinner
       '@jazzsvelte/stop_propagation_action':
         specifier: workspace:^0.1.0
-        version: link:../stop_propagation_action
+        version: link:../_actions/stop_propagation_action
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
@@ -969,13 +1062,13 @@ importers:
         version: link:../tooltip
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
-        version: link:../utils
+        version: link:../_tools/utils
 
   packages/button_group:
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
@@ -984,11 +1077,11 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
@@ -997,11 +1090,11 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
@@ -1012,49 +1105,25 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../_icons/timescircle
 
-  packages/click_outside_action:
-    dependencies:
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../dom
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
-
-  packages/dom:
-    dependencies:
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
-
-  packages/escape_action:
-    dependencies:
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../dom
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
-
   packages/icons:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
 
   packages/inplace:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
@@ -1072,14 +1141,14 @@ importers:
     dependencies:
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/key_filter_action':
         specifier: workspace:^0.1.0
-        version: link:../key_filter_action
+        version: link:../_actions/key_filter_action
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
@@ -1087,33 +1156,15 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../tooltip
 
-  packages/key_filter_action:
-    dependencies:
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../dom
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
-
-  packages/match_media_action:
-    dependencies:
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../dom
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
-
   packages/message:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/check_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/check
@@ -1137,11 +1188,11 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/check_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/check
@@ -1171,31 +1222,27 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
-
-  packages/mount_action: {}
-
-  packages/object: {}
 
   packages/panel:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
-        version: link:../utils
+        version: link:../_tools/utils
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
@@ -1212,26 +1259,15 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../test
 
-  packages/parent_events_action:
-    dependencies:
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../dom
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
-
-  packages/portal_action: {}
-
   packages/progress_bar:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
@@ -1240,11 +1276,11 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
@@ -1253,33 +1289,33 @@ importers:
     dependencies:
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
 
   packages/scroll_top:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/chevronup_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/chevronup
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
       '@jazzsvelte/parent_events_action':
         specifier: workspace:^0.1.0
-        version: link:../parent_events_action
+        version: link:../_actions/parent_events_action
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../ripple
@@ -1288,17 +1324,20 @@ importers:
         version: link:../test
       '@jazzsvelte/window_events_action':
         specifier: workspace:^0.1.0
-        version: link:../window_events_action
+        version: link:../_actions/window_events_action
+      '@jazzsvelte/z_index_action':
+        specifier: workspace:^0.1.0
+        version: link:../_actions/z_index_action
 
   packages/skeleton:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/test':
         specifier: workspace:^0.1.0
         version: link:../test
@@ -1307,20 +1346,20 @@ importers:
     dependencies:
       '@jazzsvelte/click_outside_action':
         specifier: workspace:^0.1.0
-        version: link:../click_outside_action
+        version: link:../_actions/click_outside_action
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
-        version: link:../utils
+        version: link:../_tools/utils
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
@@ -1347,14 +1386,14 @@ importers:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
-        version: link:../utils
+        version: link:../_tools/utils
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../button
@@ -1377,27 +1416,18 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../tooltip
 
-  packages/stop_propagation_action:
-    dependencies:
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../dom
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
-
   packages/tab_menu:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
@@ -1409,17 +1439,17 @@ importers:
         version: link:../test
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
-        version: link:../utils
+        version: link:../_tools/utils
 
   packages/tag:
     dependencies:
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
@@ -1431,38 +1461,41 @@ importers:
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
 
   packages/tiered_menu:
     dependencies:
       '@jazzsvelte/click_outside_action':
         specifier: workspace:^0.1.0
-        version: link:../click_outside_action
+        version: link:../_actions/click_outside_action
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/match_media_action':
         specifier: workspace:^0.1.0
-        version: link:../match_media_action
+        version: link:../_actions/match_media_action
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
       '@jazzsvelte/portal_action':
         specifier: workspace:^0.1.0
-        version: link:../portal_action
+        version: link:../_actions/portal_action
       '@jazzsvelte/utils':
         specifier: workspace:^0.1.0
-        version: link:../utils
+        version: link:../_tools/utils
       '@jazzsvelte/window_events_action':
         specifier: workspace:^0.1.0
-        version: link:../window_events_action
+        version: link:../_actions/window_events_action
+      '@jazzsvelte/z_index_action':
+        specifier: workspace:^0.1.0
+        version: link:../_actions/z_index_action
     devDependencies:
       '@jazzsvelte/angleright_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/angleright
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
@@ -1477,7 +1510,7 @@ importers:
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/check_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/check
@@ -1499,41 +1532,41 @@ importers:
       '@jazzsvelte/timescircle_icon':
         specifier: workspace:^0.1.0
         version: link:../_icons/timescircle
+      '@jazzsvelte/z_index_action':
+        specifier: workspace:^0.1.0
+        version: link:../_actions/z_index_action
 
   packages/tooltip:
     dependencies:
       '@jazzsvelte/dom':
         specifier: workspace:*
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/escape_action':
         specifier: workspace:*
-        version: link:../escape_action
+        version: link:../_actions/escape_action
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:*
-        version: link:../api
-
-  packages/utils:
-    dependencies:
-      '@jazzsvelte/dom':
+        version: link:../_tools/api
+      '@jazzsvelte/utils':
         specifier: workspace:*
-        version: link:../dom
-      '@jazzsvelte/object':
-        specifier: workspace:*
-        version: link:../object
+        version: link:../_tools/utils
+      '@jazzsvelte/z_index_action':
+        specifier: workspace:^0.1.0
+        version: link:../_actions/z_index_action
 
   packages/virtual_scroller:
     dependencies:
       '@jazzsvelte/dom':
         specifier: workspace:^0.1.0
-        version: link:../dom
+        version: link:../_tools/dom
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_tools/object
     devDependencies:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
-        version: link:../api
+        version: link:../_tools/api
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
@@ -1545,16 +1578,7 @@ importers:
         version: link:../test
       '@jazzsvelte/window_events_action':
         specifier: workspace:^0.1.0
-        version: link:../window_events_action
-
-  packages/window_events_action:
-    dependencies:
-      '@jazzsvelte/dom':
-        specifier: workspace:^0.1.0
-        version: link:../dom
-      '@jazzsvelte/object':
-        specifier: workspace:^0.1.0
-        version: link:../object
+        version: link:../_actions/window_events_action
 
 packages:
 

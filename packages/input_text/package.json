@@ -10,6 +10,7 @@
     },
     "devDependencies": {
         "@jazzsvelte/api": "workspace:^0.1.0",
+        "@jazzsvelte/key_filter_action": "workspace:^0.1.0",
         "@jazzsvelte/tooltip": "workspace:^0.1.0",
         "@jazzsvelte/test": "workspace:^0.1.0"
     },
