@@ -42,6 +42,7 @@ yarn-error.log*
 
 #svelte
 /.svelte-kit
+.svelte-kit
 apps/jazzsvelte_doc/.svelte-kit
 apps/jazzsvelte_tailwind/.svelte-kit
 /package
