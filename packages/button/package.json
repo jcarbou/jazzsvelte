@@ -15,9 +15,12 @@
         "@jazzsvelte/ripple": "workspace:^0.1.0",
         "@jazzsvelte/spinner_icon": "workspace:^0.1.0",
         "@jazzsvelte/stop_propagation_action": "workspace:^0.1.0",
-        "@jazzsvelte/tooltip": "workspace:^0.1.0",
         "@jazzsvelte/test": "workspace:^0.1.0",
-        "@jazzsvelte/utils": "workspace:^0.1.0"
+        "@jazzsvelte/tooltip": "workspace:^0.1.0",
+        "@jazzsvelte/utils": "workspace:^0.1.0",
+        "caniuse-lite": "^1.0.30001751",
+        "jsdom": "^27.0.1",
+        "update-browserslist-db": "^1.1.4"
     },
     "dependencies": {
         "@jazzsvelte/dom": "workspace:^0.1.0",

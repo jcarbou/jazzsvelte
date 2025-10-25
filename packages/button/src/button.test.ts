@@ -1,4 +1,13 @@
-import '@testing-library/jest-dom'
+import { render } from '@testing-library/svelte'
+import Button from './Button.svelte'
+import { expect, test } from 'vitest'
+
+test('when visible is false Button returns null', () => {
+    const { container } = render(Button, { label: 'test', visible: false })
+    expect(container.innerHTML).toBe('')
+})
+
+/*import '@testing-library/jest-dom'
 import { screen, fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/svelte'
 import { describe, expect, vi } from 'vitest'
 import Button from './Button.svelte'
@@ -6,7 +15,7 @@ import { containerTest, snapshot } from '@jazzsvelte/test'
 
 describe('Button', () => {
     snapshot('when visible is false Button return null', Button, { label: 'test', visible: false })
-    /*   snapshot('when visible is true Button render correctly', Button, { label: 'test', visible: true })
+       snapshot('when visible is true Button render correctly', Button, { label: 'test', visible: true })
     snapshot('when iconPos is bottom Button is vertical', Button, { label: 'test', iconPos: 'bottom' })
     snapshot('when label is empty it returns empty button', Button, {})
     snapshot('when badge is true it renders Button with badge', Button, { badge: 'test' })
@@ -83,5 +92,5 @@ describe('Button', () => {
                 expect(clickOn).not.toHaveBeenCalled()
             }
         }
-    )*/
-})
+    )
+})*/

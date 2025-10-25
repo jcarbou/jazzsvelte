@@ -8,8 +8,8 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    include: ['**/*.test.svelte.{js,ts}'],
-    setupFiles: ["../../setupTest.js"]
+   // include: ['**/*.test.ts}'],
+   // setupFiles: ["../../setupTest.js"]
   },
   resolve: process.env.VITEST
 		? {
