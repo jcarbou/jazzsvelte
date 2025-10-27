@@ -53,7 +53,7 @@ export interface BaseAvatarGroupProps {
  * Defines valid properties in Avatar component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface AvatarGroupProps extends Omit<HTMLDivAttributes, 'style'>, BaseAvatarGroupProps {}
+export interface AvatarGroupProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseAvatarGroupProps {}
 
 /**
  * @group ptType

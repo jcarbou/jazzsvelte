@@ -21,6 +21,7 @@
         dropdownIcon = DEFAULT.dropdownIcon,
         icon = DEFAULT.icon,
         label = DEFAULT.label,
+        labelSnippet = null,
         loading = DEFAULT.loading,
         loadingIcon = DEFAULT.loadingIcon,
         menuButtonClass = DEFAULT.menuButtonClass,
@@ -49,6 +50,46 @@
         ..._restProps
     }: SplitButtonProps = $props()
 
+    let _props: SplitButtonProps = $derived({
+        children,
+        appendTo,
+        autoZIndex,
+        baseZIndex,
+        buttonClass,
+        buttonProps,
+        class: className,
+        disabled,
+        dropdownIcon,
+        icon,
+        label,
+        labelSnippet,
+        loading,
+        loadingIcon,
+        menuButtonClass,
+        menuButtonProps,
+        menuClass,
+        menuStyle,
+        model,
+        outlined,
+        raised,
+        rounded,
+        severity,
+        size,
+        text,
+        tooltipOptions,
+        unstyled,
+        visible,
+        pt,
+        ptOptions,
+        style,
+        tooltip: tooltipContent,
+        tabindex,
+        onButtonClick,
+        onMenuHide,
+        onMenuShow,
+        onMenuClick
+    })
+
     export const displayName = 'SplitButton'
     export const show = () => {
         visible = true
@@ -62,10 +103,9 @@
 
     let rootEl: HTMLDivElement
     const menuId: string = uniqueId('splitButton_menuButton_')
-    let _labelString = $derived(stringValueOrNull(label))
 
     let ptContext: SplitButtonPtContext = {
-        props: { ...DEFAULT, ..._restProps, ..._restProps },
+        props: { ...DEFAULT, ..._props, ..._restProps },
         //context: {},
         // state: {},
         ptOptions,
@@ -82,7 +122,7 @@
                     className,
                     {
                         'p-disabled': disabled,
-                        'p-button-loading-label-only': loading && !icon && label,
+                        'p-button-loading-label-only': loading && !icon && (label || labelSnippet),
                         [`p-button-${severity}`]: severity,
                         'p-button-raised': raised,
                         'p-button-rounded': rounded,
@@ -148,7 +188,8 @@
             {loadingIcon}
             {severity}
             {label}
-            aria-label={_labelString}
+            {labelSnippet}
+            aria-label={label || undefined}
             {raised}
             {disabled}
             {tabindex}

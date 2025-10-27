@@ -88,7 +88,7 @@ export interface BaseSkeletonProps {
  * Defines valid properties in Skeleton component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface SkeletonProps extends Omit<HTMLDivAttributes, 'style'>, BaseSkeletonProps {}
+export interface SkeletonProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseSkeletonProps {}
 
 /**
  * @group ptType

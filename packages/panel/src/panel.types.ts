@@ -145,7 +145,7 @@ export interface BasePanelProps {
  * Defines valid properties in Panel component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface PanelProps extends Omit<HTMLDivAttributes, 'style'>, BasePanelProps {}
+export interface PanelProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BasePanelProps {}
 
 /**
  * @group ptType

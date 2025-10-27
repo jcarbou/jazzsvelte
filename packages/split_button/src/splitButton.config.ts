@@ -18,7 +18,10 @@ export function splitButtonPT(options: SplitButtonPassThroughOptions) {
 /**
  * Default splitButton  props
  */
-export const defaultSplitButtonProps: Omit<Required<BaseSplitButtonProps>, 'pt' | 'ptOptions'> = {
+export const defaultSplitButtonProps: Omit<
+    Required<BaseSplitButtonProps>,
+    'pt' | 'ptOptions' | 'labelSnippet' | 'onMenuClick' | 'onMenuHide' | 'onMenuShow' | 'onButtonClick' | 'onFocus'
+> = {
     appendTo: 'body',
     autoZIndex: true,
     baseZIndex: 0,

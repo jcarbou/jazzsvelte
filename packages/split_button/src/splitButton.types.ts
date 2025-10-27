@@ -84,7 +84,13 @@ export interface BaseSplitButtonProps {
      * Text of the button.
      * @default  null
      */
-    label?: string | ButtonLabelSnippet | null
+    label?: string | null
+
+    /**
+     * Text snippet of the button.
+     * @default  null
+     */
+    labelSnippet?: ButtonLabelSnippet | null
 
     /**
      * Display loading icon of the button
@@ -247,7 +253,7 @@ export interface BaseSplitButtonProps {
  * Defines valid properties in SplitButton component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface SplitButtonProps extends Omit<HTMLDivAttributes, 'style'>, BaseSplitButtonProps {}
+export interface SplitButtonProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseSplitButtonProps {}
 
 /**
  * @group ptType

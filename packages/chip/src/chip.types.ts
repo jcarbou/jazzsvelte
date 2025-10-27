@@ -113,7 +113,7 @@ export interface BaseChipProps {
  * Defines valid properties in Chip component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface ChipProps extends Omit<HTMLDivAttributes, 'style'>, BaseChipProps {}
+export interface ChipProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseChipProps {}
 
 /**
  * @group ptType

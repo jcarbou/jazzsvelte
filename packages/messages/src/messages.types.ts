@@ -198,7 +198,7 @@ export interface UIMessageProps {
  * Defines valid properties in Messages component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface MessagesProps extends Omit<HTMLDivAttributes, 'style'>, BaseMessagesProps {}
+export interface MessagesProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseMessagesProps {}
 
 /**
  * @group ptType

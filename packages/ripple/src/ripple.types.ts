@@ -25,7 +25,7 @@ export interface BaseRippleProps {
  * Defines valid properties in Ripple component.
  * @group Properties
  */
-export interface RippleProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'>, BaseRippleProps {}
+export interface RippleProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style' | 'class'>, BaseRippleProps {}
 
 /**
  * Custom passthrough(pt) option method.

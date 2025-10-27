@@ -107,7 +107,7 @@ export interface BaseBlockUIProps {
  * Defines valid properties in BlockUI component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface BlockUIProps extends Omit<HTMLDivAttributes, 'style'>, BaseBlockUIProps {}
+export interface BlockUIProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseBlockUIProps {}
 
 /**
  * @group ptType

@@ -105,6 +105,14 @@
                 "description": "Text of the button."
             },
             {
+                "name": "labelSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "ButtonLabelSnippet | null",
+                "default": "null",
+                "description": "Text snippet of the button."
+            },
+            {
                 "name": "loading",
                 "optional": true,
                 "readonly": false,

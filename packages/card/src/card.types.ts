@@ -97,7 +97,7 @@ export interface BaseCardProps {
  * Defines valid properties in Card component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface CardProps extends Omit<HTMLDivAttributes, 'style'>, BaseCardProps {}
+export interface CardProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseCardProps {}
 
 /**
  * @group ptType

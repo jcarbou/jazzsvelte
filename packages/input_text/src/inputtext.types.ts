@@ -95,7 +95,7 @@ export interface BaseInputTextProps {
  * @group Properties
  */
 export interface InputTextProps
-    extends Omit<HTMLInputAttributes, 'oninput' | 'disabled' | 'value' | 'size' | 'style'>,
+    extends Omit<HTMLInputAttributes, 'oninput' | 'disabled' | 'value' | 'size' | 'style' | 'class'>,
         BaseInputTextProps {}
 
 export declare type InputTextPassThroughType<T> = PassThroughType<PassThroughHTMLAttributes<T>, InputTextPassThroughMethodOptions>

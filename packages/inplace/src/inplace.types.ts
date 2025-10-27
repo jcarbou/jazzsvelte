@@ -108,7 +108,7 @@ export interface BaseInplaceProps {
  * Defines valid properties in Inplace component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface InplaceProps extends Omit<HTMLDivAttributes, 'style'>, BaseInplaceProps {}
+export interface InplaceProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseInplaceProps {}
 
 /**
  * @group ptType

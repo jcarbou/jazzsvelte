@@ -74,7 +74,7 @@ export interface BaseBadgeProps {
  * Defines valid properties in Badge component. In addition to these, all properties of HTMLSpanElement can be used in this component.
  * @group Properties
  */
-export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'>, BaseBadgeProps {}
+export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style' | 'class'>, BaseBadgeProps {}
 
 /**
  * Custom passthrough(pt) option method.

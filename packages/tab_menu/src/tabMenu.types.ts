@@ -80,7 +80,7 @@ export interface BaseTabMenuProps {
  * Defines valid properties in TabMenu component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface TabMenuProps extends Omit<HTMLDivAttributes, 'style'>, BaseTabMenuProps {}
+export interface TabMenuProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseTabMenuProps {}
 
 /**
  * @group ptType

@@ -80,7 +80,9 @@ export interface BaseButtonGroupProps {
  * Defines valid properties in Button Group component. In addition to these, all properties of HTMLSpanElement can be used in this component.
  * @group Properties
  */
-export interface ButtonGroupProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'disabled' | 'style'>, BaseButtonGroupProps {}
+export interface ButtonGroupProps
+    extends Omit<HTMLAttributes<HTMLSpanElement>, 'disabled' | 'style' | 'class'>,
+        BaseButtonGroupProps {}
 
 export declare type ButtonGroupPassThroughType<T> = PassThroughType<
     PassThroughHTMLAttributes<T>,

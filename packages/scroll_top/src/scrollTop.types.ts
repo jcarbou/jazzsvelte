@@ -99,7 +99,7 @@ export interface BaseScrollTopProps {
  * Defines valid properties in ScrollTop component.
  * @group properties
  */
-export interface ScrollTopProps extends Omit<HTMLButtonAttributes, 'style'>, BaseScrollTopProps {}
+export interface ScrollTopProps extends Omit<HTMLButtonAttributes, 'style' | 'class'>, BaseScrollTopProps {}
 
 /**
  * @group ptType

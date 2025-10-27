@@ -209,7 +209,7 @@ export interface BaseSpeedDialProps {
  * Defines valid properties in SpeedDial component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface SpeedDialProps extends Omit<HTMLDivAttributes, 'style'>, BaseSpeedDialProps {}
+export interface SpeedDialProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseSpeedDialProps {}
 
 /**
  * @group ptType

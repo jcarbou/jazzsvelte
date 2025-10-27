@@ -66,7 +66,7 @@ export interface BaseProgressSpinnerProps {
  * Defines valid properties in ProgressSpinner component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface ProgressSpinnerProps extends Omit<HTMLDivAttributes, 'style'>, BaseProgressSpinnerProps {}
+export interface ProgressSpinnerProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseProgressSpinnerProps {}
 
 /**
  * @group ptType

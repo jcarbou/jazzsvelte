@@ -182,7 +182,7 @@ export interface BaseButtonProps {
  * Defines valid properties in Button component. In addition to these, all properties of HTMLButtonElement can be used in this component.
  * @group properties
  */
-export interface ButtonProps extends Omit<HTMLButtonAttributes, 'disabled' | 'style'>, BaseButtonProps {}
+export interface ButtonProps extends Omit<HTMLButtonAttributes, 'disabled' | 'style' | 'class'>, BaseButtonProps {}
 
 /**
  * @group ptType

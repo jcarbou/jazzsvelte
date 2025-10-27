@@ -97,4 +97,4 @@ export interface BaseToastProps {
  * Defines valid properties in Toast component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group Properties
  */
-export interface ToastProps extends Omit<HTMLDivAttributes, 'id' | 'style'>, BaseToastProps {}
+export interface ToastProps extends Omit<HTMLDivAttributes, 'id' | 'style' | 'class'>, BaseToastProps {}

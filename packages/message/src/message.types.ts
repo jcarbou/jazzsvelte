@@ -98,7 +98,7 @@ export interface BaseMessageProps {
  * Defines valid properties in Message component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface MessageProps extends Omit<HTMLDivAttributes, 'style'>, BaseMessageProps {}
+export interface MessageProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseMessageProps {}
 
 /**
  * @group ptType

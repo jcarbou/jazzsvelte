@@ -88,7 +88,7 @@ export interface BaseTagProps {
  * Defines valid properties in Tag component. In addition to these, all properties of HTMLSpanElement can be used in this component.
  * @group properties
  */
-export interface TagProps extends Omit<HTMLSpanAttributes, 'style'>, BaseTagProps {}
+export interface TagProps extends Omit<HTMLSpanAttributes, 'style' | 'class'>, BaseTagProps {}
 
 /**
  * @group ptType

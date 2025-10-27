@@ -25,7 +25,7 @@ export type MeterGroupItem = {
     labelSnippet?: Snippet
     color?: string
     icon?: string
-    meterSnippet?: MeterGroupMeterSnippet
+    meterSnippet?: MeterGroupMeterSnippet<MeterGroupItem>
 }
 
 export type MeterGroupEntry<ITEM extends MeterGroupItem> = {
@@ -39,26 +39,26 @@ export type MeterGroupEntry<ITEM extends MeterGroupItem> = {
     }
 }
 
-export interface MeterGroupLabelListSnippetProps {
-    entries: MeterGroupEntry[]
+export interface MeterGroupLabelListSnippetProps<ITEM extends MeterGroupItem> {
+    entries: MeterGroupEntry<ITEM>[]
     totalPercent: number
 }
 
-export interface MeterGroupStartOrEndSnippetProps {
-    entries: MeterGroupEntry[]
+export interface MeterGroupStartOrEndSnippetProps<ITEM extends MeterGroupItem> {
+    entries: MeterGroupEntry<ITEM>[]
     totalPercent: number
 }
 
-export interface MeterGroupMeterSnippetProps {
+export interface MeterGroupMeterSnippetProps<ITEM extends MeterGroupItem> {
     index: number
-    entry: MeterGroupEntry
+    entry: MeterGroupEntry<ITEM>
     meterAttributes: HTMLElementAttributes
 }
 
-export type MeterGroupLabelListSnippet = Snippet<[MeterGroupLabelListSnippetProps]>
-export type MeterGroupStartSnippet = Snippet<[MeterGroupStartOrEndSnippetProps]>
-export type MeterGroupEndSnippet = Snippet<[MeterGroupStartOrEndSnippetProps]>
-export type MeterGroupMeterSnippet = Snippet<[MeterGroupMeterSnippetProps]>
+export type MeterGroupLabelListSnippet<ITEM extends MeterGroupItem> = Snippet<[MeterGroupLabelListSnippetProps<ITEM>]>
+export type MeterGroupStartSnippet<ITEM extends MeterGroupItem> = Snippet<[MeterGroupStartOrEndSnippetProps<ITEM>]>
+export type MeterGroupEndSnippet<ITEM extends MeterGroupItem> = Snippet<[MeterGroupStartOrEndSnippetProps<ITEM>]>
+export type MeterGroupMeterSnippet<ITEM extends MeterGroupItem> = Snippet<[MeterGroupMeterSnippetProps<ITEM>]>
 
 /**
  * undefined
@@ -75,13 +75,13 @@ export interface BaseMeterGroupProps<ITEM extends MeterGroupItem> {
      * undefined
      * @default  null
      */
-    endSnippet?: MeterGroupEndSnippet | null
+    endSnippet?: MeterGroupEndSnippet<ITEM> | null
 
     /**
      * undefined
      * @default  null
      */
-    labelListSnippet?: MeterGroupLabelListSnippet | null
+    labelListSnippet?: MeterGroupLabelListSnippet<ITEM> | null
 
     /**
      * The orientation of the label. Can be either 'horizontal' or 'vertical'.
@@ -105,7 +105,7 @@ export interface BaseMeterGroupProps<ITEM extends MeterGroupItem> {
      * undefined
      * @default  null
      */
-    meterSnippet?: MeterGroupMeterSnippet | null
+    meterSnippet?: MeterGroupMeterSnippet<ITEM> | null
 
     /**
      * The minimum value for the MeterGroup.
@@ -135,7 +135,7 @@ export interface BaseMeterGroupProps<ITEM extends MeterGroupItem> {
      * undefined
      * @default  null
      */
-    startSnippet?: MeterGroupStartSnippet | null
+    startSnippet?: MeterGroupStartSnippet<ITEM> | null
 
     /**
      * Style to add to root element.
@@ -161,7 +161,7 @@ export interface BaseMeterGroupProps<ITEM extends MeterGroupItem> {
  * @group properties
  */
 export interface MeterGroupProps<ITEM extends MeterGroupItem>
-    extends Omit<HTMLDivAttributes, 'style'>,
+    extends Omit<HTMLDivAttributes, 'style' | 'class'>,
         BaseMeterGroupProps<ITEM> {}
 
 /**

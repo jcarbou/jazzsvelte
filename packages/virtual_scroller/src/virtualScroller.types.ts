@@ -311,7 +311,7 @@ export interface BaseVirtualScrollerProps {
  * Defines valid properties in VirtualScroller component.
  * @group properties
  */
-export interface VirtualScrollerProps extends Omit<HTMLDivAttributes, 'style'>, BaseVirtualScrollerProps {}
+export interface VirtualScrollerProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseVirtualScrollerProps {}
 
 /**
  * @group ptType

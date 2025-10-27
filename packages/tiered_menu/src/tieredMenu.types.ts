@@ -190,7 +190,7 @@ export interface BaseTieredMenuProps {
  * Defines valid properties in TieredMenu component. In addition to these, all properties of HTMLDivElement can be used in this component.
  * @group properties
  */
-export interface TieredMenuProps extends Omit<HTMLDivAttributes, 'style'>, BaseTieredMenuProps {}
+export interface TieredMenuProps extends Omit<HTMLDivAttributes, 'style' | 'class'>, BaseTieredMenuProps {}
 
 /**
  * @group ptType
