@@ -1,6 +1,6 @@
 import type { ActionReturn } from 'svelte/action'
 import type { ZIndexOptions } from '@jazzsvelte/api'
-import { JAZZ_SVELTE, JazzSvelteContext } from '@jazzsvelte/api'
+import { JAZZ_SVELTE, type JazzSvelteContext } from '@jazzsvelte/api'
 
 export type ZIndexActionOptions = {
     key: string

@@ -9,7 +9,7 @@ import type {
     HTMLLiAttributes as SvelteHTMLLiAttributes,
     SVGAttributes
 } from 'svelte/elements'
-import { TransitionConfig } from 'svelte/transition'
+import type { TransitionConfig } from 'svelte/transition'
 
 export type ClassNameEntry = null | undefined | string | number | string[] | { [key: string]: any }
 

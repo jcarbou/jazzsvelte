@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { CmpApiDoc, CmpContext, ScriptOptions } from './scripts.types'
+import type { CmpApiDoc, CmpContext, ScriptOptions } from './scripts.types'
 
 export function toKebabCase(str: string) {
     return str.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()
@@ -14,6 +14,11 @@ export function buildCmpContext(name: string): CmpContext {
         cmp_name = toKebabCase(cmpName),
         cmpHomePath = `./packages/${cmp_name}`,
         docPackagePath = './apps/jazzsvelte_doc/package.json',
+        tailwindHomePath = './apps/jazzsvelte_tailwind/src',
+        tailwindRoutesPath = `${tailwindHomePath}/routes/${cmpname}`,
+        tailwindRoutesPageSveltePath = `${tailwindRoutesPath}/+page.svelte`,
+        tailwindRoutesPageTsPath = `${tailwindRoutesPath}/+page.ts`,
+        tailwindPTPath = `${tailwindHomePath}/lib/pt/${cmpName}.pt.ts`,
         docHomePath = './apps/jazzsvelte_doc/src',
         cmpDocHomePath = `${docHomePath}/lib/doc/${cmpName}`,
         cmpDocHomeMainPath = `${cmpDocHomePath}/${CmpName}Doc.svelte`,
@@ -42,6 +47,10 @@ export function buildCmpContext(name: string): CmpContext {
         cmpName,
         cmpname,
         cmp_name,
+        tailwindPTPath,
+        tailwindRoutesPath,
+        tailwindRoutesPageSveltePath,
+        tailwindRoutesPageTsPath,
         cmpHomePath,
         cmpDocHomePath,
         cmpDocHomeMainPath,

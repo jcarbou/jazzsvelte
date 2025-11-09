@@ -27,7 +27,7 @@ import type {
 import { JAZZ_SVELTE } from './JazzSvelte'
 import { mergeCssClasses } from './cssClasses'
 import { mergeCssStyles } from './cssStyles'
-import { HTMLAttributes } from 'svelte/elements'
+import type { HTMLAttributes, SVGAttributes } from 'svelte/elements'
 
 type Options<INNER_ATTR, FUNCTION_OPTIONS> = PassThroughType<INNER_ATTR, FUNCTION_OPTIONS> | undefined
 
@@ -68,12 +68,26 @@ type PtHTMLAttributes<ELT extends Element, ATTR extends HTMLAttributes<ELT>> = O
     style?: string | { [key: string]: string }
 }
 
+type PtSVGLAttributes<ELT extends Element, ATTR extends SVGAttributes<ELT>> = Omit<ATTR, 'style'> & {
+    style?: string | { [key: string]: string }
+}
+
 type PtOptions<ELT extends Element, ATTR extends HTMLAttributes<ELT>, FUNCTION_OPTIONS> = Options<
     PtHTMLAttributes<ELT, ATTR>,
     FUNCTION_OPTIONS
 >
 
+type PtSVGOptions<ELT extends Element, ATTR extends SVGAttributes<ELT>, FUNCTION_OPTIONS> = Options<
+    PtSVGLAttributes<ELT, ATTR>,
+    FUNCTION_OPTIONS
+>
+
 type CustomHTMLAttributes<ELT extends Element, ATTR extends HTMLAttributes<ELT>> = Omit<ATTR, 'style' | 'class'> & {
+    style?: CssStyle | (CssStyle | undefined | null)[]
+    class: ClassNameEntry[]
+}
+
+type CustomSVGAttributes<ELT extends Element, ATTR extends SVGAttributes<ELT>> = Omit<ATTR, 'style' | 'class'> & {
     style?: CssStyle | (CssStyle | undefined | null)[]
     class: ClassNameEntry[]
 }
@@ -156,9 +170,9 @@ export function resolveButtonPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
  * @returns Resolved HTMLSVGAttributes
  */
 export function resolveSVGCirclePt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
-    elementAttributes: CustomHTMLAttributes<SVGCircleElement, HTMLSVGCircleAttributes>,
-    elementOptions: PtOptions<SVGCircleElement, HTMLSVGCircleAttributes, FUNCTION_OPTIONS>,
-    globalOptions: PtOptions<SVGCircleElement, HTMLSVGCircleAttributes, FUNCTION_OPTIONS>,
+    elementAttributes: CustomSVGAttributes<SVGCircleElement, HTMLSVGCircleAttributes>,
+    elementOptions: PtSVGOptions<SVGCircleElement, HTMLSVGCircleAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtSVGOptions<SVGCircleElement, HTMLSVGCircleAttributes, FUNCTION_OPTIONS>,
     ptContext: {
         props: PROPS
         state?: STATE
@@ -340,9 +354,9 @@ export function resolveSpanPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
  * @returns Resolved HTMLSVGAttributes
  */
 export function resolveSVGPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
-    elementAttributes: CustomHTMLAttributes<SVGSVGElement, HTMLSVGAttributes>,
-    elementOptions: PtOptions<SVGSVGElement, HTMLSVGAttributes, FUNCTION_OPTIONS>,
-    globalOptions: PtOptions<SVGSVGElement, HTMLSVGAttributes, FUNCTION_OPTIONS>,
+    elementAttributes: CustomSVGAttributes<SVGSVGElement, HTMLSVGAttributes>,
+    elementOptions: PtSVGOptions<SVGSVGElement, HTMLSVGAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtSVGOptions<SVGSVGElement, HTMLSVGAttributes, FUNCTION_OPTIONS>,
     ptContext: {
         props: PROPS
         state?: STATE

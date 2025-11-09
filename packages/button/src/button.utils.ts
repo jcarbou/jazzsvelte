@@ -1,5 +1,5 @@
 import type { ButtonIconPos } from './button.types'
-import { ButtonGroupContext } from './buttonGroup.types'
+import type { ButtonGroupContext } from './buttonGroup.types'
 
 export const SIZE_VALUE_TO_CSS = {
     small: 'sm',

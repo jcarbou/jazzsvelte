@@ -1,4 +1,4 @@
-import { TooltipGetter } from './tooltip.types'
+import type { TooltipGetter } from './tooltip.types'
 
 export function getTooltipContent<ITEM>(getTooltip?: TooltipGetter<ITEM>, item?: ITEM): string | null {
     if (!item || !getTooltip) return null

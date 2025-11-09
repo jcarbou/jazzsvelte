@@ -93,7 +93,7 @@
 
     let ptContext: ButtonPtContext = $derived({
         props: { ...DEFAULT, ..._props, ..._restProps },
-        context: { disabled },
+        context: { disabled, iconOnly: (!!icon || loading) && !_hasLabel },
         ptOptions,
         unstyled
     })

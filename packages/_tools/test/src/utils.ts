@@ -1,8 +1,8 @@
 import { render } from '@testing-library/svelte'
 import { expect, test } from 'vitest'
 import JazzSvelteTestContext from './JazzSvelteTestContext.svelte'
-import { ComponentProps, Component } from 'svelte'
-import { TestedComponent } from './utils.types'
+import type { ComponentProps, Component } from 'svelte'
+import type { TestedComponent } from './utils.types'
 
 export function snapshot<CMP extends Component>(label: string, ComponentToTest: CMP, props: ComponentProps<CMP>) {
     containerTest(label, ComponentToTest, props, (container) => {

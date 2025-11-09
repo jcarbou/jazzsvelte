@@ -1,9 +1,7 @@
 <script lang="ts">
-    import { run } from 'svelte/legacy'
-
     import { setContext } from 'svelte'
     import type { LinkTargets, ApiDocs, Doc } from './doc.types'
-    import { apiDataToDocs } from '$lib/doc/common/doc.utils'
+    import { apiDataToDocs } from './doc.utils'
     import DocApiSection from './DocApiSection.svelte'
     import DocSectionNav from './DocSectionNav.svelte'
     import DocSections from './DocSections.svelte'

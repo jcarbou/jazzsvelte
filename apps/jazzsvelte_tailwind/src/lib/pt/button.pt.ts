@@ -8,6 +8,15 @@ buttonPT({
             'transition duration-200 ease-in-out',
             'focus:outline-none focus:outline-offset-0',
             {
+                'h-[3rem]': context.iconOnly && props.rounded,
+                'w-[3rem]': context.iconOnly
+            },
+            {
+                'px-4 py-3 text-base': props.size === null || props.size === 'normal',
+                'py-[0.65625rem] px-[1.09375rem] text-[0.875rem] text-xs': props.size === 'small',
+                'py-[0.9375rem] px-[1.5625rem] text-[1.25rem] text-xl': props.size === 'large'
+            },
+            {
                 'text-white dark:text-gray-900 bg-blue-500 dark:bg-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-600 dark:hover:bg-blue-500 hover:border-blue-600 dark:hover:border-blue-500 focus:shadow-[0_0_0_2px_rgba(255,255,255,1),0_0_0_4px_rgba(157,193,251,1),0_1px_2px_0_rgba(0,0,0,1)] dark:focus:shadow-[0_0_0_2px_rgba(28,33,39,1),0_0_0_4px_rgba(147,197,253,0.7),0_1px_2px_0_rgba(0,0,0,0)]':
                     !props.link && props.severity === null && !props.text && !props.outlined && !props.plain,
                 'text-blue-600 bg-transparent border-transparent focus:shadow-[0_0_0_2px_rgba(255,255,255,1),0_0_0_4px_rgba(157,193,251,1),0_1px_2px_0_rgba(0,0,0,1)] dark:focus:shadow-[0_0_0_2px_rgba(28,33,39,1),0_0_0_4px_rgba(147,197,253,0.7),0_1px_2px_0_rgba(0,0,0,0)]':
@@ -78,11 +87,6 @@ buttonPT({
                     props.outlined && props.severity === 'help' && !props.plain,
                 'text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 hover:bg-red-300/20':
                     props.outlined && props.severity === 'danger' && !props.plain
-            },
-            {
-                'px-4 py-3 text-base': props.size === null,
-                'text-xs py-2 px-3': props.size === 'small',
-                'text-xl py-3 px-4': props.size === 'large'
             },
             { 'flex-column': props.iconPos == 'top' || props.iconPos == 'bottom' },
             { 'opacity-60 pointer-events-none cursor-default': context.disabled }

@@ -1,5 +1,5 @@
 import { SpinnerIcon } from '@jazzsvelte/spinner_icon'
-import { BaseButtonProps, ButtonPassThroughOptions } from './button.types'
+import type { BaseButtonProps, ButtonPassThroughOptions } from './button.types'
 
 /**
  * Global Pass Through options (for all buttons)
@@ -30,7 +30,7 @@ export const defaultButtonProps: Omit<
     rounded: false,
     link: false,
     severity: null,
-    iconPos: null,
+    iconPos: 'left',
     size: null,
     loading: false,
     loadingIcon: SpinnerIcon,

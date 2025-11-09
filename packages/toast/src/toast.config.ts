@@ -1,4 +1,4 @@
-import { BaseToastProps, ToastPassThroughOptions } from './toast.types'
+import type { BaseToastProps, ToastPassThroughOptions } from './toast.types'
 
 /**
  * Global Pass Through options (for all Toasts)

@@ -9,7 +9,7 @@ import type {
     PassThroughOptions,
     PassThroughType
 } from '@jazzsvelte/api'
-import { Snippet } from 'svelte'
+import type { Snippet } from 'svelte'
 
 /**
  * Defines types used by properties of the Button component.
@@ -239,4 +239,9 @@ export interface ButtonContext {
      * Current disabled state of the element as a boolean.
      */
     disabled: boolean
+
+    /**
+     * Current iconOnly state of the element as a boolean.
+     */
+    iconOnly: boolean
 }

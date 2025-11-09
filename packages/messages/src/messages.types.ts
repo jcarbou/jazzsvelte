@@ -10,7 +10,7 @@ import type {
     IconComponent,
     TransitionFactory
 } from '@jazzsvelte/api'
-import { Snippet } from 'svelte'
+import type { Snippet } from 'svelte'
 
 export type MessagesMessageState = { id: number; message: MessagesMessage }
 

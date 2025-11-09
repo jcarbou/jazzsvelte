@@ -1,5 +1,5 @@
 import { TimesIcon } from '@jazzsvelte/times_icon'
-import { BaseToastMessageProps, ToastMessagePassThroughOptions } from './toastMessage.types'
+import type { BaseToastMessageProps, ToastMessagePassThroughOptions } from './toastMessage.types'
 import { localeOption } from '@jazzsvelte/api'
 
 /**

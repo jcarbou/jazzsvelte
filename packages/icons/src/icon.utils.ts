@@ -1,6 +1,6 @@
 import { mergeCssClasses } from '@jazzsvelte/api'
 import { isEmpty } from '@jazzsvelte/object'
-import { SvgProps } from './icon.types'
+import type { SvgProps } from './icon.types'
 
 export function getSvgProps(label: string | null, spin: boolean, cmpClasses: string | null): SvgProps {
     const isLabelEmpty = isEmpty(label)

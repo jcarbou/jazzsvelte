@@ -1,4 +1,4 @@
-import { TooltipPassThroughOptions } from './tooltip.types'
+import type { TooltipPassThroughOptions } from './tooltip.types'
 
 /**
  * Global Pass Through options (for all buttons)

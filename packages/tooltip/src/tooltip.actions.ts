@@ -5,7 +5,7 @@ import type { TooltipActionOptions, TooltipLayoutActionOptions, TooltipLayoutAct
 import { getOuterWidth, getOuterHeight, findCollisionPosition, flipfitCollision, setSingleEventListener } from '@jazzsvelte/dom'
 import Tooltip from './Tooltip.svelte'
 import { tick } from 'svelte'
-import { TimeoutId } from '@jazzsvelte/api'
+import type { TimeoutId } from '@jazzsvelte/api'
 
 /**
  * Action on element that declare the tooltip

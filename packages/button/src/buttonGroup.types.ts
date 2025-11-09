@@ -1,4 +1,4 @@
-import { ButtonIconPos, ButtonSeverity, ButtonSize } from './button.types'
+import type { ButtonIconPos, ButtonSeverity, ButtonSize } from './button.types'
 
 export type ButtonGroupContext = {
     disabled: boolean

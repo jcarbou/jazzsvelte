@@ -1,4 +1,4 @@
-import { ActionReturn } from 'svelte/action'
+import type { ActionReturn } from 'svelte/action'
 
 export type StopProgagationActionReturn = {
     eventName: string

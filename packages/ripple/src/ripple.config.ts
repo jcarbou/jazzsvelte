@@ -1,4 +1,4 @@
-import { BaseRippleProps, RipplePassThroughOptions } from './ripple.types'
+import type { BaseRippleProps, RipplePassThroughOptions } from './ripple.types'
 
 /**
  * Global Pass Through options (for all Ripples)

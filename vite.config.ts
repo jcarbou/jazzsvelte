@@ -9,7 +9,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-   // include: ['**/*.test.ts}'],
+   include: ['src/**/*.test.{ts,js}', 'src/**/*.test.svelte.ts'],
    // setupFiles: ["../../setupTest.js"]
   },
   resolve: process.env.VITEST

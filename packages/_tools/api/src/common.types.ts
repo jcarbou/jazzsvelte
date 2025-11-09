@@ -1,5 +1,5 @@
-import { Snippet } from 'svelte'
-import { CssObject, IconComponent } from './pt.types'
+import type { Snippet } from 'svelte'
+import type { CssObject, IconComponent } from './pt.types'
 
 export type MenuItem = {
     command?: (event: { originalEvent: MouseEvent | KeyboardEvent; item: MenuItem }) => void

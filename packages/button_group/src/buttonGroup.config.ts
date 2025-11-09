@@ -1,4 +1,4 @@
-import { BaseButtonGroupProps, ButtonGroupPassThroughOptions } from './buttonGroup.types'
+import type { BaseButtonGroupProps, ButtonGroupPassThroughOptions } from './buttonGroup.types'
 
 /**
  * Global Pass Through options (for all ButtonGroups)

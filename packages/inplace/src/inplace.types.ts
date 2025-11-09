@@ -6,7 +6,7 @@ import type {
     PassThroughType,
     PassThroughOptions
 } from '@jazzsvelte/api'
-import { Snippet } from 'svelte'
+import type { Snippet } from 'svelte'
 
 export type InplaceToggleEvent = {
     originalEvent: MouseEvent | KeyboardEvent | undefined

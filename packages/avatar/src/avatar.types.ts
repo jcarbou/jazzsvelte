@@ -11,7 +11,7 @@ import type {
     PassThroughOptions,
     ResolvedIconPT
 } from '@jazzsvelte/api'
-import { Snippet } from 'svelte'
+import type { Snippet } from 'svelte'
 
 /**
  * Types used by properties of the Avatar component.

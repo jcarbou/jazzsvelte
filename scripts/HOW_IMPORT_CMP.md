@@ -25,6 +25,12 @@ Add "done" attribute on apps\jazzsvelte_doc\src\lib\layout\sidebar\menuData.json
 
 Modify README.md adding the new component to "done" list
 
+6) Tailwind
+Add tailwind entry in apps\jazzsvelte_tailwind\src\routes\+layout.svelte
+Copy tailwind conf from TailwindDoc.svelte to 
+Replace 
+
+
 TODO 
 
 Replace by 2 property

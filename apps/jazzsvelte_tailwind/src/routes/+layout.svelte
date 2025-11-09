@@ -9,6 +9,7 @@
 
     // Import component PT
     import '$lib/pt/button.pt'
+    import '$lib/pt/badge.pt'
 </script>
 
 <svelte:head>
@@ -39,7 +40,11 @@
         unstyled: true
     }}
 >
-    <div class="layout-wrapper" class:p-input-filled={$inputStyle === 'filled'} class:p-ripple-disabled={$ripple === false}>
+    <div
+        class="layout-wrapper layout-light"
+        class:p-input-filled={$inputStyle === 'filled'}
+        class:p-ripple-disabled={$ripple === false}
+    >
         <div class="layout-content">
             <Sidebar />
             <div class="layout-content-slot">
@@ -48,6 +53,13 @@
         </div>
     </div>
     <Toast />
+    <Toast id="topLeft" position="top-left" />
+    <Toast id="topCenter" position="top-center" />
+    <Toast id="topRight" position="top-right" />
+    <Toast id="center" position="center" />
+    <Toast id="bottomLeft" position="bottom-left" />
+    <Toast id="bottomCenter" position="bottom-center" />
+    <Toast id="bottomRight" position="bottom-right" />
 </JazzSvelte>
 
 <style>

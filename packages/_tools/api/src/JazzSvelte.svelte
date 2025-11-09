@@ -14,9 +14,9 @@
 
     let { config = null, children }: Props = $props()
 
-    $effect(() => {
-        JAZZ_SVELTE.config(config)
-    })
+    // $effect(() => {
+    JAZZ_SVELTE.config(config)
+    //})
     let { unstyled, themePath, ripple } = JAZZ_SVELTE
     setContext<JazzSvelteContext>('JAZZ_SVELTE', JAZZ_SVELTE)
 </script>

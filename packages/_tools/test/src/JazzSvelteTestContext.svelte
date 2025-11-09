@@ -1,7 +1,7 @@
 <script lang="ts" generics="CMP extends Component">
     import { JazzSvelte } from '@jazzsvelte/api'
-    import { Component } from 'svelte'
-    import { ComponentToTestProps, TestedComponent } from './utils.types'
+    import type { Component } from 'svelte'
+    import type { ComponentToTestProps, TestedComponent } from './utils.types'
 
     interface Props {
         ComponentToTest: CMP

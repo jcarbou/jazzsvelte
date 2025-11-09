@@ -145,7 +145,7 @@ export function importCmpApiDoc(context: CmpContext, options: ScriptOptions) {
 
     newCmpApiDoc.meta = {
         RootType: newCmpApiDoc.ptOptions?.values?.find((item) => item.name === 'root')?.type || 'div',
-        omitAttributes: "'style'",
+        omitAttributes: "'style' | 'class'",
         icon: !!newCmpApiDoc.props.values?.find(({ type }) => type.includes('IconComponent')),
         tooltip: !!newCmpApiDoc.props.values?.find(({ name }) => name.includes('Tooltip')),
         svelteComponent: !!newCmpApiDoc.props.values?.find(({ type }) => type === 'typeof SvelteComponent | null')

@@ -1,34 +1,35 @@
 <script lang="ts">
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
     import { importJS, importTS } from '../common/doc.utils'
+    import { CheckIcon } from '@jazzsvelte/check_icon'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 
     const code = {
         basic: `
-<Button icon="pi pi-check" />
-<Button label="Submit" icon="pi pi-check" />
-<Button label="Submit" icon="pi pi-check" iconPos="right" />
+<Button icon={CheckIcon} />
+<Button label="Submit" icon={CheckIcon} />
+<Button label="Submit" icon={CheckIcon} iconPos="right" />
         `,
         javascript: `
-${importJS('Button')}
+${importJS(['Button', 'CheckIcon'])}
 
 <div class="card flex flex-wrap justify-content-center gap-3">
-    <Button icon="pi pi-check" />
-    <Button label="Submit" icon="pi pi-check" />
-    <Button label="Submit" icon="pi pi-check" iconPos="right" />
+    <Button icon={CheckIcon} />
+    <Button label="Submit" icon={CheckIcon} />
+    <Button label="Submit" icon={CheckIcon} iconPos="right" />
 </div>
          `,
         typescript: `
-${importTS('Button')}
+${importTS(['Button', 'CheckIcon'])}
 
 <div class="card flex flex-wrap justify-content-center gap-3">
-    <Button icon="pi pi-check" />
-    <Button label="Submit" icon="pi pi-check" />
-    <Button label="Submit" icon="pi pi-check" iconPos="right" />
+    <Button icon={CheckIcon} />
+    <Button label="Submit" icon={CheckIcon} />
+    <Button label="Submit" icon={CheckIcon} iconPos="right" />
 </div>
         `
     }
@@ -40,8 +41,8 @@ ${importTS('Button')}
     </p>
 </DocSectionText>
 <div class="card flex flex-wrap justify-content-center gap-3">
-    <Button icon="pi pi-check" />
-    <Button label="Submit" icon="pi pi-check" />
-    <Button label="Submit" icon="pi pi-check" iconPos="right" />
+    <Button icon={CheckIcon} />
+    <Button label="Submit" icon={CheckIcon} />
+    <Button label="Submit" icon={CheckIcon} iconPos="right" />
 </div>
 <DocSectionCode {code} />

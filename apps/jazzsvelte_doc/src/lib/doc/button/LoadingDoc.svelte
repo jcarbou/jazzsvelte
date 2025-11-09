@@ -1,8 +1,9 @@
 <script lang="ts">
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import { CheckIcon } from '@jazzsvelte/check_icon'
+    import type { ComponentDocProps } from '../common/doc.types'
     import { importJS, importTS } from '../common/doc.utils'
 
     let { docSection }: ComponentDocProps = $props()
@@ -18,11 +19,11 @@
 
     const code = {
         basic: `
-<Button label="Submit" icon="pi pi-check" loading={loading} onClick={load} />
+<Button label="Submit" icon={CheckIcon} loading={loading} onClick={load} />
         `,
         javascript: `
 ${importJS(
-    'Button',
+    ['Button', 'CheckIcon'],
     `
     const loading = false
 
@@ -35,12 +36,12 @@ ${importJS(
 )}
 
 <div class="card flex flex-wrap justify-content-center gap-3">
-    <Button label="Submit" icon="pi pi-check" loading={loading} onClick={load} />
+    <Button label="Submit" icon={CheckIcon} loading={loading} onClick={load} />
 </div>
         `,
         typescript: `
 ${importTS(
-    'Button',
+    ['Button', 'CheckIcon'],
     `
     const loading: boolean = false
 
@@ -53,7 +54,7 @@ ${importTS(
 )}
 
 <div class="card flex flex-wrap justify-content-center gap-3">
-    <Button label="Submit" icon="pi pi-check" loading={loading} onClick={load} />
+    <Button label="Submit" icon={CheckIcon} loading={loading} onClick={load} />
 </div>
         `
     }
@@ -65,6 +66,6 @@ ${importTS(
     </p>
 </DocSectionText>
 <div class="card flex flex-wrap justify-content-center gap-3">
-    <Button label="Submit" iconPos="right" icon="pi pi-check" {loading} onclick={load} />
+    <Button label="Submit" iconPos="right" icon={CheckIcon} {loading} onclick={load} />
 </div>
 <DocSectionCode {code} />

@@ -2,7 +2,7 @@ import { writable } from 'svelte/store'
 import { createVisibilityStore, createBooleanStore } from '@jazzsvelte/utils'
 
 // General
-export const theme = writable<string>('lara-light-amber')
+//export const theme = writable<string>('lara-light-amber')
 export const ripple = writable<boolean>(false)
 export const inputStyle = writable<string>('filled')
 

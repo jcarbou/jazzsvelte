@@ -1,4 +1,4 @@
-import { BaseBadgeProps, BadgePassThroughOptions } from './badge.types'
+import type { BaseBadgeProps, BadgePassThroughOptions } from './badge.types'
 
 /**
  * Global Pass Through options (for all Badges)

@@ -1,4 +1,4 @@
-import { BaseInputTextProps, InputTextPassThroughOptions } from './inputText.types'
+import type { BaseInputTextProps, InputTextPassThroughOptions } from './inputText.types'
 
 /**
  * Global Pass Through options (for all InputTexts)

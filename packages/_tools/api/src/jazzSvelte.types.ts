@@ -3,7 +3,7 @@
 import type { Readable, Writable } from 'svelte/store'
 import type { BooleanStore } from '@jazzsvelte/utils'
 import type { PassThroughOptions } from './pt.types'
-import { AppendTo } from './common.types'
+import type { AppendTo } from './common.types'
 
 /**
  * Value (of type S) or function with current value as argument and returning new value

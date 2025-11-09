@@ -1,4 +1,4 @@
-import { Snippet } from 'svelte'
+import type { Snippet } from 'svelte'
 
 export function stringValueOrNull(value: string | unknown): string | null {
     return typeof value === 'string' ? value : null
