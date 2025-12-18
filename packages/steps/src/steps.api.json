@@ -1,0 +1,185 @@
+{
+  "description": "Steps also known as Stepper, is an indicator for the steps in a workflow. Layout of steps component is optimized for responsive design.",
+  "methods": {
+    "description": "Defines methods that can be accessed by the component's reference.",
+    "values": [
+      {
+        "name": "getElement",
+        "parameters": [],
+        "returnType": "HTMLDivElement",
+        "description": "Used to get container element."
+      }
+    ],
+    "label": "Methods",
+    "shortLabel": "Methods"
+  },
+  "props": {
+    "description": "Defines valid properties in Steps component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+    "values": [
+      {
+        "name": "activeIndex",
+        "optional": true,
+        "readonly": false,
+        "type": "number",
+        "default": "0",
+        "description": "Index of the active item."
+      },
+      {
+        "name": "class",
+        "optional": true,
+        "readonly": false,
+        "type": "string | null",
+        "default": "null",
+        "description": "CSS classes to add to root element."
+      },
+      {
+        "name": "model",
+        "optional": false,
+        "readonly": false,
+        "type": "undefined | MenuItem[]",
+        "default": "",
+        "description": "An array of menuitems."
+      },
+      {
+        "name": "pt",
+        "optional": true,
+        "readonly": false,
+        "type": "StepsPassThroughOptions | null",
+        "default": "null",
+        "description": "Uses to pass attributes to DOM elements inside the component."
+      },
+      {
+        "name": "ptOptions",
+        "optional": true,
+        "readonly": false,
+        "type": "PassThroughOptions | null",
+        "default": "null",
+        "description": "Used to configure passthrough(pt) options of the component."
+      },
+      {
+        "name": "readOnly",
+        "optional": true,
+        "readonly": false,
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether the items are clickable or not."
+      },
+      {
+        "name": "style",
+        "optional": true,
+        "readonly": false,
+        "type": "string | CssObject | null",
+        "default": "null",
+        "description": "Style to add to root element."
+      },
+      {
+        "name": "unstyled",
+        "optional": true,
+        "readonly": false,
+        "type": "boolean",
+        "default": "false",
+        "description": "When enabled, it removes component related styles in the core."
+      }
+    ],
+    "label": "StepsProps",
+    "shortLabel": "Props"
+  },
+  "callbacks": {
+    "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+    "values": [
+      {
+        "name": "onSelect",
+        "parameters": [
+          {
+            "name": "event",
+            "optional": false,
+            "type": "StepsSelectEvent",
+            "description": "Custom select event"
+          }
+        ],
+        "returnType": "void",
+        "description": "Callback to invoke when the new step is selected."
+      }
+    ],
+    "label": "Callbacks",
+    "shortLabel": "Callbacks"
+  },
+  "id": "steps",
+  "label": "Steps",
+  "types": {
+    "label": "Props types",
+    "shortLabel": "Props types",
+    "description": "Types used by properties of the Steps component.",
+    "values": []
+  },
+  "ptMethodOptions": {
+    "values": [],
+    "label": "StepsPassThroughMethodOptions",
+    "shortLabel": "StepsPtMethodOptions"
+  },
+  "ptOptions": {
+    "description": "Custom passthrough(pt) options.",
+    "relatedProp": "pt",
+    "callbacks": [],
+    "values": [
+      {
+        "name": "root",
+        "optional": true,
+        "readonly": false,
+        "type": "Div",
+        "description": "Uses to pass attributes to the root's DOM element."
+      },
+      {
+        "name": "menu",
+        "optional": true,
+        "readonly": false,
+        "type": "UList",
+        "description": "Uses to pass attributes to the list's DOM element."
+      },
+      {
+        "name": "menuitem",
+        "optional": true,
+        "readonly": false,
+        "type": "LI",
+        "description": "Uses to pass attributes to the list item's DOM element."
+      },
+      {
+        "name": "action",
+        "optional": true,
+        "readonly": false,
+        "type": "Anchor",
+        "description": "Uses to pass attributes to the action's DOM element."
+      },
+      {
+        "name": "step",
+        "optional": true,
+        "readonly": false,
+        "type": "Span",
+        "description": "Uses to pass attributes to the step's DOM element."
+      },
+      {
+        "name": "label",
+        "optional": true,
+        "readonly": false,
+        "type": "Span",
+        "description": "Uses to pass attributes to the label's DOM element."
+      },
+      {
+        "name": "icon",
+        "optional": true,
+        "readonly": false,
+        "type": "Icon",
+        "description": "Uses to pass attributes to the icon's DOM element."
+      }
+    ],
+    "label": "StepsPassThroughOptions",
+    "shortLabel": "StepsPtOptions"
+  },
+  "meta": {
+    "RootType": "Div",
+    "omitAttributes": "'style' | 'class'",
+    "icon": false,
+    "tooltip": false,
+    "svelteComponent": false
+  }
+}

@@ -36,13 +36,18 @@ export type TooltipLayoutActionState = {
     onContentChange: () => void
 }
 
+export type TooltipPtContext = TooltipPassThroughMethodOptions & {
+    ptOptions: PassThroughOptions | null
+    unstyled: boolean
+}
+
 /**
  * Custom passthrough(pt) option method.
  */
 export interface TooltipPassThroughMethodOptions {
     props: TooltipProps
-    state?: TooltipState
-    context?: TooltipContext
+    state: TooltipState
+    context: TooltipContext
 }
 
 /**

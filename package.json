@@ -11,7 +11,8 @@
         "lint:fix": "lint --fix --ignore-path .gitignore .",
         "importCmp": "pnpx tsx ./scripts/importCmp",
         "importCmpDocList": "pnpx tsx ./scripts/importCmpDocList",
-        "generateCmp": "pnpx tsx ./scripts/generateCmp"
+        "generateCmp": "pnpx tsx ./scripts/generateCmp",
+        "tailwindDocPage": "pnpx tsx ./scripts/tailwindDocPage"
     },
     "devDependencies": {
         "@fontsource/fira-mono": "^5.2.7",

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import DocSimpleTable from '../common/DocSimpleTable.svelte'
 </script>
 

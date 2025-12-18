@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { PassThroughOptions } from '@jazzsvelte/api'
     import type { BadgePassThroughMethodOptions, BadgeProps } from './badge.types'
-
     import { resolveSpanPt } from '@jazzsvelte/api'
     import { isEmpty, isNotEmpty } from '@jazzsvelte/object'
     import { defaultBadgeProps as DEFAULT, globalBadgePT as globalPt } from './badge.config'

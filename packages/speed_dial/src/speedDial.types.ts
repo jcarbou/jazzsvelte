@@ -14,8 +14,7 @@ import type {
     PassThroughOptions
 } from '@jazzsvelte/api'
 import type { TooltipGetter, TooltipOptions } from '@jazzsvelte/tooltip'
-
-import { ButtonPassThroughOptions } from '@jazzsvelte/button'
+import type { ButtonPassThroughOptions } from '@jazzsvelte/button'
 
 /**
  * Defines types used by properties of the SpeedDial component.

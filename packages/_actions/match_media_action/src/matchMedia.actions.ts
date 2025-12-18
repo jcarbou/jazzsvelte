@@ -1,5 +1,5 @@
 import type { ActionReturn } from 'svelte/action'
-import { Writable } from 'svelte/store'
+import type { Writable } from 'svelte/store'
 
 export type MatchMediaOptions = {
     query?: string | null

@@ -1,6 +1,6 @@
 import { addScriptTsDeclaration, jsonStyleToString, prettierFormat, regexpPatch, withFileContent } from './imports.utils'
 import { CmpContext, ScriptOptions } from '../scripts.types'
-import { mkDir, copyFile, fileExist, writeText } from '../scripts.utils'
+import { mkDir, copyFile, fileExist, writeText, pnpmInstall } from '../scripts.utils'
 
 const FIX_FILENAME_CASE_ERRROR: { [key: string]: string } = {}
 
@@ -104,6 +104,8 @@ export function importCmpDocPage(context: CmpContext, options: ScriptOptions) {
 `
     )
     console.log(`"${cmpDocRoutesPageSveltePath}" generated !`)
+
+    pnpmInstall()
 
     prettierFormat(cmpDocRoutesPath)
     prettierFormat(cmpDocHomePath)

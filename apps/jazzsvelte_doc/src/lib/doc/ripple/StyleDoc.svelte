@@ -1,8 +1,8 @@
 <script lang="ts">
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-    import DocTableWrapper from '$lib/doc/common/DocTableWrapper.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
+    import DocTableWrapper from '../common/DocTableWrapper.svelte'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { DocSection } from '../common/doc.types'
 
     interface Props {
         docSection: DocSection

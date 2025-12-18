@@ -30,6 +30,7 @@ export type PassThroughMethodOptions<CP, STATE, CTX> = {
     props: CP
     state?: STATE
     context?: CTX
+    parentPtContext?: PassThroughMethodOptions<any, any, any> | null
 }
 
 export type ResolvedIconPT = {
@@ -43,6 +44,15 @@ export type PassThroughTypeFunction<T, O> = (options: O) => T | void
 export type PassThroughType<T, O> = T | PassThroughTypeFunction<T, O> | string | null | undefined
 export type PassThroughHTMLAttributes<T> = Omit<T, 'style'> & {
     style?: string | { [key: string]: string }
+}
+
+export type PtContext<PROPS, STATE, CTX> = {
+    props: PROPS
+    state?: STATE
+    context?: CTX
+    ptOptions: PassThroughOptions | null
+    unstyled: boolean
+    parentPtContext?: PassThroughMethodOptions<any, any, any> | null
 }
 
 export interface PassThroughOptions {

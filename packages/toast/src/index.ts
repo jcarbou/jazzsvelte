@@ -1,4 +1,6 @@
+export * from './toast.config'
 export * from './toast.types'
+export * from './toastMessage.config'
 export * from './toastMessage.types'
 export * from './toast.store'
 export { default as Toast } from './Toast.svelte'

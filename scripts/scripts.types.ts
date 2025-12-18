@@ -68,10 +68,16 @@ export type CmpContext = {
     apiPath: string
     typesPath: string
     configPath: string
+    docIndexPath: string
+    tailwindPackagePath: string
+    tailwindPTHomePath: string
+    tailwindMenuJsonPath: string
+    tailwindMainLayoutPath: string
     tailwindRoutesPath: string
     tailwindRoutesPageSveltePath: string
     tailwindRoutesPageTsPath: string
     tailwindPTPath: string
+    docMenuJsonPath: string
     indexPath: string
     testPath: string
     sveltePath: string

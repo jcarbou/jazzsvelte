@@ -1,9 +1,9 @@
 <script lang="ts">
     import DocSimpleTable from '../common/DocSimpleTable.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import DocSectionText from '../common/DocSectionText.svelte'
+    import type { ComponentDocProps } from '../common/doc.types'
 
-    let { docSection }: ComponentDocProps = $props();
+    let { docSection }: ComponentDocProps = $props()
 </script>
 
 <DocSectionText {docSection}>

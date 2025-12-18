@@ -1,6 +1,6 @@
 <script lang="ts">
     import DocSimpleTable from '../common/DocSimpleTable.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
 </script>
 
 <DocSectionText docSection={{ id: 'style', label: 'Style' }}>

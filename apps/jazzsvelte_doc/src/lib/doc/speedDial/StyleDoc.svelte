@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
 
     import DocSimpleTable from '../common/DocSimpleTable.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
 
     let { docSection }: ComponentDocProps = $props()
 </script>

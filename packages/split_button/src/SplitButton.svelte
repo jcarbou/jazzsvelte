@@ -199,7 +199,8 @@
             {unstyled}
             class={defaultButtonClass}
             data-pc-section="button"
-            pt={pt?.button}
+            parentPtContext={ptContext}
+            pt={pt?.button || globalPt?.button}
             {...buttonProps}
             onclick={_onClick}
         >
@@ -223,7 +224,8 @@
             {unstyled}
             class={_menuButtonClass}
             data-pc-section="menuButton"
-            pt={pt?.menuButton}
+            parentPtContext={ptContext}
+            pt={pt?.menuButton || globalPt?.menuButton}
             onkeydown={onMenuButtonKeyDown}
         />
         <TieredMenu
@@ -240,7 +242,8 @@
             onclick={onMenuClick}
             onShow={_onMenuShow}
             onHide={_onMenuHide}
-            pt={pt?.menu}
+            parentPtContext={ptContext}
+            pt={pt?.menu || globalPt?.menu}
             data-pc-section="menu"
         />
     </div>

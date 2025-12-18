@@ -112,7 +112,7 @@ export interface BaseToastMessageProps {
      */
     closeIcon?: string | IconComponent | null
     /**
-     * Custom content of the message. If enabled, the given snippet receives all props and <i>customProps</i> and replace summary and details section.
+     * Custom content of the message. If enabled, the given snippet receives all props and replace summary and details section.
      */
     customContent?: ToastSnippet | null
     /**
@@ -173,7 +173,7 @@ export interface BaseToastMessageProps {
  * Defines valid properties in Button component. In addition to these, all properties of HTMLButtonElement can be used in this component.
  * @group Properties
  */
-export interface ToastMessageProps extends Omit<HTMLButtonAttributes, 'id' | 'style'>, BaseToastMessageProps {}
+export interface ToastMessageProps extends Omit<HTMLButtonAttributes, 'id' | 'style' | 'class'>, BaseToastMessageProps {}
 
 /**
  * Defines current inline state in Toast component.

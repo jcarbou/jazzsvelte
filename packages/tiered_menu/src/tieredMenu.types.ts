@@ -11,9 +11,10 @@ import type {
     MenuItem,
     CssStyle,
     AppendTo,
-    PassThroughOptions
+    PassThroughOptions,
+    PassThroughMethodOptions
 } from '@jazzsvelte/api'
-import { Writable } from 'svelte/store'
+import type { Writable } from 'svelte/store'
 
 export interface ActiveItemPathStore extends Omit<Writable<ProcessedItem[]>, 'update' | 'set'> {
     add: (processedItem: ProcessedItem) => void
@@ -144,6 +145,8 @@ export interface BaseTieredMenuProps {
      */
     popup?: boolean
 
+    parentPtContext?: PassThroughMethodOptions<any, any, any> | null
+
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
@@ -207,7 +210,8 @@ export declare type TieredMenuPassThroughType<T> = PassThroughType<
 export interface TieredMenuPassThroughMethodOptions {
     props: TieredMenuProps
     state: TieredMenuState
-    context: TieredMenuContext
+    context?: TieredMenuContext
+    parentPtContext?: PassThroughMethodOptions<any, any, any> | null
 }
 
 /**
@@ -270,6 +274,10 @@ export interface TieredMenuContext {
      * Current active state of menuitem as a boolean.
      */
     active: boolean
+    /**
+     * Current focused state of menuitem as a boolean.
+     */
+    focused: boolean
 }
 
 /**

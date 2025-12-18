@@ -1,9 +1,9 @@
 <script lang="ts">
     import { importBrother, importJS, importObject, importTS, importType } from '../common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { DocSection } from '../common/doc.types'
     import type { MenuItem, MenuItemDefaultSnippetProps } from '@jazzsvelte/api'
     import { Badge } from '@jazzsvelte/badge'
 

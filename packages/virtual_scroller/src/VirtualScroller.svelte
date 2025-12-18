@@ -929,12 +929,10 @@
     })
 
     $effect(() => {
-        console.log('effect : previous items')
         previousItems = currentItems
         currentItems = items
     })
     $effect(() => {
-        console.log('effect : previous loading')
         previousLoading = currentLoading
         currentLoading = loading
     })
@@ -946,7 +944,7 @@
 
         // Get the length of the previous/current rows array, or 0 if it doesn't exist
         const prevRowsLength = previousItems?.length || 0
-        const currentRowsLength = currentRowsExist ? items?.length ?? 0 : 0
+        const currentRowsLength = currentRowsExist ? (items?.length ?? 0) : 0
 
         // Check if the length of the rows arrays has changed
         let valuesChanged = prevRowsLength !== currentRowsLength
@@ -955,7 +953,7 @@
         if (both && !valuesChanged) {
             // Get the length of the columns or 0
             const prevColumnsLength = previousItems?.[0]?.length || 0
-            const currentColumnsLength = currentRowsExist && (items?.length ?? 0) > 0 ? items?.[0].length ?? 0 : 0
+            const currentColumnsLength = currentRowsExist && (items?.length ?? 0) > 0 ? (items?.[0].length ?? 0) : 0
 
             // Check if the length of the columns has changed
             valuesChanged = prevColumnsLength !== currentColumnsLength

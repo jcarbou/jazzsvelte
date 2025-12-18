@@ -1,7 +1,7 @@
 import jsonData from './menuData.json'
 import type { MenuData, MenuItemData, SubMenuData } from './Sidebar.types'
 
-type MenuJsonData = {
+export type MenuJsonData = {
     name: string
     icon?: string
     children?: (MenuItemJsonData | SubMenuJsonData)[]

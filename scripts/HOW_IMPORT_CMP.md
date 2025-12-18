@@ -21,21 +21,12 @@ Replace in file MyCmpDoc.svelte, for ptDocs, the type DocApiTable by DocApiPtTab
 
 Migrate test
 
-Add "done" attribute on apps\jazzsvelte_doc\src\lib\layout\sidebar\menuData.json
-
 Modify README.md adding the new component to "done" list
 
 6) Tailwind
-Add tailwind entry in apps\jazzsvelte_tailwind\src\routes\+layout.svelte
-Copy tailwind conf from TailwindDoc.svelte to 
-Replace 
+
+`pnpm run tailwindDocPage myCmp`
 
 
-TODO 
+7) TODO 
 
-Replace by 2 property
-
-let _labelSnippet = $derived(snippetValueOrNull(label))
-    let _labelString = $derived(stringValueOrNull(label))
-    let _badgeSnippet = $derived(snippetValueOrNull(badge))
-    let _badgeString = $derived(stringValueOrNull(badge))

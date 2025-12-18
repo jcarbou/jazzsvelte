@@ -55,6 +55,14 @@
                 "description": "When present, it specifies that the element should be disabled."
             },
             {
+                "name": "fieldSize",
+                "optional": true,
+                "readonly": false,
+                "type": "FormFieldSize",
+                "default": "null",
+                "description": "Size of the input : 'small' | 'normal' | 'large'."
+            },
+            {
                 "name": "keyfilter",
                 "optional": true,
                 "readonly": false,
@@ -100,7 +108,7 @@
                 "readonly": false,
                 "type": "string | number",
                 "default": "null",
-                "description": "Size of the input."
+                "description": "How many characters wide the input field should be."
             },
             {
                 "name": "tooltip",
@@ -304,7 +312,7 @@
         "label": "Props types",
         "shortLabel": "Props types",
         "description": "Defines types used by properties of the InputText component.",
-        "values": []
+        "values": [{ "name": "FormFieldSize", "value": "'small' | 'normal' | 'large'" }]
     },
     "ptContext": {
         "label": "InputTextContext",

@@ -8,6 +8,8 @@ import type {
 import type { KeyFilterRegExp, ValidatedInputEvent } from '@jazzsvelte/key_filter_action'
 import type { TooltipOptions } from '@jazzsvelte/tooltip'
 
+export type FormFiledSize = 'small' | 'normal' | 'large'
+
 export interface InputTextEvent {
     validatedinput: ValidatedInputEvent
 }
@@ -17,6 +19,8 @@ export interface InputTextEvent {
  * @group Properties
  */
 export interface BaseInputTextProps {
+    fieldSize?: FormFiledSize
+
     /**
      * When present, it specifies that the element should be disabled.
      * @defaultValue false

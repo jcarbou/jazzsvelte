@@ -56,7 +56,9 @@
 
     let ptContext: UIMessagePtContext = $derived({
         props: { ...DEFAULT, ..._props },
-        context: {},
+        context: {
+            severity
+        },
         ptOptions,
         unstyled
     })

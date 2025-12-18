@@ -1,7 +1,7 @@
 <script lang="ts">
-    import CodeHighlight from '$lib/doc/common/CodeHighlight.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import CodeHighlight from '../common/CodeHighlight.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
+    import type { ComponentDocProps } from '../common/doc.types'
 
     let { docSection }: ComponentDocProps = $props()
 </script>

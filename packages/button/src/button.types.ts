@@ -6,6 +6,7 @@ import type {
     HTMLSpanAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
+    PassThroughMethodOptions,
     PassThroughOptions,
     PassThroughType
 } from '@jazzsvelte/api'
@@ -105,6 +106,8 @@ export interface BaseButtonProps {
      */
     plain?: boolean
 
+    parentPtContext?: PassThroughMethodOptions<any, any, any> | null
+
     /**
      * Uses to pass attributes to DOM elements inside the component.
      * @default  null
@@ -201,6 +204,7 @@ export interface ButtonPtContext extends ButtonPassThroughMethodOptions {
 export interface ButtonPassThroughMethodOptions {
     props: ButtonProps
     context: ButtonContext
+    parentPtContext?: PassThroughMethodOptions<any, any, any> | null
 }
 
 /**

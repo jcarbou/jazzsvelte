@@ -28,7 +28,7 @@
         model = DEFAULT.model,
         pt = null,
         ptOptions = null,
-        radius = $bindable(DEFAULT.radius),
+        radius = DEFAULT.radius,
         rotateAnimation = DEFAULT.rotateAnimation,
         showIcon = DEFAULT.showIcon,
         style = DEFAULT.style,
@@ -284,19 +284,19 @@
     } {
         if (type !== 'linear') {
             const length = model.length
-            radius = radius || length * 20
+            const _radius = radius || length * 20
 
             if (type === 'circle') {
                 const step = (2 * Math.PI) / length
 
                 return {
-                    left: `calc(${radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`,
-                    top: `calc(${radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
+                    left: `calc(${_radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`,
+                    top: `calc(${_radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
                 }
             } else if (type === 'semi-circle') {
                 const step = Math.PI / (length - 1)
-                const x = `calc(${radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`
-                const y = `calc(${radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
+                const x = `calc(${_radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`
+                const y = `calc(${_radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
 
                 if (direction === 'up') {
                     return { left: x, bottom: y }
@@ -309,8 +309,8 @@
                 }
             } else if (type === 'quarter-circle') {
                 const step = Math.PI / (2 * (length - 1))
-                const x = `calc(${radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`
-                const y = `calc(${radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
+                const x = `calc(${_radius * Math.cos(step * index)}px + var(--item-diff-x, 0px))`
+                const y = `calc(${_radius * Math.sin(step * index)}px + var(--item-diff-y, 0px))`
 
                 if (direction === 'up-left') {
                     return { right: x, bottom: y }
@@ -401,7 +401,9 @@
         'aria-expanded': _visible,
         'aria-haspopup': true,
         'aria-controls': idState + '_list',
-        'aria-labelledby': _props['aria-labelledby']
+        'aria-labelledby': _props['aria-labelledby'],
+        parentPtContext: ptContext,
+        pt: pt?.button || globalPt?.button
     })
 
     // "menu" element

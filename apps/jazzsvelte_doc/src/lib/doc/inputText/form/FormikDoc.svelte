@@ -1,8 +1,8 @@
 <script lang="ts">
 import { importJS, importTS} from '../common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
 
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
 
     import { Button } from '@jazzsvelte/button'
     import { InputText } from '@jazzsvelte/input_text'
@@ -11,7 +11,7 @@ import { importJS, importTS} from '../common/doc.utils'
 import { useFormik } from 'formik';
 import { useRef } from 'react'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { DocSection } from '../common/doc.types'
     
     export let docSection: DocSection
 

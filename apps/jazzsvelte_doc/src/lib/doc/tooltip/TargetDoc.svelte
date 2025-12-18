@@ -1,9 +1,9 @@
 <script lang="ts">
     import { simpleCode } from '../common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
     import { tooltip, Tooltip } from '@jazzsvelte/tooltip'
 
     let { docSection }: ComponentDocProps = $props()

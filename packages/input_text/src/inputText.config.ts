@@ -25,6 +25,7 @@ export const defaultInputTextProps: Omit<Required<BaseInputTextProps>, 'pt' | 'p
     validateOnly: false,
     value: '',
     size: null,
+    fieldSize: 'normal',
     unstyled: false,
     class: null,
     style: null,

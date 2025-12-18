@@ -50,6 +50,7 @@
         id = null,
         model = DEFAULT.model,
         popup = DEFAULT.popup,
+        parentPtContext = null,
         pt = null,
         ptOptions = null,
         scrollHeight = DEFAULT.scrollHeight,
@@ -72,6 +73,7 @@
         id,
         model,
         popup,
+        parentPtContext,
         pt,
         ptOptions,
         scrollHeight,
@@ -117,7 +119,8 @@
             visible
         },
         ptOptions,
-        unstyled
+        unstyled,
+        parentPtContext
     })
 
     let jazzSvelteContext = getContext<JazzSvelteContext>('JAZZ_SVELTE')

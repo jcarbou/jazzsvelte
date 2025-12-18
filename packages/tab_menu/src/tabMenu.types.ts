@@ -98,7 +98,8 @@ export interface TabMenuPtContext extends TabMenuPassThroughMethodOptions {
  */
 export interface TabMenuPassThroughMethodOptions {
     props: TabMenuProps
-    context: TabMenuContext
+    context?: TabMenuContext
+    state: TabMenuState
 }
 
 /**

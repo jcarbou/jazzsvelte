@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
 
     import { importJS, importTS } from '../common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { SpeedDial } from '@jazzsvelte/speed_dial'
     import { CODE_SPEED_DIAL_ITEMS, SPEED_DIAL_ITEMS } from './speedDial.data'
 

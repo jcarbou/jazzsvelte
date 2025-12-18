@@ -17,7 +17,7 @@ export type BadgeValue = string | number | null | undefined
  * Severity type of the badge.
  * @defaultValue null
  */
-export type BadgeSeverity = 'success' | 'info' | 'warning' | 'danger'
+export type BadgeSeverity = 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast'
 
 /**
  * Size of the badge, valid options are "large" and "xlarge".

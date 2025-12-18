@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { importExt, importJS } from '$lib/doc/common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import { importExt, importJS } from '../common/doc.utils'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { TabMenu } from '@jazzsvelte/tab_menu'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
     import { goto } from '$app/navigation'
 
     let { docSection }: ComponentDocProps = $props()

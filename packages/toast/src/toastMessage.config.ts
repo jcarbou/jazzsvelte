@@ -23,7 +23,6 @@ export const defaultToastMessageProps: Omit<Required<BaseToastMessageProps>, 'id
     detail: null,
     customContent: null,
     customMessage: null,
-    customProps: {},
     closable: true,
     icon: null,
     closeIcon: TimesIcon,

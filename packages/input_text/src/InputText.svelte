@@ -12,6 +12,7 @@
     let {
         class: className = null,
         disabled = DEFAULT.disabled,
+        fieldSize = DEFAULT.fieldSize,
         keyFilter: keyFilterType = DEFAULT.keyFilter,
         invalid = DEFAULT.invalid,
         onvalidatedinput = null,
@@ -31,6 +32,7 @@
     let _props: InputTextProps = $derived({
         class: className,
         disabled,
+        fieldSize,
         keyFilter: keyFilterType,
         invalid,
         pt,
@@ -82,7 +84,9 @@
                         'p-disabled': disabled,
                         'p-filled': !!value,
                         'p-invalid': invalid,
-                        'p-variant-filled': variant ? variant === 'filled' : $inputStyle === 'filled'
+                        'p-variant-filled': variant ? variant === 'filled' : $inputStyle === 'filled',
+                        'p-inputtext-sm': fieldSize === 'small',
+                        'p-inputtext-lg': fieldSize === 'large'
                     }
                 ],
                 style,

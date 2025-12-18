@@ -3,9 +3,9 @@
         TooltipContentSnippet,
         TooltipLayoutActionState,
         TooltipOptions,
-        TooltipPassThroughMethodOptions,
         TooltipPassThroughOptions,
-        TooltipPosition
+        TooltipPosition,
+        TooltipPtContext
     } from './tooltip.types'
     import type { JazzSvelteContext, CssStyle, PassThroughOptions } from '@jazzsvelte/api'
     import { getContext, tick } from 'svelte'
@@ -85,10 +85,7 @@
     const { autoZIndex, baseZIndex, closeOnEscape } = options || {}
     let classNameState = ''
 
-    let ptContext: TooltipPassThroughMethodOptions & {
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    } = $derived({
+    let ptContext: TooltipPtContext = $derived({
         props: _props,
         context: {
             right: _position === 'right',

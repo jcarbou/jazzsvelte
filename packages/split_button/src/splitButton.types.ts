@@ -3,8 +3,6 @@ import type { TooltipOptions } from '@jazzsvelte/tooltip'
 import type {
     CssObject,
     HTMLDivAttributes,
-    HTMLSVGAttributes,
-    HTMLSpanAttributes,
     IconComponent,
     PassThroughHTMLAttributes,
     PassThroughType,
@@ -12,8 +10,8 @@ import type {
     AppendTo,
     PassThroughOptions
 } from '@jazzsvelte/api'
-import { ButtonLabelSnippet, ButtonPassThroughOptions, ButtonProps, ButtonSeverity } from '@jazzsvelte/button'
-import { TieredMenuPassThroughOptions, TieredMenuPassThroughType, TieredMenuProps } from '@jazzsvelte/tiered_menu'
+import type { ButtonLabelSnippet, ButtonPassThroughOptions, ButtonProps, ButtonSeverity } from '@jazzsvelte/button'
+import type { TieredMenuPassThroughOptions } from '@jazzsvelte/tiered_menu'
 
 /**
  * Defines types used by properties of the SplitButton component.

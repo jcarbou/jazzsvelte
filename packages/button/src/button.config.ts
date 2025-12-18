@@ -19,7 +19,7 @@ export function buttonPT(options: ButtonPassThroughOptions) {
  */
 export const defaultButtonProps: Omit<
     Required<BaseButtonProps>,
-    'pt' | 'ptOptions' | 'label' | 'badgeSnippet' | 'labelSnippet'
+    'pt' | 'ptOptions' | 'parentPtContext' | 'label' | 'badgeSnippet' | 'labelSnippet'
 > = {
     badge: null,
     disabled: false,

@@ -17,7 +17,10 @@ export function tieredMenuPT(options: TieredMenuPassThroughOptions) {
 /**
  * Default tieredMenu  props
  */
-export const defaultTieredMenuProps: Omit<Required<BaseTieredMenuProps>, 'pt' | 'ptOptions'> = {
+export const defaultTieredMenuProps: Omit<
+    Required<BaseTieredMenuProps>,
+    'pt' | 'ptOptions' | 'parentPtContext' | 'onHide' | 'onShow' | 'onBlur' | 'onFocus'
+> = {
     appendTo: 'body',
     autoZIndex: true,
     baseZIndex: 0,

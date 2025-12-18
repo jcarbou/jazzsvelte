@@ -29,6 +29,7 @@
         loadingIcon = DEFAULT.loadingIcon,
         outlined = DEFAULT.outlined,
         plain = DEFAULT.plain,
+        parentPtContext = null,
         pt = null,
         ptOptions = null,
         raised = DEFAULT.raised,
@@ -58,6 +59,7 @@
         loadingIcon,
         outlined,
         plain,
+        parentPtContext,
         pt,
         ptOptions,
         raised,
@@ -95,7 +97,8 @@
         props: { ...DEFAULT, ..._props, ..._restProps },
         context: { disabled, iconOnly: (!!icon || loading) && !_hasLabel },
         ptOptions,
-        unstyled
+        unstyled,
+        parentPtContext
     })
 
     // "root element"

@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { importJS, importTS } from '$lib/doc/common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
-    import { VirtualScroller } from '@jazzsvelte/virtual_scroller'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
-    import { itemSnippet } from './VirtualScrollerDoc.modules.svelte'
+    import { importJS, importTS } from '../common/doc.utils'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
+    import { VirtualScroller, type VirtualScrollerItemSnippetProps } from '@jazzsvelte/virtual_scroller'
+    import type { ComponentDocProps } from '../common/doc.types'
     import { codeItemSnippetTS, codeItemSnippetJS } from './virtualScrollerDoc.codes'
 
     let { docSection }: ComponentDocProps = $props()
@@ -53,3 +52,12 @@ ${codeItemSnippetTS}
     ></VirtualScroller>
 </div>
 <DocSectionCode {code} />
+
+{#snippet itemSnippet({ item, options }: VirtualScrollerItemSnippetProps)}
+    <div
+        class={`flex align-items-center p-2${options.odd ? ' surface-hover' : ''}`}
+        style={`height: ${options._props.itemSize}px`}
+    >
+        {item}
+    </div>
+{/snippet}

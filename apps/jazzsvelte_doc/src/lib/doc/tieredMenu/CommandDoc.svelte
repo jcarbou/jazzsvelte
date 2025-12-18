@@ -1,10 +1,10 @@
 <script lang="ts">
     import { importJS, importObject, importTS, importType } from '../common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { TieredMenu } from '@jazzsvelte/tiered_menu'
     import { showToast } from '@jazzsvelte/toast'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
     import type { MenuItem } from '@jazzsvelte/api'
 
     let { docSection }: ComponentDocProps = $props()

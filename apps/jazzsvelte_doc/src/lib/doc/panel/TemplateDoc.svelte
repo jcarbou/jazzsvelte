@@ -1,13 +1,13 @@
 <script lang="ts">
     import { importJS, importTS } from '../common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { Panel, PanelToggler } from '@jazzsvelte/panel'
     import { Avatar } from '@jazzsvelte/avatar'
     import { Button } from '@jazzsvelte/button'
     //import { Menu } from '@jazzsvelte/menu'
 
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { DocSection } from '../common/doc.types'
 
     interface Props {
         docSection: DocSection

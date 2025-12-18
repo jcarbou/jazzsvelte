@@ -140,7 +140,7 @@
         "shortLabel": "Props types",
         "description": "Types used by properties of the Badge component.",
         "values": [
-            { "name": "BadgeSeverity", "value": "'success' | 'info' | 'warning' | 'danger'" },
+            { "name": "BadgeSeverity", "value": "'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast'" },
             { "name": "BadgeSize", "value": "'normal' | 'medium' | 'large' | 'xlarge'" }
         ]
     }

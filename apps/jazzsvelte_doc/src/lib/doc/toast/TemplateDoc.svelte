@@ -1,9 +1,9 @@
 <script lang="ts">
     import { importJS, importObject, importTS, importType } from '../common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-    import type { DocSection } from '$lib/doc/common/doc.types'
+    import type { DocSection } from '../common/doc.types'
     import { closeToast, showToast, type ToastMessageProps, type ToastMessageStatus, type ToastSnippet } from '@jazzsvelte/toast'
     import { Avatar } from '@jazzsvelte/avatar'
 

@@ -22,7 +22,8 @@ import type {
     HTMLSVGCircleAttributes,
     HTMLIAttributes,
     HTMLElementAttributes,
-    HTMLOlAttributes
+    HTMLOlAttributes,
+    PtContext
 } from './pt.types'
 import { JAZZ_SVELTE } from './JazzSvelte'
 import { mergeCssClasses } from './cssClasses'
@@ -33,23 +34,18 @@ type Options<INNER_ATTR, FUNCTION_OPTIONS> = PassThroughType<INNER_ATTR, FUNCTIO
 
 function ptToAttributes<ELT extends Element, M, PROPS, STATE, CTX>(
     options: Options<PtAttr<ELT>, M>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): PtAttr<ELT> {
     let attributes: PtAttr<ELT> = {}
 
     if (options) {
         if (isFunction(options)) {
-            const { props, context, state } = ptContext
+            const { props, context, state, parentPtContext } = ptContext
             const functionAttr = (options as PassThroughTypeFunction<PtAttr<ELT>, PassThroughMethodOptions<PROPS, STATE, CTX>>)({
                 props,
                 state,
-                context
+                context,
+                parentPtContext
             })
             if (functionAttr) {
                 attributes = { ...functionAttr }
@@ -104,13 +100,7 @@ export function resolveElementPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLElement, HTMLElementAttributes>,
     elementOptions: PtOptions<HTMLElement, HTMLElementAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLElement, HTMLElementAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLElementAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -127,13 +117,7 @@ export function resolveAnchorPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLAnchorElement, HTMLAnchorAttributes>,
     elementOptions: PtOptions<HTMLAnchorElement, HTMLAnchorAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLAnchorElement, HTMLAnchorAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLAnchorAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -150,13 +134,7 @@ export function resolveButtonPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLButtonElement, HTMLButtonAttributes>,
     elementOptions: PtOptions<HTMLButtonElement, HTMLButtonAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLButtonElement, HTMLButtonAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLButtonAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -173,13 +151,7 @@ export function resolveSVGCirclePt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomSVGAttributes<SVGCircleElement, HTMLSVGCircleAttributes>,
     elementOptions: PtSVGOptions<SVGCircleElement, HTMLSVGCircleAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtSVGOptions<SVGCircleElement, HTMLSVGCircleAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLSVGCircleAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -196,13 +168,7 @@ export function resolveDivPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLDivElement, HTMLDivAttributes>,
     elementOptions: PtOptions<HTMLDivElement, HTMLDivAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLDivElement, HTMLDivAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLDivAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -219,13 +185,7 @@ export function resolveIPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLElement, HTMLIAttributes>,
     elementOptions: PtOptions<HTMLElement, HTMLIAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLElement, HTMLIAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLIAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -242,13 +202,7 @@ export function resolveImagePt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLImageElement, HTMLImageAttributes>,
     elementOptions: PtOptions<HTMLImageElement, HTMLImageAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLImageElement, HTMLImageAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLImageAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -265,13 +219,7 @@ export function resolveInputPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLInputElement, HTMLInputAttributes>,
     elementOptions: PtOptions<HTMLInputElement, HTMLInputAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLInputElement, HTMLInputAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLInputAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -288,13 +236,7 @@ export function resolveLiPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLLIElement, HTMLLiAttributes>,
     elementOptions: PtOptions<HTMLLIElement, HTMLLiAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLLIElement, HTMLLiAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLLiAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -311,13 +253,7 @@ export function resolveOlPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLOListElement, HTMLOlAttributes>,
     elementOptions: PtOptions<HTMLOListElement, HTMLOlAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLOListElement, HTMLOlAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLOlAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -334,13 +270,7 @@ export function resolveSpanPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLSpanElement, HTMLSpanAttributes>,
     elementOptions: PtOptions<HTMLSpanElement, HTMLSpanAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLSpanElement, HTMLSpanAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLSpanAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -357,13 +287,7 @@ export function resolveSVGPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomSVGAttributes<SVGSVGElement, HTMLSVGAttributes>,
     elementOptions: PtSVGOptions<SVGSVGElement, HTMLSVGAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtSVGOptions<SVGSVGElement, HTMLSVGAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLSVGAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -380,13 +304,7 @@ export function resolveUlPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     elementAttributes: CustomHTMLAttributes<HTMLUListElement, HTMLUlAttributes>,
     elementOptions: PtOptions<HTMLUListElement, HTMLUlAttributes, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<HTMLUListElement, HTMLUlAttributes, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLUlAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
@@ -412,13 +330,7 @@ export function resolvePT<ELT extends Element, ATTR extends HTMLAttributes<ELT>,
     elementAttributes: CustomHTMLAttributes<ELT, ATTR>,
     elementOptions: PtOptions<ELT, ATTR, FUNCTION_OPTIONS>,
     globalOptions: PtOptions<ELT, ATTR, FUNCTION_OPTIONS>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): Omit<PtAttr<ELT>, 'style'> & { style?: string } {
     const unstyled = isUnstyled(ptContext)
     let elementStyle = elementAttributes.style
@@ -448,13 +360,7 @@ export function resolveIconPT<M, PROPS, STATE, CTX>(
     elementAttributes: MainElementAttributes<HTMLSpanElement> | MainElementAttributes<SVGSVGElement>,
     iconElementOptions: Options<PtAttr<HTMLSpanElement>, M> | Options<PtAttr<SVGSVGElement>, M>,
     iconGlobalOptions: Options<PtAttr<HTMLSpanElement>, M> | Options<PtAttr<SVGSVGElement>, M>,
-    ptContext: {
-        props: PROPS
-        state?: STATE
-        context?: CTX
-        ptOptions: PassThroughOptions | null
-        unstyled: boolean
-    }
+    ptContext: PtContext<PROPS, STATE, CTX>
 ): ResolvedIconPT {
     if (!icon) {
         return {}

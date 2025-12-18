@@ -45,7 +45,8 @@
     let ptContext: TieredMenuPtContext = $derived({
         ...parentPtContext,
         context: {
-            active
+            active,
+            focused
         }
     })
 
@@ -103,7 +104,7 @@
             pt?.action,
             globalPt?.action,
             ptContext
-        ) satisfies HTMLAnchorAttributes
+        )
     )
 
     // "content" element

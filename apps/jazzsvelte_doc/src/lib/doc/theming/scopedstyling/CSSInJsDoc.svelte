@@ -1,10 +1,10 @@
 <script lang="ts">
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { Panel } from '@jazzsvelte/panel'
 
-    import type { ComponentDocProps, DocSection } from '$lib/doc/common/doc.types'
-    import { importJS } from '$lib/doc/common/doc.utils'
+    import type { ComponentDocProps, DocSection } from '../common/doc.types'
+    import { importJS } from '../common/doc.utils'
 
     let { docSection }: ComponentDocProps = $props()
 

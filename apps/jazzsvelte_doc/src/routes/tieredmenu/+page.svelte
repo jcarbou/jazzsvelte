@@ -1,5 +1,5 @@
 <script lang="ts">
-    import TierredMenuDoc from '$lib/doc/tieredMenu/TierredMenuDoc.svelte'
+    import TierredMenuDoc from '$lib/doc/tieredMenu/TieredMenuDoc.svelte'
 </script>
 
 <TierredMenuDoc />

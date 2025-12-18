@@ -1,9 +1,9 @@
 <script lang="ts">
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { Badge } from '@jazzsvelte/badge'
     import { simpleCode } from '../common/doc.utils'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
 
     let { docSection }: ComponentDocProps = $props()
 
@@ -31,5 +31,7 @@
     <Badge value="4" severity="info"></Badge>
     <Badge value="12" severity="warning"></Badge>
     <Badge value="3" severity="danger"></Badge>
+    <Badge value="3" severity="secondary"></Badge>
+    <Badge value="3" severity="contrast"></Badge>
 </div>
 <DocSectionCode {code} />

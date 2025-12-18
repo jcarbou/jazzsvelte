@@ -211,11 +211,15 @@ export declare type MessagesPassThroughType<T> = PassThroughType<PassThroughHTML
  */
 export interface MessagesPassThroughMethodOptions {
     props: MessagesProps
+    context?: MessagesContext
 }
 
 export interface MessagesPtContext extends MessagesPassThroughMethodOptions {
     ptOptions: PassThroughOptions | null
     unstyled: boolean
+}
+export type MessagesContext = {
+    severity: MessagesMessageSeverity
 }
 
 /**

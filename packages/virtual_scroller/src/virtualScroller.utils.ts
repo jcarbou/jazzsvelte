@@ -1,5 +1,5 @@
-import { CssObject } from '@jazzsvelte/api'
-import {
+import type { CssObject } from '@jazzsvelte/api'
+import type {
     BothScrollPos,
     InnerBothState,
     InnerState,

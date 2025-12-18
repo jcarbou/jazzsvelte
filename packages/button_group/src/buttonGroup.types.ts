@@ -5,7 +5,7 @@ import type {
     PassThroughOptions,
     PassThroughType
 } from '@jazzsvelte/api'
-import { ButtonIconPos, ButtonSeverity, ButtonSize } from '@jazzsvelte/button'
+import type { ButtonIconPos, ButtonSeverity, ButtonSize } from '@jazzsvelte/button'
 import type { HTMLAttributes } from 'svelte/elements'
 
 /**

@@ -1,5 +1,9 @@
 import fs from 'fs'
+import child_process from 'child_process'
+import util from 'util'
 import type { CmpApiDoc, CmpContext, ScriptOptions } from './scripts.types'
+
+const exec = util.promisify(child_process.exec)
 
 export function toKebabCase(str: string) {
     return str.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()
@@ -15,11 +19,17 @@ export function buildCmpContext(name: string): CmpContext {
         cmpHomePath = `./packages/${cmp_name}`,
         docPackagePath = './apps/jazzsvelte_doc/package.json',
         tailwindHomePath = './apps/jazzsvelte_tailwind/src',
+        tailwindPackagePath = './apps/jazzsvelte_tailwind/package.json',
+        tailwindMenuJsonPath = `${tailwindHomePath}/lib/layout/sidebar/sidebar.json`,
+        tailwindMainLayoutPath = `${tailwindHomePath}/routes/+layout.svelte`,
         tailwindRoutesPath = `${tailwindHomePath}/routes/${cmpname}`,
         tailwindRoutesPageSveltePath = `${tailwindRoutesPath}/+page.svelte`,
         tailwindRoutesPageTsPath = `${tailwindRoutesPath}/+page.ts`,
-        tailwindPTPath = `${tailwindHomePath}/lib/pt/${cmpName}.pt.ts`,
+        tailwindPTHomePath = `${tailwindHomePath}/lib/pt`,
+        tailwindPTPath = `${tailwindPTHomePath}/${cmpName}.pt.ts`,
         docHomePath = './apps/jazzsvelte_doc/src',
+        docMenuJsonPath = `${docHomePath}/lib/layout/sidebar/menuData.json`,
+        docIndexPath = `${docHomePath}/index.ts`,
         cmpDocHomePath = `${docHomePath}/lib/doc/${cmpName}`,
         cmpDocHomeMainPath = `${cmpDocHomePath}/${CmpName}Doc.svelte`,
         cmpDocRoutesPath = `${docHomePath}/routes/${cmpname}`,
@@ -47,10 +57,16 @@ export function buildCmpContext(name: string): CmpContext {
         cmpName,
         cmpname,
         cmp_name,
+        tailwindPTHomePath,
+        tailwindPackagePath,
         tailwindPTPath,
+        tailwindMenuJsonPath,
+        tailwindMainLayoutPath,
         tailwindRoutesPath,
         tailwindRoutesPageSveltePath,
         tailwindRoutesPageTsPath,
+        docMenuJsonPath,
+        docIndexPath,
         cmpHomePath,
         cmpDocHomePath,
         cmpDocHomeMainPath,
@@ -76,6 +92,20 @@ export function buildCmpContext(name: string): CmpContext {
     }
 }
 
+export function tagDoneMenuEntry(menuJsonPath: string, cmpname: string) {
+    const json = readJson(menuJsonPath)
+    for (const subMenu of json.data[1].children) {
+        for (const cmp of subMenu.children) {
+            if (cmp.to === `/${cmpname}`) {
+                if (cmp.done) return
+                cmp.done = true
+                writeJson(menuJsonPath, json)
+                return
+            }
+        }
+    }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function readJson(path: string): any {
     return JSON.parse(fs.readFileSync(path, 'utf8'))
@@ -98,6 +128,10 @@ export function readText(path: string): string {
 
 export function writeText(path: string, content: string) {
     fs.writeFileSync(path, content)
+}
+
+export function writeJson(path: string, content: any) {
+    fs.writeFileSync(path, JSON.stringify(content, null, 4))
 }
 
 export function fileExist(path: string) {
@@ -219,4 +253,11 @@ export function upperFirst(s: string): string {
     const start = s.substring(0, 1),
         end = s.substring(1)
     return start.toUpperCase() + end
+}
+
+export async function pnpmInstall() {
+    const { stdout, stderr } = await exec(`pnpm i`)
+    console.log('stdout:', stdout)
+    console.log('stderr:', stderr)
+    //console.log(`prettier --check ${path} && eslint ${path}`);
 }

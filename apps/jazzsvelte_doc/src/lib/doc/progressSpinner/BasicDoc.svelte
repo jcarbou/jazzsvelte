@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { importJS, importTS } from '$lib/doc/common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import { importJS, importTS } from '../common/doc.utils'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { ProgressSpinner } from '@jazzsvelte/progress_spinner'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
 
     let { docSection }: ComponentDocProps = $props()
 

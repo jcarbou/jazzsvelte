@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { CmpContext, ScriptOptions } from '../scripts.types'
-import { copyDir, fileExist, renameFile, rmDir } from '../scripts.utils'
+import { copyDir, fileExist, renameFile, rmDir, tagDoneMenuEntry } from '../scripts.utils'
 import { addScriptTsDeclaration, jsonStyleToString, prettierFormat, regexpPatch, withFileContent } from './imports.utils'
 
 const CUSTOM_DOC_CMP = [{ _cmp: 'button', _fileName: 'LoadingDoc.svelte', _jsFileName: 'loadingdoc.js' }]
@@ -199,7 +199,7 @@ function renameAndPatchDocFiles(dirPath: string, context: CmpContext) {
 }
 
 export function importCmpDocList(context: CmpContext, options: ScriptOptions) {
-    const { cmpDocHomePath, prCmpApiDocPath } = context
+    const { cmpname, cmpDocHomePath, docMenuJsonPath, prCmpApiDocPath } = context
     const { test, override } = options
     let dirPath = cmpDocHomePath
 
@@ -214,5 +214,7 @@ export function importCmpDocList(context: CmpContext, options: ScriptOptions) {
     rmDir(dirPath)
     copyDir(prCmpApiDocPath, dirPath)
     renameAndPatchDocFiles(dirPath, context)
+    tagDoneMenuEntry(docMenuJsonPath, cmpname)
+
     prettierFormat(dirPath)
 }

@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { importJS, importObject, importTS } from '$lib/doc/common/doc.utils'
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import { importJS, importObject, importTS } from '../common/doc.utils'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { ProgressBar } from '@jazzsvelte/progress_bar'
     import { Toast, showToast } from '@jazzsvelte/toast'
 
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
 
     let { docSection }: ComponentDocProps = $props()
 

@@ -1,13 +1,13 @@
 <script lang="ts">
-    import DocSectionCode from '$lib/doc/common/DocSectionCode.svelte'
-    import DocSectionText from '$lib/doc/common/DocSectionText.svelte'
+    import DocSectionCode from '../common/DocSectionCode.svelte'
+    import DocSectionText from '../common/DocSectionText.svelte'
     import { Button } from '@jazzsvelte/button'
-    import type { ComponentDocProps } from '$lib/doc/common/doc.types'
+    import type { ComponentDocProps } from '../common/doc.types'
     import { ButtonGroup } from '@jazzsvelte/button_group'
     import { importJS, importTS } from '../common/doc.utils'
 
-    let { docSection }: ComponentDocProps = $props();
-const codeBasic = `
+    let { docSection }: ComponentDocProps = $props()
+    const codeBasic = `
 <ButtonGroup>
     <Button label="Save" icon="pi pi-check" />
     <Button label="Delete" icon="pi pi-trash" />
@@ -20,14 +20,14 @@ const codeBasic = `
     <Button label="Cancel" icon="pi pi-times" />
 </ButtonGroup>
 `
-const code = {
+    const code = {
         basic: codeBasic,
         javascript: `
-${importJS('Button','ButtonGroup')}
+${importJS('Button', 'ButtonGroup')}
 ${codeBasic}
 `,
         typescript: `
-${importTS('Button','ButtonGroup')}
+${importTS('Button', 'ButtonGroup')}
 ${codeBasic}
 `
     }

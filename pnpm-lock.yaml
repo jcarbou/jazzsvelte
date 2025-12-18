@@ -443,18 +443,33 @@ importers:
       '@jazzsvelte/api':
         specifier: workspace:^0.1.0
         version: link:../../packages/_tools/api
+      '@jazzsvelte/avatar':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/avatar
+      '@jazzsvelte/avatar_group':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/avatar_group
       '@jazzsvelte/badge':
         specifier: workspace:^0.1.0
         version: link:../../packages/badge
+      '@jazzsvelte/block_ui':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/block_ui
       '@jazzsvelte/button':
         specifier: workspace:^0.1.0
         version: link:../../packages/button
       '@jazzsvelte/button_group':
         specifier: workspace:^0.1.0
         version: link:../../packages/button_group
+      '@jazzsvelte/card':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/card
       '@jazzsvelte/check_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/check
+      '@jazzsvelte/chip':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/chip
       '@jazzsvelte/doc':
         specifier: workspace:^0.1.0
         version: link:../jazzsvelte_doc
@@ -470,21 +485,60 @@ importers:
       '@jazzsvelte/infocircle_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/infocircle
+      '@jazzsvelte/inplace':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/inplace
       '@jazzsvelte/input_text':
         specifier: workspace:^0.1.0
         version: link:../../packages/input_text
+      '@jazzsvelte/message':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/message
+      '@jazzsvelte/messages':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/messages
+      '@jazzsvelte/meter_group':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/meter_group
       '@jazzsvelte/object':
         specifier: workspace:^0.1.0
         version: link:../../packages/_tools/object
+      '@jazzsvelte/panel':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/panel
+      '@jazzsvelte/progress_bar':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/progress_bar
+      '@jazzsvelte/progress_spinner':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/progress_spinner
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../../packages/ripple
+      '@jazzsvelte/scroll_top':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/scroll_top
+      '@jazzsvelte/skeleton':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/skeleton
       '@jazzsvelte/speed_dial':
         specifier: workspace:^0.1.0
         version: link:../../packages/speed_dial
       '@jazzsvelte/spinner_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/spinner
+      '@jazzsvelte/split_button':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/split_button
+      '@jazzsvelte/tab_menu':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/tab_menu
+      '@jazzsvelte/tag':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/tag
+      '@jazzsvelte/tiered_menu':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/tiered_menu
       '@jazzsvelte/timescircle_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/timescircle

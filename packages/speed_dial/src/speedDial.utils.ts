@@ -1,4 +1,4 @@
-import { MenuItem } from '@jazzsvelte/api'
+import type { MenuItem } from '@jazzsvelte/api'
 
 export function findPrevOptionIndex(index: number, items: MenuItem[]): number | null {
     const filteredItems = items.filter((item) => !item.disabled)

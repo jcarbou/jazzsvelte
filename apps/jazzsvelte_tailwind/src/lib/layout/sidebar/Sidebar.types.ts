@@ -12,6 +12,7 @@ export type MenuItemData = {
     name: string
     href?: string
     to?: string
+    done?: string
 }
 
 export type SubMenuData = {

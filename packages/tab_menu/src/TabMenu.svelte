@@ -44,13 +44,10 @@
     let navEl: HTMLUListElement
 
     let idState = $state(_restProps.id ?? uniqueId('tabMenu_'))
-    let _item: MenuItem | null = $derived(model ? model[activeIndex] : null)
-
     let ptContext: TabMenuPtContext = $derived({
         props: { ...DEFAULT, ..._props, ..._restProps },
-        context: {
-            item: _item,
-            index: activeIndex
+        state: {
+            activeIndex
         },
         ptOptions,
         unstyled
@@ -252,7 +249,12 @@
             },
             pt?.menuitem,
             globalPt?.menuitem,
-            ptContext
+            {
+                ...ptContext,
+                context: {
+                    index
+                }
+            }
         )
     }
 
@@ -273,7 +275,12 @@
             },
             pt?.action,
             globalPt?.action,
-            ptContext
+            {
+                ...ptContext,
+                context: {
+                    index
+                }
+            }
         )
     }
 
