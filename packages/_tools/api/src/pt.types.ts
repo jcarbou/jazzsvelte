@@ -82,6 +82,7 @@ export type HTMLDivAttributes = HTMLAttributes<HTMLDivElement>
 export type HTMLElementAttributes = HTMLAttributes<HTMLElement>
 export type HTMLInputAttributes = SvelteHTMLInputAttributes
 export type HTMLIAttributes = HTMLAttributes<HTMLElement>
+export type HTMLNavAttributes = HTMLAttributes<HTMLElement>
 export type HTMLLiAttributes = SvelteHTMLLiAttributes
 export type HTMLUlAttributes = HTMLAttributes<HTMLUListElement>
 export type HTMLOlAttributes = HTMLAttributes<HTMLOListElement>

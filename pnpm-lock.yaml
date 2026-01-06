@@ -268,6 +268,9 @@ importers:
       '@jazzsvelte/panel':
         specifier: workspace:^0.1.0
         version: link:../../packages/panel
+      '@jazzsvelte/panel_menu':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/panel_menu
       '@jazzsvelte/pencil_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/pencil
@@ -301,6 +304,9 @@ importers:
       '@jazzsvelte/star_icon':
         specifier: workspace:^0.1.0
         version: link:../../packages/_icons/star
+      '@jazzsvelte/steps':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/steps
       '@jazzsvelte/tab_menu':
         specifier: workspace:^0.1.0
         version: link:../../packages/tab_menu
@@ -506,6 +512,9 @@ importers:
       '@jazzsvelte/panel':
         specifier: workspace:^0.1.0
         version: link:../../packages/panel
+      '@jazzsvelte/panel_menu':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/panel_menu
       '@jazzsvelte/progress_bar':
         specifier: workspace:^0.1.0
         version: link:../../packages/progress_bar
@@ -530,6 +539,9 @@ importers:
       '@jazzsvelte/split_button':
         specifier: workspace:^0.1.0
         version: link:../../packages/split_button
+      '@jazzsvelte/steps':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/steps
       '@jazzsvelte/tab_menu':
         specifier: workspace:^0.1.0
         version: link:../../packages/tab_menu
@@ -1018,6 +1030,19 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../object
 
+  packages/_tools/menu-utils:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:*
+        version: link:../dom
+      '@jazzsvelte/object':
+        specifier: workspace:*
+        version: link:../object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../api
+
   packages/_tools/object: {}
 
   packages/_tools/test:
@@ -1349,6 +1374,37 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../_tools/test
 
+  packages/panel_menu:
+    dependencies:
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/dom
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/api
+      '@jazzsvelte/chevrondown_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/chevrondown
+      '@jazzsvelte/chevronright_icon':
+        specifier: workspace:^0.1.0
+        version: link:../_icons/chevronright
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/ripple':
+        specifier: workspace:^0.1.0
+        version: link:../ripple
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/test
+      '@jazzsvelte/utils':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/utils
+
   packages/progress_bar:
     dependencies:
       '@jazzsvelte/object':
@@ -1506,6 +1562,34 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../tooltip
 
+  packages/steps:
+    dependencies:
+      '@jazzsvelte/object':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/object
+    devDependencies:
+      '@jazzsvelte/api':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/api
+      '@jazzsvelte/dom':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/dom
+      '@jazzsvelte/icons':
+        specifier: workspace:^0.1.0
+        version: link:../icons
+      '@jazzsvelte/menu_utils':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/menu-utils
+      '@jazzsvelte/ripple':
+        specifier: workspace:^0.1.0
+        version: link:../ripple
+      '@jazzsvelte/test':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/test
+      '@jazzsvelte/utils':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/utils
+
   packages/tab_menu:
     dependencies:
       '@jazzsvelte/object':
@@ -1521,6 +1605,9 @@ importers:
       '@jazzsvelte/icons':
         specifier: workspace:^0.1.0
         version: link:../icons
+      '@jazzsvelte/menu_utils':
+        specifier: workspace:^0.1.0
+        version: link:../_tools/menu-utils
       '@jazzsvelte/ripple':
         specifier: workspace:^0.1.0
         version: link:../ripple

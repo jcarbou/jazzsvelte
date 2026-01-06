@@ -1,0 +1,385 @@
+{
+    "description": "PanelMenu is a hybrid of accordion-tree components.",
+    "methods": {
+        "description": "Defines methods that can be accessed by the component's reference.",
+        "values": [
+            {
+                "name": "getElement",
+                "parameters": [],
+                "returnType": "HTMLDivElement",
+                "description": "Used to get container element."
+            }
+        ],
+        "label": "Methods",
+        "shortLabel": "Methods"
+    },
+    "props": {
+        "description": "Defines valid properties in PanelMenu component. In addition to these, all properties of HTMLDivElement can be used in this component.",
+        "values": [
+            {
+                "name": "class",
+                "optional": true,
+                "readonly": false,
+                "type": "string | null",
+                "default": "null",
+                "description": "CSS classes to add to root element."
+            },
+            {
+                "name": "expandedKeys",
+                "optional": true,
+                "readonly": false,
+                "type": "PanelMenuExpandedKeys",
+                "default": "null",
+                "description": "A map of keys to represent the expansion state in controlled mode."
+            },
+            {
+                "name": "itemSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "Snippet<[PanelMenuItemSnippetProps]> | null",
+                "default": "null",
+                "description": "Snippet use to render items (override default renderer)."
+            },
+            {
+                "name": "model",
+                "optional": true,
+                "readonly": false,
+                "type": "MenuItem[]",
+                "default": "null",
+                "description": "An array of menuitems."
+            },
+            {
+                "name": "multiple",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether multiple tabs can be activated at the same time or not."
+            },
+            {
+                "name": "pt",
+                "optional": true,
+                "readonly": false,
+                "type": "PanelMenuPassThroughOptions | null",
+                "default": "null",
+                "description": "Uses to pass attributes to DOM elements inside the component."
+            },
+            {
+                "name": "ptOptions",
+                "optional": true,
+                "readonly": false,
+                "type": "PassThroughOptions | null",
+                "default": "null",
+                "description": "Used to configure passthrough(pt) options of the component."
+            },
+            {
+                "name": "style",
+                "optional": true,
+                "readonly": false,
+                "type": "string | CssObject | null",
+                "default": "null",
+                "description": "Style to add to root element."
+            },
+            {
+                "name": "submenuIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Icon of the submenus."
+            },
+            {
+                "name": "activeSubmenuIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "string | IconComponent | null",
+                "default": "null",
+                "description": "Icon of the activated submenus."
+            },
+            {
+                "name": "unstyled",
+                "optional": true,
+                "readonly": false,
+                "type": "boolean",
+                "default": "false",
+                "description": "When enabled, it removes component related styles in the core."
+            }
+        ],
+        "label": "PanelMenuProps",
+        "shortLabel": "Props"
+    },
+    "callbacks": {
+        "description": "Defines callbacks that determine the behavior of the component based on a given condition or report the actions that the component takes.",
+        "values": [
+            {
+                "name": "onExpandedKeysChange",
+                "parameters": [
+                    {
+                        "name": "value",
+                        "optional": false,
+                        "type": "any",
+                        "description": "New value."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to when the expandedKeys changes."
+            },
+            {
+                "name": "onHide",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "PanelMenuHeaderItemClickEvent",
+                        "description": "custom event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when a panel gets collapsed."
+            },
+            {
+                "name": "onShow",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "optional": false,
+                        "type": "PanelMenuHeaderItemClickEvent",
+                        "description": "custom event."
+                    }
+                ],
+                "returnType": "void",
+                "description": "Callback to invoke when a panel gets expanded."
+            }
+        ],
+        "label": "Callbacks",
+        "shortLabel": "Callbacks"
+    },
+    "id": "panelMenu",
+    "label": "PanelMenu",
+    "types": {
+        "label": "Props types",
+        "shortLabel": "Props types",
+        "description": "Types used by properties of the PanelMenu component.",
+        "values": []
+    },
+    "ptMethodOptions": {
+        "description": "Custom passthrough(pt) option method.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "props",
+                "optional": false,
+                "readonly": false,
+                "type": "PanelMenuProps"
+            },
+            {
+                "name": "state",
+                "optional": false,
+                "readonly": false,
+                "type": "PanelMenuState"
+            },
+            {
+                "name": "context",
+                "optional": false,
+                "readonly": false,
+                "type": "PanelMenuContext"
+            }
+        ],
+        "label": "PanelMenuPassThroughMethodOptions",
+        "shortLabel": "PanelMenuPtMethodOptions"
+    },
+    "ptOptions": {
+        "description": "Custom passthrough(pt) options.",
+        "relatedProp": "pt",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "root",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the root's DOM element."
+            },
+            {
+                "name": "panel",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the panel's DOM element."
+            },
+            {
+                "name": "header",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the header's DOM element."
+            },
+            {
+                "name": "headerAction",
+                "optional": true,
+                "readonly": false,
+                "type": "Anchor",
+                "description": "Uses to pass attributes to the header action's DOM element."
+            },
+            {
+                "name": "headerContent",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the header content's DOM element."
+            },
+            {
+                "name": "submenuIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the submenuIcon's DOM element."
+            },
+            {
+                "name": "headerIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the header icon's DOM element."
+            },
+            {
+                "name": "headerSubmenuIcon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the header submenu icon's DOM element."
+            },
+            {
+                "name": "headerLabel",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the header label's DOM element."
+            },
+            {
+                "name": "toggleableContent",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the toggleable content's DOM element."
+            },
+            {
+                "name": "headerToggleableContent",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the header toggleable content's DOM element."
+            },
+            {
+                "name": "menuContent",
+                "optional": true,
+                "readonly": false,
+                "type": "Div",
+                "description": "Uses to pass attributes to the menu content's DOM element."
+            },
+            {
+                "name": "menu",
+                "optional": true,
+                "readonly": false,
+                "type": "UList",
+                "description": "Uses to pass attributes to the list's DOM element."
+            },
+            {
+                "name": "menuitem",
+                "optional": true,
+                "readonly": false,
+                "type": "LI",
+                "description": "Uses to pass attributes to the list item's DOM element."
+            },
+            {
+                "name": "action",
+                "optional": true,
+                "readonly": false,
+                "type": "Anchor",
+                "description": "Uses to pass attributes to the action's DOM element."
+            },
+            {
+                "name": "icon",
+                "optional": true,
+                "readonly": false,
+                "type": "Icon",
+                "description": "Uses to pass attributes to the icon's DOM element."
+            },
+            {
+                "name": "label",
+                "optional": true,
+                "readonly": false,
+                "type": "Span",
+                "description": "Uses to pass attributes to the label's DOM element."
+            },
+            {
+                "name": "separator",
+                "optional": true,
+                "readonly": false,
+                "type": "LI",
+                "description": "Uses to pass attributes to the separator's DOM element."
+            },
+            {
+                "name": "transition",
+                "optional": true,
+                "readonly": false,
+                "type": "PanelMenuPassThrou",
+                "description": "Used to control React Transition API."
+            }
+        ],
+        "label": "PanelMenuContext",
+        "shortLabel": "Context"
+    },
+    "meta": {
+        "RootType": "Div",
+        "omitAttributes": "'style' | 'class'",
+        "icon": true,
+        "tooltip": false,
+        "svelteComponent": false
+    },
+    "ptContext": {
+        "description": "Defines current options in PanelMenu component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "active",
+                "optional": false,
+                "readonly": false,
+                "type": "boolean",
+                "description": "Current active state of menuitem as a boolean."
+            }
+        ]
+    },
+    "state": {
+        "description": "Defines current inline state in PanelMenu component.",
+        "relatedProp": "",
+        "callbacks": [],
+        "values": [
+            {
+                "name": "id",
+                "optional": false,
+                "readonly": false,
+                "type": "string",
+                "description": "Current id state as a string."
+            },
+            {
+                "name": "activeItem",
+                "optional": false,
+                "readonly": false,
+                "type": "MenuItem[]",
+                "description": "Active item path."
+            },
+            {
+                "name": "animationDisabled",
+                "optional": false,
+                "readonly": false,
+                "type": "boolean",
+                "description": "Whether the menu is visible or not."
+            }
+        ],
+        "label": "PanelMenuState",
+        "shortLabel": "Context"
+    }
+}

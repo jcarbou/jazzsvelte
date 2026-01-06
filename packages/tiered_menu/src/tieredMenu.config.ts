@@ -25,6 +25,7 @@ export const defaultTieredMenuProps: Omit<
     autoZIndex: true,
     baseZIndex: 0,
     breakpoint: null,
+    itemSnippet: null,
     model: [],
     popup: false,
     scrollHeight: '400px',

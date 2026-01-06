@@ -23,6 +23,7 @@ The [PrimeReact](https://primereact.org/) documentation website is migrated to `
 - **Overlay**
    - Tooltip [PrimeReact version](https://primereact.org/tooltip/)
 - **Menu**
+    - Steps  [PrimeReact version](https://primereact.org/steps/)
     - TabMenu  [PrimeReact version](https://primereact.org/tabmenu/)
     - TieredMenu  [PrimeReact version](https://primereact.org/tieredmenu/)
 - **Messages**

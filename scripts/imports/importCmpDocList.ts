@@ -28,6 +28,10 @@ function clearPrimreactImportCmp(content: string, { CmpName, cmpName }: CmpConte
     return content.replaceAll(`import { ${CmpName} } from 'primereact/${cmpName}';`, '')
 }
 
+function removeLibReferences(content: string, context: CmpContext) {
+    return content.replaceAll('$lib/doc', '..')
+}
+
 function importCmpDocPatch(content: string, { CmpName }: CmpContext) {
     // const importCmpDocThemingRegExp = new RegExp(`import\\s*\\{\\s*${CmpName}\\s*\\}\\s*from.*`, 'gm')
     //content = content.replace(importCmpDocThemingRegExp, '')
@@ -191,7 +195,8 @@ function renameAndPatchDocFiles(dirPath: string, context: CmpContext) {
             addImport,
             importCmpDocPatch,
             addScriptTsDeclaration,
-            clearPrimreactImportCmp
+            clearPrimreactImportCmp,
+            removeLibReferences
         ])
 
         console.log(`"${newFilePath}" generated !`)

@@ -23,7 +23,8 @@ import type {
     HTMLIAttributes,
     HTMLElementAttributes,
     HTMLOlAttributes,
-    PtContext
+    PtContext,
+    HTMLNavAttributes
 } from './pt.types'
 import { JAZZ_SVELTE } from './JazzSvelte'
 import { mergeCssClasses } from './cssClasses'
@@ -238,6 +239,23 @@ export function resolveLiPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
     globalOptions: PtOptions<HTMLLIElement, HTMLLiAttributes, FUNCTION_OPTIONS>,
     ptContext: PtContext<PROPS, STATE, CTX>
 ): HTMLLiAttributes {
+    return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
+}
+
+/**
+ * Resolve "P"ass "T"rough configuration ans generate HTMLNavlAttributes
+ * @param elementAttributes - inner HTMLNavAttributes of component
+ * @param elementOptions - pass trough HTMLNavAttributes of "pt" attributte
+ * @param globalOptions - pass trough HTMLNavlAttributes of global configuration
+ * @param ptContext - context
+ * @returns Resolved HTMLNavAttributes
+ */
+export function resolveNavPt<FUNCTION_OPTIONS, PROPS, STATE, CTX>(
+    elementAttributes: CustomHTMLAttributes<HTMLElement, HTMLElementAttributes>,
+    elementOptions: PtOptions<HTMLElement, HTMLElementAttributes, FUNCTION_OPTIONS>,
+    globalOptions: PtOptions<HTMLElement, HTMLElementAttributes, FUNCTION_OPTIONS>,
+    ptContext: PtContext<PROPS, STATE, CTX>
+): HTMLNavAttributes {
     return resolvePT(elementAttributes, elementOptions, globalOptions, ptContext)
 }
 

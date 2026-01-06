@@ -13,7 +13,7 @@
         getWindowScrollTop
     } from '@jazzsvelte/dom'
     import TieredMenuSeparator from './TieredMenuSeparator.svelte'
-    import TieredMenuItem from './TieredMenuItem.svelte'
+    import TieredMenuIEntry from './TieredMenuIEntry.svelte'
 
     let {
         focusedItemId,
@@ -119,7 +119,7 @@
             {#if processedItem.isSeparator}
                 <TieredMenuSeparator />
             {:else}
-                <TieredMenuItem menuSubId={id} {processedItem} {index} {model} {menuProps} {level} {focusedItemId} />
+                <TieredMenuIEntry menuSubId={id} {processedItem} {index} {model} {menuProps} {level} {focusedItemId} />
             {/if}
         {/each}
     {/if}

@@ -2,7 +2,7 @@
     import { importJS, importTS } from '../common/doc.utils'
     import DocSectionCode from '../common/DocSectionCode.svelte'
     import DocSectionText from '../common/DocSectionText.svelte'
-    import { TabMenu } from '@jazzsvelte/tab_menu'
+    import { TabMenu, type TabMenuItem } from '@jazzsvelte/tab_menu'
     import type { ComponentDocProps } from '../common/doc.types'
     import type { MenuItemDefaultSnippetProps } from '@jazzsvelte/api'
 
@@ -10,41 +10,38 @@
 
     let activeIndex = $state(0)
 
-    const items = [
+    const items: TabMenuItem[] = [
         {
-            name: 'Amy Elsner',
-            image: 'amyelsner.png',
-            snippet: contentSnippet
+            label: 'Amy Elsner',
+            badge: 'amyelsner.png'
         },
         {
-            name: 'Anna Fali',
-            image: 'annafali.png',
-            snippet: contentSnippet
+            label: 'Anna Fali',
+            badge: 'annafali.png'
         },
         {
-            name: 'Asiya Javayant',
-            image: 'asiyajavayant.png',
-            snippet: contentSnippet
+            label: 'Asiya Javayant',
+            badge: 'asiyajavayant.png'
         }
     ]
 
     const codeItems = `
     let activeIndex = $state(0)
 
-    const items = [
+    const items : TabMenuItem[] = [
         {
-            name: 'Amy Elsner',
-            image: 'amyelsner.png',
+            label: 'Amy Elsner',
+            badge: 'amyelsner.png',
             snippet: contentSnippet
         },
         {
-            name: 'Anna Fali',
-            image: 'annafali.png',
+            label: 'Anna Fali',
+           badge: 'annafali.png',
             snippet: contentSnippet
         },
         {
-            name: 'Asiya Javayant',
-            image: 'asiyajavayant.png',
+            label: 'Asiya Javayant',
+            badge: 'asiyajavayant.png',
             snippet: contentSnippet
         }
     ]
@@ -55,10 +52,10 @@
 </div>
 
 {#snippet contentSnippet({ item, index }: MenuItemDefaultSnippetProps)}
-    <a class="p-menuitem-link flex align-items-center gap-2" onclick={() => (activeIndex = index)}>
-        <img alt={item.name} src={\`https://primefaces.org/cdn/primereact/images/avatar/\${item.image}\`} style="width:32px;" />
-        <span class="font-bold">{item.name}</span>
-    </a>
+    <button class="p-menuitem-link flex align-items-center gap-2" onclick={() => (activeIndex = index)}>
+        <img alt={item.label} src={\`https://primefaces.org/cdn/primereact/images/avatar/\${item.badge}\`} style="width:32px;" />
+        <span class="font-bold">{item.label}</span>
+    </button>
 {/snippet}
     `
     const code = {
@@ -66,7 +63,7 @@
 <TabMenu model={items} bind:activeIndex />
         `,
         javascript: `
-${importJS('TabMenu', codeItems)}
+${importJS('TabMenu', codeItems.replace(': TabMenuItem[]', ''))}
 ${codeDom}
 `,
         typescript: `
@@ -78,17 +75,17 @@ ${codeDom}
 
 <DocSectionText {docSection}>
     <p>
-        TabMenu offers item customization with the items <i>template</i> property that receives the item instance and
+        TabMenu offers item customization with <i>itemSnippet</i> property that receives the item instance and returns an element.
     </p>
 </DocSectionText>
 <div class="card">
-    <TabMenu model={items} bind:activeIndex />
+    <TabMenu model={items} {itemSnippet} bind:activeIndex />
 </div>
 <DocSectionCode {code} />
 
-{#snippet contentSnippet({ item, index }: MenuItemDefaultSnippetProps)}
-    <a class="p-menuitem-link flex align-items-center gap-2" onclick={() => (activeIndex = index)}>
-        <img alt={item.name} src={`https://primefaces.org/cdn/primereact/images/avatar/${item.image}`} style="width:32px;" />
-        <span class="font-bold">{item.name}</span>
-    </a>
+{#snippet itemSnippet({ item, index }: MenuItemDefaultSnippetProps)}
+    <button class="p-menuitem-link flex align-items-center gap-2" onclick={() => (activeIndex = index)}>
+        <img alt={item.label} src={`https://primefaces.org/cdn/primereact/images/avatar/${item.badge}`} style="width:32px;" />
+        <span class="font-bold">{item.label}</span>
+    </button>
 {/snippet}

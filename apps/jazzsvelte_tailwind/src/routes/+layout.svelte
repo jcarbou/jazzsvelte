@@ -8,6 +8,8 @@
     import './layout.css'
 
     // Import component PT
+    import '$lib/pt/panelMenu.pt'
+    import '$lib/pt/steps.pt'
     import '$lib/pt/toast.pt'
     import '$lib/pt/tag.pt'
     import '$lib/pt/skeleton.pt'

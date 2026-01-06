@@ -1,5 +1,10 @@
-import type { MenuItem } from '@jazzsvelte/api'
-import type { ActiveItemPathStore, FocusedItemInfo, FocusedItemInfoStore, ProcessedItem } from './tieredMenu.types'
+import type {
+    ActiveItemPathStore,
+    FocusedItemInfo,
+    FocusedItemInfoStore,
+    ProcessedItem,
+    TieredMenuItem
+} from './tieredMenu.types'
 import { writable } from 'svelte/store'
 
 function toSateId(processedItems: ProcessedItem[]): string {
@@ -88,7 +93,7 @@ export function createFocusedItemInfoStore(): FocusedItemInfoStore {
 }
 
 export function createProcessedItems(
-    items: MenuItem[],
+    items: TieredMenuItem[],
     level: ProcessedItem['level'] = 0,
     parent: ProcessedItem['parent'] = null,
     parentKey: ProcessedItem['parentKey'] = null

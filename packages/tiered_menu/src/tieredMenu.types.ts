@@ -12,8 +12,11 @@ import type {
     CssStyle,
     AppendTo,
     PassThroughOptions,
-    PassThroughMethodOptions
+    PassThroughMethodOptions,
+    MenuItemSnippetProps,
+    Menu
 } from '@jazzsvelte/api'
+import type { Snippet } from 'svelte'
 import type { Writable } from 'svelte/store'
 
 export interface ActiveItemPathStore extends Omit<Writable<ProcessedItem[]>, 'update' | 'set'> {
@@ -36,6 +39,7 @@ export type TieredMenuTreeContext = {
     submenuIcon: string | IconComponent | null
     pt: TieredMenuPassThroughOptions | null
     ptContext: TieredMenuPtContext
+    itemSnippet: Snippet<[TieredMenuItemSnippetProps]> | null
     onItemClick: (event: ProcessedItemEvent) => void
     onFocus: (ev: Event) => void
     onBlur: (ev: Event) => void
@@ -48,7 +52,7 @@ export type TieredMenuTreeContext = {
 }
 
 export type ProcessedItem = {
-    item: MenuItem
+    item: TieredMenuItem
     index: number
     level: number
     key: string
@@ -110,10 +114,15 @@ export interface BaseTieredMenuProps {
     class?: string | null
 
     /**
+     * Snippet use to render items (override default renderer)
+     */
+    itemSnippet?: Snippet<[TieredMenuItemSnippetProps]> | null
+
+    /**
      * An array of menuitems.
      * @default  []
      */
-    model: MenuItem[]
+    model: TieredMenuItem[]
 
     /**
      * Callback to invoke when a popup menu is hidden.
@@ -325,3 +334,24 @@ export interface TieredMenuItemProps {
     level: number
     focusedItemId: string | null
 }
+
+export type TieredMenuItemSnippetOptions = {
+    className: string
+    labelClassName: string
+    iconClassName: string
+    submenuIconClassName: string
+    grouped: boolean
+    active: boolean
+    disabled: boolean
+}
+
+export type TieredMenuItemSnippetProps = MenuItemSnippetProps & {
+    options: TieredMenuItemSnippetOptions
+    defaultSnippet: Snippet<[MenuItemSnippetProps]>
+}
+
+export type TieredMenuItem = Menu<
+    MenuItem & {
+        snippet?: Snippet<[TieredMenuItemSnippetProps]> | null
+    }
+>

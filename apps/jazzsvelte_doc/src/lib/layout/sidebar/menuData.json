@@ -330,11 +330,13 @@
                         },
                         {
                             "name": "PanelMenu",
-                            "to": "/panelmenu"
+                            "to": "/panelmenu",
+                            "done": true
                         },
                         {
                             "name": "Steps",
-                            "to": "/steps"
+                            "to": "/steps",
+                            "done": true
                         },
                         {
                             "name": "TabMenu",

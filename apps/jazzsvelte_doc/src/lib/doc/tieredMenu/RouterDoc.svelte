@@ -3,13 +3,12 @@
     import { importExt, importJS, importObject, importTS } from '../common/doc.utils'
     import DocSectionCode from '../common/DocSectionCode.svelte'
     import DocSectionText from '../common/DocSectionText.svelte'
-    import { TieredMenu } from '@jazzsvelte/tiered_menu'
+    import { TieredMenu, type TieredMenuItem } from '@jazzsvelte/tiered_menu'
     import type { DocSection } from '../common/doc.types'
-    import type { MenuItem } from '@jazzsvelte/api'
 
     export let docSection: DocSection
 
-    const items: MenuItem[] = [
+    const items: TieredMenuItem[] = [
         {
             label: 'Router',
             icon: 'pi pi-palette',

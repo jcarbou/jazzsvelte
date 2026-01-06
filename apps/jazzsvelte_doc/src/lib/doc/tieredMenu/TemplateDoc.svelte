@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { importBrother, importJS, importObject, importTS, importType } from '../common/doc.utils'
+    import { importJS, importTS } from '../common/doc.utils'
     import DocSectionCode from '../common/DocSectionCode.svelte'
     import DocSectionText from '../common/DocSectionText.svelte'
-    import { TieredMenu } from '@jazzsvelte/tiered_menu'
+    import { TieredMenu, type TieredMenuItem, type TieredMenuItemSnippetProps } from '@jazzsvelte/tiered_menu'
     import type { DocSection } from '../common/doc.types'
-    import type { MenuItem, MenuItemDefaultSnippetProps } from '@jazzsvelte/api'
+    import type { MenuItemDefaultSnippetProps } from '@jazzsvelte/api'
     import { Badge } from '@jazzsvelte/badge'
 
     export let docSection: DocSection
 
-    const items: MenuItem[] = [
+    const items: TieredMenuItem[] = [
         {
             label: 'File',
             icon: 'pi pi-file',
@@ -21,34 +21,29 @@
                         {
                             label: 'Document',
                             icon: 'pi pi-file',
-                            shortcut: '⌘+N',
-                            snippet: menuItemSnippet
+                            shortcut: '⌘+N'
                         },
                         {
                             label: 'Image',
                             icon: 'pi pi-image',
-                            shortcut: '⌘+I',
-                            snippet: menuItemSnippet
+                            shortcut: '⌘+I'
                         },
                         {
                             label: 'Video',
                             icon: 'pi pi-video',
-                            shortcut: '⌘+L',
-                            snippet: menuItemSnippet
+                            shortcut: '⌘+L'
                         }
                     ]
                 },
                 {
                     label: 'Open',
                     icon: 'pi pi-folder-open',
-                    shortcut: '⌘+O',
-                    snippet: menuItemSnippet
+                    shortcut: '⌘+O'
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
-                    shortcut: '⌘+P',
-                    snippet: menuItemSnippet
+                    shortcut: '⌘+P'
                 }
             ]
         },
@@ -59,22 +54,19 @@
                 {
                     label: 'Copy',
                     icon: 'pi pi-copy',
-                    shortcut: '⌘+C',
-                    snippet: menuItemSnippet
+                    shortcut: '⌘+C'
                 },
                 {
                     label: 'Delete',
                     icon: 'pi pi-times',
-                    shortcut: '⌘+D',
-                    snippet: menuItemSnippet
+                    shortcut: '⌘+D'
                 }
             ]
         },
         {
             label: 'Search',
             icon: 'pi pi-search',
-            shortcut: '⌘+S',
-            snippet: menuItemSnippet
+            shortcut: '⌘+S'
         },
         {
             separator: true
@@ -86,32 +78,37 @@
                 {
                     label: 'Slack',
                     icon: 'pi pi-slack',
-                    badge: 2,
-                    snippet: menuItemSnippet
+                    badge: 2
                 },
                 {
                     label: 'Whatsapp',
                     icon: 'pi pi-whatsapp',
-                    badge: 3,
-                    snippet: menuItemSnippet
+                    badge: 3
                 }
             ]
         }
     ]
     const codeTemplate = `
-<a href="#" class="flex align-items-center p-menuitem-link">
-    <span class={icon} />
-    <span class="mx-2">{item.label}</span>
-    {#if item.badge}
-        <Badge class="ml-auto" value={item.badge} />
+{#snippet itemSnippet({ item, index, tieredMenuOptions: { grouped }, defaultSnippet }: TieredMenuItemSnippetProps)}
+    {#if grouped}
+        {@render defaultSnippet({ item, index })}
+    {:else}
+        <a href="#" class="flex align-items-center p-menuitem-link">
+            <span class={item.icon as string}></span>
+            <span class="mx-2">{item.label}</span>
+            {#if item.badge}
+                <Badge class="ml-auto" value={item.badge} />
+            {/if}
+            {#if item.shortcut}
+                <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>
+            {/if}
+        </a>
     {/if}
-    {#if item.shortcut}
-        <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>
-    {/if}
-</a>
+{/snippet}
 `
     const codeItems = `
-     {
+    const items: TieredMenuItem[] = [
+        {
             label: 'File',
             icon: 'pi pi-file',
             items: [
@@ -123,19 +120,19 @@
                             label: 'Document',
                             icon: 'pi pi-file',
                             shortcut: '⌘+N',
-                            snippet: menuItemSnippet
+                            
                         },
                         {
                             label: 'Image',
                             icon: 'pi pi-image',
                             shortcut: '⌘+I',
-                            snippet: menuItemSnippet
+                            
                         },
                         {
                             label: 'Video',
                             icon: 'pi pi-video',
                             shortcut: '⌘+L',
-                            snippet: menuItemSnippet
+                            
                         }
                     ]
                 },
@@ -143,13 +140,13 @@
                     label: 'Open',
                     icon: 'pi pi-folder-open',
                     shortcut: '⌘+O',
-                    snippet: menuItemSnippet
+                    
                 },
                 {
                     label: 'Print',
                     icon: 'pi pi-print',
                     shortcut: '⌘+P',
-                    snippet: menuItemSnippet
+                    
                 }
             ]
         },
@@ -161,13 +158,13 @@
                     label: 'Copy',
                     icon: 'pi pi-copy',
                     shortcut: '⌘+C',
-                    snippet: menuItemSnippet
+                    
                 },
                 {
                     label: 'Delete',
                     icon: 'pi pi-times',
                     shortcut: '⌘+D',
-                    snippet: menuItemSnippet
+                    
                 }
             ]
         },
@@ -175,7 +172,7 @@
             label: 'Search',
             icon: 'pi pi-search',
             shortcut: '⌘+S',
-            snippet: menuItemSnippet
+            
         },
         {
             separator: true
@@ -188,86 +185,58 @@
                     label: 'Slack',
                     icon: 'pi pi-slack',
                     badge: 2,
-                    snippet: menuItemSnippet
+                    
                 },
                 {
                     label: 'Whatsapp',
                     icon: 'pi pi-whatsapp',
                     badge: 3,
-                    snippet: menuItemSnippet
+                    
                 }
             ]
         }`
     const codeBasic = `
-<TieredMenu model={items} breakpoint="767px" />
+<TieredMenu model={items} {itemSnippet} breakpoint="767px" />
 `
 
     const code = {
         basic: codeBasic,
         javascript: `
- // MenuItemTemplate
-
-${importJS(
-    'Badge',
-    `
-    export let item
-
-    $: icon = item.icon`
-)}
-${codeTemplate}
-
-// Main
-${importJS(
-    'Badge',
-    importBrother('MenuItemTemplate'),
-    `
-    const items = [${codeItems}]`
-)}
-${codeBasic}`,
+${importJS(['Badge', 'TieredMenu'], codeItems.replace(': TieredMenuItem[]', ''))}
+${codeBasic}
+${codeTemplate.replace(': TieredMenuItemSnippetProps', '')}
+`,
         typescript: `
- // MenuItemTemplate
-
-${importJS(
-    'Badge',
-    importObject('MenuItem', 'api'),
-    `
-    export let item: MenuItem
-
-    $: icon = item.icon as string`
-)}
+ ${importTS(['Badge', 'TieredMenu'], codeItems)}
+${codeBasic}
 ${codeTemplate}
-
-// Main
-${importTS(
-    'Badge',
-    importBrother('MenuItemTemplate'),
-    importType('MenuItem', 'api'),
-    `
-    const items: MenuItem[] = [${codeItems}}]`
-)}
-${codeBasic}`
+`
     }
 </script>
 
 <DocSectionText {docSection}>
     <p>
-        TieredMenu offers item customization with the items <i>template</i> property that receives the item instance and
+        TieredMenu offers item customization with <i>itemSnippet</i> property that receives the item instance and returns an element.
     </p>
 </DocSectionText>
 <div class="card flex justify-content-center">
-    <TieredMenu model={items} breakpoint="767px" />
+    <TieredMenu model={items} {itemSnippet} breakpoint="767px" />
 </div>
 <DocSectionCode {code} />
 
-{#snippet menuItemSnippet({ item, index }: MenuItemDefaultSnippetProps)}
-    <a href="#" class="flex align-items-center p-menuitem-link">
-        <span class={item.icon as string}></span>
-        <span class="mx-2">{item.label}</span>
-        {#if item.badge}
-            <Badge class="ml-auto" value={item.badge} />
-        {/if}
-        {#if item.shortcut}
-            <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>
-        {/if}
-    </a>
+{#snippet itemSnippet({ item, index, options: { grouped }, defaultSnippet }: TieredMenuItemSnippetProps)}
+    {#if grouped}
+        {@render defaultSnippet({ item, index })}
+    {:else}
+        <a href="#" class="flex align-items-center p-menuitem-link">
+            <span class={item.icon as string}></span>
+            <span class="mx-2">{item.label}</span>
+            {#if item.badge}
+                <Badge class="ml-auto" value={item.badge} />
+            {/if}
+            {#if item.shortcut}
+                <span class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>
+            {/if}
+        </a>
+    {/if}
 {/snippet}

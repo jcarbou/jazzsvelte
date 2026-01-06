@@ -19,6 +19,7 @@ export function tabMenuPT(options: TabMenuPassThroughOptions) {
 export const defaultTabMenuProps: Omit<Required<BaseTabMenuProps>, 'pt' | 'ptOptions' | 'onTabChange'> = {
     activeIndex: 0,
     class: null,
+    itemSnippet: null,
     model: null,
     style: null,
     unstyled: false

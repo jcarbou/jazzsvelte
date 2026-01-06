@@ -8,9 +8,11 @@ import type {
     PassThroughHTMLAttributes,
     PassThroughType,
     PassThroughOptions,
-    MenuItem,
-    HTMLUlAttributes
+    HTMLUlAttributes,
+    MenuItemSnippetProps,
+    MenuItem
 } from '@jazzsvelte/api'
+import type { Snippet } from 'svelte'
 
 /**
  * undefined
@@ -30,10 +32,15 @@ export interface BaseTabMenuProps {
     class?: string | null
 
     /**
+     * Snippet use to render items (override default renderer)
+     */
+    itemSnippet?: Snippet<[TabMenuItemSnippetProps]> | null
+
+    /**
      * An array of menuitems.
      * @default  null
      */
-    model?: MenuItem[] | null
+    model?: TabMenuItem[] | null
 
     /**
      * Uses to pass attributes to DOM elements inside the component.
@@ -64,15 +71,7 @@ export interface BaseTabMenuProps {
      * @default 'null'
      */
     onTabChange?:
-        | (({
-              originalEvent,
-              value,
-              index
-          }: {
-              originalEvent: MouseEvent | KeyboardEvent
-              value: MenuItem
-              index: number
-          }) => void)
+        | (({ originalEvent, item, index }: { originalEvent: MouseEvent | KeyboardEvent; item: MenuItem; index: number }) => void)
         | null
 }
 
@@ -161,4 +160,24 @@ export interface TabMenuState {
      * Current active index state as a number.
      */
     activeIndex: number
+}
+
+export type TabMenuItemSnippetOptions = {
+    onclick: (event: MouseEvent) => void
+    class: string
+    labelClass: string
+    iconClass: string
+    props: TabMenuProps
+    active: boolean
+    index: number
+    disabled: boolean | undefined
+}
+
+export type TabMenuItemSnippetProps = MenuItemSnippetProps & {
+    options: TabMenuItemSnippetOptions
+    defaultSnippet: Snippet<[MenuItemSnippetProps]>
+}
+
+export type TabMenuItem = MenuItem & {
+    snippet?: Snippet<[TabMenuItemSnippetProps]> | null
 }

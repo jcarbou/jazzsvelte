@@ -1,7 +1,12 @@
 <script lang="ts">
-    import type { TieredMenuItemProps, TieredMenuPtContext, TieredMenuTreeContext } from './tieredMenu.types'
+    import type {
+        TieredMenuItemProps,
+        TieredMenuItemSnippetOptions,
+        TieredMenuPtContext,
+        TieredMenuTreeContext
+    } from './tieredMenu.types'
     import type { ProcessedItem } from './tieredMenu.types'
-    import type { JazzSvelteContext, HTMLAnchorAttributes, MenuItem } from '@jazzsvelte/api'
+    import type { JazzSvelteContext, MenuItemSnippetProps } from '@jazzsvelte/api'
 
     import { getContext } from 'svelte'
     import { resolveAnchorPt, resolveDivPt, resolveIconPT, resolveLiPt, resolveSpanPt } from '@jazzsvelte/api'
@@ -22,6 +27,7 @@
         submenuIcon,
         pt,
         ptContext: parentPtContext,
+        itemSnippet,
         onItemClick,
         onItemMouseEnter,
         activeItemPath
@@ -165,7 +171,8 @@
         if (item.command) {
             item.command({
                 originalEvent: event,
-                item: item
+                item: item,
+                index: -1
             })
         }
 
@@ -180,6 +187,18 @@
     function _onItemMouseEnter(event: MouseEvent, processedItem: ProcessedItem): void {
         onItemMouseEnter && onItemMouseEnter({ originalEvent: event, processedItem })
     }
+
+    function getSnippetOptions(): TieredMenuItemSnippetOptions {
+        return {
+            className: 'p-menuitem-link',
+            labelClassName: 'p-menuitem-text',
+            iconClassName: 'p-menuitem-icon ' + (item.icon as string),
+            submenuIconClassName: 'p-submenu-icon',
+            active: active,
+            grouped,
+            disabled: processedItem.isDisabled
+        }
+    }
 </script>
 
 <li {...menuTtemAttributes} onmouseenter={(event) => _onItemMouseEnter(event, processedItem)}>
@@ -190,7 +209,19 @@
         onmouseenter={(event) => _onItemMouseEnter(event, processedItem)}
     >
         {#if item.snippet}
-            {@render item.snippet({ item, index, defaultSnippet })}
+            {@render item.snippet({
+                item,
+                index,
+                defaultSnippet,
+                options: getSnippetOptions()
+            })}
+        {:else if itemSnippet}
+            {@render itemSnippet({
+                item,
+                index,
+                defaultSnippet,
+                options: getSnippetOptions()
+            })}
         {:else}
             {@render defaultSnippet({ item, index })}
         {/if}
@@ -208,7 +239,7 @@
     {/if}
 </li>
 
-{#snippet defaultSnippet({ item, index }: { item: MenuItem; index: number })}
+{#snippet defaultSnippet({ item }: MenuItemSnippetProps)}
     <a href={url || '#'} {...actionAttributes} onfocus={(event) => event.stopPropagation()}>
         {#if icon}<IconBuilder {resolvedIcon} />{/if}
         {#if item.label}<span {...labelAttributes}>{item.label}</span>{/if}

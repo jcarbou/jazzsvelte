@@ -147,6 +147,9 @@ ${eachValue(
     ({ name }) => `   <IconBuilder resolvedIcon={resolved${upperFirst(name)}}/>`
 )}
 ${withValue(ptOptions, 'root', ({ type }) => `   </${type.toLocaleLowerCase()}>`)}
+
+<style>
+</style>
 `
 }
 

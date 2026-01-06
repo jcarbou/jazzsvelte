@@ -281,7 +281,7 @@ export function findEl(element: HTMLElement | null, selector: string): HTMLEleme
  * @param selector
  * @returns
  */
-export function findSingleEl(el: HTMLElement | null | undefined, selector: string): HTMLElement | null {
+export function findSingleEl(el: Element | null | undefined, selector: string): HTMLElement | null {
     return el ? el.querySelector(selector) : null
 }
 
@@ -318,7 +318,7 @@ export function findCollisionPosition(
  * @param name name of the attribute
  * @returns value
  */
-export function getAttribute(element: HTMLElement, name: string): null | string | number | boolean {
+export function getAttribute(element: HTMLElement | null | undefined, name: string): null | string | number | boolean {
     if (element) {
         const value = element.getAttribute(name)
 

@@ -10,6 +10,7 @@
     import Wireframe from './pt/Wireframe.svelte'
     import RouterDoc from './RouterDoc.svelte'
     import TemplateDoc from './TemplateDoc.svelte'
+    import ItemTemplateDoc from './ItemTemplateDoc.svelte'
     import StyledDoc from './theming/StyledDoc.svelte'
     import TailwindDoc from './theming/TailwindDoc.svelte'
     import { tieredMenuApiData } from '@jazzsvelte/tiered_menu'
@@ -34,6 +35,11 @@
             id: 'template',
             label: 'Template',
             component: TemplateDoc
+        },
+        {
+            id: 'itemTemplate',
+            label: 'Item Template',
+            component: ItemTemplateDoc
         },
         {
             id: 'command',

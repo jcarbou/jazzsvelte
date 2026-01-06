@@ -169,6 +169,10 @@ export function readApiDoc(apiPath: string): CmpApiDoc {
                 if (value.type === 'Icon') {
                     set.add('SVG')
                     set.add('Span')
+                } else if (value.type === 'UList') {
+                    set.add('Ul')
+                } else if (value.type === 'UlI') {
+                    set.add('Li')
                 } else {
                     set.add(value.type)
                 }

@@ -1,3 +1,5 @@
+export { default as PanelMenuDoc } from './lib/doc/panelMenu/PanelMenuDoc.svelte'
+export { default as StepsDoc } from './lib/doc/steps/StepsDoc.svelte'
 export { default as ToastDoc } from './lib/doc/toast/ToastDoc.svelte'
 export { default as TagDoc } from './lib/doc/tag/TagDoc.svelte'
 export { default as SkeletonDoc } from './lib/doc/skeleton/SkeletonDoc.svelte'

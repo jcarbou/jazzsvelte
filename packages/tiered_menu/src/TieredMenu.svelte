@@ -8,7 +8,6 @@
         TieredMenuPtContext,
         TieredMenuTreeContext
     } from './tieredMenu.types'
-
     import type { JazzSvelteContext, TimeoutId } from '@jazzsvelte/api'
 
     import { portal } from '@jazzsvelte/portal_action'
@@ -48,6 +47,7 @@
         breakpoint = DEFAULT.breakpoint,
         class: className = DEFAULT.class,
         id = null,
+        itemSnippet = DEFAULT.itemSnippet,
         model = DEFAULT.model,
         popup = DEFAULT.popup,
         parentPtContext = null,
@@ -106,13 +106,15 @@
     }
 
     let visible = $state(!popup)
+    let focused: boolean = $state(false)
 
     let _tieredMenuId: string = $derived(id || uniqueId('tieredMenu_'))
 
     let ptContext: TieredMenuPtContext = $derived({
         props: { ...DEFAULT, ..._props, ..._restProps },
         context: {
-            active: false
+            active: false,
+            focused
         },
         state: {
             attributeSelector: '',
@@ -157,7 +159,6 @@
 
     let processedItems: ProcessedItem[] | null = $derived(createProcessedItems(model))
     let matchMediaQuery: string | null = $derived(breakpoint ? `screen and (max-width: ${breakpoint})` : null)
-    let focused: boolean = $state(false)
     let activeItemPath: ActiveItemPathStore = createActiveItemPathStore()
     let focusedItemInfo: FocusedItemInfoStore = createFocusedItemInfoStore()
     let visibleItems = storeDerived<[ActiveItemPathStore, FocusedItemInfoStore], ProcessedItem[]>(
@@ -548,6 +549,7 @@
         pt,
         ptContext,
         hostName: 'TieredMenu',
+        itemSnippet,
         onItemClick,
         onFocus: _onFocus,
         onBlur: _onBlur,

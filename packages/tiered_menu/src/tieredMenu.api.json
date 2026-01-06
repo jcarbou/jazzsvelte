@@ -91,10 +91,18 @@
                 "description": "CSS classes to add to root element."
             },
             {
+                "name": "itemSnippet",
+                "optional": true,
+                "readonly": false,
+                "type": "Snippet<[TieredMenuItemSnippetProps]> | null",
+                "default": "null",
+                "description": "Snippet use to render items (override default renderer)."
+            },
+            {
                 "name": "model",
                 "optional": true,
                 "readonly": false,
-                "type": "MenuItem[]",
+                "type": "TieredMenuItem[]",
                 "default": "null",
                 "description": "An array of menuitems."
             },
